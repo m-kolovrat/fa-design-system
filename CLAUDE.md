@@ -291,7 +291,7 @@ Most components use `opacity-50` for disabled states instead of individual disab
 "disabled:cursor-not-allowed disabled:opacity-50";
 ```
 
-**Exception — `Button`** now matches Figma exactly using the neutral disabled tokens
+**Exception — `Button` and `ButtonGroup`** match Figma exactly (ButtonGroup: `text-disabled` text, `fg-disabled_subtle` icons/dots, unchanged background and border; selected + disabled uses `bg-disabled_subtle`). `Button` uses the neutral disabled tokens
 (`bg-disabled`, `border-disabled_subtle`, `fg-disabled`), not `opacity-50`. Disabled text and icon
 are both `fg-disabled`; primary/primary-destructive disabled is fill-only (no border, no shadow);
 secondary keeps a `border-disabled_subtle`. No disabled shadows.

@@ -167,3 +167,45 @@ export const All = () => (
         </ButtonGroup>
     </div>
 );
+
+export const AllLarge = () => (
+    <div className="flex flex-col gap-4">
+        <ButtonGroup size="lg" selectedKeys={["archive"]}>
+            <ButtonGroupItem id="archive">Archive</ButtonGroupItem>
+            <ButtonGroupItem id="edit">Edit</ButtonGroupItem>
+            <ButtonGroupItem id="delete" isDisabled>
+                Delete
+            </ButtonGroupItem>
+        </ButtonGroup>
+
+        <ButtonGroup size="lg" selectedKeys={["archive"]}>
+            <ButtonGroupItem id="archive" iconLeading={Placeholder}>
+                Archive
+            </ButtonGroupItem>
+            <ButtonGroupItem id="edit" iconLeading={Placeholder}>
+                Edit
+            </ButtonGroupItem>
+            <ButtonGroupItem id="delete" isDisabled iconLeading={Placeholder}>
+                Delete
+            </ButtonGroupItem>
+        </ButtonGroup>
+
+        <ButtonGroup size="lg" selectedKeys={["archive"]}>
+            <ButtonGroupItem id="archive" iconLeading={<Dot className="mx-0.75 size-2 text-fg-success-secondary" />}>
+                Archive
+            </ButtonGroupItem>
+            <ButtonGroupItem id="edit" iconLeading={<Dot className="mx-0.75 size-2 text-fg-success-secondary" />}>
+                Edit
+            </ButtonGroupItem>
+            <ButtonGroupItem id="delete" isDisabled iconLeading={<Dot className="mx-0.75 size-2 text-fg-success-secondary" />}>
+                Delete
+            </ButtonGroupItem>
+        </ButtonGroup>
+
+        <ButtonGroup size="lg" selectedKeys={["archive"]}>
+            <ButtonGroupItem id="archive" iconLeading={ArrowLeft} aria-label="Previous" />
+            <ButtonGroupItem id="edit" iconLeading={Plus} aria-label="Add" />
+            <ButtonGroupItem id="delete" isDisabled iconLeading={ArrowRight} aria-label="Next" />
+        </ButtonGroup>
+    </div>
+);
