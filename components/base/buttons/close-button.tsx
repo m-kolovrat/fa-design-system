@@ -5,7 +5,6 @@ import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react
 import { cx } from "@/utils/cx";
 
 const sizes = {
-    xs: { root: "size-7", icon: "size-4" },
     sm: { root: "size-9", icon: "size-5" },
     md: { root: "size-10", icon: "size-5" },
     lg: { root: "size-11", icon: "size-6" },
@@ -18,7 +17,7 @@ const themes = {
 
 interface CloseButtonProps extends AriaButtonProps {
     theme?: "light" | "dark";
-    size?: "xs" | "sm" | "md" | "lg";
+    size?: "sm" | "md" | "lg";
     label?: string;
     /**
      * The React Aria slot the button fills. Defaults to `"close"` so it

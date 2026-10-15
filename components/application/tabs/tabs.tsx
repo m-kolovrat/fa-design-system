@@ -41,12 +41,12 @@ const getTabStyles = ({ isFocusVisible, isSelected, isHovered }: AriaTabRenderPr
     underline: cx(
         "rounded-none border-b-2 border-transparent outline-focus-ring *:data-icon:text-fg-quaternary",
         isFocusVisible && "outline-2 -outline-offset-2",
-        (isSelected || isHovered) && "border-fg-brand-primary_alt text-brand-secondary *:data-icon:text-fg-brand-secondary_hover",
+        (isSelected || isHovered) && "border-fg-brand-secondary text-brand-secondary *:data-icon:text-fg-brand-secondary_hover",
     ),
     line: cx(
         "rounded-none border-l-2 border-transparent outline-focus-ring *:data-icon:text-fg-quaternary",
         isFocusVisible && "outline-2 -outline-offset-2",
-        (isSelected || isHovered) && "border-fg-brand-primary_alt text-brand-secondary *:data-icon:text-fg-brand-secondary_hover",
+        (isSelected || isHovered) && "border-fg-brand-secondary text-brand-secondary *:data-icon:text-fg-brand-secondary_hover",
     ),
 });
 

@@ -24,17 +24,18 @@ export const styles = sortCx({
     sizes: {
         sm: {
             root: [
-                "gap-1 rounded-full px-3 py-2 text-xs font-medium before:rounded-full data-icon-only:p-2",
-                "in-data-input-wrapper:px-3.5 in-data-input-wrapper:py-2.5 in-data-input-wrapper:data-icon-only:p-2.5",
-                // STROKE PROTOTYPE: was `*:data-icon:stroke-[2.25px]` — dropped so sm inherits the 1.5px default. Restore for the compensated small-icon weight.
-                "*:data-icon:size-4",
+                // Figma: Text sm (14/20), 20px icons, 12×8 padding → 36px tall (icon-only 8px padding → 36×36).
+                "gap-1 rounded-full px-3 py-2 text-sm font-medium before:rounded-full data-icon-only:p-2",
+                // Inside `InputGroup`: stay level with the 36px sm input.
+                "in-data-input-wrapper:px-3.5 in-data-input-wrapper:py-2 in-data-input-wrapper:data-icon-only:p-2",
             ].join(" "),
-            linkRoot: "gap-1 *:data-text:underline-offset-3",
+            // Figma: sm link buttons stay on Text xs (12/16) with 16px icons → 16px tall.
+            linkRoot: "gap-1 text-xs *:data-icon:size-4 *:data-text:underline-offset-3",
         },
         md: {
             root: [
+                // Same inside `InputGroup` — Figma md input group: 14×10 padding, Text sm → 40px, level with the md input.
                 "gap-1 rounded-full px-3.5 py-2.5 text-sm font-medium before:rounded-full data-icon-only:p-2.5",
-                "in-data-input-wrapper:gap-1.5 in-data-input-wrapper:px-4 in-data-input-wrapper:text-md in-data-input-wrapper:data-icon-only:p-3",
             ].join(" "),
             linkRoot: "gap-1 *:data-text:underline-offset-4",
         },
@@ -72,11 +73,12 @@ export const styles = sortCx({
         },
         "link-color": {
             root: [
-                "justify-normal rounded p-0! text-brand-tertiary hover:text-brand-secondary_hover touch-pressed:text-brand-secondary_hover",
-                // Inner text underline
-                "*:data-text:underline *:data-text:decoration-transparent hover:*:data-text:decoration-fg-brand-secondary_alt",
-                // Icon styles
-                "*:data-icon:text-fg-brand-primary_alt hover:*:data-icon:text-fg-brand-secondary_hover",
+                // Figma: text-brand-secondary → text-brand-secondary_hover on hover.
+                "justify-normal rounded p-0! text-brand-secondary hover:text-brand-secondary_hover touch-pressed:text-brand-secondary_hover",
+                // Inner text underline — Figma draws it in the text color.
+                "*:data-text:underline *:data-text:decoration-transparent hover:*:data-text:decoration-current",
+                // Icon styles — Figma: fg-brand-secondary → fg-brand-secondary_hover; loading spinner uses fg-brand-secondary_alt.
+                "*:data-icon:text-fg-brand-secondary hover:*:data-icon:text-fg-brand-secondary_hover *:data-[icon=loading]:text-fg-brand-secondary_alt",
             ].join(" "),
         },
         "link-gray": {

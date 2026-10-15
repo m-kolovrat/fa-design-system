@@ -85,7 +85,7 @@ export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valu
 
                     {/* Foreground circle */}
                     <circle
-                        className="stroke-fg-brand-primary"
+                        className="stroke-fg-brand-secondary"
                         cx={cx}
                         cy={cy}
                         r={radius}
@@ -147,7 +147,7 @@ export const ProgressBarHalfCircle = ({ value, min = 0, max = 100, size, label, 
 
                     {/* Foreground half-circle */}
                     <circle
-                        className="origin-center -scale-x-100 stroke-fg-brand-primary"
+                        className="origin-center -scale-x-100 stroke-fg-brand-secondary"
                         cx={cx}
                         cy={cy}
                         r={radius}

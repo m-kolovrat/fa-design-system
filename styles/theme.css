@@ -395,7 +395,7 @@
     --color-text-secondary: var(--color-gray-700);
     --color-text-secondary_hover: var(--color-gray-800);
     --color-text-tertiary_hover: var(--color-gray-700);
-    --color-text-brand-secondary: var(--color-brand-700);
+    --color-text-brand-secondary: var(--color-brand-500); /* synced to Figma text-brand-secondary (was brand-700) */
     --color-text-placeholder: var(--color-gray-500);
     --color-text-brand-tertiary: var(--color-brand-600);
     --color-text-editor-icon-fg: var(--color-gray-400);
@@ -408,7 +408,7 @@
     --color-text-quaternary_on-brand: var(--color-brand-300);
     --color-text-brand-tertiary_alt: var(--color-brand-600);
     --color-text-error-primary_hover: var(--color-error-600); /* synced to Figma text-error-primary_hover (was error-700) */
-    --color-text-brand-secondary_hover: var(--color-brand-800);
+    --color-text-brand-secondary_hover: var(--color-brand-600); /* synced to Figma text-brand-secondary_hover (was brand-800) */
     --color-text-disabled: var(--color-gray-500);
     --color-text-placeholder_subtle: var(--color-gray-300);
 
@@ -441,7 +441,7 @@
     --color-fg-tertiary_hover: var(--color-gray-700);
     --color-fg-brand-primary_alt: var(--color-fg-brand-primary);
     --color-fg-brand-secondary_alt: var(--color-fg-brand-secondary);
-    --color-fg-brand-secondary_hover: var(--color-brand-800); /* synced to Figma fg-brand-secondary_hover (was brand-600) */
+    --color-fg-brand-secondary_hover: var(--color-brand-600); /* synced to Figma fg-brand-secondary_hover (was brand-800) */
 
     /* BACKGROUND COLORS */
     --color-bg-primary: var(--color-white);
@@ -500,7 +500,7 @@
     --color-screen-mockup-border: var(--color-gray-900);
 
     --color-slider-handle-bg: var(--color-white);
-    --color-slider-handle-border: var(--color-brand-600);
+    --color-slider-handle-border: var(--color-brand-500); /* synced to Figma slider-handle-border (was brand-600) */
     --color-toggle-border: var(--color-gray-300);
     --color-toggle-slim-border_pressed-hover: var(--color-bg-brand-solid_hover);
     --color-toggle-slim-border_pressed: var(--color-bg-brand-solid);
