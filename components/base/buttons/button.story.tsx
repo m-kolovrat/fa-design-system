@@ -78,15 +78,15 @@ export const Sizes: Story = {
 /**
  * STROKE PROTOTYPE — trialing a 1.5px default icon stroke (was 2px).
  * Stroke is in the icon's 24-unit viewBox, so on-screen thickness scales with size:
- *   sm icon = 16px → ~1.0px stroke · md/lg/xl icon = 20px → ~1.25px stroke.
+ *   all sizes use a 20px icon → ~1.25px stroke (sm link buttons use 16px → ~1.0px).
  * Compare against how these read before committing the default across the system.
  */
 export const IconStroke: Story = {
-    render: (args) => (
+    render: ({ children: _children, ...args }) => (
         <div className="flex flex-col gap-8">
             <div className="flex flex-wrap items-end gap-8">
                 {sizes.map((size) => (
-                    <Labeled key={size} label={`${size} · ${size === "sm" ? "16px icon" : "20px icon"}`}>
+                    <Labeled key={size} label={`${size} · 20px icon`}>
                         <Button {...args} size={size} iconLeading={UploadCloud02}>
                             Button CTA
                         </Button>
@@ -124,3 +124,31 @@ export const States: Story = {
         </div>
     ),
 };
+
+/**
+ * Every hierarchy at every size, with leading + trailing icons and the icon-only
+ * variant — mirrors the Figma "Buttons/Button" and "Buttons/Button destructive"
+ * variant grids. Link hierarchies have no icon-only variant in Figma.
+ */
+export const AllVariants: Story = {
+    render: ({ children: _children, ...args }) => (
+        <div className="flex flex-col gap-6">
+            {colors.map((color) => (
+                <div key={color} data-color={color} className="flex flex-wrap items-center gap-6">
+                    <span className="w-44 text-xs font-medium text-tertiary">{color}</span>
+                    {sizes.map((size) => (
+                        <Button key={size} {...args} color={color} size={size} iconLeading={Plus} iconTrailing={Plus} data-size={size}>
+                            Button CTA
+                        </Button>
+                    ))}
+                    {!color.startsWith("link") &&
+                        sizes.map((size) => (
+                            <Button key={`${size}-icon`} {...args} color={color} size={size} iconLeading={Plus} aria-label="Add" data-size={size} />
+                        ))}
+                </div>
+            ))}
+        </div>
+    ),
+    parameters: { layout: "padded" },
+};
+AllVariants.storyName = "All variants";

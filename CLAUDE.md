@@ -374,7 +374,7 @@ import { Button } from "@/components/base/buttons/button";
 
 **Common Props:**
 
-- `size`: `"xs" | "sm" | "md" | "lg" | "xl"` - Button size (default: `"sm"`)
+- `size`: `"sm" | "md" | "lg" | "xl"` - Button size (default: `"sm"`)
 - `color`: `"primary" | "secondary" | "tertiary" | "link-gray" | "link-color" | "primary-destructive" | "secondary-destructive" | "tertiary-destructive" | "link-destructive"` - Button color variant (default: `"primary"`)
 - `iconLeading`: `FC | ReactNode` - Icon or component to display before text
 - `iconTrailing`: `FC | ReactNode` - Icon or component to display after text

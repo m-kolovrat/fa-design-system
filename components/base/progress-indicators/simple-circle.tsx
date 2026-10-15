@@ -10,7 +10,7 @@ export const CircleProgressBar = (props: { value: number; min?: 0; max?: 100 }) 
             <svg className="size-16 -rotate-90" viewBox="0 0 60 60">
                 <circle className="stroke-bg-quaternary" cx="30" cy="30" r="26" fill="none" strokeWidth="6" />
                 <circle
-                    className="stroke-fg-brand-primary"
+                    className="stroke-fg-brand-secondary"
                     style={{
                         strokeDashoffset: `calc(100 - ${percentage})`,
                     }}
