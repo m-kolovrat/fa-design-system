@@ -17,3 +17,6 @@ ButtonGroupSmall.storyName = "Button group sm";
 
 export const ButtonGroupMedium = () => <ButtonGroup.All />;
 ButtonGroupMedium.storyName = "Button group md";
+
+export const ButtonGroupLarge = () => <ButtonGroup.AllLarge />;
+ButtonGroupLarge.storyName = "Button group lg";

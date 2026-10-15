@@ -13,11 +13,12 @@ import { isReactComponent } from "@/utils/is-react-component";
 export const styles = sortCx({
     common: {
         root: [
-            "group/button-group inline-flex h-max cursor-pointer items-center bg-primary font-semibold whitespace-nowrap text-secondary shadow-skeuomorphic ring-1 ring-primary outline-brand transition ring-inset",
+            "group/button-group inline-flex h-max cursor-pointer items-center bg-primary font-medium whitespace-nowrap text-secondary shadow-skeuomorphic ring-1 ring-primary outline-brand transition ring-inset",
             // Hover and focus styles
             "hover:bg-primary_hover hover:text-secondary_hover focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2",
-            // Disabled styles
-            "disabled:cursor-not-allowed disabled:text-secondary/50 disabled:*:opacity-50",
+            // Disabled styles — Figma: no fading; text-disabled text, fg-disabled_subtle icons/dots,
+            // background and border unchanged (selected + disabled uses bg-disabled_subtle).
+            "disabled:cursor-not-allowed disabled:bg-primary disabled:text-disabled disabled:selected:bg-disabled_subtle disabled:[&>svg]:text-fg-disabled_subtle",
             // Selected styles
             "selected:bg-primary_hover selected:text-secondary_hover",
         ].join(" "),
@@ -26,15 +27,18 @@ export const styles = sortCx({
 
     sizes: {
         sm: {
-            root: "gap-1.5 px-3.5 py-2 text-sm not-last:pr-[calc(calc(var(--spacing)*3.5)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-3 data-icon-only:px-2.5",
+            // Figma sm: Text sm/Medium (14/20), 16×6 padding, 36px min height → 36px tall (same as the sm Button).
+            root: "min-h-9 gap-1.5 px-4 py-1.5 text-sm not-last:pr-[calc(calc(var(--spacing)*4)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-3.5 data-icon-only:px-3",
             icon: "size-5",
         },
         md: {
-            root: "gap-1.5 px-4 py-2.5 text-sm not-last:pr-[calc(calc(var(--spacing)*4)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-3.5 data-icon-only:px-3",
+            // Figma md: Text sm/Medium (14/20), 16×10 padding, 40px min height → 40px tall (same as the md Button).
+            root: "min-h-10 gap-1.5 px-4 py-2.5 text-sm not-last:pr-[calc(calc(var(--spacing)*4)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-3.5 data-icon-only:px-3",
             icon: "size-5",
         },
         lg: {
-            root: "gap-2 px-4.5 py-2.5 text-md not-last:pr-[calc(calc(var(--spacing)*4.5)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-4 data-icon-only:px-3.5",
+            // Figma lg: Text md/Medium (16/24), 18×10 padding, 44px min height → 44px tall (icon-only too) (same as the lg Button).
+            root: "min-h-11 gap-2 px-4.5 py-2.5 text-md not-last:pr-[calc(calc(var(--spacing)*4.5)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-4 data-icon-only:px-3.5",
             icon: "size-5",
         },
     },
