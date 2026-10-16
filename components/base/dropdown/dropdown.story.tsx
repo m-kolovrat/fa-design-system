@@ -12,7 +12,6 @@ import { DropdownContextMenuAdvanced } from "@/components/base/dropdown/dropdown
 import { DropdownContextMenuSimple } from "@/components/base/dropdown/dropdown-context-menu-simple";
 import { DropdownIconAdvanced } from "@/components/base/dropdown/dropdown-icon-advanced";
 import { DropdownIconSimple } from "@/components/base/dropdown/dropdown-icon-simple";
-import { DropdownIntegration } from "@/components/base/dropdown/dropdown-integration";
 import { DropdownSearchAdvanced } from "@/components/base/dropdown/dropdown-search-advanced";
 import { DropdownSearchSimple } from "@/components/base/dropdown/dropdown-search-simple";
 
@@ -53,9 +52,6 @@ DropdownSearchSimpleStory.storyName = "Dropdown menu search simple";
 
 export const DropdownSearchAdvancedStory = () => <DropdownSearchAdvanced />;
 DropdownSearchAdvancedStory.storyName = "Dropdown menu search advanced";
-
-export const DropdownIntegrationStory = () => <DropdownIntegration />;
-DropdownIntegrationStory.storyName = "Dropdown menu integration";
 
 export const DropdownAccountButtonStory = () => <DropdownAccountButton />;
 DropdownAccountButtonStory.storyName = "Dropdown menu account button";
