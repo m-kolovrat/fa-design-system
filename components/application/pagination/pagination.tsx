@@ -10,20 +10,16 @@ import { cx } from "@/utils/cx";
 import type { PaginationRootProps } from "./pagination-base";
 import { Pagination } from "./pagination-base";
 
-interface PaginationProps extends Partial<Omit<PaginationRootProps, "children">> {
-    /** Whether the pagination buttons are rounded. */
-    rounded?: boolean;
-}
+type PaginationProps = Partial<Omit<PaginationRootProps, "children">>;
 
-const PaginationItem = ({ value, rounded, isCurrent }: { value: number; rounded?: boolean; isCurrent: boolean }) => {
+const PaginationItem = ({ value, isCurrent }: { value: number; isCurrent: boolean }) => {
     return (
         <Pagination.Item
             value={value}
             isCurrent={isCurrent}
             className={({ isSelected }) =>
                 cx(
-                    "flex size-9 cursor-pointer items-center justify-center p-3 text-sm font-medium text-quaternary outline-focus-ring transition hover:bg-primary_hover hover:text-secondary focus-visible:z-10 focus-visible:bg-primary_hover focus-visible:outline-2 focus-visible:outline-offset-2",
-                    rounded ? "rounded-full" : "rounded-md",
+                    "flex size-9 cursor-pointer items-center justify-center rounded-full p-3 text-sm font-medium text-quaternary outline-focus-ring transition hover:bg-primary_hover hover:text-secondary focus-visible:z-10 focus-visible:bg-primary_hover focus-visible:outline-2 focus-visible:outline-offset-2",
                     isSelected && "bg-primary_hover text-secondary",
                 )
             }
@@ -70,7 +66,7 @@ const MobilePagination = ({ page = 1, total = 10, className, onPageChange }: Mob
     );
 };
 
-export const PaginationPageDefault = ({ rounded, page = 1, total = 10, className, ...props }: PaginationProps) => {
+export const PaginationPageDefault = ({ page = 1, total = 10, className, ...props }: PaginationProps) => {
     const isDesktop = useBreakpoint("md");
 
     return (
@@ -100,7 +96,7 @@ export const PaginationPageDefault = ({ rounded, page = 1, total = 10, className
                         <div className="hidden justify-center gap-0.5 md:flex">
                             {pages.map((page, index) =>
                                 page.type === "page" ? (
-                                    <PaginationItem key={index} rounded={rounded} {...page} />
+                                    <PaginationItem key={index} {...page} />
                                 ) : (
                                     <Pagination.Ellipsis key={index} className="flex size-9 shrink-0 items-center justify-center text-tertiary">
                                         &#8230;
@@ -132,7 +128,7 @@ export const PaginationPageDefault = ({ rounded, page = 1, total = 10, className
     );
 };
 
-export const PaginationPageMinimalCenter = ({ rounded, page = 1, total = 10, className, ...props }: PaginationProps) => {
+export const PaginationPageMinimalCenter = ({ page = 1, total = 10, className, ...props }: PaginationProps) => {
     const isDesktop = useBreakpoint("md");
 
     return (
@@ -156,7 +152,7 @@ export const PaginationPageMinimalCenter = ({ rounded, page = 1, total = 10, cla
                         <div className="hidden justify-center gap-0.5 md:flex">
                             {pages.map((page, index) =>
                                 page.type === "page" ? (
-                                    <PaginationItem key={index} rounded={rounded} {...page} />
+                                    <PaginationItem key={index} {...page} />
                                 ) : (
                                     <Pagination.Ellipsis key={index} className="flex size-9 shrink-0 items-center justify-center text-tertiary">
                                         &#8230;
@@ -183,7 +179,7 @@ export const PaginationPageMinimalCenter = ({ rounded, page = 1, total = 10, cla
     );
 };
 
-export const PaginationCardDefault = ({ rounded, page = 1, total = 10, ...props }: PaginationProps) => {
+export const PaginationCardDefault = ({ page = 1, total = 10, ...props }: PaginationProps) => {
     const isDesktop = useBreakpoint("md");
 
     return (
@@ -207,7 +203,7 @@ export const PaginationCardDefault = ({ rounded, page = 1, total = 10, ...props 
                         <div className="hidden justify-center gap-0.5 md:flex">
                             {pages.map((page, index) =>
                                 page.type === "page" ? (
-                                    <PaginationItem key={index} rounded={rounded} {...page} />
+                                    <PaginationItem key={index} {...page} />
                                 ) : (
                                     <Pagination.Ellipsis key={index} className="flex size-9 shrink-0 items-center justify-center text-tertiary">
                                         &#8230;
@@ -464,6 +460,9 @@ export const PaginationCardAdvanced = ({
                     </Pagination.Context>
 
                     <div className="flex gap-2">
+                        <Pagination.NextTrigger asChild>
+                            <Button iconTrailing={ChevronRight} color="secondary" size="sm" />
+                        </Pagination.NextTrigger>
                         <Button
                             iconTrailing={ChevronRightDouble}
                             color="secondary"
@@ -471,9 +470,6 @@ export const PaginationCardAdvanced = ({
                             isDisabled={page === total}
                             onClick={() => onPageChange?.(total)}
                         />
-                        <Pagination.NextTrigger asChild>
-                            <Button iconTrailing={ChevronRight} color="secondary" size="sm" />
-                        </Pagination.NextTrigger>
                     </div>
                 </div>
             </Pagination.Root>
