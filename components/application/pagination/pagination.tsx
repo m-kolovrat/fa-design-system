@@ -20,7 +20,8 @@ const PaginationItem = ({ value, isCurrent }: { value: number; isCurrent: boolea
             className={({ isSelected }) =>
                 cx(
                     "flex size-9 cursor-pointer items-center justify-center rounded-full p-3 text-sm font-medium text-quaternary outline-focus-ring transition hover:bg-primary_hover hover:text-secondary focus-visible:z-10 focus-visible:bg-primary_hover focus-visible:outline-2 focus-visible:outline-offset-2",
-                    isSelected && "bg-primary_hover text-secondary",
+                    // Active (current page) uses the same tokens as selected tabs and keeps them on hover.
+                    isSelected && "bg-brand-primary_alt text-brand-secondary hover:bg-brand-primary_alt hover:text-brand-secondary",
                 )
             }
         >
