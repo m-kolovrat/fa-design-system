@@ -59,31 +59,62 @@ This applies to all file types including:
 
 ## Development Commands
 
+This repo is a component library viewed through Storybook. There is no app dev server or production build. Use **npm** (`package-lock.json` is the lockfile in use).
+
 ```bash
-# Development
-npm run dev               # Start Vite development server (http://localhost:5173)
-npm run build            # Build for production (TypeScript compilation + Vite build)
+npm install --legacy-peer-deps   # first time only (eslint peer conflict)
+npm run storybook                # Storybook at http://localhost:6006
+npm test                         # type-check + lint + prettier + token parity (run before every commit)
+npm run lint                     # eslint --fix on components/
+npm run prettier                 # prettier --write on the repo
+npm run tokens:check             # styles/theme.css vs tokens/figma-tokens.json (see TOKENS.md)
+npm run build-storybook          # static Storybook in ./storybook-static
 ```
+
+**Restart Storybook after adding a new component file.** Tailwind doesn't pick up classes from files created while Storybook is running, so a new component renders unstyled (missing paddings, colors, rings) until Storybook is restarted. Edits to existing files hot-reload normally.
 
 ## Project Structure
 
-### Application Architecture
+There is no `src/` folder. Everything sits at the repo root, and the `@/` import alias maps to the root (`@/components/...` → `./components/...`).
 
 ```
-src/
-├── components/
-│   ├── base/              # Core UI components (Button, Input, Select, etc.)
-│   ├── application/       # Complex application components
-│   ├── foundations/       # Design tokens and foundational elements
-│   ├── marketing/         # Marketing-specific components
-│   └── shared-assets/     # Reusable assets and illustrations
-├── hooks/                 # Custom React hooks
-├── pages/                 # Route components
-├── providers/             # React context providers
-├── styles/               # Global styles and theme
-├── types/                # TypeScript type definitions
-└── utils/                # Utility functions
+components/
+├── base/              # Building blocks: buttons, inputs, select, checkbox, radio, toggle, badges, avatar, tags, tooltip…
+├── application/       # Composed patterns: alerts, notifications, modals, pagination, table, tabs, date-picker, navigation…
+├── foundations/       # Featured icon, payment and social icons, logo, rating stars, dot icon
+├── shared-assets/     # Illustrations, background patterns, QR code, iPhone mockup, section divider
+└── internal/          # Storybook-only helpers (decorators); not part of the library
+hooks/                 # use-breakpoint, use-clipboard, use-resize-observer, use-active-item
+styles/                # globals.css, theme.css (tokens), typography.css
+tokens/                # figma-tokens.json: the committed Figma variable extract
+scripts/               # check-token-parity.mjs
+utils/                 # cx.ts, is-react-component.ts, countries, timezones
+docs/                  # figma-parity.md
+.storybook/            # Storybook config: theme switcher, viewports, story order
 ```
+
+Related docs: `TOKENS.md` (how design tokens map to Figma and how to change them), `docs/figma-parity.md` (Figma ↔ code gaps), `CONTRIBUTING.md`.
+
+### Component files
+
+Each component lives in its own kebab-case folder:
+
+```
+components/<category>/<component-name>/
+├── <component-name>.tsx         # The component (exported)
+├── <component-name>.demo.tsx    # Example usages (optional; stories import from here)
+└── <component-name>.story.tsx   # Storybook stories (Storybook loads components/**/*.story.tsx)
+```
+
+Stories can link to their Figma frame through a `design` parameter holding Figma node ids:
+
+```typescript
+Table01DividerLine.parameters = {
+    design: { desktop: "1227-110480", mobile: "1227-110588" },
+};
+```
+
+Dark mode is the `.dark-mode` class (Storybook's theme switcher toggles it); the `dark:` variant targets it. All semantic color tokens switch automatically.
 
 ### Component Patterns
 
@@ -91,21 +122,21 @@ src/
 
 Located in `components/base/`, these are the building blocks:
 
-- `Button` - All button variants with loading states
-- `Input` - Text inputs with validation and icons
-- `Select` - Dropdown selections with complex options
-- `Checkbox`, `Radio`, `Toggle` - Form controls
-- `Avatar`, `Badge`, `Tooltip` - Display components
+- `Button`, `ButtonGroup`, `ButtonUtility`, `CloseButton` - Buttons
+- `Input`, `InputGroup`, `InputDate`, `InputNumber`, `InputFile`, `InputTags`, `PinInput` - Inputs
+- `Select` (with `Select.ComboBox`), `MultiSelect`, `TagSelect` - Dropdown selections
+- `Checkbox`, `RadioButton` / `RadioGroup`, `RadioCard` / `RadioCardGroup`, `Toggle` - Form controls
+- `Avatar`, `AvatarLabelGroup`, `Badge`, `Tag`, `Tooltip` - Display components
 
 #### 2. Application Components
 
 Located in `components/application/`, these are complex UI patterns:
 
-- `DatePicker` - Calendar-based date selection
-- `Modal` - Overlay dialogs
-- `Pagination` - Data navigation
-- `Table` - Data display with sorting
-- `Tabs` - Content organization
+- `Alert`, `Notification` (+ `notify()` toast helper) - Feedback
+- `Modal` with `ModalHeader` / `ModalActions` - Overlay dialogs (the body is a free slot)
+- `DatePicker`, `DateRangePicker` - Calendar-based date selection
+- `Pagination*` - Page, card, button-group and advanced variants
+- `Table`, `Tabs`, `Carousel`, `SlideoutMenu`, `LoadingIndicator`, charts, app navigation
 
 #### 3. Styling Architecture
 
@@ -116,18 +147,21 @@ Located in `components/application/`, these are complex UI patterns:
 
 #### 4. Component Props Pattern
 
+Components extend the React Aria props of the element they wrap, and add `size`, `color` and icon props on top:
+
 ```typescript
+import type { ButtonProps as AriaButtonProps } from "react-aria-components";
+
 interface CommonProps {
     size?: "sm" | "md" | "lg";
     isDisabled?: boolean;
     isLoading?: boolean;
-    // ... other common props
 }
 
-interface ButtonProps extends CommonProps, HTMLButtonElement {
+interface ButtonProps extends CommonProps, Omit<AriaButtonProps, "children" | "className"> {
     color?: "primary" | "secondary" | "tertiary";
-    iconLeading?: FC | ReactNode;
-    iconTrailing?: FC | ReactNode;
+    iconLeading?: FC<{ className?: string }> | ReactNode;
+    iconTrailing?: FC<{ className?: string }> | ReactNode;
 }
 ```
 
@@ -139,29 +173,9 @@ interface ButtonProps extends CommonProps, HTMLButtonElement {
 - Custom design tokens defined in theme configuration
 - Consistent spacing, colors, and typography scales
 
-### Brand Color Customization
+### Changing tokens (including the brand color)
 
-To change the main brand color across the entire application:
-
-1. **Update Brand Color Variables**: Edit `src/styles/theme.css` and modify the `--color-brand-*` variables
-2. **Maintain Color Scale**: Ensure you provide a complete color scale from 25 to 950 with proper contrast ratios
-3. **Example Brand Color Scale**:
-    ```css
-    --color-brand-25: rgb(252 250 255); /* Lightest tint */
-    --color-brand-50: rgb(249 245 255);
-    --color-brand-100: rgb(244 235 255);
-    --color-brand-200: rgb(233 215 254);
-    --color-brand-300: rgb(214 187 251);
-    --color-brand-400: rgb(182 146 246);
-    --color-brand-500: rgb(158 119 237); /* Base brand color */
-    --color-brand-600: rgb(127 86 217); /* Primary interactive color */
-    --color-brand-700: rgb(105 65 198);
-    --color-brand-800: rgb(83 56 158);
-    --color-brand-900: rgb(66 48 125);
-    --color-brand-950: rgb(44 28 95); /* Darkest shade */
-    ```
-
-The color scale automatically adapts to both light and dark modes through the CSS variable system.
+Color, radius, spacing and type tokens are synced from Figma. Don't edit `styles/theme.css` values on your own: change Figma first, update `tokens/figma-tokens.json`, then `theme.css`, and run `npm run tokens:check`. `TOKENS.md` explains the layers, where each token lives and how to read values from Figma. Semantic tokens (e.g. `bg-brand-solid`) switch between light and dark through `.dark-mode`.
 
 ### Style Organization
 
@@ -194,7 +208,6 @@ export const styles = sortCx({
 
 - `@untitledui/icons` - 1,100+ line-style icons (free)
 - `@untitledui/file-icons` - File type icons
-- `@untitledui-pro/icons` - 4,600+ icons in 4 styles (Requires PRO access)
 
 ### Import & Usage
 
@@ -206,7 +219,7 @@ import { Home01, Settings01, ChevronDown } from "@untitledui/icons";
 <Button iconLeading={ChevronDown}>Options</Button>
 
 // Standalone usage
-<Home01 className="size-5 text-gray-600" />
+<Home01 className="size-5 text-fg-quaternary" />
 
 // As JSX element - MUST include data-icon
 <Button iconLeading={<ChevronDown data-icon className="size-4" />}>Options</Button>
@@ -219,7 +232,7 @@ import { Home01, Settings01, ChevronDown } from "@untitledui/icons";
 <Home01 className="size-5" />
 
 // Color: use semantic text colors
-<Home01 className="size-5 text-brand-600" />
+<Home01 className="size-5 text-fg-brand-primary" />
 
 // Stroke width (line icons only)
 <Home01 className="size-5" strokeWidth={2} />
@@ -228,25 +241,10 @@ import { Home01, Settings01, ChevronDown } from "@untitledui/icons";
 <Home01 className="size-5" aria-hidden="true" />
 ```
 
-### PRO Icon Styles
-
-```typescript
-import { Home01 } from "@untitledui-pro/icons";
-// Line
-import { Home01 } from "@untitledui-pro/icons/duocolor";
-import { Home01 } from "@untitledui-pro/icons/duotone";
-import { Home01 } from "@untitledui-pro/icons/solid";
-```
-
 ## Form Handling
 
-### Form Components
-
-- `Input` - Text inputs with validation
-- `Select` - Dropdown selections
-- `Checkbox`, `Radio` - Selection controls
-- `Textarea` - Multi-line text input
-- `Form` - Form wrapper with validation
+- Form fields (`Input`, `Select`, `Checkbox`, `TextArea`, …) take `label`, `hint`, `isRequired`, `isInvalid` and `isDisabled`.
+- `Form` (`components/base/form/form.tsx`) wraps React Aria's form; `HookForm` / `FormField` (`hook-form.tsx`) connect fields to `react-hook-form`.
 
 ## Animation and Interactions
 
@@ -278,9 +276,8 @@ where these tokens live relative to the Figma-synced ones.
 
 ### Loading States
 
-- Components support `isLoading` prop
-- Built-in loading spinners
-- Proper disabled states during loading
+- `Button` and `InputFile` take `isLoading` (spinner; the control is non-interactive while loading).
+- For standalone spinners use `LoadingIndicator` (`components/application/loading-indicator`).
 
 ### Disabled states
 
@@ -291,7 +288,7 @@ Most components use `opacity-50` for disabled states instead of individual disab
 "disabled:cursor-not-allowed disabled:opacity-50";
 ```
 
-**Exception — `Button` and `ButtonGroup`** match Figma exactly (ButtonGroup: `text-disabled` text, `fg-disabled_subtle` icons/dots, unchanged background and border; selected + disabled uses `bg-disabled_subtle`). `Button` uses the neutral disabled tokens
+**Exceptions — `Button`, `ButtonGroup` and `RadioCard`** match Figma exactly (RadioCard: `bg-disabled_subtle` fill and `ring-disabled` border). `Button` and `ButtonGroup` (ButtonGroup: `text-disabled` text, `fg-disabled_subtle` icons/dots, unchanged background and border; selected + disabled uses `bg-disabled_subtle`). `Button` uses the neutral disabled tokens
 (`bg-disabled`, `border-disabled_subtle`, `fg-disabled`), not `opacity-50`. Disabled text and icon
 are both `fg-disabled`; primary/primary-destructive disabled is fill-only (no border, no shadow);
 secondary keeps a `border-disabled_subtle`. No disabled shadows.
@@ -323,30 +320,32 @@ Select.ComboBox = ComboBox;
 
 ## State Management
 
-### Component State
-
-- Use React Aria's built-in state management
-- Local state for component-specific data
-- Context for shared component state (theme, router)
-
-### Global State
-
-- Theme context in `src/providers/theme.tsx`
-- Router context in `src/providers/router-provider.tsx`
+- Use React Aria's built-in state management (selection, open/close, focus).
+- Local state for component-specific data; context for state shared by a compound component (e.g. `SelectContext`, the radio group size context).
+- There are no app-level providers in this repo. Theming is the `.dark-mode` class.
 
 ## Key Files and Utilities
 
-### Core Utilities
+- `utils/cx.ts` - `cx()` (tailwind-merge) and `sortCx()`
+- `utils/is-react-component.ts` - Component type checking
+- `hooks/` - `useBreakpoint`, `useClipboard`, `useResizeObserver`, `useActiveItem`
+- `styles/theme.css` - All design tokens (colors, radius, spacing, type, motion), light + dark
+- `styles/globals.css` - Global styles and the `dark` variant
+- `styles/typography.css` - Typography styles
+- `tokens/figma-tokens.json` + `scripts/check-token-parity.mjs` - Figma token extract and its parity check
 
-- `src/utils/cx.ts` - Class name utilities
-- `src/utils/is-react-component.ts` - Component type checking
-- `src/hooks/` - Custom React hooks
+## Figma Parity
 
-### Style Configuration
+The code is kept in sync with the Figma file "Untitled UI x Fa". Known gaps are tracked in
+[`docs/figma-parity.md`](docs/figma-parity.md): components named differently, things missing on
+either side, partial builds, variant differences and settled decisions.
 
-- `src/styles/globals.css` - Global styles
-- `src/styles/theme.css` - Theme definitions
-- `src/styles/typography.css` - Typography styles
+- **Before working on a component**, check it in `docs/figma-parity.md`. If it's listed, point out
+  the gap and the suggested action to the user before starting.
+- **When Figma and code disagree** on which sizes, variants, states or components exist, report it
+  and let the user decide. Don't map, delete or add variants on your own.
+- **When a gap is closed or a new one is found**, update `docs/figma-parity.md` in the same change,
+  including the "Last verified" date.
 
 ## Best Practices for AI Assistance
 
@@ -359,6 +358,9 @@ Select.ComboBox = ComboBox;
 5. Include accessibility features
 6. Follow the naming conventions
 7. Add components to appropriate folders (`base/`, `application/`, etc.)
+8. Add a `.story.tsx` (and `.demo.tsx` if useful); restart Storybook so Tailwind sees the new file
+9. Check `docs/figma-parity.md`, and update it if the component closes or opens a gap
+10. Run `npm test` and check the stories in Storybook (light, dark, mobile width) before committing
 
 ## Most Used Components Reference
 
@@ -549,7 +551,7 @@ import { Badge, BadgeWithDot, BadgeWithIcon } from "@/components/base/badges/bad
 **Common Props:**
 
 - `size`: `"sm" | "md" | "lg"` - Badge size
-- `color`: `"gray" | "brand" | "error" | "warning" | "success" | "slate" | "sky" | "blue" | "indigo" | "purple" | "pink" | "rose" | "orange"` - Color theme
+- `color`: `"gray" | "brand" | "error" | "warning" | "success" | "blue-light" | "purple" | "pink" | "orange-dark"` - Color theme (see `BadgeColors` in `badge-types.ts`)
 - `type`: `"pill-color" | "color" | "modern"` - Badge style variant
 
 **Examples:**
@@ -607,6 +609,8 @@ import { AvatarLabelGroup } from "@/components/base/avatar/avatar-label-group";
   size="md"
 />
 ```
+
+`AvatarLabelGroup` sizes: `sm`, `md`, `lg`, `xl`.
 
 ### FeaturedIcon
 
@@ -691,26 +695,6 @@ import { Button } from "@/components/base/buttons/button";
 </Button>
 ```
 
-### Common Component Patterns
-
-1. **Size Variants**: Most components support `sm`, `md`, `lg` sizes
-2. **State Props**: `isDisabled`, `isLoading`, `isInvalid`, `isRequired` are common
-3. **Icon Support**: Components accept icons as both components (`Icon`) or elements (`<Icon />`)
-4. **Compound Components**: Complex components use dot notation (e.g., `Select.Item`, `Select.ComboBox`)
-5. **Accessibility**: All components include proper ARIA attributes and keyboard support
-
-### Icon Usage
-
-When passing icons to components:
-
-```typescript
-// As component reference (preferred)
-<Button iconLeading={ChevronDown}>Options</Button>
-
-// As element (must include data-icon)
-<Button iconLeading={<ChevronDown data-icon className="size-4" />}>Options</Button>
-```
-
 ## COLORS
 
 MUST use color classes to style elements.
@@ -760,16 +744,18 @@ Use text color variables to manage all text fill colors in your designs across l
 
 Use border color variables to manage all stroke colors in your designs across light and dark modes. You can use the same values for `ring-` and `outline-` as well (i.e. `ring-primary` `outline-secondary`).
 
-| Name                 | Usage                                                                                                                                                                                   |
-| :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| border-primary       | High contrast borders. These are used for components such as input fields, button groups, and checkboxes.                                                                               |
-| border-secondary     | Medium contrast borders. This is the most commonly used border color and is the default for most components (e.g. file uploaders), cards (such as tables), and content dividers.        |
-| border-secondary_alt | An alternative to secondary border that uses alpha transparency. This is used exclusively for floating menus such as input dropdowns and notifications to create sharper bottom border. |
-| border-tertiary      | Low contrast borders useful for very subtle dividers and borders such as line and bar chart axis dividers.                                                                              |
-| border-brand         | Default brand border color. Useful for active states in components such as input fields.                                                                                                |
-| border-brand_alt     | An brand border color that switches to gray when in dark mode. Useful for components such as brand-style variants of banners and footers.                                               |
-| border-error         | Default error state semantic border color. Useful for error states in components such as input fields and file uploaders.                                                               |
-| border-error_subtle  | A more subtle (lower contrast) alternative for error state semantic borders such as error state input fields.                                                                           |
+| Name                   | Usage                                                                                                                                                                                   |
+| :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| border-primary         | High contrast borders. These are used for components such as input fields, button groups, and checkboxes.                                                                               |
+| border-secondary       | Medium contrast borders. This is the most commonly used border color and is the default for most components (e.g. file uploaders), cards (such as tables), and content dividers.        |
+| border-secondary_alt   | An alternative to secondary border that uses alpha transparency. This is used exclusively for floating menus such as input dropdowns and notifications to create sharper bottom border. |
+| border-tertiary        | Low contrast borders useful for very subtle dividers and borders such as line and bar chart axis dividers.                                                                              |
+| border-brand           | Default brand border color. Useful for active states in components such as input fields.                                                                                                |
+| border-brand_alt       | An brand border color that switches to gray when in dark mode. Useful for components such as brand-style variants of banners and footers.                                               |
+| border-error           | Default error state semantic border color. Useful for error states in components such as input fields and file uploaders.                                                               |
+| border-error_subtle    | A more subtle (lower contrast) alternative for error state semantic borders such as error state input fields.                                                                           |
+| border-disabled        | Border for disabled controls (e.g. disabled radio cards and inputs in Figma).                                                                                                           |
+| border-disabled_subtle | Subtler disabled border (e.g. disabled secondary buttons).                                                                                                                              |
 
 ### Foreground Color
 
@@ -795,6 +781,8 @@ Use foreground color variables to manage all non-text foreground elements in you
 | fg-warning-secondary   | Secondary warning state color for non-text foreground elements.                                                                                               |
 | fg-success-primary     | Primary success state color for non-text foreground elements such as featured icons.                                                                          |
 | fg-success-secondary   | Secondary success state color for non-text foreground elements such as button dots, avatar online indicator dots, and positive metrics item charts and icons. |
+| fg-disabled            | Disabled text and icons in buttons.                                                                                                                           |
+| fg-disabled_subtle     | Subtler disabled foreground (e.g. button group icons and dots).                                                                                               |
 
 ### Background Color
 
@@ -832,3 +820,5 @@ Use background color variables to manage all fill colors for elements in your de
 | bg-success-primary      | Primary success state background color for components.                                                                                                                                        |
 | bg-success-secondary    | Secondary success state background color for components such as featured icons.                                                                                                               |
 | bg-success-solid        | Default solid (dark) success state background color for components such as featured icons and metric items.                                                                                   |
+| bg-disabled             | Fill for disabled solid controls (e.g. disabled primary buttons).                                                                                                                             |
+| bg-disabled_subtle      | Subtle disabled fill (e.g. selected + disabled button group items, disabled radio cards).                                                                                                     |
