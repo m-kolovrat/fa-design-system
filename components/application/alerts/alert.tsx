@@ -1,30 +1,29 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
-import { AlertCircle, AlertTriangle, CheckCircle, InfoCircle } from "@untitledui/icons";
+import { AlertCircle, CheckCircle, InfoCircle } from "@untitledui/icons";
 import { CloseButton } from "@/components/base/buttons/close-button";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 import { cx } from "@/utils/cx";
 
 /*
- * Figma: "Alert" — Color (Default, Gray, Error, Warning, Success, Brand) × Size (Floating, Full-width),
- * with the desktop and mobile breakpoints handled responsively. Color only changes the icon:
- * Default uses the gray "modern" featured icon, the rest use the outline featured icon in that color.
+ * Figma: "Alert" — Color (Gray, Brand, Error, Warning, Success) × Size (Floating, Full-width),
+ * with the desktop and mobile breakpoints handled responsively. Color only changes the icon,
+ * a small light featured icon in that color.
  */
 
-export type AlertColor = "default" | "gray" | "error" | "warning" | "success" | "brand";
+export type AlertColor = "gray" | "brand" | "error" | "warning" | "success";
 
 const defaultIcons: Record<AlertColor, FC<{ className?: string }>> = {
-    default: InfoCircle,
     gray: InfoCircle,
     brand: InfoCircle,
     error: AlertCircle,
-    warning: AlertTriangle,
+    warning: AlertCircle,
     success: CheckCircle,
 };
 
 interface AlertProps {
-    /** @default "default" */
+    /** @default "gray" */
     color?: AlertColor;
     /** Figma "Size". `floating` is a card; `full-width` is a banner with a bottom border. @default "floating" */
     variant?: "floating" | "full-width";
@@ -40,14 +39,9 @@ interface AlertProps {
     className?: string;
 }
 
-export const Alert = ({ color = "default", variant = "floating", title, description, actions, icon, onClose, className }: AlertProps) => {
+export const Alert = ({ color = "gray", variant = "floating", title, description, actions, icon, onClose, className }: AlertProps) => {
     const Icon = icon ?? defaultIcons[color];
-    const featuredIcon =
-        color === "default" ? (
-            <FeaturedIcon icon={Icon} color="gray" theme="modern" size="md" />
-        ) : (
-            <FeaturedIcon icon={Icon} color={color} theme="outline" size="md" />
-        );
+    const featuredIcon = <FeaturedIcon icon={Icon} color={color} theme="light" size="sm" />;
     const closeButton = onClose && <CloseButton size="sm" slot={null} onPress={onClose} label="Dismiss" className="absolute top-2 right-2" />;
 
     if (variant === "full-width") {

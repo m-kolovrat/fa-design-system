@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
-import { AlertCircle, AlertTriangle, CheckCircle, InfoCircle, UploadCloud02 } from "@untitledui/icons";
+import { AlertCircle, CheckCircle, InfoCircle, UploadCloud02 } from "@untitledui/icons";
 import { Toaster, toast } from "sonner";
 import { Avatar } from "@/components/base/avatar/avatar";
 import { CloseButton } from "@/components/base/buttons/close-button";
@@ -21,7 +21,7 @@ const defaultIcons: Partial<Record<NotificationType, FC<{ className?: string }>>
     brand: InfoCircle,
     gray: InfoCircle,
     error: AlertCircle,
-    warning: AlertTriangle,
+    warning: AlertCircle,
     success: CheckCircle,
     progress: UploadCloud02,
 };
@@ -67,7 +67,8 @@ export const Notification = ({
     className,
 }: NotificationProps) => {
     const Icon = icon ?? defaultIcons[type];
-    const isOutlineIcon = type === "brand" || type === "error" || type === "warning" || type === "success";
+    // Figma: gray and progress use the md (40px) light featured icon; the colored types use sm (32px).
+    const isGrayIcon = type === "gray" || type === "progress";
 
     const text = (
         <div className="flex flex-col gap-1 text-sm">
@@ -110,14 +111,14 @@ export const Notification = ({
                 {Icon && type !== "none" && type !== "avatar" && (
                     <FeaturedIcon
                         icon={Icon}
-                        color={type === "gray" || type === "progress" ? "gray" : (type as "brand" | "error" | "warning" | "success")}
-                        theme={isOutlineIcon ? "outline" : "modern"}
-                        size="md"
+                        color={isGrayIcon ? "gray" : (type as "brand" | "error" | "warning" | "success")}
+                        theme="light"
+                        size={isGrayIcon ? "md" : "sm"}
                     />
                 )}
                 {type === "avatar" && <Avatar src={avatarSrc} size="md" status="online" alt="" />}
 
-                <div className={cx("flex min-w-0 flex-1 flex-col", type === "progress" ? "gap-4" : "gap-3", isOutlineIcon && "sm:pt-0.5")}>
+                <div className={cx("flex min-w-0 flex-1 flex-col", type === "progress" ? "gap-4" : "gap-3")}>
                     <div className={cx(type === "progress" && onClose && "pr-8")}>{text}</div>
                     {type === "progress" && <ProgressBar value={progress} labelPosition="bottom" />}
                     {actionRow}

@@ -13,10 +13,9 @@ export default {
     ],
 };
 
-const colors: AlertColor[] = ["default", "gray", "brand", "error", "warning", "success"];
+const colors: AlertColor[] = ["gray", "brand", "error", "warning", "success"];
 
 const titles: Record<AlertColor, string> = {
-    default: "We’ve just released a new feature",
     gray: "We’ve just released a new feature",
     brand: "We’ve just released a new feature",
     error: "There was a problem with that action",
