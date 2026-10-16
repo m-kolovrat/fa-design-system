@@ -97,7 +97,7 @@ export const LabelGroup: Story = {
     name: "Avatar label group",
     render: () => (
         <div className="flex flex-col gap-6">
-            {(["sm", "md", "lg"] as const).map((size) => (
+            {(["sm", "md", "lg", "xl"] as const).map((size) => (
                 <AvatarLabelGroup key={size} size={size} src={AVATAR_SRC} title="Lana Steiner" subtitle="lana@untitledui.com" />
             ))}
         </div>
