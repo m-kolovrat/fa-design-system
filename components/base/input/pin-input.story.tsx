@@ -29,3 +29,6 @@ VerificationCodeInputMd.storyName = "Verification code input md";
 
 export const VerificationCodeInputLg = () => <PinInputs.VerificationCodeInputLG />;
 VerificationCodeInputLg.storyName = "Verification code input lg";
+
+export const VerificationCodeInputDisabled = () => <PinInputs.DisabledDemo />;
+VerificationCodeInputDisabled.storyName = "Verification code input disabled";

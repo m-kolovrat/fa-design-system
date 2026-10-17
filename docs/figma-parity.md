@@ -2,7 +2,7 @@
 
 Tracks where the code in this repo and the Figma file [Untitled UI x Fa](https://www.figma.com/design/ycDcr4jjOWyIneuxyL1xAd/Untitled-UI-x-Fa) (file key `ycDcr4jjOWyIneuxyL1xAd`) don't line up: different names, things that exist on only one side, and partial builds.
 
-**Last verified:** 2026-10-16, against `main` after PR #9.
+**Last verified:** 2026-10-17, against the `visual-updates` branch.
 
 **How to use it**
 
@@ -96,7 +96,6 @@ Same thing, different name. No action needed; use this to find the counterpart.
 | ----------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
 | Badge colors            | 12: Gray, Brand, Error, Warning, Success, Blue light, Blue, Indigo, Purple, Pink, Orange, Blue gray | 9: no Blue, Indigo, Blue gray             | Add the 3 colors to code, or remove them from Figma |
 | Textarea                | One size                                                                                            | sm, md                                    | Add a size to Figma, or drop one in code            |
-| Social button           | One size                                                                                            | md, lg                                    | Add a size to Figma, or drop one in code            |
 | Avatar online indicator | xs – 2xl                                                                                            | xs – 4xl                                  | Add 3xl / 4xl to Figma, or drop them in code        |
 | Pagination Shape        | "Card button group" types are still labelled Square; all other types are Circle only                | No shape option (round page numbers only) | Cosmetic: rename or drop the Square label in Figma  |
 
@@ -108,7 +107,7 @@ Not code gaps, but worth fixing in Figma:
 
 - **New input sets** (Input date, Input file, Input number, Input tags outer) only have Size / State / Orientation variants. They don't have the Label, Hint text and icon booleans that Input field has.
 - **Small verification code sizes** (xxxs / xxs / xs): the dash between digit groups in the 6-digit variants is scaled down to fit. Code keeps the large dash at every size (no small code example shows one).
-- **Disabled states** in the new input sets use Figma's disabled tokens. Code inputs use `opacity-50` by convention (see `CLAUDE.md` → Disabled states).
+- **Disabled states** in the new input sets use Figma's disabled tokens. Code inputs use `opacity-50` by convention (see `CLAUDE.md` → Disabled states), except `PinInput`, whose digit boxes use Figma's `bg-disabled_subtle` / `fg-disabled_subtle` / `border-disabled`.
 
 ---
 
@@ -124,6 +123,7 @@ Settled; don't re-raise unless the design changes.
 | Alert colors                   | No "Default" color; Gray is the default.                                                                                                                            |
 | Size naming                    | Input field and Select follow code naming: sm / md / lg = 36 / 40 / 44px. Verification code input has xxxs / xxs / xs / sm / md / lg in both.                       |
 | Removed from code (2026-10-16) | Empty state (with the table's empty/error examples), Credit card, Integration icons (with the integration dropdown).                                                |
+| Button icon stroke             | Figma: every Button / Button destructive icon is 1.67px (24px icon at 20px). Code keeps the 1.5px stroke prototype in `button.tsx` for now.                         |
 
 ---
 

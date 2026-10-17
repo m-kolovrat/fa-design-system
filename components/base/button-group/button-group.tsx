@@ -13,7 +13,7 @@ import { isReactComponent } from "@/utils/is-react-component";
 export const styles = sortCx({
     common: {
         root: [
-            "group/button-group inline-flex h-max cursor-pointer items-center bg-primary font-medium whitespace-nowrap text-secondary shadow-skeuomorphic ring-1 ring-primary outline-brand transition ring-inset",
+            "group/button-group inline-flex h-max cursor-pointer items-center bg-primary font-medium whitespace-nowrap text-secondary ring-1 ring-primary outline-focus-ring transition ring-inset",
             // Hover and focus styles
             "hover:bg-primary_hover hover:text-secondary_hover focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2",
             // Disabled styles — Figma: no fading; text-disabled text, fg-disabled_subtle icons/dots,
