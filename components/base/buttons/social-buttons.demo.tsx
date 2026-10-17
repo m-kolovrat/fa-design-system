@@ -102,56 +102,6 @@ export const SocialButtonTwitterDemo = () => {
     );
 };
 
-export const SocialButtonFigmaDemo = () => {
-    return (
-        <div className="flex flex-col gap-4">
-            <div className="flex gap-8">
-                <SocialButton social="figma" theme="brand">
-                    Sign in with Figma
-                </SocialButton>
-                <SocialButton social="figma" theme="brand" />
-            </div>
-            <div className="flex gap-8">
-                <SocialButton social="figma" theme="color">
-                    Sign in with Figma
-                </SocialButton>
-                <SocialButton social="figma" theme="color" />
-            </div>
-            <div className="flex gap-8">
-                <SocialButton social="figma" theme="gray">
-                    Sign in with Figma
-                </SocialButton>
-                <SocialButton social="figma" theme="gray" />
-            </div>
-        </div>
-    );
-};
-
-export const SocialButtonDribbleDemo = () => {
-    return (
-        <div className="flex flex-col gap-4">
-            <div className="flex gap-8">
-                <SocialButton social="dribble" theme="brand">
-                    Sign in with Dribble
-                </SocialButton>
-                <SocialButton social="dribble" theme="brand" />
-            </div>
-            <div className="flex gap-8">
-                <SocialButton social="dribble" theme="color">
-                    Sign in with Dribble
-                </SocialButton>
-                <SocialButton social="dribble" theme="color" />
-            </div>
-            <div className="flex gap-8">
-                <SocialButton social="dribble" theme="gray">
-                    Sign in with Dribble
-                </SocialButton>
-                <SocialButton social="dribble" theme="gray" />
-            </div>
-        </div>
-    );
-};
-
 export const SocialButtonGroupBrandDemo = () => {
     return (
         <div className="flex w-90 flex-col gap-3">
@@ -318,50 +268,6 @@ export const SocialButtons = () => {
                         Sign in with X
                     </SocialButton>
                     <SocialButton social="twitter" theme="gray" />
-                </div>
-            </div>
-
-            {/* Figma */}
-            <div className="mb-4 flex justify-items-start gap-16">
-                <div className="grid grid-cols-[238px_44px] justify-items-start gap-8">
-                    <SocialButton social="figma" theme="brand">
-                        Sign in with Figma
-                    </SocialButton>
-                    <SocialButton social="figma" theme="brand" />
-                </div>
-                <div className="grid grid-cols-[238px_44px] justify-items-start gap-8">
-                    <SocialButton social="figma" theme="color">
-                        Sign in with figma
-                    </SocialButton>
-                    <SocialButton social="figma" theme="color" />
-                </div>
-                <div className="grid grid-cols-[238px_44px] justify-items-start gap-8">
-                    <SocialButton social="figma" theme="gray">
-                        Sign in with Figma
-                    </SocialButton>
-                    <SocialButton social="figma" theme="gray" />
-                </div>
-            </div>
-
-            {/* Dribbble */}
-            <div className="mb-4 flex justify-items-start gap-16">
-                <div className="grid grid-cols-[238px_44px] justify-items-start gap-8">
-                    <SocialButton social="dribble" theme="brand">
-                        Sign in with Dribble
-                    </SocialButton>
-                    <SocialButton social="dribble" theme="brand" />
-                </div>
-                <div className="grid grid-cols-[238px_44px] justify-items-start gap-8">
-                    <SocialButton social="dribble" theme="color">
-                        Sign in with Dribble
-                    </SocialButton>
-                    <SocialButton social="dribble" theme="color" />
-                </div>
-                <div className="grid grid-cols-[238px_44px] justify-items-start gap-8">
-                    <SocialButton social="dribble" theme="gray">
-                        Sign in with Dribble
-                    </SocialButton>
-                    <SocialButton social="dribble" theme="gray" />
                 </div>
             </div>
         </div>

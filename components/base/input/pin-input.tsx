@@ -96,11 +96,11 @@ const Slot = ({ index, className, ...props }: ComponentPropsWithRef<"div"> & { i
             aria-invalid={invalid}
             aria-label={"Enter digit " + (index + 1) + " of " + slots.length}
             className={cx(
-                "relative flex items-center justify-center rounded-xl bg-primary text-center text-placeholder/40 shadow-xs ring-1 ring-primary transition-[box-shadow,background-color] ring-inset",
+                "relative flex items-center justify-center rounded-xl bg-primary text-center text-placeholder_subtle ring-1 ring-primary transition-[box-shadow,background-color] ring-inset",
                 styles[size].slot,
-                isFocused && slot?.isActive && "ring-2 ring-brand outline-2 outline-offset-2 outline-brand",
-                slot?.char && "text-brand-tertiary_alt ring-2 ring-brand",
-                disabled && "opacity-50",
+                isFocused && slot?.isActive && "text-brand-secondary ring-2 ring-brand outline-2 outline-offset-2 outline-focus-ring",
+                slot?.char && "text-brand-secondary ring-2 ring-brand",
+                disabled && "bg-disabled_subtle text-fg-disabled_subtle ring-1 ring-disabled",
                 invalid && "text-error-primary ring-error_subtle",
                 className,
             )}
