@@ -1,6 +1,6 @@
 # Design tokens: Figma ↔ code
 
-How a change made to the **Figma design system** ("❖ Untitled UI x Fa") maps to a change in
+How a change made to the **Figma design system** ("Fa Design System") maps to a change in
 **this repo**. The goal: a designer says _"I changed X"_ and an engineer can find exactly one
 place named `X`.
 

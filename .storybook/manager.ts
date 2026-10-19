@@ -2,7 +2,7 @@ import { addons } from "storybook/manager-api";
 import { create } from "storybook/theming/create";
 
 /**
- * Manager (chrome) theme for the "❖ Untitled UI x Fa" Storybook.
+ * Manager (chrome) theme for the "Fa Design System" Storybook.
  * This themes the sidebar / toolbar / branding only — the preview canvas
  * theme is handled separately by `@storybook/addon-themes` (see preview.ts).
  * Colors come from the FA brand ramp in `styles/theme.css`.
@@ -11,7 +11,7 @@ const faTheme = create({
     base: "light",
 
     // Branding
-    brandTitle: "Untitled UI × Fa",
+    brandTitle: "Fa Design System",
     brandTarget: "_self",
 
     // Brand accent (selected nav item, links, active toolbar item)
