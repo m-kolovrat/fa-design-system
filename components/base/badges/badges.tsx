@@ -3,8 +3,9 @@
 import type { MouseEventHandler, ReactNode } from "react";
 import { X as CloseX } from "@untitledui/icons";
 import { Dot } from "@/components/foundations/dot-icon";
+import { Flag, type FlagName } from "@/components/foundations/flags";
 import { cx } from "@/utils/cx";
-import type { BadgeColors, BadgeTypeToColorMap, BadgeTypes, FlagTypes, IconComponentType, Sizes } from "./badge-types";
+import type { BadgeColors, BadgeTypeToColorMap, BadgeTypes, IconComponentType, Sizes } from "./badge-types";
 import { badgeTypes } from "./badge-types";
 
 export const filledColors: Record<BadgeColors, { root: string; addon: string; addonButton: string }> = {
@@ -233,13 +234,13 @@ export const BadgeWithIcon = <T extends BadgeTypes>(props: BadgeWithIconProps<T>
 interface BadgeWithFlagProps<T extends BadgeTypes> {
     type?: T;
     size?: Sizes;
-    flag?: FlagTypes;
+    flag?: FlagName;
     color?: BadgeTypeToColorMap<typeof withPillTypes>[T];
     children: ReactNode;
 }
 
 export const BadgeWithFlag = <T extends BadgeTypes>(props: BadgeWithFlagProps<T>) => {
-    const { size = "md", color = "gray", flag = "AU", type = "pill-color", children } = props;
+    const { size = "md", color = "gray", flag = "australia-aud", type = "pill-color", children } = props;
 
     const colors = withPillTypes[type];
 
@@ -262,7 +263,7 @@ export const BadgeWithFlag = <T extends BadgeTypes>(props: BadgeWithFlagProps<T>
 
     return (
         <span className={cx(colors.common, sizes[type][size], colors.styles[color].root)}>
-            <img src={`https://www.untitledui.com/images/flags/${flag}.svg`} className="size-4 max-w-none rounded-full" alt={`${flag} flag`} />
+            <Flag name={flag} className="size-4 shrink-0" />
             {children}
         </span>
     );

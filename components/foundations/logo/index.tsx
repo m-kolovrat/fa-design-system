@@ -1,0 +1,20 @@
+"use client";
+
+export { default as FaBokLogo } from "./fa-bok";
+export { default as FaLargeLogo } from "./fa-large";
+export { default as FaSmallLogo } from "./fa-small";
+export { default as HegnarLogo } from "./hegnar";
+export { default as HegnarAnonseLogo } from "./hegnar-anonse";
+export { default as HegnarBokLogo } from "./hegnar-bok";
+export { default as HegnarVideoproduksjonLogo } from "./hegnar-videoproduksjon";
+export { default as InteriorMagasinetLogo } from "./interior-magasinet";
+export { default as KapitalList100Logo } from "./kapital-list-100";
+export { default as KapitalList40Logo } from "./kapital-list-40";
+export { default as KapitalList400Logo } from "./kapital-list-400";
+export { default as KapitalListArvingerLogo } from "./kapital-list-arvinger";
+export { default as KapitalLargeLogo } from "./kapital-large";
+export { default as KapitalSmallLogo } from "./kapital-small";
+export { default as MotorLogo } from "./motor";
+export { default as PinpointLogo } from "./pinpoint";
+export { default as VippsLargeLogo } from "./vipps-large";
+export { default as VippsSmallLogo } from "./vipps-small";

@@ -125,7 +125,7 @@ export default {
 
 export const Colors = () => (
     <Page>
-        <Section title="Brand ramp" hint="FA blue — canonical ramp (25–950) from the Figma “Untitled UI x Fa” variables.">
+        <Section title="Brand ramp" hint="FA blue — canonical ramp (25–950) from the Figma “Fa Design System” variables.">
             <div className="grid grid-cols-3 gap-4 sm:grid-cols-6 md:grid-cols-12">
                 {brandRamp.map((d) => (
                     <Swatch key={d.name} {...d} />

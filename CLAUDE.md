@@ -336,7 +336,7 @@ Select.ComboBox = ComboBox;
 
 ## Figma Parity
 
-The code is kept in sync with the Figma file "Untitled UI x Fa". Known gaps are tracked in
+The code is kept in sync with the Figma file "Fa Design System". Known gaps are tracked in
 [`docs/figma-parity.md`](docs/figma-parity.md): components named differently, things missing on
 either side, partial builds, variant differences and settled decisions.
 
@@ -346,6 +346,16 @@ either side, partial builds, variant differences and settled decisions.
   and let the user decide. Don't map, delete or add variants on your own.
 - **When a gap is closed or a new one is found**, update `docs/figma-parity.md` in the same change,
   including the "Last verified" date.
+
+### Figma first: custom components and assets
+
+- **Custom components** (e.g. a card header): the main component is designed in Figma first, then
+  recreated in code from it. Don't invent a new component in code without its Figma frame.
+- **Logos and country flags** are added to the Figma file and exported from there into code (no
+  runtime loading from external URLs). Single-color logos use `currentColor`, so the page decides
+  the color with a `text-*` class; only logos with fixed brand colors keep their fills
+  (`components/foundations/logo`). Flags are done:
+  `<Flag name="argentina-ars" />` from `@/components/foundations/flags`, named exactly as in Figma.
 
 ## Best Practices for AI Assistance
 

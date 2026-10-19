@@ -106,7 +106,7 @@ export const Variants: Story = {
                 </BadgeWithIcon>
             </Labeled>
             <Labeled label="Flag">
-                <BadgeWithFlag size={args.size} color="gray" flag="AU">
+                <BadgeWithFlag size={args.size} color="gray" flag="australia-aud">
                     Label
                 </BadgeWithFlag>
             </Labeled>
