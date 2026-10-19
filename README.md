@@ -14,7 +14,6 @@ Check out our documentation here → [untitledui.com/react/docs](https://www.unt
 
 Check out our installation guide here → [untitledui.com/react/docs/installation](https://www.untitledui.com/react/docs/installation)
 
-
 ## License
 
 Untitled UI React open-source components are licensed under the MIT license, which means you can use them for free in unlimited commercial projects.
