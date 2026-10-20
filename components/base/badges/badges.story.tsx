@@ -1,12 +1,14 @@
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ArrowRight } from "fa-icons";
+import { iconArg, iconArgType } from "@/components/internal/icon-controls";
 import { Badge, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWithIcon, BadgeWithImage } from "./badges";
 
 /**
  * Canonical interactive story for the Badge.
  *
- * `Playground` drives the base `Badge` from the Controls panel. The curated
+ * `Playground` drives the base `Badge` from the Controls panel, and `WithIcon`
+ * does the same for `BadgeWithIcon` (leading/trailing icon, or "None"). The curated
  * rows below are hand-picked references: `Colors` (all 9), `Types` (the 3
  * shapes), and `Variants` (the sibling badge components — dot, icon, flag,
  * image, close button).
@@ -54,6 +56,17 @@ type Story = StoryObj<typeof meta>;
 
 /** Single interactive badge — edit props live in the Controls panel. */
 export const Playground: Story = {};
+
+/** `BadgeWithIcon` from the Controls panel: pick any Fa icon for either side, or "None". */
+export const WithIcon: StoryObj<ComponentProps<typeof BadgeWithIcon>> = {
+    args: { iconLeading: iconArg("ArrowUp"), iconTrailing: iconArg("None") },
+    argTypes: {
+        iconLeading: iconArgType(),
+        iconTrailing: iconArgType(),
+    },
+    render: (args) => <BadgeWithIcon {...args} />,
+};
+WithIcon.storyName = "With icon";
 
 /** The badge in all 9 colors (pill-color type). */
 export const Colors: Story = {
