@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 import { useState } from "react";
-import { DotsVertical, LifeBuoy01, Settings01 } from "@untitledui/icons";
+import { DotsVertical, LifeBuoy, Settings } from "fa-icons";
 import { FaLargeLogo, FaSmallLogo } from "fa-icons";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { Button as AriaButton, DialogTrigger as AriaDialogTrigger, Popover as AriaPopover } from "react-aria-components";
@@ -195,10 +195,10 @@ export const SidebarNavigationSlim = ({ activeUrl, items, footerItems = [], hide
 
                     <div className="mt-auto flex flex-col gap-3 p-4">
                         <div className="flex flex-col">
-                            <NavItemBase current={activeUrl === "/support"} type="link" href="/support" icon={LifeBuoy01}>
+                            <NavItemBase current={activeUrl === "/support"} type="link" href="/support" icon={LifeBuoy}>
                                 Support
                             </NavItemBase>
-                            <NavItemBase current={activeUrl === "/settings"} type="link" href="/settings" icon={Settings01}>
+                            <NavItemBase current={activeUrl === "/settings"} type="link" href="/settings" icon={Settings}>
                                 Settings
                             </NavItemBase>
                         </div>

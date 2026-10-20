@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC, HTMLAttributes, MouseEventHandler, ReactNode } from "react";
-import { ChevronDown, Share04 } from "@untitledui/icons";
+import { ChevronDown, ExternalLink } from "fa-icons";
 import { Link as AriaLink } from "react-aria-components";
 import { Badge } from "@/components/base/badges/badges";
 import { cx, sortCx } from "@/utils/cx";
@@ -67,7 +67,7 @@ export const NavItemBase = ({ current, type, badge, href, icon: Icon, children, 
     );
 
     const isExternal = href && href.startsWith("http");
-    const externalIcon = isExternal && <Share04 className="size-4 stroke-[2.5px] text-fg-quaternary" />;
+    const externalIcon = isExternal && <ExternalLink className="size-4 text-fg-quaternary" />;
 
     if (type === "collapsible") {
         return (
@@ -78,7 +78,7 @@ export const NavItemBase = ({ current, type, badge, href, icon: Icon, children, 
 
                 {badgeElement}
 
-                <ChevronDown aria-hidden="true" className="ml-3 size-4 shrink-0 stroke-[2.5px] text-fg-quaternary in-open:-scale-y-100" />
+                <ChevronDown aria-hidden="true" className="ml-3 size-4 shrink-0 text-fg-quaternary in-open:-scale-y-100" />
             </summary>
         );
     }

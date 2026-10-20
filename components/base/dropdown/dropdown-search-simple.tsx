@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, SearchLg } from "@untitledui/icons";
+import { ChevronDown, Search } from "fa-icons";
 import type { Selection } from "react-aria-components";
 import { Autocomplete, SearchField, useFilter } from "react-aria-components";
 import { Button } from "@/components/base/buttons/button";
@@ -14,19 +14,14 @@ export const DropdownSearchSimple = () => {
 
     return (
         <Dropdown.Root>
-            <Button
-                size="sm"
-                className="group"
-                color="secondary"
-                iconTrailing={(props) => <ChevronDown data-icon="trailing" {...props} className="size-4! stroke-[2.25px]!" />}
-            >
+            <Button size="sm" className="group" color="secondary" iconTrailing={(props) => <ChevronDown data-icon="trailing" {...props} className="size-4!" />}>
                 Manage access
             </Button>
 
             <Dropdown.Popover className="w-60">
                 <Autocomplete filter={contains}>
                     <SearchField className="flex gap-3 border-b border-secondary p-3">
-                        <InputBase size="md" placeholder="Search" icon={SearchLg} />
+                        <InputBase size="md" placeholder="Search" icon={Search} />
                     </SearchField>
                     <Dropdown.Menu selectionMode="multiple" selectedKeys={selectedUsers} onSelectionChange={setSelectedUsers}>
                         <Dropdown.Item id="olivia" textValue="Olivia Rhye" selectionIndicator="checkbox">

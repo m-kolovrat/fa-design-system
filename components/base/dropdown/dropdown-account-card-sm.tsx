@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, HelpCircle, LogOut01, Moon01, Plus, Settings01, User01 } from "@untitledui/icons";
+import { ChevronDown, Help, Logout, Moon, Plus, Settings, User } from "fa-icons";
 import type { Selection } from "react-aria-components";
 import { Button as AriaButton, SubmenuTrigger } from "react-aria-components";
 import { Avatar } from "@/components/base/avatar/avatar";
@@ -27,7 +27,7 @@ export const DropdownAccountCardSM = () => {
                 <p className="text-sm font-semibold text-primary">Olivia Rhye</p>
 
                 <div className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-sm">
-                    <ChevronDown className="size-4 shrink-0 stroke-[2.25px] text-fg-quaternary" />
+                    <ChevronDown className="size-4 shrink-0 text-fg-quaternary" />
                 </div>
             </AriaButton>
 
@@ -37,20 +37,20 @@ export const DropdownAccountCardSM = () => {
                     <p className="text-sm text-tertiary">olivia@untitledui.com</p>
                 </div>
                 <Dropdown.Menu>
-                    <Dropdown.Item icon={User01} addon="⌘K->P">
+                    <Dropdown.Item icon={User} addon="⌘K->P">
                         View profile
                     </Dropdown.Item>
-                    <Dropdown.Item icon={Settings01} addon="⌘S">
+                    <Dropdown.Item icon={Settings} addon="⌘S">
                         Settings
                     </Dropdown.Item>
                     <Dropdown.Section selectionMode="single" selectedKeys={selectedTheme} onSelectionChange={setSelectedTheme}>
-                        <Dropdown.Item id="dark-mode" icon={Moon01} selectionIndicator="toggle">
+                        <Dropdown.Item id="dark-mode" icon={Moon} selectionIndicator="toggle">
                             Dark mode
                         </Dropdown.Item>
                     </Dropdown.Section>
 
                     <SubmenuTrigger>
-                        <Dropdown.Item icon={HelpCircle}>Support</Dropdown.Item>
+                        <Dropdown.Item icon={Help}>Support</Dropdown.Item>
 
                         <Dropdown.Popover placement="right top" offset={-6}>
                             <Dropdown.Menu>
@@ -81,7 +81,7 @@ export const DropdownAccountCardSM = () => {
                     <Dropdown.Separator />
 
                     <SubmenuTrigger>
-                        <Dropdown.Item icon={LogOut01}>Sign out</Dropdown.Item>
+                        <Dropdown.Item icon={Logout}>Sign out</Dropdown.Item>
 
                         <Dropdown.Popover placement="right top" offset={-6}>
                             <Dropdown.Menu>

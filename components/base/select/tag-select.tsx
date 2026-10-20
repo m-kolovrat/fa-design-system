@@ -2,7 +2,7 @@
 
 import type { FocusEventHandler, KeyboardEvent, PointerEventHandler, RefAttributes, RefObject } from "react";
 import React, { createContext, useCallback, useContext, useRef, useState } from "react";
-import { SearchLg } from "@untitledui/icons";
+import { Search } from "fa-icons";
 import { FocusScope, useFilter, useFocusManager } from "react-aria";
 import type { ComboBoxProps as AriaComboBoxProps, GroupProps as AriaGroupProps, ListBoxProps as AriaListBoxProps, Key } from "react-aria-components";
 import { ComboBox as AriaComboBox, Group as AriaGroup, Input as AriaInput, ListBox as AriaListBox, ComboBoxStateContext } from "react-aria-components";
@@ -346,7 +346,7 @@ export const TagSelectTagsValue = ({
     shortcut,
     placeholder,
     shortcutClassName,
-    icon: Icon = SearchLg,
+    icon: Icon = Search,
     // Omit this prop to avoid invalid HTML attribute warning
     isDisabled: _isDisabled,
     ...otherProps

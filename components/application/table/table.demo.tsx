@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { FileIcon } from "@untitledui/file-icons";
-import { Check, Edit01, ReverseLeft, Trash01, UploadCloud02, X } from "@untitledui/icons";
+import { ArrowLeft, Check, Close, Pen, Trash, Upload } from "fa-icons";
 import type { SortDescriptor } from "react-aria-components";
 import { PaginationCardMinimal, PaginationPageMinimalCenter } from "@/components/application/pagination/pagination";
 import customers from "@/components/application/table/customers.json";
@@ -104,8 +104,8 @@ export const Table01DividerLine = () => {
                             </Table.Cell>
                             <Table.Cell className="px-4">
                                 <div className="flex justify-end gap-0.5">
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash01} />
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Edit01} />
+                                    <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash} />
+                                    <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Pen} />
                                 </div>
                             </Table.Cell>
                         </Table.Row>
@@ -203,8 +203,8 @@ export const Table01AlternatingFills = () => {
                             </Table.Cell>
                             <Table.Cell className="px-4">
                                 <div className="flex justify-end gap-0.5">
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash01} />
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Edit01} />
+                                    <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash} />
+                                    <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Pen} />
                                 </div>
                             </Table.Cell>
                         </Table.Row>
@@ -300,8 +300,8 @@ export const Table01DividerLineSm = () => {
                             </Table.Cell>
                             <Table.Cell className="px-3">
                                 <div className="flex justify-end gap-0.5">
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash01} />
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Edit01} />
+                                    <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash} />
+                                    <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Pen} />
                                 </div>
                             </Table.Cell>
                         </Table.Row>
@@ -625,11 +625,11 @@ export const Table03DividerLine = () => {
                                         {item.status}
                                     </BadgeWithIcon>
                                 ) : item.status === "refunded" ? (
-                                    <BadgeWithIcon size="sm" color="gray" iconLeading={ReverseLeft} className="capitalize">
+                                    <BadgeWithIcon size="sm" color="gray" iconLeading={ArrowLeft} className="capitalize">
                                         {item.status}
                                     </BadgeWithIcon>
                                 ) : (
-                                    <BadgeWithIcon size="sm" color="error" iconLeading={X} className="capitalize">
+                                    <BadgeWithIcon size="sm" color="error" iconLeading={Close} className="capitalize">
                                         {item.status}
                                     </BadgeWithIcon>
                                 )}
@@ -721,11 +721,11 @@ export const Table03AlternatingFills = () => {
                                         {item.status}
                                     </BadgeWithIcon>
                                 ) : item.status === "refunded" ? (
-                                    <BadgeWithIcon size="sm" color="gray" iconLeading={ReverseLeft} className="capitalize">
+                                    <BadgeWithIcon size="sm" color="gray" iconLeading={ArrowLeft} className="capitalize">
                                         {item.status}
                                     </BadgeWithIcon>
                                 ) : (
-                                    <BadgeWithIcon size="sm" color="error" iconLeading={X} className="capitalize">
+                                    <BadgeWithIcon size="sm" color="error" iconLeading={Close} className="capitalize">
                                         {item.status}
                                     </BadgeWithIcon>
                                 )}
@@ -770,7 +770,7 @@ export const Table04DividerLine = () => {
                         <Button size="sm" color="secondary">
                             Download all
                         </Button>
-                        <Button size="sm" iconLeading={UploadCloud02}>
+                        <Button size="sm" iconLeading={Upload}>
                             Upload
                         </Button>
                     </div>
@@ -826,7 +826,7 @@ export const Table04AlternatingFills = () => {
                         <Button size="sm" color="secondary">
                             Download all
                         </Button>
-                        <Button size="sm" iconLeading={UploadCloud02}>
+                        <Button size="sm" iconLeading={Upload}>
                             Upload
                         </Button>
                     </div>

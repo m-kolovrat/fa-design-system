@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
-import { AlertCircle, CheckCircle, InfoCircle } from "@untitledui/icons";
+import { Alert as AlertIcon, Info, Success } from "fa-icons";
 import { CloseButton } from "@/components/base/buttons/close-button";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 import { cx } from "@/utils/cx";
@@ -15,11 +15,11 @@ import { cx } from "@/utils/cx";
 export type AlertColor = "gray" | "brand" | "error" | "warning" | "success";
 
 const defaultIcons: Record<AlertColor, FC<{ className?: string }>> = {
-    gray: InfoCircle,
-    brand: InfoCircle,
-    error: AlertCircle,
-    warning: AlertCircle,
-    success: CheckCircle,
+    gray: Info,
+    brand: Info,
+    error: AlertIcon,
+    warning: AlertIcon,
+    success: Success,
 };
 
 interface AlertProps {

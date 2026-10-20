@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, type ReactNode, useState } from "react";
-import { LayersTwo01, Lock01, Rows01, UserSquare, Users01 } from "@untitledui/icons";
+import { BulletList, Lock, User, Users, Wallet } from "fa-icons";
 import type { Key } from "react-aria-components";
 import { Tabs } from "@/components/application/tabs/tabs";
 import { NativeSelect } from "@/components/base/select/select-native";
@@ -17,11 +17,11 @@ const tabs = [
 ];
 
 const fullWidthTabs = [
-    { id: "details", label: "My details", icon: Rows01 },
-    { id: "profile", label: "Profile", icon: UserSquare },
-    { id: "password", label: "Password", icon: Lock01 },
-    { id: "team", label: "Team", icon: Users01, badge: 2 },
-    { id: "notifications", label: "Plan", icon: LayersTwo01 },
+    { id: "details", label: "My details", icon: BulletList },
+    { id: "profile", label: "Profile", icon: User },
+    { id: "password", label: "Password", icon: Lock },
+    { id: "team", label: "Team", icon: Users, badge: 2 },
+    { id: "notifications", label: "Plan", icon: Wallet },
 ];
 
 export const ButtonBrandHorizontalDemo = () => {

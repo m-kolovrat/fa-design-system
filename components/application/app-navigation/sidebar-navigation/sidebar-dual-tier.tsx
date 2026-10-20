@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { SearchLg } from "@untitledui/icons";
+import { Search } from "fa-icons";
 import { FaLargeLogo } from "fa-icons";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { Input } from "@/components/base/input/input";
@@ -66,10 +66,10 @@ export const SidebarNavigationDualTier = ({
                     <FaLargeLogo className="h-6 w-auto text-fg-primary" />
 
                     {/* Mobile search input */}
-                    <Input size="md" aria-label="Search" placeholder="Search" icon={SearchLg} className="md:hidden" />
+                    <Input size="md" aria-label="Search" placeholder="Search" icon={Search} className="md:hidden" />
 
                     {/* Desktop search input */}
-                    <Input shortcut size="sm" aria-label="Search" placeholder="Search" icon={SearchLg} className="max-md:hidden" />
+                    <Input shortcut size="sm" aria-label="Search" placeholder="Search" icon={Search} className="max-md:hidden" />
                 </div>
 
                 <NavList activeUrl={activeUrl} items={items} className="lg:hidden" />

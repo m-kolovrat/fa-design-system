@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Container, HelpCircle, LayersTwo01, LogOut01, Moon01, Settings01, User01 } from "@untitledui/icons";
+import { Help, Link, Logout, Moon, News, Settings, User } from "fa-icons";
 import type { Selection } from "react-aria-components";
 import { Button as AriaButton, SubmenuTrigger } from "react-aria-components";
 import { Avatar } from "@/components/base/avatar/avatar";
@@ -37,26 +37,26 @@ export const DropdownAvatar = () => {
                     />
                 </div>
                 <Dropdown.Menu>
-                    <Dropdown.Item icon={User01} addon="⌘K->P">
+                    <Dropdown.Item icon={User} addon="⌘K->P">
                         View profile
                     </Dropdown.Item>
-                    <Dropdown.Item icon={Settings01} addon="⌘S">
+                    <Dropdown.Item icon={Settings} addon="⌘S">
                         Settings
                     </Dropdown.Item>
                     <Dropdown.Section selectionMode="single" selectedKeys={selectedTheme} onSelectionChange={setSelectedTheme}>
-                        <Dropdown.Item id="dark-mode" icon={Moon01} selectionIndicator="toggle">
+                        <Dropdown.Item id="dark-mode" icon={Moon} selectionIndicator="toggle">
                             Dark mode
                         </Dropdown.Item>
                     </Dropdown.Section>
 
                     <Dropdown.Separator />
 
-                    <Dropdown.Item icon={LayersTwo01} addon="⌘S">
+                    <Dropdown.Item icon={News} addon="⌘S">
                         Changelog
                     </Dropdown.Item>
 
                     <SubmenuTrigger>
-                        <Dropdown.Item icon={HelpCircle}>Support</Dropdown.Item>
+                        <Dropdown.Item icon={Help}>Support</Dropdown.Item>
 
                         <Dropdown.Popover placement="right top" offset={-6}>
                             <Dropdown.Menu>
@@ -67,10 +67,10 @@ export const DropdownAvatar = () => {
                         </Dropdown.Popover>
                     </SubmenuTrigger>
 
-                    <Dropdown.Item icon={Container}>API</Dropdown.Item>
+                    <Dropdown.Item icon={Link}>API</Dropdown.Item>
                 </Dropdown.Menu>
                 <div className="flex flex-col gap-3 border-t border-secondary p-3">
-                    <Button size="sm" color="secondary" iconLeading={LogOut01} className="text-center">
+                    <Button size="sm" color="secondary" iconLeading={Logout} className="text-center">
                         Sign out
                     </Button>
                 </div>

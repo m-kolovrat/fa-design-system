@@ -2,35 +2,30 @@
 
 import type { FC } from "react";
 import {
-    Archive,
-    BarChartSquare02,
+    Ai,
+    Bell,
+    Bookmark,
+    BulletList,
     Calendar,
-    CheckDone01,
+    Chat,
     ChevronRight,
-    ClockFastForward,
-    CurrencyDollarCircle,
-    File05,
-    Folder,
-    Grid03,
-    HomeLine,
-    Inbox01,
-    LayoutAlt01,
-    LifeBuoy01,
-    LineChartUp03,
-    MessageChatCircle,
-    NotificationBox,
-    Package,
-    PieChart03,
-    Rows01,
-    Settings01,
-    Settings03,
-    Star01,
-    Stars01,
-    User01,
-    UserSquare,
-    Users01,
-    UsersPlus,
-} from "@untitledui/icons";
+    Clock,
+    Factory,
+    GraphLine,
+    GraphUp,
+    Grid,
+    Home,
+    LifeBuoy,
+    Mail,
+    Notebook,
+    Settings,
+    Star,
+    Success,
+    Table,
+    User,
+    Users,
+    Wallet,
+} from "fa-icons";
 import { FeaturedCardProgressBar, FeaturedCardProgressCircle } from "@/components/application/app-navigation/base-components/featured-cards.demo";
 import type { NavItemDividerType, NavItemType } from "@/components/application/app-navigation/config";
 import { SidebarNavigationDualTier } from "@/components/application/app-navigation/sidebar-navigation/sidebar-dual-tier";
@@ -45,52 +40,52 @@ const navItemsSimple: NavItemType[] = [
     {
         label: "Home",
         href: "/",
-        icon: HomeLine,
+        icon: Home,
         items: [
-            { label: "Overview", href: "/overview", icon: Grid03 },
-            { label: "Products", href: "/products", icon: Package },
-            { label: "Orders", href: "/orders", icon: CurrencyDollarCircle },
-            { label: "Customers", href: "/customers", icon: Users01 },
+            { label: "Overview", href: "/overview", icon: Grid },
+            { label: "Products", href: "/products", icon: Factory },
+            { label: "Orders", href: "/orders", icon: Wallet },
+            { label: "Customers", href: "/customers", icon: Users },
         ],
     },
     {
         label: "Dashboard",
         href: "/dashboard",
-        icon: BarChartSquare02,
+        icon: Grid,
         items: [
-            { label: "Overview", href: "/dashboard/overview", icon: Grid03 },
-            { label: "Notifications", href: "/dashboard/notifications", icon: NotificationBox, badge: 10 },
-            { label: "Analytics", href: "/dashboard/analytics", icon: LineChartUp03 },
-            { label: "Saved reports", href: "/dashboard/saved-reports", icon: Star01 },
+            { label: "Overview", href: "/dashboard/overview", icon: Grid },
+            { label: "Notifications", href: "/dashboard/notifications", icon: Bell, badge: 10 },
+            { label: "Analytics", href: "/dashboard/analytics", icon: GraphUp },
+            { label: "Saved reports", href: "/dashboard/saved-reports", icon: Star },
         ],
     },
     {
         label: "Projects",
         href: "/projects",
-        icon: Rows01,
+        icon: BulletList,
         items: [
-            { label: "View all", href: "/projects/all", icon: Rows01 },
-            { label: "Personal", href: "/projects/personal", icon: User01 },
-            { label: "Team", href: "/projects/team", icon: Users01 },
-            { label: "Shared with me", href: "/projects/shared-with-me", icon: UsersPlus },
-            { label: "Archive", href: "/projects/archive", icon: Archive },
+            { label: "View all", href: "/projects/all", icon: BulletList },
+            { label: "Personal", href: "/projects/personal", icon: User },
+            { label: "Team", href: "/projects/team", icon: Users },
+            { label: "Shared with me", href: "/projects/shared-with-me", icon: Users },
+            { label: "Archive", href: "/projects/archive", icon: Bookmark },
         ],
     },
     {
         label: "Tasks",
         href: "/tasks",
-        icon: CheckDone01,
+        icon: Success,
         badge: 10,
     },
     {
         label: "Reporting",
         href: "/reporting",
-        icon: PieChart03,
+        icon: GraphLine,
     },
     {
         label: "Users",
         href: "/users",
-        icon: Users01,
+        icon: Users,
     },
 ];
 
@@ -98,57 +93,57 @@ const navItemsDualTier: (NavItemType & { icon: FC<{ className?: string }> })[] =
     {
         label: "Home",
         href: "/",
-        icon: HomeLine,
+        icon: Home,
         items: [
-            { label: "Overview", href: "/overview", icon: Grid03 },
-            { label: "Products", href: "/products", icon: Package },
-            { label: "Orders", href: "/orders", icon: CurrencyDollarCircle },
-            { label: "Customers", href: "/customers", icon: Users01 },
-            { label: "Inbox", href: "/inbox", icon: Inbox01, badge: 4 },
-            { label: "What's new?", href: "/whats-new", icon: Stars01 },
+            { label: "Overview", href: "/overview", icon: Grid },
+            { label: "Products", href: "/products", icon: Factory },
+            { label: "Orders", href: "/orders", icon: Wallet },
+            { label: "Customers", href: "/customers", icon: Users },
+            { label: "Inbox", href: "/inbox", icon: Mail, badge: 4 },
+            { label: "What's new?", href: "/whats-new", icon: Ai },
         ],
     },
     {
         label: "Dashboard",
         href: "/dashboard",
-        icon: BarChartSquare02,
+        icon: Grid,
         items: [
-            { label: "Overview", href: "/dashboard/overview", icon: Grid03 },
-            { label: "Notifications", href: "/dashboard/notifications", icon: NotificationBox, badge: 10 },
-            { label: "Analytics", href: "/dashboard/analytics", icon: LineChartUp03 },
-            { label: "Saved reports", href: "/dashboard/saved-reports", icon: Star01 },
-            { label: "Scheduled reports", href: "/dashboard/scheduled-reports", icon: ClockFastForward },
-            { label: "User reports", href: "/dashboard/user-reports", icon: UserSquare },
-            { label: "Manage notifications", href: "/dashboard/manage-notifications", icon: Settings03 },
+            { label: "Overview", href: "/dashboard/overview", icon: Grid },
+            { label: "Notifications", href: "/dashboard/notifications", icon: Bell, badge: 10 },
+            { label: "Analytics", href: "/dashboard/analytics", icon: GraphUp },
+            { label: "Saved reports", href: "/dashboard/saved-reports", icon: Star },
+            { label: "Scheduled reports", href: "/dashboard/scheduled-reports", icon: Clock },
+            { label: "User reports", href: "/dashboard/user-reports", icon: User },
+            { label: "Manage notifications", href: "/dashboard/manage-notifications", icon: Settings },
         ],
     },
     {
         label: "Projects",
         href: "/projects",
-        icon: Rows01,
+        icon: BulletList,
         items: [
-            { label: "View all", href: "/projects/all", icon: Rows01 },
-            { label: "Personal", href: "/projects/personal", icon: User01 },
-            { label: "Team", href: "/projects/team", icon: Users01 },
-            { label: "Shared with me", href: "/projects/shared-with-me", icon: UsersPlus },
-            { label: "Archive", href: "/projects/archive", icon: Archive },
+            { label: "View all", href: "/projects/all", icon: BulletList },
+            { label: "Personal", href: "/projects/personal", icon: User },
+            { label: "Team", href: "/projects/team", icon: Users },
+            { label: "Shared with me", href: "/projects/shared-with-me", icon: Users },
+            { label: "Archive", href: "/projects/archive", icon: Bookmark },
         ],
     },
     {
         label: "Tasks",
         href: "/tasks",
-        icon: CheckDone01,
+        icon: Success,
         badge: 10,
     },
     {
         label: "Reporting",
         href: "/reporting",
-        icon: PieChart03,
+        icon: GraphLine,
     },
     {
         label: "Users",
         href: "/users",
-        icon: Users01,
+        icon: Users,
     },
 ];
 
@@ -156,22 +151,22 @@ const navItemsWithDividers: (NavItemType | NavItemDividerType)[] = [
     {
         label: "Home",
         href: "/",
-        icon: HomeLine,
+        icon: Home,
     },
     {
         label: "Dashboard",
         href: "/dashboard",
-        icon: BarChartSquare02,
+        icon: Grid,
     },
     {
         label: "Projects",
         href: "/projects",
-        icon: Rows01,
+        icon: BulletList,
     },
     { divider: true },
     {
         label: "Folders",
-        icon: Folder,
+        icon: Notebook,
         href: "/folders",
         items: [
             { label: "View all", badge: 18, href: "/folders/view-all" },
@@ -184,17 +179,17 @@ const navItemsWithDividers: (NavItemType | NavItemDividerType)[] = [
     {
         label: "Reporting",
         href: "/reporting",
-        icon: PieChart03,
+        icon: GraphLine,
     },
     {
         label: "Settings",
         href: "/settings",
-        icon: Settings01,
+        icon: Settings,
     },
     {
         label: "Support",
         href: "/support",
-        icon: MessageChatCircle,
+        icon: Chat,
         badge: (
             <BadgeWithDot color="success" type="modern" size="sm">
                 Online
@@ -204,7 +199,7 @@ const navItemsWithDividers: (NavItemType | NavItemDividerType)[] = [
     {
         label: "Open in browser",
         href: "https://www.untitledui.com/",
-        icon: LayoutAlt01,
+        icon: Table,
     },
 ];
 
@@ -215,17 +210,17 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
             {
                 label: "Dashboard",
                 href: "/",
-                icon: BarChartSquare02,
+                icon: Grid,
             },
             {
                 label: "Projects",
                 href: "/projects",
-                icon: Rows01,
+                icon: BulletList,
             },
             {
                 label: "Documents",
                 href: "/documents",
-                icon: File05,
+                icon: Notebook,
             },
             {
                 label: "Calendar",
@@ -240,12 +235,12 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
             {
                 label: "Reporting",
                 href: "#",
-                icon: PieChart03,
+                icon: GraphLine,
             },
             {
                 label: "Tasks",
                 href: "#",
-                icon: CheckDone01,
+                icon: Success,
                 badge: (
                     <Badge size="sm" type="modern">
                         8
@@ -255,7 +250,7 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
             {
                 label: "Users",
                 href: "#",
-                icon: Users01,
+                icon: Users,
             },
         ],
     },
@@ -325,12 +320,12 @@ export const SidebarNavigationSimpleDemo = () => (
             {
                 label: "Settings",
                 href: "/settings",
-                icon: Settings01,
+                icon: Settings,
             },
             {
                 label: "Support",
                 href: "/support",
-                icon: MessageChatCircle,
+                icon: Chat,
                 badge: (
                     <BadgeWithDot color="success" type="modern" size="sm">
                         Online
@@ -340,7 +335,7 @@ export const SidebarNavigationSimpleDemo = () => (
             {
                 label: "Open in browser",
                 href: "https://www.untitledui.com/",
-                icon: LayoutAlt01,
+                icon: Table,
             },
         ]}
         featureCard={
@@ -364,12 +359,12 @@ export const SidebarNavigationDualTierDemo = () => (
             {
                 label: "Support",
                 href: "/support",
-                icon: LifeBuoy01,
+                icon: LifeBuoy,
             },
             {
                 label: "Settings",
                 href: "/settings",
-                icon: Settings01,
+                icon: Settings,
             },
         ]}
         featureCard={
@@ -393,12 +388,12 @@ export const SidebarNavigationSlimDemo = () => (
             {
                 label: "Support",
                 href: "/support",
-                icon: LifeBuoy01,
+                icon: LifeBuoy,
             },
             {
                 label: "Settings",
                 href: "/settings",
-                icon: Settings01,
+                icon: Settings,
             },
         ]}
     />

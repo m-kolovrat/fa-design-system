@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, type RefAttributes, useCallback } from "react";
-import { Check, ChevronRight, DotsVertical } from "@untitledui/icons";
+import { Check, ChevronRight, DotsVertical } from "fa-icons";
 import type {
     ButtonProps as AriaButtonProps,
     MenuItemProps as AriaMenuItemProps,
@@ -45,12 +45,7 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
     const SelectionIndicator = useCallback(
         (state: MenuItemRenderProps & { className?: string }) => {
             if (selectionIndicator === "checkmark") {
-                return (
-                    <Check
-                        aria-hidden="true"
-                        className={cx("size-4 shrink-0 stroke-[2.25px] text-fg-brand-primary", !state.isSelected && "invisible", state.className)}
-                    />
-                );
+                return <Check aria-hidden="true" className={cx("size-4 shrink-0 text-fg-brand-primary", !state.isSelected && "invisible", state.className)} />;
             }
             if (selectionIndicator === "checkbox") {
                 return (
@@ -106,7 +101,7 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
                         </div>
                     )}
 
-                    {Icon && <Icon aria-hidden="true" className="mr-2 size-4 shrink-0 stroke-[2.25px] text-fg-quaternary" />}
+                    {Icon && <Icon aria-hidden="true" className="mr-2 size-4 shrink-0 text-fg-quaternary" />}
 
                     <span className={cx("grow truncate text-sm font-semibold text-secondary", state.isFocused && "text-secondary_hover")}>
                         {label || (typeof children === "function" ? children(state) : children)}
@@ -116,7 +111,7 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
 
                     {state.selectionMode !== "none" && (avatarUrl || Icon) && <SelectionIndicator {...state} className="ml-1" />}
 
-                    {state.hasSubmenu && <ChevronRight aria-hidden="true" className="ml-auto size-4 shrink-0 stroke-[2.25px] text-fg-quaternary" />}
+                    {state.hasSubmenu && <ChevronRight aria-hidden="true" className="ml-auto size-4 shrink-0 text-fg-quaternary" />}
                 </div>
             )}
         </AriaMenuItem>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Archive, ArrowLeft, ArrowRight, Edit03, Placeholder, Plus, Trash01 } from "@untitledui/icons";
+import { ArrowLeft, ArrowRight, Bookmark, Pen, Plus, Star, Trash } from "fa-icons";
 import type { Key } from "react-aria";
 import { ButtonGroup, ButtonGroupItem } from "@/components/base/button-group/button-group";
 import { Dot } from "@/components/foundations/dot-icon";
@@ -16,13 +16,13 @@ export const Default = () => (
 
 export const LeadingIcon = () => (
     <ButtonGroup selectedKeys={[]}>
-        <ButtonGroupItem id="archive" iconLeading={Archive}>
+        <ButtonGroupItem id="archive" iconLeading={Bookmark}>
             Archive
         </ButtonGroupItem>
-        <ButtonGroupItem id="edit" iconLeading={Edit03}>
+        <ButtonGroupItem id="edit" iconLeading={Pen}>
             Edit
         </ButtonGroupItem>
-        <ButtonGroupItem id="delete" iconLeading={Trash01}>
+        <ButtonGroupItem id="delete" iconLeading={Trash}>
             Delete
         </ButtonGroupItem>
     </ButtonGroup>
@@ -95,13 +95,13 @@ export const AllSmall = () => (
         </ButtonGroup>
 
         <ButtonGroup size="sm" selectedKeys={["archive"]}>
-            <ButtonGroupItem id="archive" iconLeading={Placeholder}>
+            <ButtonGroupItem id="archive" iconLeading={Star}>
                 Archive
             </ButtonGroupItem>
-            <ButtonGroupItem id="edit" iconLeading={Placeholder}>
+            <ButtonGroupItem id="edit" iconLeading={Star}>
                 Edit
             </ButtonGroupItem>
-            <ButtonGroupItem id="delete" isDisabled iconLeading={Placeholder}>
+            <ButtonGroupItem id="delete" isDisabled iconLeading={Star}>
                 Delete
             </ButtonGroupItem>
         </ButtonGroup>
@@ -137,13 +137,13 @@ export const All = () => (
         </ButtonGroup>
 
         <ButtonGroup selectedKeys={["archive"]}>
-            <ButtonGroupItem id="archive" iconLeading={Placeholder}>
+            <ButtonGroupItem id="archive" iconLeading={Star}>
                 Archive
             </ButtonGroupItem>
-            <ButtonGroupItem id="edit" iconLeading={Placeholder}>
+            <ButtonGroupItem id="edit" iconLeading={Star}>
                 Edit
             </ButtonGroupItem>
-            <ButtonGroupItem id="delete" isDisabled iconLeading={Placeholder}>
+            <ButtonGroupItem id="delete" isDisabled iconLeading={Star}>
                 Delete
             </ButtonGroupItem>
         </ButtonGroup>
@@ -179,13 +179,13 @@ export const AllLarge = () => (
         </ButtonGroup>
 
         <ButtonGroup size="lg" selectedKeys={["archive"]}>
-            <ButtonGroupItem id="archive" iconLeading={Placeholder}>
+            <ButtonGroupItem id="archive" iconLeading={Star}>
                 Archive
             </ButtonGroupItem>
-            <ButtonGroupItem id="edit" iconLeading={Placeholder}>
+            <ButtonGroupItem id="edit" iconLeading={Star}>
                 Edit
             </ButtonGroupItem>
-            <ButtonGroupItem id="delete" isDisabled iconLeading={Placeholder}>
+            <ButtonGroupItem id="delete" isDisabled iconLeading={Star}>
                 Delete
             </ButtonGroupItem>
         </ButtonGroup>

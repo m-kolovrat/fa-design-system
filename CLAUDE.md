@@ -206,39 +206,44 @@ export const styles = sortCx({
 
 ### Available Libraries
 
-- `@untitledui/icons` - 1,100+ line-style icons (free)
+- `fa-icons` - The Fa icon set from the Figma file ("Icons V2": line icons plus `-filled` variants), and the flags and logos. Built from Figma in the separate repo `github:m-kolovrat/fa-icons`.
 - `@untitledui/file-icons` - File type icons
+
+Untitled UI icons (`@untitledui/icons`) are no longer used. If a design needs an icon that `fa-icons` doesn't have, it's designed in Figma first and added to `fa-icons`; don't pull in another icon library.
 
 ### Import & Usage
 
 ```typescript
-// Recommended: Named imports (tree-shakeable)
-import { Home01, Settings01, ChevronDown } from "@untitledui/icons";
+// Recommended: Named imports (tree-shakeable). Names are the Figma names in PascalCase (`chevron-down` → `ChevronDown`).
+import { Home, Settings, ChevronDown } from "fa-icons";
 
 // Component props - pass as reference
 <Button iconLeading={ChevronDown}>Options</Button>
 
 // Standalone usage
-<Home01 className="size-5 text-fg-quaternary" />
+<Home className="size-5 text-fg-quaternary" />
 
 // As JSX element - MUST include data-icon
 <Button iconLeading={<ChevronDown data-icon className="size-4" />}>Options</Button>
 ```
 
+The `flag` icon is exported as `FlagIcon` (`Flag` is the country flag component). Name an import
+`<Name>Icon` (e.g. `Calendar as CalendarIcon`) when it clashes with a component in the file.
+
 ### Styling
 
 ```typescript
-// Size: use size-4 (16px), size-5 (20px), size-6 (24px)
-<Home01 className="size-5" />
+// Size: icons are 20px (the Figma frame) by default. Use size-4 (16px), size-5 (20px), size-6 (24px), or the `size` prop
+<Home className="size-5" />
 
-// Color: use semantic text colors
-<Home01 className="size-5 text-fg-brand-primary" />
+// Color: icons use currentColor, so use semantic text colors
+<Home className="size-5 text-fg-brand-primary" />
 
-// Stroke width (line icons only)
-<Home01 className="size-5" strokeWidth={2} />
+// Stroke: 1.5px at 20px (the Figma icon), scaling with the size (1.2px at 16px). Don't override it with stroke-* classes
+<Home className="size-4" />
 
-// Accessibility: decorative icons need aria-hidden
-<Home01 className="size-5" aria-hidden="true" />
+// Accessibility: icons are aria-hidden by default. Give meaningful ones a label
+<Home aria-hidden={false} aria-label="Home" />
 ```
 
 ## Form Handling
@@ -410,7 +415,7 @@ import { Button } from "@/components/base/buttons/button";
 <Button isLoading showTextWhileLoading>Submitting...</Button>
 
 // Destructive action
-<Button color="primary-destructive" iconLeading={Trash02}>Delete</Button>
+<Button color="primary-destructive" iconLeading={Trash}>Delete</Button>
 ```
 
 ### Input
@@ -444,7 +449,7 @@ import { InputGroup } from "@/components/base/input/input-group";
 
 // With icon and validation
 <Input
-  icon={Mail01}
+  icon={Mail}
   label="Email"
   isRequired
   isInvalid
@@ -506,7 +511,7 @@ import { Select } from "@/components/base/select/select";
 </Select.ComboBox>
 
 // With avatars
-<Select items={users} icon={User01}>
+<Select items={users} icon={User}>
   {(item) => (
     <Select.Item avatarUrl={item.avatar} supportingText={item.role}>
       {item.name}
@@ -654,16 +659,16 @@ import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-ic
 
 ```typescript
 // Basic featured icon
-<FeaturedIcon icon={CheckCircle} color="success" theme="light" size="lg" />
+<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />
 
 // With gradient theme
-<FeaturedIcon icon={AlertCircle} color="warning" theme="gradient" size="xl" />
+<FeaturedIcon icon={Alert} color="warning" theme="gradient" size="xl" />
 
 // Dark theme for emphasis
-<FeaturedIcon icon={XCircle} color="error" theme="dark" size="md" />
+<FeaturedIcon icon={CloseCircle} color="error" theme="dark" size="md" />
 
 // Outline style
-<FeaturedIcon icon={InfoCircle} color="brand" theme="outline" size="lg" />
+<FeaturedIcon icon={Info} color="brand" theme="outline" size="lg" />
 
 // Modern styles (IMPORTANT: gray only)
 <FeaturedIcon icon={Settings} color="gray" theme="modern" size="lg" />
@@ -692,17 +697,17 @@ import { Button } from "@/components/base/buttons/button";
 <Button href="/dashboard" color="link-color">View Dashboard</Button>
 
 // With icon
-<Button href="/settings" color="link-gray" iconLeading={Settings01}>
+<Button href="/settings" color="link-gray" iconLeading={Settings}>
   Settings
 </Button>
 
 // Destructive link
-<Button href="/delete" color="link-destructive" iconLeading={Trash02}>
+<Button href="/delete" color="link-destructive" iconLeading={Trash}>
   Delete Account
 </Button>
 
 // External link
-<Button href="https://example.com" color="link-color" iconTrailing={ExternalLink01}>
+<Button href="https://example.com" color="link-color" iconTrailing={ExternalLink}>
   Visit Site
 </Button>
 ```

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronLeftDouble, ChevronRight, ChevronRightDouble } from "@untitledui/icons";
+import { ArrowLeft, ArrowRight, ChevronDoubleLeft, ChevronDoubleRight, ChevronLeft, ChevronRight } from "fa-icons";
 import { ButtonGroup, ButtonGroupItem } from "@/components/base/button-group/button-group";
 import { Button } from "@/components/base/buttons/button";
 import { InputBase } from "@/components/base/input/input";
@@ -432,7 +432,7 @@ export const PaginationCardAdvanced = ({
 
                 <div className={cx("flex flex-1 items-center gap-4 md:ml-auto md:justify-end", align === "center" && "md:justify-center")}>
                     <div className="flex gap-2">
-                        <Button iconLeading={ChevronLeftDouble} color="secondary" size="sm" isDisabled={page === 1} onClick={() => onPageChange?.(1)} />
+                        <Button iconLeading={ChevronDoubleLeft} color="secondary" size="sm" isDisabled={page === 1} onClick={() => onPageChange?.(1)} />
                         <Pagination.PrevTrigger asChild>
                             <Button iconLeading={ChevronLeft} color="secondary" size="sm" />
                         </Pagination.PrevTrigger>
@@ -465,7 +465,7 @@ export const PaginationCardAdvanced = ({
                             <Button iconTrailing={ChevronRight} color="secondary" size="sm" />
                         </Pagination.NextTrigger>
                         <Button
-                            iconTrailing={ChevronRightDouble}
+                            iconTrailing={ChevronDoubleRight}
                             color="secondary"
                             size="sm"
                             isDisabled={page === total}

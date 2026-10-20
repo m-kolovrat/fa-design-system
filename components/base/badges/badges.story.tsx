@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { ArrowRight } from "@untitledui/icons";
+import { ArrowRight } from "fa-icons";
 import { Badge, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWithIcon, BadgeWithImage } from "./badges";
 
 /**

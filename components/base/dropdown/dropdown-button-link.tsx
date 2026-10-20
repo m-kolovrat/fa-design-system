@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Trash01 } from "@untitledui/icons";
+import { ChevronDown, Trash } from "fa-icons";
 import { Button as AriaButton } from "react-aria-components";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { cx } from "@/utils/cx";
@@ -26,7 +26,7 @@ export const DropdownButtonLink = () => {
                 }
             >
                 {permissions.find((permission) => permission.id === selectedPermission.toString())?.label}
-                <ChevronDown className="size-3 shrink-0 stroke-3 text-fg-quaternary" />
+                <ChevronDown className="size-3 shrink-0 text-fg-quaternary" />
             </AriaButton>
 
             <Dropdown.Popover className="w-40">
@@ -44,7 +44,7 @@ export const DropdownButtonLink = () => {
                     </Dropdown.Section>
                     <Dropdown.Separator />
                     <Dropdown.Section>
-                        <Dropdown.Item icon={Trash01}>Delete</Dropdown.Item>
+                        <Dropdown.Item icon={Trash}>Delete</Dropdown.Item>
                     </Dropdown.Section>
                 </Dropdown.Menu>
             </Dropdown.Popover>

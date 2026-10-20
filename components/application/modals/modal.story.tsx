@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { CheckCircle, Settings01, Trash01, UserPlus01 } from "@untitledui/icons";
+import { Settings, Success, Trash, Users } from "fa-icons";
 import { Dialog, DialogTrigger, Modal, ModalActions, ModalHeader, ModalOverlay } from "@/components/application/modals/modal";
 import { Button } from "@/components/base/buttons/button";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
@@ -33,7 +33,7 @@ export const Default = () => (
         {(close) => (
             <>
                 <ModalHeader
-                    icon={<FeaturedIcon icon={CheckCircle} color="success" theme="light" size="lg" />}
+                    icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
                     title="Blog post published"
                     description="This blog post has been published. Team members will be able to edit this post and republish changes."
                     paddingBottom={false}
@@ -56,7 +56,7 @@ export const Destructive = () => (
         {(close) => (
             <>
                 <ModalHeader
-                    icon={<FeaturedIcon icon={Trash01} color="error" theme="light" size="lg" />}
+                    icon={<FeaturedIcon icon={Trash} color="error" theme="light" size="lg" />}
                     title="Delete this item?"
                     description="This action cannot be undone. This will permanently remove the item."
                     paddingBottom={false}
@@ -82,7 +82,7 @@ export const Parts = () => (
                 <>
                     <ModalHeader
                         align="left"
-                        icon={<FeaturedIcon icon={CheckCircle} color="success" theme="light" size="lg" />}
+                        icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
                         title="Blog post published"
                         description="This blog post has been published. Team members will be able to edit this post and republish changes."
                         paddingBottom={false}
@@ -103,7 +103,7 @@ export const Parts = () => (
                 <>
                     <ModalHeader
                         align="center"
-                        icon={<FeaturedIcon icon={CheckCircle} color="success" theme="light" size="lg" />}
+                        icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
                         title="Blog post published"
                         description="This blog post has been published. Team members will be able to edit this post and republish changes."
                         paddingBottom={false}
@@ -124,7 +124,7 @@ export const Parts = () => (
                 <>
                     <ModalHeader
                         align="horizontal"
-                        icon={<FeaturedIcon icon={CheckCircle} color="success" theme="light" size="lg" />}
+                        icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
                         title="Blog post published"
                         description="This blog post has been published. Team members will be able to edit this post and republish changes."
                         divider
@@ -135,7 +135,7 @@ export const Parts = () => (
                         leading={
                             <>
                                 <Checkbox label="Don’t show again" />
-                                <Button size="lg" color="link-gray" iconLeading={Settings01}>
+                                <Button size="lg" color="link-gray" iconLeading={Settings}>
                                     Settings
                                 </Button>
                             </>
@@ -160,7 +160,7 @@ export const CustomBody = () => (
         {(close) => (
             <>
                 <ModalHeader
-                    icon={<FeaturedIcon icon={UserPlus01} color="gray" theme="modern" size="lg" />}
+                    icon={<FeaturedIcon icon={Users} color="gray" theme="modern" size="lg" />}
                     title="Invite team member"
                     description="They’ll get an email with a link to join your workspace."
                 />

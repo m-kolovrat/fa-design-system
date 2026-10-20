@@ -1,7 +1,7 @@
 "use client";
 
 import type { MouseEventHandler, ReactNode } from "react";
-import { X as CloseX } from "@untitledui/icons";
+import { Close as CloseX } from "fa-icons";
 import { Flag, type FlagName } from "fa-icons";
 import { Dot } from "@/components/foundations/dot-icon";
 import { cx } from "@/utils/cx";
@@ -224,9 +224,9 @@ export const BadgeWithIcon = <T extends BadgeTypes>(props: BadgeWithIconProps<T>
 
     return (
         <span className={cx(colors.common, sizes[type][size][icon], colors.styles[color].root, className)}>
-            {IconLeading && <IconLeading className={cx(colors.styles[color].addon, "size-3 stroke-3")} />}
+            {IconLeading && <IconLeading className={cx(colors.styles[color].addon, "size-3")} />}
             {children}
-            {IconTrailing && <IconTrailing className={cx(colors.styles[color].addon, "size-3 stroke-3")} />}
+            {IconTrailing && <IconTrailing className={cx(colors.styles[color].addon, "size-3")} />}
         </span>
     );
 };
@@ -358,7 +358,7 @@ export const BadgeWithButton = <T extends BadgeTypes>(props: BadgeWithButtonProp
                     type === "pill-color" ? "rounded-full" : "rounded-[3px]",
                 )}
             >
-                <Icon className="size-3 stroke-[3px] transition-inherit-all" />
+                <Icon className="size-3 transition-inherit-all" />
             </button>
         </span>
     );
@@ -397,7 +397,7 @@ export const BadgeIcon = <T extends BadgeTypes>(props: BadgeIconProps<T>) => {
 
     return (
         <span className={cx(colors.common, sizes[type][size], colors.styles[color].root)}>
-            <Icon className={cx("size-3 stroke-[3px]", colors.styles[color].addon)} />
+            <Icon className={cx("size-3", colors.styles[color].addon)} />
         </span>
     );
 };

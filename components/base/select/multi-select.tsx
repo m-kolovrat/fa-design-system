@@ -2,7 +2,7 @@
 
 import type { ReactNode, RefAttributes } from "react";
 import { useCallback, useRef, useState } from "react";
-import { ChevronDown, SearchLg } from "@untitledui/icons";
+import { ChevronDown, Search } from "fa-icons";
 import { useFilter } from "react-aria";
 import type { Selection } from "react-aria-components";
 import {
@@ -24,7 +24,7 @@ import { SelectItem } from "./select-item";
 import { type CommonProps, SelectContext, type SelectItemType, sizes } from "./select-shared";
 
 const searchSizes = {
-    sm: { wrapper: "py-1", root: "px-3 py-2 gap-2 *:data-icon:size-4 *:data-icon:stroke-[2.25px]", text: "text-sm" },
+    sm: { wrapper: "py-1", root: "px-3 py-2 gap-2 *:data-icon:size-4", text: "text-sm" },
     md: { wrapper: "py-0.5", root: "px-3 py-2 gap-2 *:data-icon:size-5", text: "text-md" },
     lg: { wrapper: "py-0.5", root: "px-3.5 py-2.5 gap-2 *:data-icon:size-5", text: "text-md" },
 };
@@ -95,7 +95,7 @@ const MultiSelectEmptyState = ({
 }: MultiSelectEmptyStateProps) => (
     <div className={cx("flex flex-col items-center gap-3 px-4 py-4", className)}>
         <div className="flex flex-col items-center gap-3">
-            <FeaturedIcon icon={SearchLg} size="sm" color="gray" theme="modern" />
+            <FeaturedIcon icon={Search} size="sm" color="gray" theme="modern" />
             <div className="flex flex-col items-center gap-0.5 text-center text-sm">
                 <p className="font-semibold text-primary">{title}</p>
                 <p className="text-tertiary">{description}</p>
@@ -239,10 +239,7 @@ const MultiSelectRoot = ({
                                 <span className={cx("text-placeholder", sizes[size].text)}>{placeholder}</span>
                             )}
 
-                            <ChevronDown
-                                aria-hidden="true"
-                                className={cx("ml-auto shrink-0 text-fg-quaternary", size === "lg" ? "size-5" : "size-4 stroke-[2.25px]")}
-                            />
+                            <ChevronDown aria-hidden="true" className={cx("ml-auto shrink-0 text-fg-quaternary", size === "lg" ? "size-5" : "size-4")} />
                         </span>
                     </AriaButton>
 
@@ -268,7 +265,7 @@ const MultiSelectRoot = ({
                                     <div className={cx("border-b border-secondary", searchSizes[size].wrapper)}>
                                         <AriaSearchField aria-label="Search" value={searchValue} onChange={setSearchValue} autoFocus>
                                             <div className={cx("flex items-center", searchSizes[size].root)}>
-                                                <SearchLg data-icon aria-hidden="true" className="shrink-0 text-fg-quaternary" />
+                                                <Search data-icon aria-hidden="true" className="shrink-0 text-fg-quaternary" />
                                                 <AriaInput
                                                     placeholder="Search"
                                                     className={cx(

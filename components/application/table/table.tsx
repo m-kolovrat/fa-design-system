@@ -2,7 +2,7 @@
 
 import type { ComponentPropsWithRef, HTMLAttributes, ReactNode, Ref, TdHTMLAttributes, ThHTMLAttributes } from "react";
 import { createContext, isValidElement, useContext } from "react";
-import { ArrowDown, ChevronSelectorVertical, Copy01, Edit01, HelpCircle, Trash01 } from "@untitledui/icons";
+import { ArrowDown, ChevronUpDown, Copy, Help, Pen, Trash } from "fa-icons";
 import type {
     CellProps as AriaCellProps,
     ColumnProps as AriaColumnProps,
@@ -33,13 +33,13 @@ export const TableRowActionsDropdown = () => (
 
         <Dropdown.Popover className="w-min">
             <Dropdown.Menu>
-                <Dropdown.Item icon={Edit01}>
+                <Dropdown.Item icon={Pen}>
                     <span className="pr-4">Edit</span>
                 </Dropdown.Item>
-                <Dropdown.Item icon={Copy01}>
+                <Dropdown.Item icon={Copy}>
                     <span className="pr-4">Copy link</span>
                 </Dropdown.Item>
-                <Dropdown.Item icon={Trash01}>
+                <Dropdown.Item icon={Trash}>
                     <span className="pr-4">Delete</span>
                 </Dropdown.Item>
             </Dropdown.Menu>
@@ -194,16 +194,16 @@ const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadP
                     {tooltip && (
                         <Tooltip title={tooltip} placement="top">
                             <TooltipTrigger className="cursor-pointer text-fg-quaternary transition hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover">
-                                <HelpCircle className="size-4" />
+                                <Help className="size-4" />
                             </TooltipTrigger>
                         </Tooltip>
                     )}
 
                     {state.allowsSorting &&
                         (state.sortDirection ? (
-                            <ArrowDown className={cx("size-3 stroke-[3px] text-fg-quaternary", state.sortDirection === "ascending" && "rotate-180")} />
+                            <ArrowDown className={cx("size-3 text-fg-quaternary", state.sortDirection === "ascending" && "rotate-180")} />
                         ) : (
-                            <ChevronSelectorVertical size={12} strokeWidth={3} className="text-fg-quaternary" />
+                            <ChevronUpDown size={12} className="text-fg-quaternary" />
                         ))}
                 </AriaGroup>
             )}

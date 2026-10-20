@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FC } from "react";
-import { UploadCloud02 } from "@untitledui/icons";
+import { Upload } from "fa-icons";
 import { Button } from "@/components/base/buttons/button";
 import { FileTrigger } from "@/components/base/file-upload-trigger/file-upload-trigger";
 
@@ -21,7 +21,7 @@ export const Default = () => {
     return (
         <div className="flex flex-col items-start gap-4">
             <FileTrigger onSelect={(list) => setFiles(list ? Array.from(list).map((f) => f.name) : [])}>
-                <Button color="secondary" iconLeading={UploadCloud02}>
+                <Button color="secondary" iconLeading={Upload}>
                     Select a file
                 </Button>
             </FileTrigger>
@@ -43,7 +43,7 @@ export const Multiple = () => {
     return (
         <div className="flex flex-col items-start gap-4">
             <FileTrigger allowsMultiple onSelect={(list) => setFiles(list ? Array.from(list).map((f) => f.name) : [])}>
-                <Button color="secondary" iconLeading={UploadCloud02}>
+                <Button color="secondary" iconLeading={Upload}>
                     Select multiple files
                 </Button>
             </FileTrigger>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import React from "react";
-import { AlertCircle, Calendar, Check, CheckCircle, Copy01, Lock03, Mail01 } from "@untitledui/icons";
+import { Alert, Calendar, Check, Copy, Lock, Mail, Success } from "fa-icons";
 import { Button } from "@/components/base/buttons/button";
 import { Input, InputBase, TextField } from "@/components/base/input/input";
 import { InputFile } from "@/components/base/input/input-file";
@@ -70,14 +70,7 @@ export const SizesDemo = () => {
 
 export const LeadingIconDemo = () => {
     return (
-        <Input
-            isRequired
-            icon={Mail01}
-            label="Email"
-            hint="This is a hint text to help user."
-            placeholder="olivia@untitledui.com"
-            tooltip="This is a tooltip"
-        />
+        <Input isRequired icon={Mail} label="Email" hint="This is a hint text to help user." placeholder="olivia@untitledui.com" tooltip="This is a tooltip" />
     );
 };
 
@@ -151,7 +144,7 @@ export const TrailingButtonDemo = () => {
             hint="This is a hint text to help user."
             onChange={setValue}
             trailingAddon={
-                <Button color="secondary" iconLeading={copied ? Check : Copy01} onClick={() => copy(value || "www.untitledui.com")}>
+                <Button color="secondary" iconLeading={copied ? Check : Copy} onClick={() => copy(value || "www.untitledui.com")}>
                     Copy
                 </Button>
             }
@@ -167,12 +160,10 @@ export const PasswordInputDemo = () => {
     return (
         <TextField isRequired minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
             <Label>Password</Label>
-            <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+            <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
             <HintText className="flex items-center gap-1">
-                <CheckCircle
-                    className={cx("size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")}
-                />
-                <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                 Must be at least 8 characters.
             </HintText>
         </TextField>
@@ -325,7 +316,7 @@ export const LeadingIcon = () => {
                 <Input
                     isRequired
                     size="sm"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
                     placeholder="olivia@untitledui.com"
@@ -335,7 +326,7 @@ export const LeadingIcon = () => {
                     isRequired
                     isDisabled
                     size="sm"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
                     placeholder="olivia@untitledui.com"
@@ -345,7 +336,7 @@ export const LeadingIcon = () => {
                     isRequired
                     isInvalid
                     size="sm"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is an error message."
                     placeholder="olivia@untitledui.com"
@@ -356,7 +347,7 @@ export const LeadingIcon = () => {
                 <Input
                     isRequired
                     size="md"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
                     placeholder="olivia@untitledui.com"
@@ -366,7 +357,7 @@ export const LeadingIcon = () => {
                     isRequired
                     isDisabled
                     size="md"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
                     placeholder="olivia@untitledui.com"
@@ -376,7 +367,7 @@ export const LeadingIcon = () => {
                     isRequired
                     isInvalid
                     size="md"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is an error message."
                     placeholder="olivia@untitledui.com"
@@ -387,7 +378,7 @@ export const LeadingIcon = () => {
                 <Input
                     isRequired
                     size="lg"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
                     placeholder="olivia@untitledui.com"
@@ -397,7 +388,7 @@ export const LeadingIcon = () => {
                     isRequired
                     isDisabled
                     size="lg"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
                     placeholder="olivia@untitledui.com"
@@ -407,7 +398,7 @@ export const LeadingIcon = () => {
                     isRequired
                     isInvalid
                     size="lg"
-                    icon={Mail01}
+                    icon={Mail}
                     label="Email"
                     hint="This is an error message."
                     placeholder="olivia@untitledui.com"
@@ -1000,7 +991,7 @@ export const TrailingButton = () => {
                         <Button
                             size="sm"
                             color="secondary"
-                            iconLeading={copied === "input-1" ? Check : Copy01}
+                            iconLeading={copied === "input-1" ? Check : Copy}
                             onClick={() => copy(inputValue1 || "www.untitledui.com", "input-1")}
                         >
                             Copy
@@ -1022,7 +1013,7 @@ export const TrailingButton = () => {
                             isDisabled
                             size="sm"
                             color="secondary"
-                            iconLeading={copied === "input-2" ? Check : Copy01}
+                            iconLeading={copied === "input-2" ? Check : Copy}
                             onClick={() => copy(inputValue2 || "www.untitledui.com", "input-2")}
                         >
                             Copy
@@ -1042,7 +1033,7 @@ export const TrailingButton = () => {
                         <Button
                             size="sm"
                             color="secondary"
-                            iconLeading={copied === "input-3" ? Check : Copy01}
+                            iconLeading={copied === "input-3" ? Check : Copy}
                             onClick={() => copy(inputValue3 || "www.untitledui.com", "input-3")}
                         >
                             Copy
@@ -1063,7 +1054,7 @@ export const TrailingButton = () => {
                         <Button
                             color="secondary"
                             size="md"
-                            iconLeading={copied === "input-4" ? Check : Copy01}
+                            iconLeading={copied === "input-4" ? Check : Copy}
                             onClick={() => copy(inputValue4 || "www.untitledui.com", "input-4")}
                         >
                             Copy
@@ -1084,7 +1075,7 @@ export const TrailingButton = () => {
                             isDisabled
                             color="secondary"
                             size="md"
-                            iconLeading={copied === "input-5" ? Check : Copy01}
+                            iconLeading={copied === "input-5" ? Check : Copy}
                             onClick={() => copy(inputValue5 || "www.untitledui.com", "input-5")}
                         >
                             Copy
@@ -1104,7 +1095,7 @@ export const TrailingButton = () => {
                         <Button
                             color="secondary"
                             size="md"
-                            iconLeading={copied === "input-6" ? Check : Copy01}
+                            iconLeading={copied === "input-6" ? Check : Copy}
                             onClick={() => copy(inputValue6 || "www.untitledui.com", "input-6")}
                         >
                             Copy
@@ -1125,7 +1116,7 @@ export const TrailingButton = () => {
                         <Button
                             color="secondary"
                             size="lg"
-                            iconLeading={copied === "input-4" ? Check : Copy01}
+                            iconLeading={copied === "input-4" ? Check : Copy}
                             onClick={() => copy(inputValue4 || "www.untitledui.com", "input-4")}
                         >
                             Copy
@@ -1146,7 +1137,7 @@ export const TrailingButton = () => {
                             isDisabled
                             color="secondary"
                             size="lg"
-                            iconLeading={copied === "input-5" ? Check : Copy01}
+                            iconLeading={copied === "input-5" ? Check : Copy}
                             onClick={() => copy(inputValue5 || "www.untitledui.com", "input-5")}
                         >
                             Copy
@@ -1166,7 +1157,7 @@ export const TrailingButton = () => {
                         <Button
                             color="secondary"
                             size="lg"
-                            iconLeading={copied === "input-6" ? Check : Copy01}
+                            iconLeading={copied === "input-6" ? Check : Copy}
                             onClick={() => copy(inputValue6 || "www.untitledui.com", "input-6")}
                         >
                             Copy
@@ -1188,43 +1179,28 @@ export const PasswordInputs = () => {
             <div className="flex flex-col gap-4">
                 <TextField isRequired size="sm" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
                 <TextField isRequired isDisabled size="sm" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
                 <TextField isRequired isInvalid size="sm" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1232,43 +1208,28 @@ export const PasswordInputs = () => {
             <div className="flex flex-col gap-4">
                 <TextField isRequired size="md" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
                 <TextField isRequired isDisabled size="md" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
                 <TextField isRequired isInvalid size="md" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1276,43 +1237,28 @@ export const PasswordInputs = () => {
             <div className="flex flex-col gap-4">
                 <TextField isRequired size="lg" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
                 <TextField isRequired isDisabled size="lg" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
                 <TextField isRequired isInvalid size="lg" minLength={8} name="password" autoComplete="new-password" onChange={setPassword}>
                     <Label>Password</Label>
-                    <InputBase icon={Lock03} type="password" placeholder="••••••••••••" />
+                    <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <CheckCircle
-                            className={cx(
-                                "size-4 stroke-[2.25px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <AlertCircle className="hidden size-4 stroke-[2.25px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
