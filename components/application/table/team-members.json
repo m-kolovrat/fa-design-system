@@ -8,12 +8,12 @@
             "email": "olivia@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" },
                 { "name": "Engineering", "color": "warning" },
-                { "name": "Finance", "color": "orange" }
+                { "name": "Finance", "color": "orange-dark" }
             ],
             "avatarUrl": "https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80&w=100"
         },
@@ -25,12 +25,12 @@
             "email": "phoenix@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" },
                 { "name": "Engineering", "color": "warning" },
-                { "name": "Finance", "color": "orange" }
+                { "name": "Finance", "color": "orange-dark" }
             ],
             "avatarUrl": "https://www.untitledui.com/images/avatars/phoenix-baker?fm=webp&q=80&w=100"
         },
@@ -42,8 +42,8 @@
             "email": "lana@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" }
             ],
@@ -57,8 +57,8 @@
             "email": "demi@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Support", "color": "success" }
             ],
             "avatarUrl": "https://www.untitledui.com/images/avatars/demi-wilkinson?fm=webp&q=80&w=100"
@@ -71,8 +71,8 @@
             "email": "candice@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" }
             ],
@@ -86,8 +86,8 @@
             "email": "natali@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" }
             ],
@@ -101,12 +101,12 @@
             "email": "drew@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" },
                 { "name": "Engineering", "color": "warning" },
-                { "name": "Finance", "color": "orange" }
+                { "name": "Finance", "color": "orange-dark" }
             ],
             "avatarUrl": "https://www.untitledui.com/images/avatars/drew-cano"
         },
@@ -118,12 +118,12 @@
             "email": "orlando@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" },
                 { "name": "Engineering", "color": "warning" },
-                { "name": "Finance", "color": "orange" }
+                { "name": "Finance", "color": "orange-dark" }
             ],
             "avatarUrl": "https://www.untitledui.com/images/avatars/orlando-diggs?fm=webp&q=80&w=100"
         },
@@ -135,12 +135,12 @@
             "email": "andi@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" },
                 { "name": "Engineering", "color": "warning" },
-                { "name": "Finance", "color": "orange" }
+                { "name": "Finance", "color": "orange-dark" }
             ],
             "avatarUrl": "https://www.untitledui.com/images/avatars/andi-lane?fm=webp&q=80&w=100"
         },
@@ -152,8 +152,8 @@
             "email": "kate@untitledui.com",
             "teams": [
                 { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "sky" },
-                { "name": "Marketing", "color": "indigo" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" }
             ],
