@@ -1,7 +1,8 @@
 import type { FC } from "react";
-import { Alert, Plus, Restart, Search } from "fa-icons";
-import { EmptyState, ErrorState } from "@/components/application/empty-state/empty-state";
+import { Plus, Restart } from "fa-icons";
+import { EmptyState, type EmptyStateProps, ErrorState } from "@/components/application/empty-state/empty-state";
 import { Button } from "@/components/base/buttons/button";
+import { iconArg, iconArgType } from "@/components/internal/icon-controls";
 
 export default {
     title: "Application/Empty states",
@@ -16,6 +17,7 @@ export default {
 
 /** The Figma boolean props, as Storybook controls. */
 interface ToggleArgs {
+    icon: EmptyStateProps["icon"];
     showIcon: boolean;
     actions: boolean;
     secondaryButton: boolean;
@@ -25,6 +27,8 @@ interface ToggleArgs {
 const toggles = {
     args: { showIcon: true, actions: true, secondaryButton: true, primaryButton: true },
     argTypes: {
+        // No "None": leaving the icon out falls back to the default one. "Featured icon" hides it.
+        icon: { name: "Icon", ...iconArgType({ none: false }) },
         showIcon: { name: "Featured icon", control: "boolean" },
         actions: { name: "Actions", control: "boolean" },
         secondaryButton: { name: "Secondary button", control: "boolean" },
@@ -34,10 +38,11 @@ const toggles = {
 
 export const Empty = {
     ...toggles,
+    args: { ...toggles.args, icon: iconArg("Search") },
     render: (args: ToggleArgs) => (
         <EmptyState
             showIcon={args.showIcon}
-            icon={Search}
+            icon={args.icon}
             title="No projects found"
             description="Your search “Landing page design” did not match any projects. Please try again."
             secondaryAction={
@@ -64,10 +69,11 @@ export const Empty = {
 export const ErrorStory = {
     ...toggles,
     name: "Error",
+    args: { ...toggles.args, icon: iconArg("Alert") },
     render: (args: ToggleArgs) => (
         <ErrorState
             showIcon={args.showIcon}
-            icon={Alert}
+            icon={args.icon}
             title="Something went wrong"
             description="Please try again later."
             secondaryAction={

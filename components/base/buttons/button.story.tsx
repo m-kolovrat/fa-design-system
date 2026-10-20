@@ -1,13 +1,15 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Plus, Upload } from "fa-icons";
+import { iconArgType } from "@/components/internal/icon-controls";
 import { Button } from "./button";
 
 /**
  * Canonical interactive story for the Button.
  *
  * The `Playground` renders a single Button driven entirely by the Controls
- * panel — switch color, size, text, and toggle disabled/loading live. The
+ * panel — switch color, size, text and the leading/trailing icon (any Fa icon,
+ * or "None"), and toggle disabled/loading live. The
  * curated stories below (`Sizes`, `States`, `IconStroke`) are hand-picked
  * reference rows for at-a-glance review.
  *
@@ -49,6 +51,8 @@ const meta = {
         color: { control: "select", options: colors },
         size: { control: "select", options: sizes },
         children: { control: "text" },
+        iconLeading: iconArgType(),
+        iconTrailing: iconArgType(),
         isDisabled: { control: "boolean" },
         isLoading: { control: "boolean" },
         showTextWhileLoading: { control: "boolean" },

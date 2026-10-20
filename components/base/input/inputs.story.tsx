@@ -1,5 +1,8 @@
 import type { FC } from "react";
+import type { StoryObj } from "@storybook/nextjs-vite";
+import { Input } from "@/components/base/input/input";
 import * as Inputs from "@/components/base/input/inputs.demo";
+import { iconArg, iconArgType } from "@/components/internal/icon-controls";
 
 export default {
     title: "Base components/Inputs",
@@ -23,6 +26,33 @@ const WiderDecorator = (Story: FC) => (
         <Story />
     </div>
 );
+
+/** Single interactive input — pick the leading icon (any Fa icon, or "None") and other props in the Controls panel. */
+export const Playground: StoryObj<typeof Input> = {
+    args: {
+        size: "md",
+        label: "Email",
+        placeholder: "olivia@untitledui.com",
+        hint: "This is a hint text to help user.",
+        icon: iconArg("Mail"),
+        isRequired: false,
+        isDisabled: false,
+        isInvalid: false,
+    },
+    argTypes: {
+        size: { control: "select", options: ["sm", "md", "lg"] },
+        label: { control: "text" },
+        placeholder: { control: "text" },
+        hint: { control: "text" },
+        tooltip: { control: "text" },
+        icon: iconArgType(),
+        isRequired: { control: "boolean" },
+        isDisabled: { control: "boolean" },
+        isInvalid: { control: "boolean" },
+    },
+    render: (args) => <Input {...args} />,
+    decorators: [DefaultDecorator],
+};
 
 export const Default = () => <Inputs.Default />;
 Default.decorators = [DefaultDecorator];

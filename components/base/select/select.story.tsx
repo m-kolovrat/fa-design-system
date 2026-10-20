@@ -1,5 +1,8 @@
 import type { FC } from "react";
+import type { StoryObj } from "@storybook/nextjs-vite";
+import { Select } from "@/components/base/select/select";
 import * as Selects from "@/components/base/select/select.demo";
+import { iconArg, iconArgType } from "@/components/internal/icon-controls";
 
 export default {
     title: "Base components/Select",
@@ -20,6 +23,50 @@ const WiderDecorator = (Story: FC) => (
         </div>
     </div>
 );
+
+const PLAYGROUND_ITEMS = [
+    { id: "phoenix", label: "Phoenix Baker", supportingText: "@phoenix" },
+    { id: "olivia", label: "Olivia Rhye", supportingText: "@olivia" },
+    { id: "lana", label: "Lana Steiner", supportingText: "@lana" },
+    { id: "demi", label: "Demi Wilkinson", supportingText: "@demi" },
+];
+
+/** Single interactive select — pick the leading icon (any Fa icon, or "None") and other props in the Controls panel. */
+export const Playground: StoryObj<typeof Select> = {
+    args: {
+        size: "md",
+        label: "Team member",
+        placeholder: "Select team member",
+        hint: "This is a hint text to help user.",
+        icon: iconArg("User"),
+        isRequired: false,
+        isDisabled: false,
+        isInvalid: false,
+    },
+    argTypes: {
+        size: { control: "select", options: ["sm", "md", "lg"] },
+        label: { control: "text" },
+        placeholder: { control: "text" },
+        hint: { control: "text" },
+        tooltip: { control: "text" },
+        icon: iconArgType(),
+        isRequired: { control: "boolean" },
+        isDisabled: { control: "boolean" },
+        isInvalid: { control: "boolean" },
+        children: { control: false },
+        items: { control: false },
+    },
+    render: (args) => (
+        <Select {...args} items={PLAYGROUND_ITEMS}>
+            {(item) => (
+                <Select.Item id={item.id} supportingText={item.supportingText}>
+                    {item.label}
+                </Select.Item>
+            )}
+        </Select>
+    ),
+    decorators: [DefaultDecorator],
+};
 
 export const Default = () => <Selects.Default />;
 Default.decorators = [DefaultDecorator];
