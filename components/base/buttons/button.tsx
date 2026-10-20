@@ -16,8 +16,7 @@ export const styles = sortCx({
             // Disabled styles — Figma-accurate neutral tokens (shared text + icon across all hierarchies)
             "disabled:cursor-not-allowed disabled:text-fg-disabled disabled:*:data-icon:text-fg-disabled",
             // Same as `icon` but for SSR icons that cannot be passed to the client as functions.
-            // STROKE PROTOTYPE (Button-only): trialing 1.5px default icon stroke (was 2). Remove `*:data-icon:stroke-[1.5px]` to revert.
-            "*:data-icon:pointer-events-none *:data-icon:size-5 *:data-icon:shrink-0 *:data-icon:stroke-[1.5px] *:data-icon:transition-inherit-all",
+            "*:data-icon:pointer-events-none *:data-icon:size-5 *:data-icon:shrink-0 *:data-icon:transition-inherit-all",
         ].join(" "),
         icon: "pointer-events-none size-5 shrink-0 transition-inherit-all",
     },

@@ -1,7 +1,7 @@
 "use client";
 
 import { type ComponentType, type HTMLAttributes, type ReactNode, type Ref, createContext, useContext } from "react";
-import { HelpCircle, InfoCircle } from "@untitledui/icons";
+import { Help, Info } from "fa-icons";
 import type { DateInputProps as AriaDateInputProps } from "react-aria-components";
 import {
     DateField as AriaDateField,
@@ -75,7 +75,7 @@ export const InputDateBase = ({
     const sizes = sortCx({
         sm: {
             root: cx("px-3 py-2 text-sm", hasTrailingIcon && "pr-9", hasLeadingIcon && "pl-8.5"),
-            iconLeading: "left-3 size-4 stroke-[2.25px]",
+            iconLeading: "left-3 size-4 stroke-[1.875px]",
             iconTrailing: "right-3",
             shortcut: "pr-2.5",
         },
@@ -152,15 +152,15 @@ export const InputDateBase = ({
                             tooltipClassName,
                         )}
                     >
-                        <HelpCircle className="size-4 stroke-[2.25px]" />
+                        <Help className="size-4 stroke-[1.875px]" />
                     </TooltipTrigger>
                 </Tooltip>
             )}
 
             {/* Invalid icon */}
-            <InfoCircle
+            <Info
                 className={cx(
-                    "pointer-events-none absolute hidden size-4 stroke-[2.25px] text-fg-error-secondary group-invalid/input:block",
+                    "pointer-events-none absolute hidden size-4 stroke-[1.875px] text-fg-error-secondary group-invalid/input:block",
                     sizes[inputSize].iconTrailing,
                     context?.tooltipClassName,
                     tooltipClassName,

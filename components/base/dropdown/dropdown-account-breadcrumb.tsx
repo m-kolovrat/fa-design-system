@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronSelectorVertical } from "@untitledui/icons";
+import { ChevronUpDown } from "fa-icons";
 import { Button as AriaButton, MenuItem as AriaMenuItem } from "react-aria-components";
 import { Avatar } from "@/components/base/avatar/avatar";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
@@ -45,7 +45,7 @@ export const DropdownAccountBreadcrumb = () => {
                 </div>
                 <span className="text-sm font-semibold text-primary">{selectedAccount?.name}</span>
 
-                <ChevronSelectorVertical className="size-3 shrink-0 stroke-3 text-fg-quaternary" />
+                <ChevronUpDown className="size-3 shrink-0 stroke-[2.08px] text-fg-quaternary" />
             </AriaButton>
 
             <Dropdown.Popover className="w-62" placement="bottom left">

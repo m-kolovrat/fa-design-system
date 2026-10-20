@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, type ReactNode } from "react";
-import { Bell01, LifeBuoy01, SearchLg, Settings01 } from "@untitledui/icons";
+import { Bell, LifeBuoy, Search, Settings } from "fa-icons";
 import { FaLargeLogo } from "fa-icons";
 import { TabList, Tabs } from "@/components/application/tabs/tabs";
 import { BadgeWithDot } from "@/components/base/badges/badges";
@@ -72,12 +72,12 @@ const DefaultActions = ({ activeUrl }: { activeUrl?: string }) => {
     return (
         <>
             <div className="flex gap-0.5">
-                <NavButton current={activeUrl === "/search"} icon={SearchLg} label="Search" href="/search" tooltipPlacement="bottom" />
-                <NavButton current={activeUrl === "/settings-01"} icon={Settings01} label="Settings" href="/settings-01" tooltipPlacement="bottom" />
+                <NavButton current={activeUrl === "/search"} icon={Search} label="Search" href="/search" tooltipPlacement="bottom" />
+                <NavButton current={activeUrl === "/settings-01"} icon={Settings} label="Settings" href="/settings-01" tooltipPlacement="bottom" />
                 <div className="relative">
                     <NavButton
                         current={activeUrl === "/notifications-01"}
-                        icon={Bell01}
+                        icon={Bell}
                         label="Notifications"
                         href="/notifications-01"
                         tooltipPlacement="bottom"
@@ -128,20 +128,20 @@ export const HeaderNavigationBase = ({
                     <div className="flex flex-col gap-5 px-4">
                         <FaLargeLogo className="h-6 w-auto text-fg-primary" />
 
-                        <Input size="md" aria-label="Search" placeholder="Search" icon={SearchLg} />
+                        <Input size="md" aria-label="Search" placeholder="Search" icon={Search} />
                     </div>
 
                     <NavList items={items} />
 
                     <div className="mt-auto flex flex-col gap-3 p-4">
                         <div className="flex flex-col">
-                            <NavItemBase type="link" href="#" icon={LifeBuoy01}>
+                            <NavItemBase type="link" href="#" icon={LifeBuoy}>
                                 Support
                             </NavItemBase>
                             <NavItemBase
                                 type="link"
                                 href="#"
-                                icon={Settings01}
+                                icon={Settings}
                                 badge={
                                     <BadgeWithDot color="success" type="modern" size="sm">
                                         Online
@@ -150,7 +150,7 @@ export const HeaderNavigationBase = ({
                             >
                                 Settings
                             </NavItemBase>
-                            <NavItemBase type="link" href="https://www.untitledui.com/" icon={Settings01}>
+                            <NavItemBase type="link" href="https://www.untitledui.com/" icon={Settings}>
                                 Open in browser
                             </NavItemBase>
                         </div>
@@ -215,7 +215,7 @@ export const HeaderNavigationBase = ({
                                     </ul>
                                 </nav>
 
-                                {!centered && <Input shortcut aria-label="Search" placeholder="Search" icon={SearchLg} size="sm" className="max-w-70" />}
+                                {!centered && <Input shortcut aria-label="Search" placeholder="Search" icon={Search} size="sm" className="max-w-70" />}
                             </div>
                         )}
                     </section>

@@ -1,7 +1,7 @@
 "use client";
 
 import type { RefAttributes } from "react";
-import { XClose } from "@untitledui/icons";
+import { Close } from "fa-icons";
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 import { cx } from "@/utils/cx";
 
@@ -11,9 +11,9 @@ interface TagCloseXProps extends AriaButtonProps, RefAttributes<HTMLButtonElemen
 }
 
 const styles = {
-    sm: { root: "p-0.5", icon: "size-2.5 stroke-[3.6px]" },
-    md: { root: "p-0.5", icon: "size-3 stroke-[2.86px]" },
-    lg: { root: "p-0.75", icon: "size-3.5 stroke-3" },
+    sm: { root: "p-0.5", icon: "size-2.5 stroke-[3px]" },
+    md: { root: "p-0.5", icon: "size-3 stroke-[2.38px]" },
+    lg: { root: "p-0.75", icon: "size-3.5 stroke-[2.08px]" },
 };
 
 export const TagCloseX = ({ size = "md", className, ...otherProps }: TagCloseXProps) => {
@@ -28,7 +28,7 @@ export const TagCloseX = ({ size = "md", className, ...otherProps }: TagCloseXPr
             )}
             {...otherProps}
         >
-            <XClose className={cx("transition-inherit-all", styles[size].icon)} />
+            <Close className={cx("transition-inherit-all", styles[size].icon)} />
         </AriaButton>
     );
 };

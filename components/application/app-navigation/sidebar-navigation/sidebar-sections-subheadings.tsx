@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchLg } from "@untitledui/icons";
+import { Search } from "fa-icons";
 import { FaLargeLogo } from "fa-icons";
 import { ButtonUtility } from "@/components/base/buttons/button-utility";
 import { MobileNavigationHeader } from "../base-components/mobile-header";
@@ -29,7 +29,7 @@ export const SidebarNavigationSectionsSubheadings = ({ activeUrl = "/", items }:
         >
             <div className="flex items-center justify-between gap-5 px-4 lg:pl-5">
                 <FaLargeLogo className="h-6 w-auto text-fg-primary" />
-                <ButtonUtility size="xs" color="tertiary" tooltip="Search" icon={SearchLg} />
+                <ButtonUtility size="xs" color="tertiary" tooltip="Search" icon={Search} />
             </div>
 
             <ul className="mt-6 md:mt-5">

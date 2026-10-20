@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { LayerSingle, LayersThree01, LayersTwo01 } from "@untitledui/icons";
+import { Factory, Plant, Rocket } from "fa-icons";
 import { BadgeWithDot } from "@/components/base/badges/badges";
 import { Button } from "@/components/base/buttons/button";
 import { RadioCard, RadioCardGroup } from "@/components/base/radio-buttons/radio-cards";
@@ -17,9 +17,9 @@ export default {
 };
 
 const plans = [
-    { id: "basic", title: "Basic plan", subtitle: "$10/month", price: "$10", icon: LayerSingle },
-    { id: "business", title: "Business plan", subtitle: "$20/month", price: "$20", icon: LayersTwo01 },
-    { id: "enterprise", title: "Enterprise plan", subtitle: "$40/month", price: "$40", icon: LayersThree01, isDisabled: true },
+    { id: "basic", title: "Basic plan", subtitle: "$10/month", price: "$10", icon: Plant },
+    { id: "business", title: "Business plan", subtitle: "$20/month", price: "$20", icon: Rocket },
+    { id: "enterprise", title: "Enterprise plan", subtitle: "$40/month", price: "$40", icon: Factory, isDisabled: true },
 ];
 
 const people = [

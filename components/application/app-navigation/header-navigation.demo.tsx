@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell01, SearchLg, Settings01, Zap } from "@untitledui/icons";
+import { Bell, Bolt, Search, Settings } from "fa-icons";
 import { NavButton } from "@/components/application/app-navigation/base-components/nav-button";
 import { HeaderNavigationBase } from "@/components/application/app-navigation/header-navigation";
 import { Button } from "@/components/base/buttons/button";
@@ -42,13 +42,13 @@ export const HeaderNavigationDualTierDemo = () => (
         items={items}
         actions={
             <>
-                <Button iconLeading={Zap} color="secondary" size="sm">
+                <Button iconLeading={Bolt} color="secondary" size="sm">
                     Upgrade now
                 </Button>
                 <div className="flex gap-0.5">
-                    <NavButton icon={Settings01} label="Settings" href="/settings-01" tooltipPlacement="bottom" />
+                    <NavButton icon={Settings} label="Settings" href="/settings-01" tooltipPlacement="bottom" />
                     <div className="relative">
-                        <NavButton icon={Bell01} label="Notifications" href="/notifications-01" tooltipPlacement="bottom" />
+                        <NavButton icon={Bell} label="Notifications" href="/notifications-01" tooltipPlacement="bottom" />
                         <div className="absolute -top-0.25 -right-0.25 flex size-3.5 items-center justify-center rounded-full bg-fg-error-primary text-[10px] font-bold text-white">
                             2
                         </div>
@@ -68,9 +68,9 @@ export const HeaderNavigationTabsDemo = () => (
         actions={
             <>
                 <div className="flex gap-0.5">
-                    <NavButton icon={SearchLg} label="Search" href="/search" tooltipPlacement="bottom" />
+                    <NavButton icon={Search} label="Search" href="/search" tooltipPlacement="bottom" />
                     <div className="relative">
-                        <NavButton icon={Bell01} label="Notifications" href="/notifications-01" tooltipPlacement="bottom" />
+                        <NavButton icon={Bell} label="Notifications" href="/notifications-01" tooltipPlacement="bottom" />
                         <div className="absolute -top-0.25 -right-0.25 flex size-3.5 items-center justify-center rounded-full bg-fg-error-primary text-[10px] font-bold text-white">
                             2
                         </div>

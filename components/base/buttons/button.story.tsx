@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Plus, UploadCloud02 } from "@untitledui/icons";
+import { Plus, Upload } from "fa-icons";
 import { Button } from "./button";
 
 /**
@@ -87,7 +87,7 @@ export const IconStroke: Story = {
             <div className="flex flex-wrap items-end gap-8">
                 {sizes.map((size) => (
                     <Labeled key={size} label={`${size} · 20px icon`}>
-                        <Button {...args} size={size} iconLeading={UploadCloud02}>
+                        <Button {...args} size={size} iconLeading={Upload}>
                             Button CTA
                         </Button>
                     </Labeled>

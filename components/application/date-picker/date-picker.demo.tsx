@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { endOfMonth, endOfWeek, getLocalTimeZone, startOfMonth, startOfWeek, toCalendarDateTime, today } from "@internationalized/date";
-import { Calendar as CalendarIcon, Clock } from "@untitledui/icons";
+import { Calendar as CalendarIcon, Clock } from "fa-icons";
 import { useDateFormatter } from "react-aria";
 import type { DateValue, Key } from "react-aria-components";
 import {

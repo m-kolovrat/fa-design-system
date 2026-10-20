@@ -2,7 +2,7 @@
 
 import type { FC, ReactElement, ReactNode } from "react";
 import { Children, createContext, isValidElement, useContext, useState } from "react";
-import { ChevronRight, SlashDivider } from "@untitledui/icons";
+import { ChevronRight, Slash } from "fa-icons";
 import type { BreadcrumbsProps as AriaBreadcrumbsProps, LinkProps as AriaLinkProps } from "react-aria-components";
 import { Breadcrumb as AriaBreadcrumb, Breadcrumbs as AriaBreadcrumbs, Button as AriaButton, Link as AriaLink } from "react-aria-components";
 import { cx, sortCx } from "@/utils/cx";
@@ -58,7 +58,7 @@ export const styles = sortCx({
 
 const Divider = () => {
     const { divider } = useContext(BreadcrumbsContext);
-    const Icon = divider === "slash" ? SlashDivider : ChevronRight;
+    const Icon = divider === "slash" ? Slash : ChevronRight;
 
     return <Icon aria-hidden="true" className={styles.dividers[divider]} />;
 };

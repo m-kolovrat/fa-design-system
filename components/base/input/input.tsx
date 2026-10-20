@@ -1,7 +1,7 @@
 "use client";
 
 import { type ComponentType, type HTMLAttributes, type ReactNode, type Ref, createContext, useContext, useState } from "react";
-import { Eye, EyeOff, HelpCircle, InfoCircle } from "@untitledui/icons";
+import { Eye, EyeOff, Help, Info } from "fa-icons";
 import type { InputProps as AriaInputProps, TextFieldProps as AriaTextFieldProps } from "react-aria-components";
 import { Button as AriaButton, Group as AriaGroup, Input as AriaInput, TextField as AriaTextField } from "react-aria-components";
 import { HintText } from "@/components/base/input/hint-text";
@@ -73,7 +73,7 @@ export const InputBase = ({
     const sizes = sortCx({
         sm: {
             root: cx("px-3 py-2 text-sm", hasLeadingIcon && "pl-9", hasTrailingIcon && "pr-9"),
-            iconLeading: "left-3 size-4 stroke-[2.25px]",
+            iconLeading: "left-3 size-4 stroke-[1.875px]",
             iconTrailing: "right-3",
             shortcut: "pr-1.5",
         },
@@ -149,16 +149,16 @@ export const InputBase = ({
                             tooltipClassName,
                         )}
                     >
-                        <HelpCircle className="size-4 stroke-[2.25px]" />
+                        <Help className="size-4 stroke-[1.875px]" />
                     </TooltipTrigger>
                 </Tooltip>
             )}
 
             {/* Invalid icon */}
             {type !== "password" && (
-                <InfoCircle
+                <Info
                     className={cx(
-                        "pointer-events-none absolute hidden size-4 stroke-[2.25px] text-fg-error-secondary group-invalid/input:block",
+                        "pointer-events-none absolute hidden size-4 stroke-[1.875px] text-fg-error-secondary group-invalid/input:block",
                         sizes[inputSize].iconTrailing,
                         context?.tooltipClassName,
                         tooltipClassName,
@@ -176,7 +176,7 @@ export const InputBase = ({
                         sizes[inputSize].iconTrailing,
                     )}
                 >
-                    {isPasswordVisible ? <EyeOff className="size-4 stroke-[2.25px]" /> : <Eye className="size-4 stroke-[2.25px]" />}
+                    {isPasswordVisible ? <EyeOff className="size-4 stroke-[1.875px]" /> : <Eye className="size-4 stroke-[1.875px]" />}
                 </AriaButton>
             )}
 

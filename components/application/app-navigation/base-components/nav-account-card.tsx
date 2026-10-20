@@ -2,7 +2,7 @@
 
 import type { FC, HTMLAttributes } from "react";
 import { useCallback, useEffect, useRef } from "react";
-import { BookOpen01, ChevronSelectorVertical, LogOut01, Plus, Settings01, User01 } from "@untitledui/icons";
+import { BookOpen, ChevronUpDown, Logout, Plus, Settings, User } from "fa-icons";
 import { useFocusManager } from "react-aria";
 import type { Placement as AriaPlacement } from "react-aria-components";
 import type { DialogProps as AriaDialogProps } from "react-aria-components";
@@ -86,9 +86,9 @@ export const NavAccountMenu = ({
         >
             <div className="rounded-xl bg-primary ring-1 ring-secondary">
                 <div className="flex flex-col gap-0.5 py-1.5">
-                    <NavAccountCardMenuItem label="View profile" icon={User01} shortcut="⌘K->P" />
-                    <NavAccountCardMenuItem label="Account settings" icon={Settings01} shortcut="⌘S" />
-                    <NavAccountCardMenuItem label="Documentation" icon={BookOpen01} />
+                    <NavAccountCardMenuItem label="View profile" icon={User} shortcut="⌘K->P" />
+                    <NavAccountCardMenuItem label="Account settings" icon={Settings} shortcut="⌘S" />
+                    <NavAccountCardMenuItem label="Documentation" icon={BookOpen} />
                 </div>
                 <div className="flex flex-col gap-0.5 border-t border-secondary py-1.5">
                     <div className="px-3 pt-1.5 pb-1 text-xs font-semibold text-tertiary">Switch account</div>
@@ -117,7 +117,7 @@ export const NavAccountMenu = ({
             </div>
 
             <div className="pt-1 pb-1.5">
-                <NavAccountCardMenuItem label="Sign out" icon={LogOut01} shortcut="⌥⇧Q" />
+                <NavAccountCardMenuItem label="Sign out" icon={Logout} shortcut="⌥⇧Q" />
             </div>
         </AriaDialog>
     );
@@ -188,7 +188,7 @@ export const NavAccountCard = ({
 
             <AriaDialogTrigger>
                 <AriaButton className="absolute top-2 right-2 flex cursor-pointer items-center justify-center rounded-sm p-1.5 text-fg-quaternary outline-focus-ring transition hover:bg-primary_hover hover:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 pressed:bg-primary_hover pressed:text-fg-quaternary_hover">
-                    <ChevronSelectorVertical className="size-4 shrink-0 stroke-[2.25px]" />
+                    <ChevronUpDown className="size-4 shrink-0 stroke-[1.875px]" />
                 </AriaButton>
                 <AriaPopover
                     placement={popoverPlacement ?? (isDesktop ? "right bottom" : "top right")}

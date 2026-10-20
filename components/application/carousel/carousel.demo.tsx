@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "@untitledui/icons";
+import { ChevronLeft, ChevronRight } from "fa-icons";
 import { Carousel, useCarousel } from "@/components/application/carousel/carousel-base";
 import { PaginationDot } from "@/components/application/pagination/pagination-dot";
 

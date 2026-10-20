@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
-import { AlertCircle, CheckCircle, InfoCircle, UploadCloud02 } from "@untitledui/icons";
+import { Alert, Info, Success, Upload } from "fa-icons";
 import { Toaster, toast } from "sonner";
 import { Avatar } from "@/components/base/avatar/avatar";
 import { CloseButton } from "@/components/base/buttons/close-button";
@@ -18,12 +18,12 @@ import { cx } from "@/utils/cx";
 export type NotificationType = "brand" | "gray" | "error" | "warning" | "success" | "none" | "avatar" | "image" | "progress";
 
 const defaultIcons: Partial<Record<NotificationType, FC<{ className?: string }>>> = {
-    brand: InfoCircle,
-    gray: InfoCircle,
-    error: AlertCircle,
-    warning: AlertCircle,
-    success: CheckCircle,
-    progress: UploadCloud02,
+    brand: Info,
+    gray: Info,
+    error: Alert,
+    warning: Alert,
+    success: Success,
+    progress: Upload,
 };
 
 export interface NotificationProps {

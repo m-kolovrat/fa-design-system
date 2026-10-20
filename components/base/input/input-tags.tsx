@@ -2,7 +2,7 @@
 
 import type { Key, KeyboardEvent, ReactNode } from "react";
 import { useCallback, useRef, useState } from "react";
-import { HelpCircle, InfoCircle } from "@untitledui/icons";
+import { Help, Info } from "fa-icons";
 import { Group as AriaGroup, Input as AriaInput } from "react-aria-components";
 import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
@@ -298,14 +298,14 @@ export const InputTags = ({
                                         sizes[size].iconTrailing,
                                     )}
                                 >
-                                    <HelpCircle className="size-4 stroke-[2.25px]" />
+                                    <Help className="size-4 stroke-[1.875px]" />
                                 </TooltipTrigger>
                             </Tooltip>
                         )}
 
-                        <InfoCircle
+                        <Info
                             className={cx(
-                                "pointer-events-none absolute hidden size-4 stroke-[2.25px] text-fg-error-secondary group-invalid/input:block",
+                                "pointer-events-none absolute hidden size-4 stroke-[1.875px] text-fg-error-secondary group-invalid/input:block",
                                 sizes[size].iconTrailing,
                             )}
                         />

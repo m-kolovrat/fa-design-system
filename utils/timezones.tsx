@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock } from "@untitledui/icons";
+import { Clock } from "fa-icons";
 import type { SelectItemType } from "@/components/base/select/select";
 
 /**

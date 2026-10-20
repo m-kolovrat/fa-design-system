@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithRef, FC, ReactNode } from "react";
-import { CheckCircle } from "@untitledui/icons";
+import { Success } from "fa-icons";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 import { cx } from "@/utils/cx";
 
@@ -19,7 +19,7 @@ export interface EmptyStateProps extends Omit<ComponentPropsWithRef<"div">, "tit
 }
 
 const StateBase = ({
-    icon = CheckCircle,
+    icon = Success,
     showIcon = true,
     color,
     title,

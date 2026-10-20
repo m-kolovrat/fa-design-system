@@ -1,7 +1,7 @@
 "use client";
 
 import type { HTMLAttributes } from "react";
-import { AlertCircle } from "@untitledui/icons";
+import { Alert } from "fa-icons";
 import { cx } from "@/utils/cx";
 
 interface IllustrationProps extends HTMLAttributes<HTMLDivElement> {
@@ -16,13 +16,7 @@ export const CreditCardIllustration = ({ size = "lg", ...otherProps }: Illustrat
     return <Pattern {...otherProps} />;
 };
 
-export const sm = ({
-    className,
-    svgClassName,
-    childrenClassName,
-    children = <AlertCircle className="size-6" />,
-    ...otherProps
-}: Omit<IllustrationProps, "size">) => {
+export const sm = ({ className, svgClassName, childrenClassName, children = <Alert className="size-6" />, ...otherProps }: Omit<IllustrationProps, "size">) => {
     return (
         <div {...otherProps} className={cx("relative h-29.5 w-38", className)}>
             <svg viewBox="0 0 152 118" fill="none" className={cx("size-full stroke-inherit text-inherit", svgClassName)}>
@@ -111,13 +105,7 @@ export const sm = ({
     );
 };
 
-export const md = ({
-    className,
-    svgClassName,
-    childrenClassName,
-    children = <AlertCircle className="size-7" />,
-    ...otherProps
-}: Omit<IllustrationProps, "size">) => {
+export const md = ({ className, svgClassName, childrenClassName, children = <Alert className="size-7" />, ...otherProps }: Omit<IllustrationProps, "size">) => {
     return (
         <div {...otherProps} className={cx("relative h-35.75 w-45", className)}>
             <svg viewBox="0 0 180 143" fill="none" className={cx("size-full stroke-inherit text-inherit", svgClassName)}>
@@ -204,13 +192,7 @@ export const md = ({
     );
 };
 
-export const lg = ({
-    className,
-    svgClassName,
-    childrenClassName,
-    children = <AlertCircle className="size-7" />,
-    ...otherProps
-}: Omit<IllustrationProps, "size">) => {
+export const lg = ({ className, svgClassName, childrenClassName, children = <Alert className="size-7" />, ...otherProps }: Omit<IllustrationProps, "size">) => {
     return (
         <div {...otherProps} className={cx("relative h-41.75 w-55", className)}>
             <svg viewBox="0 0 220 167" fill="none" className={cx("size-full stroke-inherit text-inherit", svgClassName)}>

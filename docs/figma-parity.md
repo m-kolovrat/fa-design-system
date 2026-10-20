@@ -2,7 +2,7 @@
 
 Tracks where the code in this repo and the Figma file [Fa Design System](https://www.figma.com/design/ycDcr4jjOWyIneuxyL1xAd/Fa-Design-System) (file key `ycDcr4jjOWyIneuxyL1xAd`) don't line up: different names, things that exist on only one side, and partial builds.
 
-**Last verified:** 2026-10-20, against the `use-fa-icons-package` branch.
+**Last verified:** 2026-10-20, against the `fa-icons-ui` branch.
 
 **How to use it**
 
@@ -88,6 +88,27 @@ Same thing, different name. No action needed; use this to find the counterpart.
 | Payment icons                                                           | Code has 57 brands, Figma 39. All Figma brands exist in code; code adds 18 (Afterpay, Venmo, Zelle, Revolut…)                                                 | Add to Figma if needed                        |
 | Form, hook form                                                         | Logic only, nothing visual                                                                                                                                    | None needed                                   |
 
+### Icons with no Fa equivalent
+
+All icons come from `fa-icons` (Figma "Icons V2"). These Untitled UI icons had no matching Fa icon, so the closest one stands in. Design them in Figma (and add them to `fa-icons`) if the meaning matters.
+
+| Untitled icon                                     | Used for                                                    | Stand-in                                   |
+| ------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------ |
+| Code02, Cube01, Scissors01                        | Dropdown examples: Developer, More tools, Cut               | `Hammer`, `Grid`, `Unlink`                 |
+| Container, LayersTwo01                            | Avatar dropdown: API, Changelog                             | `Link`, `News`                             |
+| LayerSingle, LayersTwo01, LayersThree01           | Radio card plans (basic / business / enterprise), Plan tab  | `Plant`, `Rocket`, `Factory`, `Wallet`     |
+| Archive, Folder, File05, Package, Inbox01         | Sidebar demo: Archive, Projects, Documents, Products, Inbox | `Bookmark`, `Notebook`, `Factory`, `Mail`  |
+| BarChartSquare02, PieChart03, LayoutAlt01, Rows01 | Sidebar / tabs demos: dashboards, reporting, layouts, lists | `Grid`, `GraphLine`, `Table`, `BulletList` |
+| UserPlus01, UsersPlus, UserSquare                 | Invite modal, "Shared with me", profile                     | `Users`, `User`                            |
+| ClockFastForward, NotificationBox, ReverseLeft    | Scheduled reports, notifications, refunded badge            | `Clock`, `Bell`, `ArrowLeft`               |
+| Placeholder                                       | Button group examples                                       | `Star`                                     |
+
+**Icon stroke weight (open).** Fa icons have a 1.5px stroke at 20px that scales with the icon, as in Figma
+(1.2px at 16px). Many components set a `stroke-[…]` class on 12–16px icons to keep a heavier line; those
+values were rescaled from Untitled's 24px grid to Fa's 20px grid so the rendered weight didn't change
+(`stroke-[2.25px]` → `stroke-[1.875px]`, i.e. 1.5px at 16px). Decide whether small icons follow Figma's
+scaled stroke (drop the classes) or keep a fixed weight.
+
 ---
 
 ## 4. Same component, different variants
@@ -126,12 +147,12 @@ Settled; don't re-raise unless the design changes.
 | Flags                          | Figma's 59 flags (Misc icons → Flag, `<country>-<currency>` + `globe`) are `Flag` / `flags` from the `fa-icons` package (20×20, as in Figma), keyed by the Figma name. `utils/countries.tsx` only lists countries with a flag (55; Hong Kong and Taiwan have flags but no country entry). Croatia has no flag on purpose.                                                         |
 | Custom components              | Designed as a main component in Figma first, then recreated in code.                                                                                                                                                                                                                                                                                                              |
 | Logos and country flags        | Added to Figma, then exported into the `fa-icons` package. Logos (Misc icons → Logos) are components from `fa-icons`, named as in Figma. Most follow the text color (`currentColor`); pinpoint, vipps and the four Kapital list versions (`kapital-list-*`) keep fixed colors, and hegnar-bok keeps its orange accent. The Fa logos replaced the Untitled UI logos in navigation. |
-| Button icon stroke             | Figma: every Button / Button destructive icon is 1.67px (24px icon at 20px). Code keeps the 1.5px stroke prototype in `button.tsx` for now.                                                                                                                                                                                                                                       |
+| Button icon stroke             | Figma: every Button / Button destructive icon is 1.67px (24px icon at 20px). Code uses Fa icons at 20px, which draw 1.5px natively (the stroke prototype class in `button.tsx` is gone).                                                                                                                                                                                          |
 
 ---
 
 ## 7. Figma components that don't need code
 
 - **Documentation and foundations:** \_Swatch base, \_Type scale base, \_Shadow card, \_Focus ring card, \_Blur card, \_Radius card, \_Container, Design note, Design system header / footer, Measure + spacing guide, Numeric key, Cursor, the Thumbnail page.
-- **Asset libraries the code gets from packages:** icons (`@untitledui/icons`), file type icons (`@untitledui/file-icons`), flags and logos (`fa-icons`, built from Figma; it also has the Fa icons that will replace `@untitledui/icons`).
+- **Asset libraries the code gets from packages:** icons, flags and logos (`fa-icons`, built from Figma), file type icons (`@untitledui/file-icons`). `@untitledui/icons` was dropped on 2026-10-20.
 - **Building blocks** (names starting with `_`): the internal parts Figma assembles a component from, such as \_Tab button base, \_Toggle base, \_Checkbox base, \_Nav item base, \_Tag close X, \_Pagination number base, \_Select menu item and \_Calendar cell. In code they live inside their parent component. Building blocks of components that are missing in code (§2) are missing too.

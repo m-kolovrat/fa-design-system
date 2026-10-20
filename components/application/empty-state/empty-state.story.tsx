@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { AlertCircle, Plus, RefreshCw01, SearchLg } from "@untitledui/icons";
+import { Alert, Plus, Restart, Search } from "fa-icons";
 import { EmptyState, ErrorState } from "@/components/application/empty-state/empty-state";
 import { Button } from "@/components/base/buttons/button";
 
@@ -37,7 +37,7 @@ export const Empty = {
     render: (args: ToggleArgs) => (
         <EmptyState
             showIcon={args.showIcon}
-            icon={SearchLg}
+            icon={Search}
             title="No projects found"
             description="Your search “Landing page design” did not match any projects. Please try again."
             secondaryAction={
@@ -67,7 +67,7 @@ export const ErrorStory = {
     render: (args: ToggleArgs) => (
         <ErrorState
             showIcon={args.showIcon}
-            icon={AlertCircle}
+            icon={Alert}
             title="Something went wrong"
             description="Please try again later."
             secondaryAction={
@@ -81,7 +81,7 @@ export const ErrorStory = {
             primaryAction={
                 args.actions &&
                 args.primaryButton && (
-                    <Button size="md" iconLeading={RefreshCw01}>
+                    <Button size="md" iconLeading={Restart}>
                         Try again
                     </Button>
                 )

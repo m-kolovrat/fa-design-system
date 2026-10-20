@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { HomeLine } from "@untitledui/icons";
+import { Home } from "fa-icons";
 import { Breadcrumbs } from "./breadcrumbs";
 
 /**
@@ -24,7 +24,7 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 );
 
 const Trail = () => [
-    <Breadcrumbs.Item key="home" href="#" icon={HomeLine} aria-label="Home" />,
+    <Breadcrumbs.Item key="home" href="#" icon={Home} aria-label="Home" />,
     <Breadcrumbs.Item key="settings" href="#">
         Settings
     </Breadcrumbs.Item>,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { User01 } from "@untitledui/icons";
+import { User } from "fa-icons";
 import type { Selection } from "react-aria-components";
 import { useListData } from "react-stately";
 import { MultiSelect } from "@/components/base/select/multi-select";
@@ -186,16 +186,16 @@ export const SizesDemo = () => {
 
 export const IconLeadingDemo = () => {
     const items = [
-        { label: "Phoenix Baker", id: "@phoenix", supportingText: "@phoenix", icon: User01 },
-        { label: "Olivia Rhye", id: "@olivia", supportingText: "@olivia", icon: User01 },
-        { label: "Lana Steiner", id: "@lana", supportingText: "@lana", icon: User01, disabled: true },
-        { label: "Demi Wilkinson", id: "@demi", supportingText: "@demi", icon: User01 },
-        { label: "Candice Wu", id: "@candice", supportingText: "@candice", icon: User01 },
-        { label: "Natali Craig", id: "@natali", supportingText: "@natali", icon: User01 },
-        { label: "Abraham Baker", id: "@abraham", supportingText: "@abraham", icon: User01 },
-        { label: "Adem Lane", id: "@adem", supportingText: "@adem", icon: User01 },
-        { label: "Jackson Reed", id: "@jackson", supportingText: "@jackson", icon: User01 },
-        { label: "Jessie Meyton", id: "@jessie", supportingText: "@jessie", icon: User01 },
+        { label: "Phoenix Baker", id: "@phoenix", supportingText: "@phoenix", icon: User },
+        { label: "Olivia Rhye", id: "@olivia", supportingText: "@olivia", icon: User },
+        { label: "Lana Steiner", id: "@lana", supportingText: "@lana", icon: User, disabled: true },
+        { label: "Demi Wilkinson", id: "@demi", supportingText: "@demi", icon: User },
+        { label: "Candice Wu", id: "@candice", supportingText: "@candice", icon: User },
+        { label: "Natali Craig", id: "@natali", supportingText: "@natali", icon: User },
+        { label: "Abraham Baker", id: "@abraham", supportingText: "@abraham", icon: User },
+        { label: "Adem Lane", id: "@adem", supportingText: "@adem", icon: User },
+        { label: "Jackson Reed", id: "@jackson", supportingText: "@jackson", icon: User },
+        { label: "Jessie Meyton", id: "@jessie", supportingText: "@jessie", icon: User },
     ];
 
     return (
@@ -205,7 +205,7 @@ export const IconLeadingDemo = () => {
             tooltip="This is a tooltip"
             hint="This is a hint text to help user."
             placeholder="Select team member"
-            icon={User01}
+            icon={User}
             items={items}
         >
             {(item) => (
@@ -284,7 +284,7 @@ export const AvatarLeadingDemo = () => {
             tooltip="This is a tooltip"
             hint="This is a hint text to help user."
             placeholder="Select team member"
-            icon={User01}
+            icon={User}
             items={items}
         >
             {(item) => (
@@ -590,8 +590,8 @@ export const IconLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
-                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User01 }))}
+                icon={User}
+                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User }))}
             >
                 {(item) => (
                     <Select.Item id={item.id} supportingText={item.supportingText} isDisabled={item.isDisabled} icon={item.icon} avatarUrl={item.avatarUrl}>
@@ -605,9 +605,9 @@ export const IconLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 isDisabled
-                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User01 }))}
+                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User }))}
             >
                 {(item) => (
                     <Select.Item id={item.id} supportingText={item.supportingText} isDisabled={item.isDisabled} icon={item.icon} avatarUrl={item.avatarUrl}>
@@ -624,8 +624,8 @@ export const IconLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
-                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User01 }))}
+                icon={User}
+                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User }))}
             >
                 {(item) => (
                     <Select.Item id={item.id} supportingText={item.supportingText} isDisabled={item.isDisabled} icon={item.icon} avatarUrl={item.avatarUrl}>
@@ -640,9 +640,9 @@ export const IconLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 isDisabled
-                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User01 }))}
+                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User }))}
             >
                 {(item) => (
                     <Select.Item id={item.id} supportingText={item.supportingText} isDisabled={item.isDisabled} icon={item.icon} avatarUrl={item.avatarUrl}>
@@ -659,8 +659,8 @@ export const IconLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
-                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User01 }))}
+                icon={User}
+                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User }))}
             >
                 {(item) => (
                     <Select.Item id={item.id} supportingText={item.supportingText} isDisabled={item.isDisabled} icon={item.icon} avatarUrl={item.avatarUrl}>
@@ -675,9 +675,9 @@ export const IconLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 isDisabled
-                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User01 }))}
+                items={items.map(({ avatarUrl: _, ...item }) => ({ ...item, icon: User }))}
             >
                 {(item) => (
                     <Select.Item id={item.id} supportingText={item.supportingText} isDisabled={item.isDisabled} icon={item.icon} avatarUrl={item.avatarUrl}>
@@ -698,7 +698,7 @@ export const AvatarLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 items={items}
             >
                 {(item) => (
@@ -713,7 +713,7 @@ export const AvatarLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 isDisabled
                 items={items}
             >
@@ -732,7 +732,7 @@ export const AvatarLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 items={items}
             >
                 {(item) => (
@@ -748,7 +748,7 @@ export const AvatarLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 isDisabled
                 items={items}
             >
@@ -767,7 +767,7 @@ export const AvatarLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 items={items}
             >
                 {(item) => (
@@ -783,7 +783,7 @@ export const AvatarLeading = () => (
                 tooltip="This is a tooltip"
                 hint="This is a hint text to help user."
                 placeholder="Select team member"
-                icon={User01}
+                icon={User}
                 isDisabled
                 items={items}
             >

@@ -1,19 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-    ArrowNarrowLeft,
-    ArrowNarrowRight,
-    ChevronDown,
-    Code02,
-    Copy01,
-    Cube01,
-    Download01,
-    Edit04,
-    RefreshCcw02,
-    Scissors01,
-    Star01,
-} from "@untitledui/icons";
+import { ArrowLeft, ArrowRight, ChevronDown, Copy, Download, Grid, Hammer, Pen, Restart, Star, Unlink } from "fa-icons";
 import type { Selection } from "react-aria-components";
 import { SubmenuTrigger } from "react-aria-components";
 import { Button } from "@/components/base/buttons/button";
@@ -35,7 +23,7 @@ export const DropdownButtonAdvanced = () => {
                 size="sm"
                 className="group"
                 color="secondary"
-                iconTrailing={(props) => <ChevronDown data-icon="trailing" {...props} className="size-4! stroke-[2.25px]!" />}
+                iconTrailing={(props) => <ChevronDown data-icon="trailing" {...props} className="size-4! stroke-[1.875px]!" />}
             >
                 Actions
             </Button>
@@ -43,13 +31,13 @@ export const DropdownButtonAdvanced = () => {
             <Dropdown.Popover className="w-60">
                 <Dropdown.Menu selectionMode="none">
                     <Dropdown.Section>
-                        <Dropdown.Item icon={ArrowNarrowLeft}>Back</Dropdown.Item>
-                        <Dropdown.Item icon={ArrowNarrowRight}>Forward</Dropdown.Item>
-                        <Dropdown.Item addon="⌘R" icon={RefreshCcw02}>
+                        <Dropdown.Item icon={ArrowLeft}>Back</Dropdown.Item>
+                        <Dropdown.Item icon={ArrowRight}>Forward</Dropdown.Item>
+                        <Dropdown.Item addon="⌘R" icon={Restart}>
                             Reload
                         </Dropdown.Item>
-                        <Dropdown.Item icon={Edit04}>Edit page</Dropdown.Item>
-                        <Dropdown.Item icon={Star01}>Add to favorites</Dropdown.Item>
+                        <Dropdown.Item icon={Pen}>Edit page</Dropdown.Item>
+                        <Dropdown.Item icon={Star}>Add to favorites</Dropdown.Item>
                     </Dropdown.Section>
 
                     <Dropdown.Separator />
@@ -74,11 +62,11 @@ export const DropdownButtonAdvanced = () => {
 
                     <Dropdown.Section>
                         <SubmenuTrigger>
-                            <Dropdown.Item icon={Cube01}>More tools</Dropdown.Item>
+                            <Dropdown.Item icon={Grid}>More tools</Dropdown.Item>
                             <Dropdown.Popover placement="right top" offset={-6} className="w-50">
                                 <Dropdown.Menu selectionMode="none">
                                     <SubmenuTrigger>
-                                        <Dropdown.Item icon={Download01}>Save as</Dropdown.Item>
+                                        <Dropdown.Item icon={Download}>Save as</Dropdown.Item>
                                         <Dropdown.Popover placement="right top" offset={-6} className="w-50">
                                             <Dropdown.Menu selectionMode="none">
                                                 <Dropdown.Item>PDF</Dropdown.Item>
@@ -87,17 +75,17 @@ export const DropdownButtonAdvanced = () => {
                                             </Dropdown.Menu>
                                         </Dropdown.Popover>
                                     </SubmenuTrigger>
-                                    <Dropdown.Item addon="⌘X" icon={Scissors01}>
+                                    <Dropdown.Item addon="⌘X" icon={Unlink}>
                                         Cut
                                     </Dropdown.Item>
-                                    <Dropdown.Item addon="⌘C" icon={Copy01}>
+                                    <Dropdown.Item addon="⌘C" icon={Copy}>
                                         Copy
                                     </Dropdown.Item>
 
                                     <Dropdown.Separator />
 
                                     <SubmenuTrigger>
-                                        <Dropdown.Item icon={Code02}>Developer</Dropdown.Item>
+                                        <Dropdown.Item icon={Hammer}>Developer</Dropdown.Item>
                                         <Dropdown.Popover placement="right top" offset={-6} className="w-50">
                                             <Dropdown.Menu selectionMode="none">
                                                 <Dropdown.Item>View source</Dropdown.Item>

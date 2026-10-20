@@ -1,7 +1,7 @@
 "use client";
 
 import { isValidElement, useContext } from "react";
-import { Check } from "@untitledui/icons";
+import { Check } from "fa-icons";
 import type { ListBoxItemProps as AriaListBoxItemProps } from "react-aria-components";
 import { ListBoxItem as AriaListBoxItem, Text as AriaText } from "react-aria-components";
 import { Avatar } from "@/components/base/avatar/avatar";
@@ -13,10 +13,10 @@ import { SelectContext } from "./select-shared";
 
 const sizes = {
     sm: {
-        root: "p-2 pr-2.5 gap-2 *:data-icon:size-4 *:data-icon:stroke-[2.25px]",
+        root: "p-2 pr-2.5 gap-2 *:data-icon:size-4 *:data-icon:stroke-[1.875px]",
         text: "text-sm",
         textContainer: "gap-x-1.5",
-        check: "size-4 stroke-[2.25px]",
+        check: "size-4 stroke-[1.875px]",
         checkbox: "sm" as const,
     },
     md: {

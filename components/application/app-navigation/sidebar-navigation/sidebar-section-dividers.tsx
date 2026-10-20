@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchLg } from "@untitledui/icons";
+import { Search } from "fa-icons";
 import { FaLargeLogo } from "fa-icons";
 import { Input } from "@/components/base/input/input";
 import { MobileNavigationHeader } from "../base-components/mobile-header";
@@ -31,10 +31,10 @@ export const SidebarNavigationSectionDividers = ({ activeUrl, items }: SidebarNa
                 <FaLargeLogo className="h-6 w-auto text-fg-primary" />
 
                 {/* Mobile search input */}
-                <Input size="md" aria-label="Search" placeholder="Search" icon={SearchLg} className="md:hidden" />
+                <Input size="md" aria-label="Search" placeholder="Search" icon={Search} className="md:hidden" />
 
                 {/* Desktop search input */}
-                <Input shortcut size="sm" aria-label="Search" placeholder="Search" icon={SearchLg} className="max-md:hidden" />
+                <Input shortcut size="sm" aria-label="Search" placeholder="Search" icon={Search} className="max-md:hidden" />
             </div>
 
             <NavList activeUrl={activeUrl} items={items} />
