@@ -1,7 +1,7 @@
 {
-  "name": "@untitledui/react",
+  "name": "fa-design-system",
   "version": "0.0.0",
-  "description": "Untitled UI React is the world's largest collection of open-source React components. Everything you need to design and develop modern, beautiful interfaces—fast.",
+  "description": "The Fa Design System: React components built with Tailwind CSS and React Aria, kept in sync with the Fa Design System Figma file. Based on Untitled UI React (MIT).",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -23,15 +23,14 @@
     "design-system",
     "typescript"
   ],
-  "author": "Untitled UI",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/untitleduico/react/issues"
+    "url": "https://github.com/m-kolovrat/fa-design-system/issues"
   },
-  "homepage": "https://www.untitledui.com/react",
+  "homepage": "https://fa-design-system-mkolovrat-proficohrs-projects.vercel.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/untitleduico/react.git"
+    "url": "https://github.com/m-kolovrat/fa-design-system.git"
   },
   "dependencies": {
     "@internationalized/date": "^3.12.3",
