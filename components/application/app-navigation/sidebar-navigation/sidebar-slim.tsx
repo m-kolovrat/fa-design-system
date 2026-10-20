@@ -3,11 +3,11 @@
 import type { FC } from "react";
 import { useState } from "react";
 import { DotsVertical, LifeBuoy01, Settings01 } from "@untitledui/icons";
+import { FaLargeLogo, FaSmallLogo } from "fa-icons";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { Button as AriaButton, DialogTrigger as AriaDialogTrigger, Popover as AriaPopover } from "react-aria-components";
 import { Avatar } from "@/components/base/avatar/avatar";
 import { ButtonUtility } from "@/components/base/buttons/button-utility";
-import { FaLargeLogo, FaSmallLogo } from "@/components/foundations/logo";
 import { cx } from "@/utils/cx";
 import { MobileNavigationHeader } from "../base-components/mobile-header";
 import { NavAccountCard, NavAccountMenu } from "../base-components/nav-account-card";

@@ -1,8 +1,8 @@
 "use client";
 
 import type { SVGProps } from "react";
+import { Flag, type FlagName } from "fa-icons";
 import type { SelectItemType } from "@/components/base/select/select";
-import { Flag, type FlagName } from "@/components/foundations/flags";
 
 interface Country {
     name: string;

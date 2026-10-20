@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Flag, type FlagName, flags } from "@/components/foundations/flags";
+import { Flag, type FlagName, flags } from "fa-icons";
 
 const names = Object.keys(flags) as FlagName[];
 

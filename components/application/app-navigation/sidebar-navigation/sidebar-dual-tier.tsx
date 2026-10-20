@@ -3,9 +3,9 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { SearchLg } from "@untitledui/icons";
+import { FaLargeLogo } from "fa-icons";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { Input } from "@/components/base/input/input";
-import { FaLargeLogo } from "@/components/foundations/logo";
 import { cx } from "@/utils/cx";
 import { MobileNavigationHeader } from "../base-components/mobile-header";
 import { NavAccountCard, type NavAccountType } from "../base-components/nav-account-card";

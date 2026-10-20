@@ -18,7 +18,7 @@ import {
     PinpointLogo,
     VippsLargeLogo,
     VippsSmallLogo,
-} from "@/components/foundations/logo";
+} from "fa-icons";
 
 const logos: { name: string; logo: FC<SVGProps<SVGSVGElement>>; fixed: boolean }[] = [
     { name: "fa-bok", logo: FaBokLogo, fixed: false },

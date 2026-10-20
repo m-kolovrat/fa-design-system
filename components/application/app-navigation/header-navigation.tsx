@@ -2,11 +2,11 @@
 
 import { type FC, type ReactNode } from "react";
 import { Bell01, LifeBuoy01, SearchLg, Settings01 } from "@untitledui/icons";
+import { FaLargeLogo } from "fa-icons";
 import { TabList, Tabs } from "@/components/application/tabs/tabs";
 import { BadgeWithDot } from "@/components/base/badges/badges";
 import { DropdownAccountButton } from "@/components/base/dropdown/dropdown-account-button";
 import { Input } from "@/components/base/input/input";
-import { FaLargeLogo } from "@/components/foundations/logo";
 import { cx } from "@/utils/cx";
 import { MobileNavigationHeader } from "./base-components/mobile-header";
 import { NavAccountCard } from "./base-components/nav-account-card";

@@ -351,11 +351,13 @@ either side, partial builds, variant differences and settled decisions.
 
 - **Custom components** (e.g. a card header): the main component is designed in Figma first, then
   recreated in code from it. Don't invent a new component in code without its Figma frame.
-- **Logos and country flags** are added to the Figma file and exported from there into code (no
-  runtime loading from external URLs). Single-color logos use `currentColor`, so the page decides
-  the color with a `text-*` class; only logos with fixed brand colors keep their fills
-  (`components/foundations/logo`). Flags are done:
-  `<Flag name="argentina-ars" />` from `@/components/foundations/flags`, named exactly as in Figma.
+- **Logos and country flags** come from the [`fa-icons`](https://github.com/m-kolovrat/fa-icons)
+  package, which is built from SVGs exported from the Figma file (no runtime loading from external
+  URLs). Single-color logos use `currentColor`, so the page decides the color with a `text-*`
+  class; only logos with fixed brand colors keep their fills. Import them from `"fa-icons"`:
+  `<FaLargeLogo />`, `<Flag name="argentina-ars" />` (flags are named exactly as in Figma, 20×20).
+  To add or change one, update Figma, then `fa-icons` (see its README), release a new tag and
+  bump the `fa-icons` version in `package.json`. Storybook shows them under Foundations → Flags / Logos.
 
 ## Best Practices for AI Assistance
 

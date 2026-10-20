@@ -1,8 +1,8 @@
 "use client";
 
 import { SearchLg } from "@untitledui/icons";
+import { FaLargeLogo } from "fa-icons";
 import { ButtonUtility } from "@/components/base/buttons/button-utility";
-import { FaLargeLogo } from "@/components/foundations/logo";
 import { MobileNavigationHeader } from "../base-components/mobile-header";
 import { NavAccountCard } from "../base-components/nav-account-card";
 import { NavItemBase } from "../base-components/nav-item";
