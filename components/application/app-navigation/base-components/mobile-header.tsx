@@ -2,6 +2,7 @@
 
 import type { PropsWithChildren } from "react";
 import { X as CloseIcon, Menu02 } from "@untitledui/icons";
+import { FaLargeLogo } from "fa-icons";
 import {
     Button as AriaButton,
     Dialog as AriaDialog,
@@ -9,7 +10,6 @@ import {
     Modal as AriaModal,
     ModalOverlay as AriaModalOverlay,
 } from "react-aria-components";
-import { FaLargeLogo } from "@/components/foundations/logo";
 import { cx } from "@/utils/cx";
 
 export const MobileNavigationHeader = ({ children }: PropsWithChildren) => {
