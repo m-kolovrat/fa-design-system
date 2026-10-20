@@ -203,7 +203,7 @@ const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadP
                         (state.sortDirection ? (
                             <ArrowDown className={cx("size-3 stroke-[2.5px] text-fg-quaternary", state.sortDirection === "ascending" && "rotate-180")} />
                         ) : (
-                            <ChevronUpDown size={12} strokeWidth={3} className="text-fg-quaternary" />
+                            <ChevronUpDown size={12} strokeWidth={2.5} className="text-fg-quaternary" />
                         ))}
                 </AriaGroup>
             )}
