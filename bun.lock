@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "@untitledui/components",
+      "name": "fa-design-system",
       "dependencies": {
         "@internationalized/date": "^3.12.3",
         "@react-aria/utils": "^3.34.1",

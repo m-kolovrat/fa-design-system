@@ -1,19 +1,25 @@
-# Untitled UI React
+# Fa Design System
 
-[Untitled UI React](https://www.untitledui.com/react) is the world’s largest collection of open-source React components built with Tailwind CSS and React Aria. Everything you need to design and develop modern, beautiful interfaces—fast. Just copy, paste, and build.
+React components for the Fa Design System, built with React 19, Tailwind CSS v4.3, TypeScript and React Aria.
+The code is kept in sync with the [Fa Design System Figma file](https://www.figma.com/design/ycDcr4jjOWyIneuxyL1xAd/Fa-Design-System).
 
-Built with React 19.2, Tailwind CSS v4.3, TypeScript 5.9, and React Aria, Untitled UI React components deliver modern performance, type safety, and maintainability.
+[Storybook](https://fa-design-system-mkolovrat-proficohrs-projects.vercel.app) • [Figma](https://www.figma.com/design/ycDcr4jjOWyIneuxyL1xAd/Fa-Design-System) • [Icons, flags and logos (`fa-icons`)](https://github.com/m-kolovrat/fa-icons)
 
-[Learn more](https://www.untitledui.com/react) • [Documentation](https://www.untitledui.com/react/docs/introduction) • [Figma](https://www.untitledui.com/figma) • [FAQs](https://www.untitledui.com/faqs)
+## Getting started
+
+```bash
+npm install --legacy-peer-deps
+npm run storybook   # http://localhost:6006
+npm test            # type-check, lint, prettier and token parity
+```
 
 ## Documentation
 
-Check out our documentation here → [untitledui.com/react/docs](https://www.untitledui.com/react/docs/introduction)
-
-## Installation
-
-Check out our installation guide here → [untitledui.com/react/docs/installation](https://www.untitledui.com/react/docs/installation)
+- [`CLAUDE.md`](CLAUDE.md): project structure, conventions, components and color tokens
+- [`TOKENS.md`](TOKENS.md): how design tokens map to Figma and how to change them
+- [`docs/figma-parity.md`](docs/figma-parity.md): where Figma and code differ
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): how to contribute
 
 ## License
 
-Untitled UI React open-source components are licensed under the MIT license, which means you can use them for free in unlimited commercial projects.
+MIT. The Fa Design System started from [Untitled UI React](https://www.untitledui.com/react), which is MIT-licensed; its copyright notice is kept in [`LICENSE`](LICENSE).

@@ -1,17 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-    - name: 💡 Feature Requests
-      url: https://github.com/untitleduico/react/discussions/new?category=ideas
-      about: Suggest ideas, request features and new components
-    - name: 💬 General Questions & Discussions
-      url: https://github.com/untitleduico/react/discussions
-      about: Ask questions, share ideas, and discuss with the community
     - name: 📖 Documentation
-      url: https://www.untitledui.com/react/components
-      about: View the full component documentation and examples
+      url: https://fa-design-system-mkolovrat-proficohrs-projects.vercel.app
+      about: Browse the components and examples in Storybook
     - name: 🎨 Design Files
-      url: https://www.untitledui.com/figma
-      about: Access Figma design files and component specifications
-    - name: 🔒 Security Vulnerabilities
-      url: mailto:support@untitledui.com?subject=Security%20Vulnerability
-      about: Report security vulnerabilities privately
+      url: https://www.figma.com/design/ycDcr4jjOWyIneuxyL1xAd/Fa-Design-System
+      about: The Fa Design System Figma file, the source for components and tokens
