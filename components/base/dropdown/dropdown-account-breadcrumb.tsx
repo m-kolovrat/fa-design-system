@@ -45,7 +45,7 @@ export const DropdownAccountBreadcrumb = () => {
                 </div>
                 <span className="text-sm font-semibold text-primary">{selectedAccount?.name}</span>
 
-                <ChevronUpDown className="size-3 shrink-0 stroke-[2.08px] text-fg-quaternary" />
+                <ChevronUpDown className="size-3 shrink-0 text-fg-quaternary" />
             </AriaButton>
 
             <Dropdown.Popover className="w-62" placement="bottom left">

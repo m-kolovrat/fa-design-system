@@ -28,7 +28,7 @@ export const TagAvatar = ({ src, alt, contrastBorder = true, className }: ImgHTM
             {src && !isFailed ? (
                 <img data-avatar-img className="size-full object-cover" src={src} alt={alt} onError={() => setIsFailed(true)} />
             ) : (
-                <User className="size-3 stroke-[1.875px] text-fg-quaternary" />
+                <User className="size-3 text-fg-quaternary" />
             )}
         </div>
     );

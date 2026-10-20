@@ -162,10 +162,8 @@ export const PasswordInputDemo = () => {
             <Label>Password</Label>
             <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
             <HintText className="flex items-center gap-1">
-                <Success
-                    className={cx("size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")}
-                />
-                <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                 Must be at least 8 characters.
             </HintText>
         </TextField>
@@ -1183,13 +1181,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1197,13 +1190,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1211,13 +1199,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1227,13 +1210,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1241,13 +1219,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1255,13 +1228,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1271,13 +1239,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1285,13 +1248,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>
@@ -1299,13 +1257,8 @@ export const PasswordInputs = () => {
                     <Label>Password</Label>
                     <InputBase icon={Lock} type="password" placeholder="••••••••••••" />
                     <HintText className="flex items-center gap-1">
-                        <Success
-                            className={cx(
-                                "size-4 stroke-[1.875px] text-fg-quaternary transition in-invalid:hidden",
-                                password.length >= 8 && "text-fg-success-primary",
-                            )}
-                        />
-                        <Alert className="hidden size-4 stroke-[1.875px] text-fg-error-secondary in-invalid:inline-block" />
+                        <Success className={cx("size-4 text-fg-quaternary transition in-invalid:hidden", password.length >= 8 && "text-fg-success-primary")} />
+                        <Alert className="hidden size-4 text-fg-error-secondary in-invalid:inline-block" />
                         Must be at least 8 characters.
                     </HintText>
                 </TextField>

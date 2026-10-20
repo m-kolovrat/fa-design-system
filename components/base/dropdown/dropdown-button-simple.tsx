@@ -7,7 +7,7 @@ import { Dropdown } from "@/components/base/dropdown/dropdown";
 
 export const DropdownButtonSimple = () => (
     <Dropdown.Root>
-        <Button size="sm" color="secondary" iconTrailing={ChevronDown} className="group *:data-icon:size-4 *:data-icon:stroke-[1.875px]!">
+        <Button size="sm" color="secondary" iconTrailing={ChevronDown} className="group *:data-icon:size-4">
             Account
         </Button>
 

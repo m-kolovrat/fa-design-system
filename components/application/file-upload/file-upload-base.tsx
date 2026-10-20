@@ -281,10 +281,10 @@ export const FileListItemProgressBar = ({ name, size, progress, failed, type, fi
                             <hr className="h-3 w-px rounded-t-full rounded-b-full border-none bg-border-primary" />
 
                             <div className="flex items-center gap-1">
-                                {isComplete && <Success className="size-4 stroke-[2.08px] text-fg-success-primary" />}
+                                {isComplete && <Success className="size-4 text-fg-success-primary" />}
                                 {isComplete && <p className="text-sm font-medium text-success-primary">Complete</p>}
 
-                                {!isComplete && !failed && <Upload className="size-4 stroke-[2.08px] text-fg-quaternary" />}
+                                {!isComplete && !failed && <Upload className="size-4 text-fg-quaternary" />}
                                 {!isComplete && !failed && <p className="text-sm font-medium text-quaternary">Uploading...</p>}
 
                                 {failed && <CloseCircle className="size-4 text-fg-error-primary" />}
@@ -344,8 +344,8 @@ export const FileListItemProgressFill = ({ name, size, progress, failed, type, f
                                 <>
                                     <hr className="h-3 w-px rounded-t-full rounded-b-full border-none bg-border-primary" />
                                     <div className="flex items-center gap-1">
-                                        {isComplete && <Success className="size-4 stroke-[2.08px] text-fg-success-primary" />}
-                                        {!isComplete && <Upload className="size-4 stroke-[2.08px] text-fg-quaternary" />}
+                                        {isComplete && <Success className="size-4 text-fg-success-primary" />}
+                                        {!isComplete && <Upload className="size-4 text-fg-quaternary" />}
 
                                         <p className="text-sm text-tertiary">{progress}%</p>
                                     </div>

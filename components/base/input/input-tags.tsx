@@ -298,14 +298,14 @@ export const InputTags = ({
                                         sizes[size].iconTrailing,
                                     )}
                                 >
-                                    <Help className="size-4 stroke-[1.875px]" />
+                                    <Help className="size-4" />
                                 </TooltipTrigger>
                             </Tooltip>
                         )}
 
                         <Info
                             className={cx(
-                                "pointer-events-none absolute hidden size-4 stroke-[1.875px] text-fg-error-secondary group-invalid/input:block",
+                                "pointer-events-none absolute hidden size-4 text-fg-error-secondary group-invalid/input:block",
                                 sizes[size].iconTrailing,
                             )}
                         />

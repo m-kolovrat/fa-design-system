@@ -17,11 +17,11 @@ interface NativeSelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>
 const styles = {
     sm: {
         root: "py-2 pl-3 text-sm",
-        icon: "size-4 right-2.5 stroke-[1.875px]",
+        icon: "size-4 right-2.5",
     },
     md: {
         root: "py-2 pl-3 text-md",
-        icon: "size-4 stroke-[1.875px] right-3",
+        icon: "size-4 right-3",
     },
     lg: {
         root: "py-2.5 px-3.5 text-md",
@@ -80,7 +80,7 @@ export const NativeSelect = ({ label, hint, options, className, selectClassName,
 
                         styles[size].icon,
                         // Styles for the icon when the select is within an `InputGroup`
-                        "in-data-input-wrapper:right-0 in-data-input-wrapper:size-4 in-data-input-wrapper:stroke-[2.19px]",
+                        "in-data-input-wrapper:right-0 in-data-input-wrapper:size-4",
                         // For "trailing" dropdown within `InputGroup`
                         "in-data-input-wrapper:in-data-trailing:in-data-[input-size=md]:right-3 in-data-input-wrapper:in-data-trailing:in-data-[input-size=sm]:right-3",
                     )}

@@ -188,7 +188,7 @@ export const NavAccountCard = ({
 
             <AriaDialogTrigger>
                 <AriaButton className="absolute top-2 right-2 flex cursor-pointer items-center justify-center rounded-sm p-1.5 text-fg-quaternary outline-focus-ring transition hover:bg-primary_hover hover:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 pressed:bg-primary_hover pressed:text-fg-quaternary_hover">
-                    <ChevronUpDown className="size-4 shrink-0 stroke-[1.875px]" />
+                    <ChevronUpDown className="size-4 shrink-0" />
                 </AriaButton>
                 <AriaPopover
                     placement={popoverPlacement ?? (isDesktop ? "right bottom" : "top right")}

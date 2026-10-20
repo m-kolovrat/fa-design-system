@@ -44,13 +44,13 @@ const getSizeClasses = (
         md: {
             root: cx("py-1 pr-1 pl-3 text-xs font-medium", theme === "modern" && "pl-2.5"),
             addon: cx("py-0.5 pr-1.5 pl-2", theme === "modern" && "pr-1.5 pl-2", text && "ml-2"),
-            icon: "ml-0.5 size-3 stroke-[2.5px]",
+            icon: "ml-0.5 size-3",
             dot: "mr-1.5",
         },
         lg: {
             root: "py-1 pr-1 pl-3 text-sm font-medium",
             addon: cx("py-0.5 pr-2 pl-2.5", theme === "modern" && "pr-1.5 pl-2", text && "ml-2"),
-            icon: "ml-1 size-3 stroke-[2.5px]",
+            icon: "ml-1 size-3",
             dot: "mr-2",
         },
     },

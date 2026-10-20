@@ -26,7 +26,7 @@ export const DropdownButtonLink = () => {
                 }
             >
                 {permissions.find((permission) => permission.id === selectedPermission.toString())?.label}
-                <ChevronDown className="size-3 shrink-0 stroke-[2.08px] text-fg-quaternary" />
+                <ChevronDown className="size-3 shrink-0 text-fg-quaternary" />
             </AriaButton>
 
             <Dropdown.Popover className="w-40">

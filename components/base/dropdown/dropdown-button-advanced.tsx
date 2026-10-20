@@ -19,12 +19,7 @@ export const DropdownButtonAdvanced = () => {
 
     return (
         <Dropdown.Root>
-            <Button
-                size="sm"
-                className="group"
-                color="secondary"
-                iconTrailing={(props) => <ChevronDown data-icon="trailing" {...props} className="size-4! stroke-[1.875px]!" />}
-            >
+            <Button size="sm" className="group" color="secondary" iconTrailing={(props) => <ChevronDown data-icon="trailing" {...props} className="size-4!" />}>
                 Actions
             </Button>
 

@@ -239,8 +239,8 @@ The `flag` icon is exported as `FlagIcon` (`Flag` is the country flag component)
 // Color: icons use currentColor, so use semantic text colors
 <Home className="size-5 text-fg-brand-primary" />
 
-// Stroke: 1.5px at 20px, scaling with the icon. Some components override it with a stroke-[…] class
-<Home className="size-4 stroke-[1.875px]" />
+// Stroke: 1.5px at 20px (the Figma icon), scaling with the size (1.2px at 16px). Don't override it with stroke-* classes
+<Home className="size-4" />
 
 // Accessibility: icons are aria-hidden by default. Give meaningful ones a label
 <Home aria-hidden={false} aria-label="Home" />

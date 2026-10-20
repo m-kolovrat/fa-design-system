@@ -123,13 +123,13 @@ export const InputNumberBase = ({
                         slot="increment"
                         className="flex flex-1 cursor-pointer items-center justify-center text-fg-quaternary outline-brand transition hover:bg-primary_hover hover:text-fg-quaternary_hover disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <ChevronUp className={cx("size-3 stroke-[2.08px]", size === "lg" && "size-3.5 stroke-[2.14px]")} />
+                        <ChevronUp className={cx("size-3", size === "lg" && "size-3.5")} />
                     </AriaButton>
                     <AriaButton
                         slot="decrement"
                         className="flex flex-1 cursor-pointer items-center justify-center border-t border-primary text-fg-quaternary outline-brand transition hover:bg-primary_hover hover:text-fg-quaternary_hover disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <ChevronDown className={cx("size-3 stroke-[2.08px]", size === "lg" && "size-3.5 stroke-[2.14px]")} />
+                        <ChevronDown className={cx("size-3", size === "lg" && "size-3.5")} />
                     </AriaButton>
                 </div>
             )}

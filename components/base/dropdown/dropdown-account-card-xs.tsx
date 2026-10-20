@@ -27,7 +27,7 @@ export const DropdownAccountCardXS = () => {
                 <p className="text-sm font-semibold text-primary">Olivia Rhye</p>
 
                 <div className="absolute top-1 right-1 flex size-7 items-center justify-center rounded-sm">
-                    <ChevronDown className="size-4 shrink-0 stroke-[1.875px] text-fg-quaternary" />
+                    <ChevronDown className="size-4 shrink-0 text-fg-quaternary" />
                 </div>
             </AriaButton>
 

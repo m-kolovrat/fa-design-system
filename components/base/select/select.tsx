@@ -82,10 +82,7 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, size, placeholder, icon, r
                                 <p className={cx("text-placeholder", sizes[size].text)}>{placeholder}</p>
                             )}
 
-                            <ChevronDown
-                                aria-hidden="true"
-                                className={cx("ml-auto shrink-0 text-fg-quaternary", size === "lg" ? "size-5" : "size-4 stroke-[1.875px]")}
-                            />
+                            <ChevronDown aria-hidden="true" className={cx("ml-auto shrink-0 text-fg-quaternary", size === "lg" ? "size-5" : "size-4")} />
                         </>
                     );
                 }}

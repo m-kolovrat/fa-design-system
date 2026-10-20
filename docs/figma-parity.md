@@ -103,12 +103,6 @@ All icons come from `fa-icons` (Figma "Icons V2"). These Untitled UI icons had n
 | ClockFastForward, NotificationBox, ReverseLeft    | Scheduled reports, notifications, refunded badge            | `Clock`, `Bell`, `ArrowLeft`               |
 | Placeholder                                       | Button group examples                                       | `Star`                                     |
 
-**Icon stroke weight (open).** Fa icons have a 1.5px stroke at 20px that scales with the icon, as in Figma
-(1.2px at 16px). Many components set a `stroke-[…]` class on 12–16px icons to keep a heavier line; those
-values were rescaled from Untitled's 24px grid to Fa's 20px grid so the rendered weight didn't change
-(`stroke-[2.25px]` → `stroke-[1.875px]`, i.e. 1.5px at 16px). Decide whether small icons follow Figma's
-scaled stroke (drop the classes) or keep a fixed weight.
-
 ---
 
 ## 4. Same component, different variants
@@ -147,7 +141,7 @@ Settled; don't re-raise unless the design changes.
 | Flags                          | Figma's 59 flags (Misc icons → Flag, `<country>-<currency>` + `globe`) are `Flag` / `flags` from the `fa-icons` package (20×20, as in Figma), keyed by the Figma name. `utils/countries.tsx` only lists countries with a flag (55; Hong Kong and Taiwan have flags but no country entry). Croatia has no flag on purpose.                                                         |
 | Custom components              | Designed as a main component in Figma first, then recreated in code.                                                                                                                                                                                                                                                                                                              |
 | Logos and country flags        | Added to Figma, then exported into the `fa-icons` package. Logos (Misc icons → Logos) are components from `fa-icons`, named as in Figma. Most follow the text color (`currentColor`); pinpoint, vipps and the four Kapital list versions (`kapital-list-*`) keep fixed colors, and hegnar-bok keeps its orange accent. The Fa logos replaced the Untitled UI logos in navigation. |
-| Button icon stroke             | Figma: every Button / Button destructive icon is 1.67px (24px icon at 20px). Code uses Fa icons at 20px, which draw 1.5px natively (the stroke prototype class in `button.tsx` is gone).                                                                                                                                                                                          |
+| Icon stroke                    | Fa icons are 1.5px at 20px, as in Figma, and the stroke scales with the icon size (1.2px at 16px). No component sets its own stroke width (decided 2026-10-20).                                                                                                                                                                                                                   |
 
 ---
 

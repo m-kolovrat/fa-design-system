@@ -73,7 +73,7 @@ export const InputBase = ({
     const sizes = sortCx({
         sm: {
             root: cx("px-3 py-2 text-sm", hasLeadingIcon && "pl-9", hasTrailingIcon && "pr-9"),
-            iconLeading: "left-3 size-4 stroke-[1.875px]",
+            iconLeading: "left-3 size-4",
             iconTrailing: "right-3",
             shortcut: "pr-1.5",
         },
@@ -149,7 +149,7 @@ export const InputBase = ({
                             tooltipClassName,
                         )}
                     >
-                        <Help className="size-4 stroke-[1.875px]" />
+                        <Help className="size-4" />
                     </TooltipTrigger>
                 </Tooltip>
             )}
@@ -158,7 +158,7 @@ export const InputBase = ({
             {type !== "password" && (
                 <Info
                     className={cx(
-                        "pointer-events-none absolute hidden size-4 stroke-[1.875px] text-fg-error-secondary group-invalid/input:block",
+                        "pointer-events-none absolute hidden size-4 text-fg-error-secondary group-invalid/input:block",
                         sizes[inputSize].iconTrailing,
                         context?.tooltipClassName,
                         tooltipClassName,
@@ -176,7 +176,7 @@ export const InputBase = ({
                         sizes[inputSize].iconTrailing,
                     )}
                 >
-                    {isPasswordVisible ? <EyeOff className="size-4 stroke-[1.875px]" /> : <Eye className="size-4 stroke-[1.875px]" />}
+                    {isPasswordVisible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </AriaButton>
             )}
 

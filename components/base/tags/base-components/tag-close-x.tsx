@@ -11,9 +11,9 @@ interface TagCloseXProps extends AriaButtonProps, RefAttributes<HTMLButtonElemen
 }
 
 const styles = {
-    sm: { root: "p-0.5", icon: "size-2.5 stroke-[3px]" },
-    md: { root: "p-0.5", icon: "size-3 stroke-[2.38px]" },
-    lg: { root: "p-0.75", icon: "size-3.5 stroke-[2.08px]" },
+    sm: { root: "p-0.5", icon: "size-2.5" },
+    md: { root: "p-0.5", icon: "size-3" },
+    lg: { root: "p-0.75", icon: "size-3.5" },
 };
 
 export const TagCloseX = ({ size = "md", className, ...otherProps }: TagCloseXProps) => {

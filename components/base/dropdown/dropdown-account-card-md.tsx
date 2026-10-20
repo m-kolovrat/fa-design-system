@@ -31,7 +31,7 @@ export const DropdownAccountCardMD = () => {
                 />
 
                 <div className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-sm">
-                    <ChevronUpDown className="size-4 shrink-0 stroke-[1.875px] text-fg-quaternary" />
+                    <ChevronUpDown className="size-4 shrink-0 text-fg-quaternary" />
                 </div>
             </AriaButton>
 
