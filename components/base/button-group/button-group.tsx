@@ -16,12 +16,13 @@ export const styles = sortCx({
             "group/button-group inline-flex h-max cursor-pointer items-center bg-primary font-medium whitespace-nowrap text-secondary ring-1 ring-primary outline-focus-ring transition ring-inset",
             // Hover and focus styles
             "hover:bg-primary_hover hover:text-secondary_hover focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2",
-            // Disabled styles — Figma: no fading; text-disabled text, fg-disabled_subtle icons/dots,
-            // background and border unchanged (selected + disabled uses bg-disabled_subtle).
-            "disabled:cursor-not-allowed disabled:bg-primary disabled:text-disabled disabled:selected:bg-disabled_subtle disabled:[&>svg]:text-fg-disabled_subtle",
+            // Disabled styles — Figma: no fading; bg-disabled_subtle fill (current or not), text-disabled text,
+            // fg-disabled_subtle icons/dots, border unchanged.
+            "disabled:cursor-not-allowed disabled:bg-disabled_subtle disabled:text-disabled disabled:selected:bg-disabled_subtle disabled:[&>svg]:text-fg-disabled_subtle",
             // Selected styles
             "selected:bg-primary_hover selected:text-secondary_hover",
         ].join(" "),
+        // Figma: fg-quaternary icons, fg-quaternary_hover on hover and when selected (same rule as Button).
         icon: "pointer-events-none text-fg-quaternary transition-inherit-all group-hover/button-group:text-fg-quaternary_hover group-selected/button-group:text-fg-quaternary_hover",
     },
 
@@ -29,16 +30,20 @@ export const styles = sortCx({
         sm: {
             // Figma sm: Text sm/Medium (14/20), 16×6 padding, 36px min height → 36px tall (same as the sm Button).
             root: "min-h-9 gap-1.5 px-4 py-1.5 text-sm not-last:pr-[calc(calc(var(--spacing)*4)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-3.5 data-icon-only:px-3",
+            // Trailing icon mirrors the leading padding (Figma Icon=Trailing: 16 left, 14 right).
+            trailing: "data-icon-trailing:pr-3.5 data-icon-trailing:not-last:pr-[calc(calc(var(--spacing)*3.5)+1px)]",
             icon: "size-5",
         },
         md: {
             // Figma md: Text sm/Medium (14/20), 16×10 padding, 40px min height → 40px tall (same as the md Button).
             root: "min-h-10 gap-1.5 px-4 py-2.5 text-sm not-last:pr-[calc(calc(var(--spacing)*4)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-3.5 data-icon-only:px-3",
+            trailing: "data-icon-trailing:pr-3.5 data-icon-trailing:not-last:pr-[calc(calc(var(--spacing)*3.5)+1px)]",
             icon: "size-5",
         },
         lg: {
             // Figma lg: Text md/Medium (16/24), 18×10 padding, 44px min height → 44px tall (icon-only too) (same as the lg Button).
             root: "min-h-11 gap-2 px-4.5 py-2.5 text-md not-last:pr-[calc(calc(var(--spacing)*4.5)+1px)] first:rounded-l-md last:rounded-r-md data-icon-leading:pl-4 data-icon-only:px-3.5",
+            trailing: "data-icon-trailing:pr-4 data-icon-trailing:not-last:pr-[calc(calc(var(--spacing)*4)+1px)]",
             icon: "size-5",
         },
     },
@@ -77,7 +82,8 @@ export const ButtonGroupItem = ({
             {...otherProps}
             data-icon-only={isIcon ? true : undefined}
             data-icon-leading={IconLeading ? true : undefined}
-            className={cx(styles.common.root, styles.sizes[size].root, className)}
+            data-icon-trailing={IconTrailing && children ? true : undefined}
+            className={cx(styles.common.root, styles.sizes[size].root, styles.sizes[size].trailing, className)}
         >
             {isReactComponent(IconLeading) && <IconLeading className={cx(styles.common.icon, styles.sizes[size].icon)} />}
             {isValidElement(IconLeading) && IconLeading}

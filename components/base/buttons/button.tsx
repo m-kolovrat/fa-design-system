@@ -51,23 +51,23 @@ export const styles = sortCx({
     colors: {
         primary: {
             root: [
-                "bg-brand-solid text-white hover:bg-brand-solid_hover disabled:bg-disabled data-loading:bg-brand-solid_hover touch-pressed:bg-brand-solid_hover",
+                "bg-brand-solid text-white hover:bg-brand-solid_hover disabled:bg-disabled_subtle data-loading:bg-brand-solid_hover touch-pressed:bg-brand-solid_hover",
                 // Icon styles
                 "*:data-icon:text-button-primary-icon hover:*:data-icon:text-button-primary-icon_hover",
             ].join(" "),
         },
         secondary: {
             root: [
-                "bg-primary text-secondary ring-1 ring-primary ring-inset hover:bg-primary_hover disabled:bg-primary disabled:ring-disabled_subtle data-loading:bg-primary_hover touch-pressed:bg-primary_hover",
-                // Icon styles
-                "*:data-icon:text-fg-secondary",
+                "bg-primary text-secondary ring-1 ring-primary ring-inset hover:bg-primary_hover disabled:bg-disabled_subtle disabled:ring-disabled_subtle data-loading:bg-primary_hover touch-pressed:bg-primary_hover",
+                // Icon styles — Figma: fg-quaternary → fg-quaternary_hover.
+                "*:data-icon:text-fg-quaternary hover:*:data-icon:text-fg-quaternary_hover",
             ].join(" "),
         },
         tertiary: {
             root: [
                 "text-secondary hover:bg-primary_hover disabled:hover:bg-transparent data-loading:bg-primary_hover touch-pressed:bg-primary_hover",
-                // Icon styles
-                "*:data-icon:text-fg-secondary",
+                // Icon styles — Figma: fg-quaternary → fg-quaternary_hover.
+                "*:data-icon:text-fg-quaternary hover:*:data-icon:text-fg-quaternary_hover",
             ].join(" "),
         },
         "link-color": {
@@ -91,14 +91,14 @@ export const styles = sortCx({
         },
         "primary-destructive": {
             root: [
-                "bg-error-solid text-white outline-focus-ring-error hover:bg-error-solid_hover disabled:bg-disabled data-loading:bg-error-solid_hover touch-pressed:bg-error-solid_hover",
+                "bg-error-solid text-white outline-focus-ring-error hover:bg-error-solid_hover disabled:bg-disabled_subtle data-loading:bg-error-solid_hover touch-pressed:bg-error-solid_hover",
                 // Icon styles
                 "*:data-icon:text-button-destructive-primary-icon hover:*:data-icon:text-button-destructive-primary-icon_hover",
             ].join(" "),
         },
         "secondary-destructive": {
             root: [
-                "bg-primary text-error-primary ring-1 ring-error_subtle outline-focus-ring-error ring-inset hover:bg-error-primary hover:text-error-primary_hover disabled:bg-primary disabled:ring-disabled_subtle data-loading:bg-error-primary touch-pressed:bg-error-primary",
+                "bg-primary text-error-primary ring-1 ring-error_subtle outline-focus-ring-error ring-inset hover:bg-error-primary hover:text-error-primary_hover disabled:bg-disabled_subtle disabled:ring-disabled_subtle data-loading:bg-error-primary touch-pressed:bg-error-primary",
                 // Icon styles
                 "*:data-icon:text-fg-error-secondary hover:*:data-icon:text-fg-error-primary",
             ].join(" "),
