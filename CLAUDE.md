@@ -133,7 +133,8 @@ Located in `components/base/`, these are the building blocks:
 Located in `components/application/`, these are complex UI patterns:
 
 - `Alert`, `Notification` (+ `notify()` toast helper) - Feedback
-- `Modal` with `ModalHeader` / `ModalActions` - Overlay dialogs (the body is a free slot)
+- `Modal` with `ModalHeader` / `ModalBody` / `ModalFooter` (+ `Modal.Trigger`) - Fixed header and footer around a scrolling body; a bottom sheet (`mobile="sheet"`) or full screen (`mobile="fullscreen"`) on mobile
+- `PromptModal` with `PromptModalHeader` / `PromptModalActions` (+ `PromptModal.Trigger`) - Short, focused prompts (confirm, delete, a few fields); the body is a free slot
 - `DatePicker`, `DateRangePicker` - Calendar-based date selection
 - `Pagination*` - Page, card, button-group and advanced variants
 - `Table`, `Tabs`, `Carousel`, `SlideoutMenu`, `LoadingIndicator`, charts, app navigation

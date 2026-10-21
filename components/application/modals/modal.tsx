@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import type { DialogProps as AriaDialogProps, ModalOverlayProps as AriaModalOverlayProps } from "react-aria-components";
+import type { DialogRenderProps as AriaDialogRenderProps, ModalOverlayProps as AriaModalOverlayProps } from "react-aria-components";
 import {
     Dialog as AriaDialog,
     DialogTrigger as AriaDialogTrigger,
@@ -9,154 +9,153 @@ import {
     Modal as AriaModal,
     ModalOverlay as AriaModalOverlay,
 } from "react-aria-components";
+import { Badge } from "@/components/base/badges/badges";
 import { CloseButton } from "@/components/base/buttons/close-button";
 import { cx } from "@/utils/cx";
 
-export const DialogTrigger = AriaDialogTrigger;
-
-export const ModalOverlay = (props: AriaModalOverlayProps) => {
-    return (
-        <AriaModalOverlay
-            {...props}
-            className={(state) =>
-                cx(
-                    "fixed inset-0 z-50 flex min-h-dvh w-full items-end justify-center bg-overlay/70 px-4 outline-hidden backdrop-blur-[6px] sm:items-center sm:justify-center sm:px-8",
-                    // Vertical padding
-                    "pt-(--modal-pt) pb-(--modal-pb) [--modal-pb:clamp(16px,8vh,64px)] [--modal-pt:16px] sm:[--modal-pb:32px] sm:[--modal-pt:32px]",
-                    // Animations
-                    state.isEntering && "duration-slower ease-out animate-in fade-in",
-                    state.isExiting && "duration-slow ease-out animate-out fade-out",
-                    typeof props.className === "function" ? props.className(state) : props.className,
-                )
-            }
-        />
-    );
-};
-
-export const Modal = (props: AriaModalOverlayProps) => (
-    <AriaModal
-        {...props}
-        className={(state) =>
-            cx(
-                "w-full rounded-xl bg-primary align-middle shadow-xl outline-hidden max-sm:overflow-y-auto sm:rounded-2xl",
-                // Max height based on parent's vertical padding
-                "max-h-[calc(var(--visual-viewport-height)-var(--modal-pt)-var(--modal-pb))]",
-                // Animations
-                state.isEntering && "duration-slower ease-out animate-in zoom-in-95",
-                state.isExiting && "duration-slow ease-out animate-out zoom-out-95",
-                typeof props.className === "function" ? props.className(state) : props.className,
-            )
-        }
-    />
-);
-
-export const Dialog = (props: AriaDialogProps) => (
-    <AriaDialog {...props} className={cx("relative max-h-[inherit] w-full overflow-y-auto outline-hidden", props.className)} />
-);
-
 /*
- * Modal parts. Figma: `_Modal header` and `_Modal actions`. The modal body between them is a free slot,
- * so any layout is assembled from `Modal` + `ModalHeader` + your content + `ModalActions`.
+ * Modal. Figma: `Modal` (Breakpoint = Desktop / Mobile sheet / Mobile full screen) with
+ * `_Modal header`, the Body slot, `_Modal footer` and `_Sheet handle`.
+ * A fixed header and footer with dividers around a scrolling body. Centered from `sm` up;
+ * below `sm` it becomes a bottom sheet or a full-screen view. For short confirmations, use `PromptModal`.
  */
 
-interface ModalHeaderProps {
+interface ModalProps extends Omit<AriaModalOverlayProps, "children" | "className"> {
     /**
-     * Figma "Type": `left` = Left aligned, `center` = Center aligned, `horizontal` = Horizontal left aligned
-     * (icon beside the text from `sm` up, stacked on mobile like Figma's mobile breakpoint).
-     * @default "left"
+     * How the modal renders below the `sm` breakpoint (Figma "Breakpoint"):
+     * - `sheet` — Mobile sheet: full width from the bottom, top corners rounded, grab handle,
+     *   as tall as its content up to the viewport minus a 48px gap.
+     * - `fullscreen` — Mobile full screen: fills the viewport, no radius. Use for forms and long content.
+     * From `sm` up both render as the centered Desktop modal.
+     * @default "sheet"
      */
-    align?: "left" | "center" | "horizontal";
-    /** Usually a `<FeaturedIcon size="lg" />`. */
-    icon?: ReactNode;
+    mobile?: "sheet" | "fullscreen";
+    /** Desktop width of the modal. @default "sm:max-w-120" (480px, the Figma frame) */
+    className?: string;
+    children: ReactNode | ((renderProps: AriaDialogRenderProps) => ReactNode);
+}
+
+const ModalComponent = ({ mobile = "sheet", className, children, isDismissable = true, ...props }: ModalProps) => (
+    <AriaModalOverlay
+        {...props}
+        isDismissable={isDismissable}
+        className={(state) =>
+            cx(
+                "fixed inset-0 z-50 flex min-h-dvh w-full items-end justify-center bg-overlay/70 outline-hidden backdrop-blur-[6px] sm:items-center sm:px-8",
+                // Vertical padding: the sheet keeps a 48px gap at the top, full screen has none.
+                "pt-(--modal-pt) pb-(--modal-pb) [--modal-pb:0px] sm:[--modal-pb:32px] sm:[--modal-pt:32px]",
+                mobile === "sheet" ? "[--modal-pt:48px]" : "[--modal-pt:0px]",
+                // Animations
+                state.isEntering && "duration-slower ease-out animate-in fade-in",
+                state.isExiting && "duration-slow ease-out animate-out fade-out",
+            )
+        }
+    >
+        <AriaModal
+            className={(state) =>
+                cx(
+                    "flex w-full flex-col overflow-hidden bg-primary shadow-xl outline-hidden sm:max-w-120 sm:rounded-2xl",
+                    // Max height based on the overlay's vertical padding
+                    "max-h-[calc(var(--visual-viewport-height)-var(--modal-pt)-var(--modal-pb))]",
+                    mobile === "sheet" && "rounded-t-2xl",
+                    mobile === "fullscreen" && "h-(--visual-viewport-height) shadow-none sm:h-auto sm:shadow-xl",
+                    // Animations: zoom in on desktop, slide up from the bottom on mobile.
+                    state.isEntering && "duration-slower ease-out animate-in zoom-in-95 max-sm:ease-drawer max-sm:slide-in-from-bottom max-sm:zoom-in-100",
+                    state.isExiting && "duration-slow ease-out animate-out zoom-out-95 max-sm:ease-drawer max-sm:slide-out-to-bottom max-sm:zoom-out-100",
+                    className,
+                )
+            }
+        >
+            <AriaDialog className="flex max-h-[inherit] min-h-0 w-full flex-1 flex-col outline-hidden">
+                {(renderProps) => (
+                    <>
+                        {mobile === "sheet" && <SheetHandle />}
+                        {typeof children === "function" ? children(renderProps) : children}
+                    </>
+                )}
+            </AriaDialog>
+        </AriaModal>
+    </AriaModalOverlay>
+);
+
+/** Figma `_Sheet handle`. Decorative: the sheet closes with the close button, Escape or a tap on the overlay. */
+const SheetHandle = () => (
+    <div aria-hidden="true" className="flex shrink-0 justify-center p-2 sm:hidden">
+        <div className="h-1 w-9 rounded-full bg-quaternary" />
+    </div>
+);
+
+interface ModalHeaderProps {
     title: ReactNode;
+    /** Shown next to the title. A string renders a small brand `Badge`; pass an element for anything else. */
+    badge?: ReactNode;
     description?: ReactNode;
-    /** Figma "X close button". Closes the parent `Dialog` via the React Aria `close` slot. @default true */
+    /** Figma "Close button". Closes the modal via the React Aria `close` slot. @default true */
     showCloseButton?: boolean;
-    /** Figma "Padding bottom" — 20px below the text. Turn off when the body sits flush under the header. @default true */
-    paddingBottom?: boolean;
-    /** Figma "Divider" — a border-secondary line under the header. @default false */
+    /** Figma "Divider" — a border-secondary line under the header. @default true */
     divider?: boolean;
     className?: string;
 }
 
-export const ModalHeader = ({
-    align = "left",
-    icon,
-    title,
-    description,
-    showCloseButton = true,
-    paddingBottom = true,
-    divider = false,
-    className,
-}: ModalHeaderProps) => (
-    <div className={cx("relative flex flex-col", className)}>
-        <div
-            className={cx(
-                "flex flex-col gap-4 px-4 pt-5 sm:px-6 sm:pt-6",
-                align === "center" && "items-center text-center",
-                align === "horizontal" && "sm:flex-row",
-                paddingBottom && "pb-5",
-            )}
-        >
-            {icon}
-            <div
-                className={cx(
-                    "flex min-w-0 flex-col gap-0.5",
-                    // Keep text clear of the close button when it shares the first row.
-                    showCloseButton && (!icon || align === "horizontal") && "sm:pr-8",
-                    showCloseButton && !icon && "pr-8",
-                )}
-            >
-                <AriaHeading slot="title" className="text-md font-semibold text-primary">
+export const ModalHeader = ({ title, badge, description, showCloseButton = true, divider = true, className }: ModalHeaderProps) => (
+    <div className={cx("flex shrink-0 items-start gap-4 px-4 py-5 sm:px-6", divider && "border-b border-secondary", className)}>
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <div className="flex flex-wrap items-center gap-2">
+                <AriaHeading slot="title" className="text-lg font-semibold text-primary">
                     {title}
                 </AriaHeading>
-                {description && <p className="text-sm text-tertiary">{description}</p>}
+                {typeof badge === "string" ? (
+                    <Badge type="pill-color" color="brand" size="sm">
+                        {badge}
+                    </Badge>
+                ) : (
+                    badge
+                )}
             </div>
+            {description && <p className="text-sm text-tertiary">{description}</p>}
         </div>
-        {divider && <div className="w-full border-t border-secondary" />}
-        {showCloseButton && <CloseButton size="lg" className="absolute top-3 right-3" />}
+        {/* As tall as the title line, so the button centers on the title (Figma "Actions" frame). */}
+        {showCloseButton && (
+            <div className="flex h-7.5 items-center">
+                <CloseButton size="md" />
+            </div>
+        )}
     </div>
 );
 
-interface ModalActionsProps {
-    /**
-     * Figma "Type":
-     * - `vertical` — Vertical fill container: full-width buttons stacked, first child on top.
-     * - `horizontal` — Horizontal fill container: equal-width buttons side by side from `sm` up
-     *   (pass secondary first, primary last); stacked with primary on top on mobile.
-     * - `horizontal-right` — Horizontal right aligned: `leading` content (e.g. a checkbox) on the left,
-     *   buttons on the right; buttons stacked above `leading` on mobile.
-     * @default "horizontal"
-     */
-    layout?: "vertical" | "horizontal" | "horizontal-right";
-    /** Left-hand content for `horizontal-right`, e.g. a `Checkbox` and a `link-gray` button. */
-    leading?: ReactNode;
-    /** Figma "Divider" — a border-secondary line above the actions. @default false */
-    divider?: boolean;
-    /** The buttons. Use `size="lg"` to match Figma; destructive modals pass `color="primary-destructive"`. */
+interface ModalBodyProps {
     children: ReactNode;
     className?: string;
 }
 
-export const ModalActions = ({ layout = "horizontal", leading, divider = false, children, className }: ModalActionsProps) => (
-    <div className={cx("flex flex-col pt-6 sm:pt-8", className)}>
-        {divider && <div className="mb-4 w-full border-t border-secondary sm:mb-6" />}
-        <div
-            className={cx(
-                "flex gap-3 px-4 pb-4 sm:px-6 sm:pb-6",
-                layout === "vertical" && "flex-col *:w-full",
-                layout === "horizontal" && "flex-col-reverse *:w-full sm:flex-row sm:*:w-auto sm:*:flex-1",
-                layout === "horizontal-right" && "flex-col-reverse sm:flex-row sm:items-center",
-            )}
-        >
-            {layout === "horizontal-right" ? (
-                <>
-                    {leading && <div className="flex items-center gap-3">{leading}</div>}
-                    <div className="flex flex-col-reverse gap-3 *:w-full sm:ml-auto sm:flex-row sm:*:w-auto">{children}</div>
-                </>
-            ) : (
-                children
-            )}
-        </div>
+/** Figma "Body" slot. Scrolls when the content is taller than the space between header and footer. */
+export const ModalBody = ({ children, className }: ModalBodyProps) => (
+    <div className={cx("flex min-h-0 flex-auto flex-col gap-4 overflow-y-auto px-4 py-5 sm:px-6", className)}>{children}</div>
+);
+
+interface ModalFooterProps {
+    /** Figma "Actions" slot: usually the buttons, secondary first and primary last. Use `size="lg"` to match Figma. */
+    children: ReactNode;
+    /** Figma "Divider" — a border-secondary line above the footer. @default true */
+    divider?: boolean;
+    className?: string;
+}
+
+export const ModalFooter = ({ children, divider = true, className }: ModalFooterProps) => (
+    <div
+        className={cx(
+            // Mobile: equal-width buttons side by side. From `sm` up: right aligned.
+            "flex shrink-0 gap-3 px-4 pt-4 pb-[calc(--spacing(4)+env(safe-area-inset-bottom))] *:flex-1 sm:justify-end sm:px-6 sm:pb-4 sm:*:flex-none",
+            divider && "border-t border-secondary",
+            className,
+        )}
+    >
+        {children}
     </div>
 );
+
+export const Modal = ModalComponent as typeof ModalComponent & {
+    /** Wraps the button that opens the modal and the `Modal` itself. */
+    Trigger: typeof AriaDialogTrigger;
+};
+Modal.Trigger = AriaDialogTrigger;
