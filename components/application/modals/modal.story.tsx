@@ -1,13 +1,12 @@
 import type { FC, ReactNode } from "react";
-import { Settings, Success, Trash, Users } from "fa-icons";
-import { Dialog, DialogTrigger, Modal, ModalActions, ModalHeader, ModalOverlay } from "@/components/application/modals/modal";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/application/modals/modal";
 import { Button } from "@/components/base/buttons/button";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
 import { Input } from "@/components/base/input/input";
-import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
+import { TextArea } from "@/components/base/textarea/textarea";
 
 export default {
-    title: "Application/Modal",
+    title: "Application/Modals",
     decorators: [
         (Story: FC) => (
             <div className="flex min-h-screen w-full items-start bg-primary p-4">
@@ -17,166 +16,117 @@ export default {
     ],
 };
 
-const Example = ({ trigger, className = "max-w-100", children }: { trigger: ReactNode; className?: string; children: (close: () => void) => ReactNode }) => (
-    <DialogTrigger>
+const Example = ({
+    trigger,
+    mobile,
+    className,
+    children,
+}: {
+    trigger: ReactNode;
+    mobile?: "sheet" | "fullscreen";
+    className?: string;
+    children: (close: () => void) => ReactNode;
+}) => (
+    <Modal.Trigger>
         {trigger}
-        <ModalOverlay isDismissable>
-            <Modal className={className}>
-                <Dialog>{({ close }) => children(close)}</Dialog>
-            </Modal>
-        </ModalOverlay>
-    </DialogTrigger>
+        <Modal mobile={mobile} className={className}>
+            {({ close }) => children(close)}
+        </Modal>
+    </Modal.Trigger>
 );
 
+const Footer = ({ close, confirm }: { close: () => void; confirm: string }) => (
+    <ModalFooter>
+        <Button size="lg" color="secondary" onClick={close}>
+            Cancel
+        </Button>
+        <Button size="lg" onClick={close}>
+            {confirm}
+        </Button>
+    </ModalFooter>
+);
+
+/** Centered on desktop, a bottom sheet on mobile (switch the viewport to see it). */
 export const Default = () => (
-    <Example trigger={<Button color="secondary">Open modal</Button>}>
+    <Example trigger={<Button color="secondary">Invite team members</Button>} className="sm:max-w-140">
         {(close) => (
             <>
-                <ModalHeader
-                    icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
-                    title="Blog post published"
-                    description="This blog post has been published. Team members will be able to edit this post and republish changes."
-                    paddingBottom={false}
-                />
-                <ModalActions>
-                    <Button size="lg" color="secondary" onClick={close}>
-                        Cancel
-                    </Button>
-                    <Button size="lg" onClick={close}>
-                        Confirm
-                    </Button>
-                </ModalActions>
+                <ModalHeader title="Invite team members" badge="10/20 seats" description="Invite colleagues to collaborate on this project." />
+                <ModalBody>
+                    <Input label="Email" placeholder="olivia@untitledui.com" isRequired />
+                    <Input label="Email" placeholder="phoenix@untitledui.com" isRequired />
+                </ModalBody>
+                <Footer close={close} confirm="Send invites" />
             </>
         )}
     </Example>
 );
+Default.parameters = {
+    design: { desktop: "17279-7253", mobile: "17279-7282" },
+};
 
-export const Destructive = () => (
-    <Example trigger={<Button color="primary-destructive">Delete item</Button>}>
+/** `mobile="fullscreen"`: fills the screen on mobile. Use it for forms, where a sheet would leave little room above the keyboard. */
+export const FullScreen = () => (
+    <Example mobile="fullscreen" trigger={<Button color="secondary">New project</Button>}>
         {(close) => (
             <>
-                <ModalHeader
-                    icon={<FeaturedIcon icon={Trash} color="error" theme="light" size="lg" />}
-                    title="Delete this item?"
-                    description="This action cannot be undone. This will permanently remove the item."
-                    paddingBottom={false}
-                />
-                <ModalActions>
-                    <Button size="lg" color="secondary" onClick={close}>
-                        Cancel
-                    </Button>
-                    <Button size="lg" color="primary-destructive" onClick={close}>
-                        Delete
-                    </Button>
-                </ModalActions>
+                <ModalHeader title="New project" description="Set up the basics. You can change them later." />
+                <ModalBody>
+                    <Input label="Project name" placeholder="Website redesign" isRequired />
+                    <Input label="Client" placeholder="Acme Inc." />
+                    <TextArea label="Description" placeholder="What is this project about?" rows={4} />
+                    <Checkbox label="Notify team members" hint="Everyone on the team gets an email." />
+                </ModalBody>
+                <Footer close={close} confirm="Create project" />
             </>
         )}
     </Example>
 );
+FullScreen.storyName = "Full screen on mobile";
+FullScreen.parameters = {
+    design: { desktop: "17279-7253", mobile: "17279-7314" },
+};
 
-/** All three Figma header types and all three action layouts. */
-export const Parts = () => (
-    <div className="flex flex-wrap gap-3">
-        <Example trigger={<Button color="secondary">Left aligned + vertical</Button>}>
-            {(close) => (
-                <>
-                    <ModalHeader
-                        align="left"
-                        icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
-                        title="Blog post published"
-                        description="This blog post has been published. Team members will be able to edit this post and republish changes."
-                        paddingBottom={false}
-                    />
-                    <ModalActions layout="vertical">
-                        <Button size="lg" onClick={close}>
-                            Confirm
-                        </Button>
-                        <Button size="lg" color="secondary" onClick={close}>
-                            Cancel
-                        </Button>
-                    </ModalActions>
-                </>
-            )}
-        </Example>
-        <Example trigger={<Button color="secondary">Center aligned + horizontal</Button>}>
-            {(close) => (
-                <>
-                    <ModalHeader
-                        align="center"
-                        icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
-                        title="Blog post published"
-                        description="This blog post has been published. Team members will be able to edit this post and republish changes."
-                        paddingBottom={false}
-                    />
-                    <ModalActions layout="horizontal">
-                        <Button size="lg" color="secondary" onClick={close}>
-                            Cancel
-                        </Button>
-                        <Button size="lg" onClick={close}>
-                            Confirm
-                        </Button>
-                    </ModalActions>
-                </>
-            )}
-        </Example>
-        <Example className="max-w-140" trigger={<Button color="secondary">Horizontal + right aligned, dividers</Button>}>
-            {(close) => (
-                <>
-                    <ModalHeader
-                        align="horizontal"
-                        icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
-                        title="Blog post published"
-                        description="This blog post has been published. Team members will be able to edit this post and republish changes."
-                        divider
-                    />
-                    <ModalActions
-                        layout="horizontal-right"
-                        divider
-                        leading={
-                            <>
-                                <Checkbox label="Don’t show again" />
-                                <Button size="lg" color="link-gray" iconLeading={Settings}>
-                                    Settings
-                                </Button>
-                            </>
-                        }
-                    >
-                        <Button size="lg" color="secondary" onClick={close}>
-                            Cancel
-                        </Button>
-                        <Button size="lg" onClick={close}>
-                            Confirm
-                        </Button>
-                    </ModalActions>
-                </>
-            )}
-        </Example>
-    </div>
-);
-
-/** The body between header and actions is a free slot. */
-export const CustomBody = () => (
-    <Example trigger={<Button color="secondary">Invite team member</Button>}>
+/** Header and footer stay put while the body scrolls. */
+export const LongContent = () => (
+    <Example trigger={<Button color="secondary">Terms of service</Button>}>
         {(close) => (
             <>
-                <ModalHeader
-                    icon={<FeaturedIcon icon={Users} color="gray" theme="modern" size="lg" />}
-                    title="Invite team member"
-                    description="They’ll get an email with a link to join your workspace."
-                />
-                <div className="flex flex-col gap-4 px-4 sm:px-6">
-                    <Input label="Email" placeholder="olivia@untitledui.com" />
-                </div>
-                <ModalActions>
-                    <Button size="lg" color="secondary" onClick={close}>
-                        Cancel
-                    </Button>
-                    <Button size="lg" onClick={close}>
-                        Send invite
-                    </Button>
-                </ModalActions>
+                <ModalHeader title="Terms of service" badge="Updated" description="Please read and accept to continue." />
+                <ModalBody>
+                    {Array.from({ length: 12 }, (_, i) => (
+                        <p key={i} className="text-sm text-tertiary">
+                            {i + 1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus, posuere velit
+                            aliquet. Donec ullamcorper nulla non metus auctor fringilla.
+                        </p>
+                    ))}
+                </ModalBody>
+                <Footer close={close} confirm="Accept" />
             </>
         )}
     </Example>
 );
-CustomBody.storyName = "Custom body";
+LongContent.storyName = "Long content";
+
+/** Header without a badge or description, and a modal without a footer. */
+export const Minimal = () => (
+    <Example trigger={<Button color="secondary">Keyboard shortcuts</Button>}>
+        {() => (
+            <>
+                <ModalHeader title="Keyboard shortcuts" />
+                <ModalBody>
+                    {[
+                        ["Search", "⌘ K"],
+                        ["New project", "⌘ N"],
+                        ["Toggle sidebar", "⌘ B"],
+                    ].map(([label, keys]) => (
+                        <div key={label} className="flex justify-between text-sm">
+                            <span className="text-secondary">{label}</span>
+                            <span className="font-medium text-primary">{keys}</span>
+                        </div>
+                    ))}
+                </ModalBody>
+            </>
+        )}
+    </Example>
+);

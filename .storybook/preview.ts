@@ -54,6 +54,7 @@ export const parameters = {
                 [
                     "Application navigation",
                     "Modals",
+                    "Prompt modals",
                     "Command menus",
                     "Charts",
                     "Slideout menus",
