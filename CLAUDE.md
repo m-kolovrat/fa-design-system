@@ -246,6 +246,28 @@ The `flag` icon is exported as `FlagIcon` (`Flag` is the country flag component)
 <Home aria-hidden={false} aria-label="Home" />
 ```
 
+### Adding or updating icons, flags and logos
+
+Figma is the source, the [`fa-icons`](https://github.com/m-kolovrat/fa-icons) repo builds the
+package, and this repo only installs it. Never add an SVG or icon component here.
+
+1. **Figma** (file "Fa Design System"): each asset is a component in its section. Icons V2
+   (node `17218-803`), Flag (`17201-14733`), Logos (`17204-1131`). The component name is the
+   kebab-case code name (`arrow-left`). Icons and flags are 20×20 frames. Icons keep their
+   strokes; don't outline them.
+2. **Export** each changed component as SVG ("Include id attribute" off). Without manual export,
+   use the Figma MCP: `use_figma` with `node.exportAsync({ format: "SVG_STRING", svgIdAttribute: false })`
+   per component. A call returns at most 48 KB, so batch about 40 icons or 15 flags per call.
+3. **`fa-icons`** (sibling checkout, `~/Projects/fa-icons`): put the files in `svg/icons`,
+   `svg/flags` or `svg/logos`, then run `npm run check`, `npm test` and `npm run preview`
+   (http://localhost:4310, every component with size, color and dark controls). A new
+   brand-colored logo goes in `keepColors`, a name that clashes with an export in
+   `componentNames` (`scripts/config.mjs`). Release: `npm version minor` (major when an asset is
+   renamed or removed), then `git push --follow-tags`.
+4. **This repo**: change the tag in `package.json` (`"fa-icons": "github:m-kolovrat/fa-icons#vX.Y.Z"`),
+   run `npm install --legacy-peer-deps`, check the stories that use the asset, and `npm test`.
+   Removed or renamed assets are breaking changes: update every import in the same PR.
+
 ## Form Handling
 
 - Form fields (`Input`, `Select`, `Checkbox`, `TextArea`, …) take `label`, `hint`, `isRequired`, `isInvalid` and `isDisabled`.
@@ -293,10 +315,10 @@ Most components use `opacity-50` for disabled states instead of individual disab
 "disabled:cursor-not-allowed disabled:opacity-50";
 ```
 
-**Exceptions — `Button`, `ButtonGroup`, `RadioCard` and `PinInput`** match Figma exactly (RadioCard: `bg-disabled_subtle` fill and `ring-disabled` border; PinInput digit boxes: the same fill and border with `fg-disabled_subtle` digits). `Button` and `ButtonGroup` (ButtonGroup: `text-disabled` text, `fg-disabled_subtle` icons/dots, unchanged background and border; selected + disabled uses `bg-disabled_subtle`). `Button` uses the neutral disabled tokens
-(`bg-disabled`, `border-disabled_subtle`, `fg-disabled`), not `opacity-50`. Disabled text and icon
-are both `fg-disabled`; primary/primary-destructive disabled is fill-only (no border, no shadow);
-secondary keeps a `border-disabled_subtle`. No disabled shadows.
+**Exceptions — `Button`, `ButtonGroup`, `RadioCard` and `PinInput`** match Figma exactly (RadioCard: `bg-disabled_subtle` fill and `ring-disabled` border; PinInput digit boxes: the same fill and border with `fg-disabled_subtle` digits). `Button` and `ButtonGroup` (ButtonGroup: `bg-disabled_subtle` fill, `text-disabled` text, `fg-disabled_subtle` icons/dots, unchanged border). `Button` uses the neutral disabled tokens
+(`bg-disabled_subtle`, `border-disabled_subtle`, `fg-disabled`), not `opacity-50`. Disabled text and icon
+are both `fg-disabled`. Primary and secondary disabled (destructive too) use the `bg-disabled_subtle` fill;
+secondary also keeps a `border-disabled_subtle`, primary is fill-only (no border). No disabled shadows.
 Shared text/icon greying lives in `common.root`; per-hierarchy fill/border in each color variant.
 The disabled tokens are defined in `styles/theme.css` (bound to the `neutral` ramp at Figma's Gray
 step numbers, light + dark). See `components/base/buttons/button.tsx`. If you convert other
@@ -361,8 +383,8 @@ either side, partial builds, variant differences and settled decisions.
   URLs). Single-color logos use `currentColor`, so the page decides the color with a `text-*`
   class; only logos with fixed brand colors keep their fills. Import them from `"fa-icons"`:
   `<FaLargeLogo />`, `<Flag name="argentina-ars" />` (flags are named exactly as in Figma, 20×20).
-  To add or change one, update Figma, then `fa-icons` (see its README), release a new tag and
-  bump the `fa-icons` version in `package.json`. Storybook shows them under Foundations → Flags / Logos.
+  To add or change one, follow "Adding or updating icons, flags and logos" under Icon Usage.
+  Storybook shows them under Foundations → Flags / Logos.
 
 ## Best Practices for AI Assistance
 
