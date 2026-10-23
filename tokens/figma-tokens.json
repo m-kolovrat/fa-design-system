@@ -243,7 +243,7 @@
         "background": {
             "bg-primary": ["base/white", "gray-dark/950"],
             "bg-primary_alt": ["base/white", "bg-secondary"],
-            "bg-primary_hover": ["gray-light/50", "gray-dark/800"],
+            "bg-primary_hover": ["gray-light/100", "gray-dark/800"],
             "bg-primary-solid": ["gray-light/950", "bg-secondary"],
             "bg-secondary": ["gray-light/50", "gray-dark/900"],
             "bg-secondary_alt": ["gray-light/50", "bg-primary"],

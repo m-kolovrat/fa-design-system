@@ -12,6 +12,13 @@ const customViewports = {
             height: "100vh",
         },
     },
+    tablet: {
+        name: "Tablet",
+        styles: {
+            width: "768px",
+            height: "100vh",
+        },
+    },
     desktop: {
         name: "Desktop",
         styles: {
@@ -53,6 +60,8 @@ export const parameters = {
                 "Application",
                 [
                     "Application navigation",
+                    "Site header",
+                    "Site footer",
                     "Modals",
                     "Prompt modals",
                     "Command menus",
