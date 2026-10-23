@@ -1,10 +1,20 @@
 ## Project Overview
 
-This is an **Untitled UI React** component library project built with:
+The **Fa Design System**: the component library for Finansavisen, Kapital and Motor, kept in sync
+with the Figma file "Fa Design System". Forked from Untitled UI React and built with:
 
 - **React 19** with TypeScript
 - **Tailwind CSS v4.3** for styling
 - **React Aria Components** as the foundation for accessibility and behavior
+
+## Two kinds of work
+
+- **Changing the library** (a component's code, tokens, icons, Storybook setup): follow this file.
+- **Building UI with the library** (demos, stories, patterns, pages, and any app that uses these
+  components): load the **`fa-design-system` skill** in `skills/fa-design-system/`. It holds the
+  usage rules, the token reference, a page per component and the anti-patterns. When you change a
+  component's props, sizes or colors, update its page in `skills/fa-design-system/references/components/`
+  in the same change.
 
 ## Key Architecture Principles
 
@@ -168,11 +178,13 @@ interface ButtonProps extends CommonProps, Omit<AriaButtonProps, "children" | "c
 
 ## Styling Guidelines
 
-### Tailwind CSS v4.3
+### Colors
 
-- Uses the latest Tailwind CSS v4.3 features
-- Custom design tokens defined in theme configuration
-- Consistent spacing, colors, and typography scales
+Use semantic token classes only (`text-primary`, `bg-secondary`, `border-secondary`,
+`text-fg-quaternary`), never Tailwind palette colors (`text-gray-900`, `bg-blue-700`) or hex. A
+component may use a primitive ramp step (`brand-700`) only when its Figma component is bound to that
+primitive (as in `site-brands.ts`). The full token list with what each one is for is in
+`skills/fa-design-system/references/tokens.md`.
 
 ### Changing tokens (including the brand color)
 
@@ -212,40 +224,16 @@ export const styles = sortCx({
 
 Untitled UI icons (`@untitledui/icons`) are no longer used. If a design needs an icon that `fa-icons` doesn't have, it's designed in Figma first and added to `fa-icons`; don't pull in another icon library.
 
-### Import & Usage
+### Import & usage
 
-```typescript
-// Recommended: Named imports (tree-shakeable). Names are the Figma names in PascalCase (`chevron-down` → `ChevronDown`).
-import { Home, Settings, ChevronDown } from "fa-icons";
-
-// Component props - pass as reference
-<Button iconLeading={ChevronDown}>Options</Button>
-
-// Standalone usage
-<Home className="size-5 text-fg-quaternary" />
-
-// As JSX element - MUST include data-icon
-<Button iconLeading={<ChevronDown data-icon className="size-4" />}>Options</Button>
-```
+Named imports; names are the Figma names in PascalCase (`chevron-down` → `ChevronDown`). Pass an
+icon to a component prop as a reference (`iconLeading={ChevronDown}`), or as JSX with `data-icon`.
+Icons are 20px by default (`size-4` / `size-5` / `size-6` to change), colored with `text-fg-*`
+(`currentColor`), and `aria-hidden` unless given `aria-hidden={false}` and an `aria-label`. The
+stroke is 1.5px at 20px and scales with the size; never override it with `stroke-*`.
 
 The `flag` icon is exported as `FlagIcon` (`Flag` is the country flag component). Name an import
 `<Name>Icon` (e.g. `Calendar as CalendarIcon`) when it clashes with a component in the file.
-
-### Styling
-
-```typescript
-// Size: icons are 20px (the Figma frame) by default. Use size-4 (16px), size-5 (20px), size-6 (24px), or the `size` prop
-<Home className="size-5" />
-
-// Color: icons use currentColor, so use semantic text colors
-<Home className="size-5 text-fg-brand-primary" />
-
-// Stroke: 1.5px at 20px (the Figma icon), scaling with the size (1.2px at 16px). Don't override it with stroke-* classes
-<Home className="size-4" />
-
-// Accessibility: icons are aria-hidden by default. Give meaningful ones a label
-<Home aria-hidden={false} aria-label="Home" />
-```
 
 ### Adding or updating icons, flags and logos
 
@@ -402,471 +390,12 @@ call sites. When a second place needs the same restyle, propose a real variant i
 1. Follow the existing component structure
 2. Use React Aria Components as foundation
 3. Implement proper TypeScript types
-4. Add size and color variants where applicable
+4. Add only the sizes and colors the Figma component has
 5. Include accessibility features
 6. Follow the naming conventions
 7. Add components to appropriate folders (`base/`, `application/`, etc.)
 8. Add a `.story.tsx` (and `.demo.tsx` if useful); restart Storybook so Tailwind sees the new file
 9. Check `docs/figma-parity.md`, and update it if the component closes or opens a gap
-10. Run `npm test` and check the stories in Storybook (light, dark, mobile width) before committing
-
-## Most Used Components Reference
-
-### Button
-
-The Button component is the most frequently used interactive element across the library.
-
-**Import:**
-
-```typescript
-import { Button } from "@/components/base/buttons/button";
-```
-
-**Common Props:**
-
-- `size`: `"sm" | "md" | "lg" | "xl"` - Button size (default: `"sm"`)
-- `color`: `"primary" | "secondary" | "tertiary" | "link-gray" | "link-color" | "primary-destructive" | "secondary-destructive" | "tertiary-destructive" | "link-destructive"` - Button color variant (default: `"primary"`)
-- `iconLeading`: `FC | ReactNode` - Icon or component to display before text
-- `iconTrailing`: `FC | ReactNode` - Icon or component to display after text
-- `isDisabled`: `boolean` - Disabled state
-- `isLoading`: `boolean` - Loading state with spinner
-- `showTextWhileLoading`: `boolean` - Keep text visible during loading
-- `children`: `ReactNode` - Button content
-
-**Examples:**
-
-```typescript
-// Basic button
-<Button size="md">Save</Button>
-
-// With leading icon
-<Button iconLeading={Check} color="primary">Save</Button>
-
-// Loading state
-<Button isLoading showTextWhileLoading>Submitting...</Button>
-
-// Destructive action
-<Button color="primary-destructive" iconLeading={Trash}>Delete</Button>
-```
-
-### Input
-
-Text input component with extensive customization options.
-
-**Import:**
-
-```typescript
-import { Input } from "@/components/base/input/input";
-import { InputGroup } from "@/components/base/input/input-group";
-```
-
-**Common Props:**
-
-- `size`: `"sm" | "md" | "lg"` - Input size (default: `"md"`)
-- `label`: `string` - Field label
-- `placeholder`: `string` - Placeholder text
-- `hint`: `string` - Helper text below input
-- `tooltip`: `string` - Tooltip text for help icon
-- `icon`: `FC` - Leading icon component
-- `isRequired`: `boolean` - Required field indicator
-- `isDisabled`: `boolean` - Disabled state
-- `isInvalid`: `boolean` - Error state
-
-**Examples:**
-
-```typescript
-// Basic input with label
-<Input label="Email" placeholder="olivia@untitledui.com" />
-
-// With icon and validation
-<Input
-  icon={Mail}
-  label="Email"
-  isRequired
-  isInvalid
-  hint="Please enter a valid email"
-/>
-
-// Input group with button
-<InputGroup label="Website" trailingAddon={<Button>Copy</Button>}>
-  <InputBase placeholder="www.untitledui.com" />
-</InputGroup>
-```
-
-### Select
-
-Dropdown selection component with search and multi-select capabilities.
-
-**Import:**
-
-```typescript
-import { MultiSelect } from "@/components/base/select/multi-select";
-import { Select } from "@/components/base/select/select";
-```
-
-**Common Props:**
-
-- `size`: `"sm" | "md" | "lg"` - Select size (default: `"md"`)
-- `label`: `string` - Field label
-- `placeholder`: `string` - Placeholder text
-- `hint`: `string` - Helper text
-- `tooltip`: `string` - Tooltip text
-- `items`: `Array` - Data items to display
-- `isRequired`: `boolean` - Required field
-- `isDisabled`: `boolean` - Disabled state
-- `icon`: `FC | ReactNode` - Icon for placeholder
-
-**Item Props:**
-
-- `id`: `string` - Unique identifier
-- `supportingText`: `string` - Secondary text
-- `icon`: `FC | ReactNode` - Leading icon
-- `avatarUrl`: `string` - Avatar image URL
-- `isDisabled`: `boolean` - Disabled item
-
-**Examples:**
-
-```typescript
-// Basic select
-<Select label="Team member" placeholder="Select member" items={users}>
-  {(item) => (
-    <Select.Item id={item.id} supportingText={item.email}>
-      {item.name}
-    </Select.Item>
-  )}
-</Select>
-
-// With search (ComboBox)
-<Select.ComboBox label="Search" placeholder="Search users" items={users}>
-  {(item) => <Select.Item id={item.id}>{item.name}</Select.Item>}
-</Select.ComboBox>
-
-// With avatars
-<Select items={users} icon={User}>
-  {(item) => (
-    <Select.Item avatarUrl={item.avatar} supportingText={item.role}>
-      {item.name}
-    </Select.Item>
-  )}
-</Select>
-```
-
-### Checkbox
-
-Checkbox component for boolean selections.
-
-**Import:**
-
-```typescript
-import { Checkbox } from "@/components/base/checkbox/checkbox";
-```
-
-**Common Props:**
-
-- `size`: `"sm" | "md"` - Checkbox size (default: `"sm"`)
-- `label`: `string` - Checkbox label
-- `hint`: `string` - Helper text below label
-- `isSelected`: `boolean` - Checked state
-- `isDisabled`: `boolean` - Disabled state
-- `isIndeterminate`: `boolean` - Indeterminate state
-
-**Examples:**
-
-```typescript
-// Basic checkbox
-<Checkbox label="Remember me" />
-
-// With hint text
-<Checkbox
-  label="Remember me"
-  hint="Save my login details for next time"
-/>
-
-// Controlled state
-<Checkbox isSelected={checked} onChange={setChecked} />
-```
-
-### Badge
-
-Badge components for status indicators and labels.
-
-**Import:**
-
-```typescript
-import { Badge, BadgeWithDot, BadgeWithIcon } from "@/components/base/badges/badges";
-```
-
-**Common Props:**
-
-- `size`: `"sm" | "md" | "lg"` - Badge size
-- `color`: `"gray" | "brand" | "error" | "warning" | "success" | "blue-light" | "purple" | "pink" | "orange-dark"` - Color theme (see `BadgeColors` in `badge-types.ts`)
-- `type`: `"pill-color" | "color" | "modern"` - Badge style variant
-
-**Examples:**
-
-```typescript
-// Basic badge
-<Badge color="brand" size="md">New</Badge>
-
-// With dot indicator
-<BadgeWithDot color="success" type="pill-color">Active</BadgeWithDot>
-
-// With icon
-<BadgeWithIcon iconLeading={ArrowUp} color="success">12%</BadgeWithIcon>
-```
-
-### Avatar
-
-Avatar component for user profile images.
-
-**Import:**
-
-```typescript
-import { Avatar } from "@/components/base/avatar/avatar";
-import { AvatarLabelGroup } from "@/components/base/avatar/avatar-label-group";
-```
-
-**Common Props:**
-
-- `size`: `"xs" | "sm" | "md" | "lg" | "xl" | "2xl"` - Avatar size (note: `"xxs"` was removed in v8)
-- `src`: `string` - Image URL
-- `alt`: `string` - Alt text for accessibility
-- `initials`: `string` - Text initials when no image
-- `icon`: `FC` - Icon when no image
-- `status`: `"online" | "offline"` - Status indicator
-- `verified`: `boolean` - Verification badge
-- `badge`: `ReactNode` - Custom badge element
-
-**Examples:**
-
-```typescript
-// Basic avatar
-<Avatar src="/avatar.jpg" alt="User Name" size="md" />
-
-// With status
-<Avatar src="/avatar.jpg" status="online" />
-
-// With initials fallback
-<Avatar initials="OR" size="lg" />
-
-// Label group
-<AvatarLabelGroup
-  src="/avatar.jpg"
-  title="Olivia Rhye"
-  subtitle="olivia@untitledui.com"
-  size="md"
-/>
-```
-
-`AvatarLabelGroup` sizes: `sm`, `md`, `lg`, `xl`.
-
-### FeaturedIcon
-
-Decorative icon component with themed backgrounds for emphasis and visual hierarchy.
-
-**Import:**
-
-```typescript
-import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
-```
-
-**Common Props:**
-
-- `icon`: `FC` - Icon component to display (required)
-- `size`: `"sm" | "md" | "lg" | "xl"` - Icon container size
-- `color`: `"brand" | "gray" | "error" | "warning" | "success"` - Color scheme
-- `theme`: `"light" | "gradient" | "dark" | "modern" | "modern-neue" | "outline"` - Visual theme style
-
-**Theme Styles:**
-
-- `light`: Subtle background with colored icon
-- `gradient`: Gradient background effect
-- `dark`: Solid colored background with white icon
-- `modern`: Contemporary gray styling (gray color only)
-- `modern-neue`: Alternative modern style (gray color only)
-- `outline`: Border style with transparent background
-
-**Examples:**
-
-```typescript
-// Basic featured icon
-<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />
-
-// With gradient theme
-<FeaturedIcon icon={Alert} color="warning" theme="gradient" size="xl" />
-
-// Dark theme for emphasis
-<FeaturedIcon icon={CloseCircle} color="error" theme="dark" size="md" />
-
-// Outline style
-<FeaturedIcon icon={Info} color="brand" theme="outline" size="lg" />
-
-// Modern styles (IMPORTANT: gray only)
-<FeaturedIcon icon={Settings} color="gray" theme="modern" size="lg" />
-```
-
-### Link
-
-**Note**: There is no dedicated Link component. Instead, use the Button component with an `href` prop and link-specific color variants.
-
-**Import:**
-
-```typescript
-import { Button } from "@/components/base/buttons/button";
-```
-
-**Link Colors:**
-
-- `link-gray` - Gray link styling
-- `link-color` - Brand color link styling
-- `link-destructive` - Destructive link styling
-
-**Examples:**
-
-```typescript
-// Basic link
-<Button href="/dashboard" color="link-color">View Dashboard</Button>
-
-// With icon
-<Button href="/settings" color="link-gray" iconLeading={Settings}>
-  Settings
-</Button>
-
-// Destructive link
-<Button href="/delete" color="link-destructive" iconLeading={Trash}>
-  Delete Account
-</Button>
-
-// External link
-<Button href="https://example.com" color="link-color" iconTrailing={ExternalLink}>
-  Visit Site
-</Button>
-```
-
-## COLORS
-
-MUST use color classes to style elements.
-
-Bad:
-
-- text-gray-900
-- text-gray-600
-- bg-blue-700
-
-Good:
-
-- text-primary
-- text-secondary
-- bg-primary
-
-### Text Color
-
-Use text color variables to manage all text fill colors in your designs across light and dark modes.
-
-| Name                       | Usage                                                                                                                                                                |
-| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| text-primary               | Primary text such as page headings.                                                                                                                                  |
-| text-primary_on-brand      | Primary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. CTA sections).                                         |
-| text-secondary             | Secondary text such as labels and section headings.                                                                                                                  |
-| text-secondary_hover       | Secondary text when in hover state.                                                                                                                                  |
-| text-secondary_on-brand    | Secondary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. CTA sections).                                       |
-| text-tertiary              | Tertiary text such as supporting text and paragraph text.                                                                                                            |
-| text-tertiary_hover        | Tertiary text when in hover state.                                                                                                                                   |
-| text-tertiary_on-brand     | Tertiary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. CTA sections).                                        |
-| text-quaternary            | Quaternary text for more subtle and lower-contrast text, such as footer column headings.                                                                             |
-| text-quaternary_on-brand   | Quaternary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. footers).                                           |
-| text-white                 | Text that is always white, regardless of the mode.                                                                                                                   |
-| text-placeholder           | Default color for placeholder text such as input field placeholders. This can be changed to gray-400, but gray-500 is more accessible because it is higher contrast. |
-| text-placeholder_subtle    | A lower-contrast alternative to text-placeholder for placeholder text that should recede further, such as a secondary field in a multi-part input.                   |
-| text-disabled              | Default text color for disabled form elements and controls.                                                                                                          |
-| text-brand-primary         | Primary brand text useful for headings (e.g. cards in pricing page headers).                                                                                         |
-| text-brand-secondary       | Secondary brand text for brand buttons, as well as accented text, highlights, and subheadings (e.g. subheadings in blog post cards).                                 |
-| text-brand-secondary_hover | Secondary brand text when in hover state (e.g. brand buttons).                                                                                                       |
-| text-brand-tertiary        | Tertiary brand text for lighter accented text and highlights (e.g. numbers in metric cards).                                                                         |
-| text-brand-tertiary_alt    | An alternative to tertiary brand text that is lighter in dark mode (e.g. numbers in metric cards).                                                                   |
-| text-error-primary         | Default error state semantic text color (e.g. input field error states).                                                                                             |
-| text-warning-primary       | Default warning state semantic text color.                                                                                                                           |
-| text-success-primary       | Default success state semantic text color.                                                                                                                           |
-
-### Border Color
-
-Use border color variables to manage all stroke colors in your designs across light and dark modes. You can use the same values for `ring-` and `outline-` as well (i.e. `ring-primary` `outline-secondary`).
-
-| Name                   | Usage                                                                                                                                                                                   |
-| :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| border-primary         | High contrast borders. These are used for components such as input fields, button groups, and checkboxes.                                                                               |
-| border-secondary       | Medium contrast borders. This is the most commonly used border color and is the default for most components (e.g. file uploaders), cards (such as tables), and content dividers.        |
-| border-secondary_alt   | An alternative to secondary border that uses alpha transparency. This is used exclusively for floating menus such as input dropdowns and notifications to create sharper bottom border. |
-| border-tertiary        | Low contrast borders useful for very subtle dividers and borders such as line and bar chart axis dividers.                                                                              |
-| border-brand           | Default brand border color. Useful for active states in components such as input fields.                                                                                                |
-| border-brand_alt       | An brand border color that switches to gray when in dark mode. Useful for components such as brand-style variants of banners and footers.                                               |
-| border-error           | Default error state semantic border color. Useful for error states in components such as input fields and file uploaders.                                                               |
-| border-error_subtle    | A more subtle (lower contrast) alternative for error state semantic borders such as error state input fields.                                                                           |
-| border-disabled        | Border for disabled controls (e.g. disabled radio cards and inputs in Figma).                                                                                                           |
-| border-disabled_subtle | Subtler disabled border (e.g. disabled secondary buttons).                                                                                                                              |
-
-### Foreground Color
-
-Use foreground color variables to manage all non-text foreground elements in your designs across light and dark modes. Can be used via `text-`, `bg-`, `ring-`, `outline-`, `stroke-`, `fill-`, etc.
-
-| Name                   | Usage                                                                                                                                                         |
-| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| fg-primary             | Highest contrast non-text foreground elements such as icons.                                                                                                  |
-| fg-secondary           | High contrast non-text foreground elements such as icons.                                                                                                     |
-| fg-secondary_hover     | Secondary foreground elements when in hover state.                                                                                                            |
-| fg-tertiary            | Medium contrast non-text foreground elements such as icons.                                                                                                   |
-| fg-tertiary_hover      | Tertiary foreground elements when in hover state.                                                                                                             |
-| fg-quaternary          | Low contrast non-text foreground elements such as icons in buttons, help icons and icons used in input fields.                                                |
-| fg-quaternary_hover    | Quaternary foreground elements when in hover state, such as help icons.                                                                                       |
-| fg-white               | Foreground elements that are always white, regardless of the mode.                                                                                            |
-| fg-brand-primary       | Primary brand color non-text foreground elements such as featured icons and progress bars.                                                                    |
-| fg-brand-primary_alt   | An alternative for primary brand color non-text foreground elements that switches to gray when in dark mode such as active horizontal tabs.                   |
-| fg-brand-secondary     | Secondary brand color non-text foreground elements such as accents and arrows in marketing site sections (e.g. hero header sections).                         |
-| fg-brand-secondary_alt | An alternative for secondary brand color non-text foreground elements that switches to gray when in dark mode such as brand buttons.                          |
-| fg-error-primary       | Primary error state color for non-text foreground elements such as featured icons.                                                                            |
-| fg-error-secondary     | Secondary error state color for non-text foreground elements such as icons in error state input fields and negative metrics item charts and icons.            |
-| fg-warning-primary     | Primary warning state color for non-text foreground elements such as featured icons.                                                                          |
-| fg-warning-secondary   | Secondary warning state color for non-text foreground elements.                                                                                               |
-| fg-success-primary     | Primary success state color for non-text foreground elements such as featured icons.                                                                          |
-| fg-success-secondary   | Secondary success state color for non-text foreground elements such as button dots, avatar online indicator dots, and positive metrics item charts and icons. |
-| fg-disabled            | Disabled text and icons in buttons.                                                                                                                           |
-| fg-disabled_subtle     | Subtler disabled foreground (e.g. button group icons and dots).                                                                                               |
-
-### Background Color
-
-Use background color variables to manage all fill colors for elements in your designs across light and dark modes.
-
-| Name                    | Usage                                                                                                                                                                                         |
-| :---------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| bg-primary              | The primary background color (white) used across all layouts and components.                                                                                                                  |
-| bg-primary_alt          | An alternative primary background color (white) that switches to bg-secondary when in dark mode.                                                                                              |
-| bg-primary_hover        | Primary background hover color. This acts as the default hover state background color for components with white backgrounds (e.g. input dropdown menu items).                                 |
-| bg-primary-solid        | The primary dark background color used across layouts and components. This switches to bg-secondary when in dark mode and is useful for components such as tooltips and Text editor tooltips. |
-| bg-secondary            | The secondary background color used to create contrast against white backgrounds, such as website section backgrounds.                                                                        |
-| bg-secondary_alt        | An alternative secondary background color that switches to bg-primary when in dark mode. Useful for components such as border-style horizontal tabs.                                          |
-| bg-secondary_hover      | Secondary background hover color. Useful for hover states for components with gray-50 backgrounds such as active states (e.g. navigation items and date pickers).                             |
-| bg-secondary_subtle     | An alternative secondary background color that is slightly lighter and more subtle in light mode. This is useful for components such as banners.                                              |
-| bg-secondary-solid      | The secondary dark background color used across layouts and components. This is useful for components such as featured icons.                                                                 |
-| bg-tertiary             | The tertiary background color used to create contrast against light backgrounds such as toggles.                                                                                              |
-| bg-quaternary           | The quaternary background color used to create contrast against light backgrounds, such as sliders and progress bars.                                                                         |
-| bg-active               | Default active background color for components such as selected menu items in input dropdowns.                                                                                                |
-| bg-overlay              | Default background color for background overlays. These are useful for overlay components such as modals.                                                                                     |
-| bg-brand-primary        | The primary brand background color. Useful for components such as check icons.                                                                                                                |
-| bg-brand-primary_alt    | An alternative primary brand background color that switches to bg-secondary when in dark mode. Useful for components such as active horizontal tabs.                                          |
-| bg-brand-secondary      | The secondary brand background color. Useful for components such as featured icons.                                                                                                           |
-| bg-brand-solid          | Default solid (dark) brand background color. Useful for components such as toggles and messages.                                                                                              |
-| bg-brand-solid_hover    | Solid brand background color when in hover state. Useful for components such as toggles.                                                                                                      |
-| bg-brand-section        | This is the default dark brand color background used for website sections such as CTA sections and testimonials. Switches to bg-secondary when in dark mode.                                  |
-| bg-brand-section_subtle | An alternative brand section background color to provide contrast for website sections such as FAQ sections. Switches to bg-primary when in dark mode.                                        |
-| bg-error-primary        | Primary error state background color for components such as buttons.                                                                                                                          |
-| bg-error-secondary      | Secondary error state background color for components such as featured icons.                                                                                                                 |
-| bg-error-solid          | Default solid (dark) error state background color for components such as buttons, featured icons and metric items.                                                                            |
-| bg-error-solid_hover    | Default solid (dark) error hover state background color for components such as buttons.                                                                                                       |
-| bg-warning-primary      | Primary warning state background color for components.                                                                                                                                        |
-| bg-warning-secondary    | Secondary warning state background color for components such as featured icons.                                                                                                               |
-| bg-warning-solid        | Default solid (dark) warning state background color for components such as featured icons.                                                                                                    |
-| bg-success-primary      | Primary success state background color for components.                                                                                                                                        |
-| bg-success-secondary    | Secondary success state background color for components such as featured icons.                                                                                                               |
-| bg-success-solid        | Default solid (dark) success state background color for components such as featured icons and metric items.                                                                                   |
-| bg-disabled             | Fill for disabled solid controls (e.g. disabled primary buttons).                                                                                                                             |
-| bg-disabled_subtle      | Subtle disabled fill (e.g. selected + disabled button group items, disabled radio cards).                                                                                                     |
+10. Add its page to `skills/fa-design-system/references/components/` (copy the structure of
+    `button.md`) and list it in the component index of `skills/fa-design-system/SKILL.md`
+11. Run `npm test` and check the stories in Storybook (light, dark, mobile width) before committing
