@@ -5,8 +5,8 @@ at login, or when changing an e-post address). Built on `input-otp`. Figma: Veri
 field (digit boxes: \_Mega input field base).
 
 ```ts
+import { PinInput } from "fa-design-system/components/base/input/pin-input";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { PinInput } from "@/components/base/input/pin-input";
 ```
 
 ## Use when

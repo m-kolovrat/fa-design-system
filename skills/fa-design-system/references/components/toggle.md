@@ -4,7 +4,7 @@ An on/off switch for a setting that takes effect at once (kursvarsler, mørk mod
 video). React Aria `Switch`. Figma: Toggle.
 
 ```ts
-import { Toggle } from "@/components/base/toggle/toggle";
+import { Toggle } from "fa-design-system/components/base/toggle/toggle";
 ```
 
 ## Use when

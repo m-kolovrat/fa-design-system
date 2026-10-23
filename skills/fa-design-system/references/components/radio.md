@@ -5,8 +5,8 @@ rows; `RadioCardGroup` + `RadioCard` for bordered cards with icon, avatar, payme
 Figma: Checkbox (Type = Radio) for `RadioButton`; Radio group / Radio group item for the cards.
 
 ```ts
-import { RadioButton, RadioGroup } from "@/components/base/radio-buttons/radio-buttons";
-import { RadioCard, RadioCardGroup } from "@/components/base/radio-buttons/radio-cards";
+import { RadioButton, RadioGroup } from "fa-design-system/components/base/radio-buttons/radio-buttons";
+import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radio-buttons/radio-cards";
 ```
 
 ## Use when
@@ -23,7 +23,7 @@ import { RadioCard, RadioCardGroup } from "@/components/base/radio-buttons/radio
 ## Rules
 
 - **radio-group-name** MUST Give the group a visible question: a `Label` from
-  `@/components/base/input/label` as the group's first child, or `aria-label` when the heading is
+  `fa-design-system/components/base/input/label` as the group's first child, or `aria-label` when the heading is
   elsewhere. Because neither group has a `label` prop, and options mean little without the
   question.
 - **radio-value** MUST Give every `RadioButton` / `RadioCard` a unique `value`, and control the
@@ -50,19 +50,19 @@ Stacks with `gap-3`; pass `className="grid gap-3 md:grid-cols-3"` for a row of c
 
 `RadioCard`:
 
-| Prop                       | Values                                                              | Default |
-| :------------------------- | :------------------------------------------------------------------ | :------ |
-| `type`                     | `radio` · `checkbox` · `icon` · `avatar` · `payment` · `card`       | `radio` |
-| `value`                    | string (required)                                                   |         |
-| `title`                    | ReactNode (required)                                                |         |
-| `subtitle`                 | ReactNode, inline after the title (not `payment` / `card`)          |         |
-| `description`              | ReactNode                                                           |         |
-| `icon`                     | icon component (`icon`, `card`)                                     |         |
-| `avatarSrc`                | string (`avatar`)                                                   |         |
-| `paymentIcon`              | component from `@/components/foundations/payment-icons` (`payment`) |         |
-| `actions`                  | ReactNode (`payment`)                                               |         |
-| `price`, `period`, `badge` | ReactNode (`card`)                                                  |         |
-| `isDisabled`               | boolean (Figma disabled tokens, not `opacity-50`)                   |         |
+| Prop                       | Values                                                                             | Default |
+| :------------------------- | :--------------------------------------------------------------------------------- | :------ |
+| `type`                     | `radio` · `checkbox` · `icon` · `avatar` · `payment` · `card`                      | `radio` |
+| `value`                    | string (required)                                                                  |         |
+| `title`                    | ReactNode (required)                                                               |         |
+| `subtitle`                 | ReactNode, inline after the title (not `payment` / `card`)                         |         |
+| `description`              | ReactNode                                                                          |         |
+| `icon`                     | icon component (`icon`, `card`)                                                    |         |
+| `avatarSrc`                | string (`avatar`)                                                                  |         |
+| `paymentIcon`              | component from `fa-design-system/components/foundations/payment-icons` (`payment`) |         |
+| `actions`                  | ReactNode (`payment`)                                                              |         |
+| `price`, `period`, `badge` | ReactNode (`card`)                                                                 |         |
+| `isDisabled`               | boolean (Figma disabled tokens, not `opacity-50`)                                  |         |
 
 ## Accessibility
 

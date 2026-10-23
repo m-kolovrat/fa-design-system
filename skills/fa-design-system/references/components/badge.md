@@ -4,9 +4,9 @@ A short, non-interactive status or label ("Aktiv", "Utbytte", "+2,4 %"). `BadgeG
 badge plus a message line, for announcements. Figma: Badges/Badge, Badges/Badge group.
 
 ```ts
-import { BadgeGroup } from "@/components/base/badges/badge-groups";
-import type { BadgeColors } from "@/components/base/badges/badge-types";
-import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWithIcon, BadgeWithImage } from "@/components/base/badges/badges";
+import { BadgeGroup } from "fa-design-system/components/base/badges/badge-groups";
+import type { BadgeColors } from "fa-design-system/components/base/badges/badge-types";
+import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWithIcon, BadgeWithImage } from "fa-design-system/components/base/badges/badges";
 ```
 
 ## Use when

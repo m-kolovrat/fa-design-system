@@ -69,7 +69,7 @@ This applies to all file types including:
 
 ## Development Commands
 
-This repo is a component library viewed through Storybook. There is no app dev server or production build. Use **npm** (`package-lock.json` is the lockfile in use).
+This repo is a component library viewed through Storybook, and installed in apps as a package from a git tag (see "Releasing the package" below). There is no app dev server. Use **npm** (`package-lock.json` is the lockfile in use).
 
 ```bash
 npm install --legacy-peer-deps   # first time only (eslint peer conflict)
@@ -79,9 +79,29 @@ npm run lint                     # eslint --fix on components/
 npm run prettier                 # prettier --write on the repo
 npm run tokens:check             # styles/theme.css vs tokens/figma-tokens.json (see TOKENS.md)
 npm run build-storybook          # static Storybook in ./storybook-static
+npm run build                    # the installable package in ./dist (also runs on install via `prepare`)
 ```
 
 **Restart Storybook after adding a new component file.** Tailwind doesn't pick up classes from files created while Storybook is running, so a new component renders unstyled (missing paddings, colors, rings) until Storybook is restarted. Edits to existing files hot-reload normally.
+
+### Releasing the package
+
+Apps install the library like `fa-icons`: `"fa-design-system": "github:m-kolovrat/fa-design-system#vX.Y.Z"`.
+Installing runs `prepare`, which builds `dist/` with `scripts/build-package.mjs` (`tsc` with
+`tsconfig.build.json`, one file per source file so every `"use client"` survives, then `tsc-alias`
+turns `@/` imports into relative ones). `dist/` is not committed.
+
+- **What ships** is set by `files` and `exports` in `package.json`: the built components, their
+  source (for ejecting), `styles/` (apps import `fa-design-system/styles/index.css`), the skill and
+  the docs it refers to. Stories, demos and `components/internal` don't ship.
+- **Import paths are public API.** An app imports `fa-design-system/components/<path>`, the same
+  path as `@/components/<path>` here. A folder with an `index.tsx` needs its own `exports` entry.
+- **Release:** run `npm test` and `npm run build`, then `npm version minor` (`patch` for fixes only,
+  `major` when a component, prop or export is renamed or removed), then `git push --follow-tags`.
+- `styles/index.css` holds everything the components need except `@import "tailwindcss"`;
+  `styles/globals.css` adds that for Storybook. Put new global CSS in `index.css`.
+- `npx fa-design-system setup` (`scripts/setup.mjs`) links the skill into an app's
+  `.claude/skills/` and adds the `AGENTS.md` block.
 
 ## Project Structure
 

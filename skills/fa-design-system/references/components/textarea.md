@@ -4,7 +4,7 @@ Several lines of free text: a reader comment, a tip to the newsroom, a message t
 service. React Aria `TextField` with a `TextArea`. Figma: Textarea.
 
 ```ts
-import { TextArea } from "@/components/base/textarea/textarea";
+import { TextArea } from "fa-design-system/components/base/textarea/textarea";
 ```
 
 ## Use when

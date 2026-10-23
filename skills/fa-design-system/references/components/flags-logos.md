@@ -5,9 +5,9 @@ from the Figma file, never from SVGs in this repo). Payment and social icons liv
 `components/foundations`. Figma: Misc icons → Flag (`17201-14733`), Misc icons → Logos (`17204-1131`).
 
 ```ts
+import { MastercardIcon, VisaIcon } from "fa-design-system/components/foundations/payment-icons";
+import { Facebook, Instagram, LinkedIn, X } from "fa-design-system/components/foundations/social-icons";
 import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNokFlag, flags } from "fa-icons";
-import { MastercardIcon, VisaIcon } from "@/components/foundations/payment-icons";
-import { Facebook, Instagram, LinkedIn, X } from "@/components/foundations/social-icons";
 ```
 
 ## Use when

@@ -5,7 +5,7 @@ where content would be. `EmptyState` (gray icon) when there is nothing to show y
 (red icon) when loading it failed. One size. Figma: States → Empty state, Error state.
 
 ```ts
-import { EmptyState, ErrorState } from "@/components/application/empty-state/empty-state";
+import { EmptyState, ErrorState } from "fa-design-system/components/application/empty-state/empty-state";
 ```
 
 ## Use when

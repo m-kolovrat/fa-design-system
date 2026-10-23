@@ -4,7 +4,7 @@ A standalone brand-colored spinner with an optional label under it, for content 
 way. Three styles, four sizes. Figma: none yet (Figma only has the button spinner; see parity).
 
 ```ts
-import { LoadingIndicator } from "@/components/application/loading-indicator/loading-indicator";
+import { LoadingIndicator } from "fa-design-system/components/application/loading-indicator/loading-indicator";
 ```
 
 ## Use when

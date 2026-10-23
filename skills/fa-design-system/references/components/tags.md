@@ -4,7 +4,7 @@ Small labels in a row that can be removable (active filters) or selectable (filt
 React Aria `TagGroup`. Figma: Tag (and its \_Tag close X building block).
 
 ```ts
-import { Tag, TagGroup, TagList } from "@/components/base/tags/tags";
+import { Tag, TagGroup, TagList } from "fa-design-system/components/base/tags/tags";
 ```
 
 ## Use when

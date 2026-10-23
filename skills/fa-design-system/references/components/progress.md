@@ -4,9 +4,9 @@ Shows how far along something is: a horizontal bar, a full circle or a half circ
 with the brand color. Figma: Progress indicators/Progress bar, Progress circle.
 
 ```ts
-import { ProgressBarCircle, ProgressBarHalfCircle } from "@/components/base/progress-indicators/progress-circles";
-import { ProgressBar, ProgressBarBase } from "@/components/base/progress-indicators/progress-indicators";
-import { CircleProgressBar } from "@/components/base/progress-indicators/simple-circle";
+import { ProgressBarCircle, ProgressBarHalfCircle } from "fa-design-system/components/base/progress-indicators/progress-circles";
+import { ProgressBar, ProgressBarBase } from "fa-design-system/components/base/progress-indicators/progress-indicators";
+import { CircleProgressBar } from "fa-design-system/components/base/progress-indicators/simple-circle";
 ```
 
 ## Use when

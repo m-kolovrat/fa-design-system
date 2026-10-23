@@ -11,13 +11,23 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 
 ## Setup
 
-- Import `styles/globals.css` once at the app root. It loads the tokens (`styles/theme.css`) and
-  typography (`styles/typography.css`).
+- In the app's main stylesheet, import the system's styles right after Tailwind. They bring the
+  tokens, typography, plugins and the `dark` variant, and point Tailwind at the components:
+
+    ```css
+    @import "tailwindcss";
+    @import "fa-design-system/styles/index.css";
+    ```
+
 - Dark mode is the `.dark-mode` class on `<html>` or a root element. Every semantic token switches
   on its own; don't write `dark:` color variants.
 - The publication is the `brand` prop on `SiteHeader` / `SiteFooter` (`"fa" | "kapital" | "motor"`).
   Everything else is shared.
-- Import paths below use `@/`, which maps to the library root (`@/components/...`).
+- Import paths below are the package paths (`fa-design-system/components/...`). Inside the library
+  repo itself (its demos and stories), the same files are imported as `@/components/...`.
+- Mentions of `docs/figma-parity.md`, `docs/overrides.md`, `TOKENS.md` and `CLAUDE.md` refer to
+  files in the library repo. In an app they're under `node_modules/fa-design-system/`; open them
+  only when a reference page sends you there.
 
 ## Steps
 
@@ -54,6 +64,27 @@ your reply with:
 Don't resolve a clash on your own and don't update the reference files; the design system owner
 decides which way it goes. Write "No new patterns or clashes" when there are none.
 
+## Changing a component
+
+When a component doesn't do what the screen needs, take the lightest option that works, in this
+order, and say in your reply which one you used:
+
+1. **Props and layout classes.** Use the component's props; `className` only for layout (width,
+   margins, placement, grid spans), never for color, size or radius.
+2. **Wrap it** in an app component for app-specific behavior or content, keeping the library
+   component inside unchanged.
+3. **Ask for a variant.** A missing size, color or state goes to the design system owner: it's
+   designed in Figma, added to the library and shipped in the next version. Use the closest
+   existing variant until then and say so.
+4. **Patch it temporarily** with `patch-package` for an urgent bug fix, and report the bug so the
+   patch can be removed after the next release.
+5. **Try a branch.** Point the dependency at a branch or tag of the library
+   (`github:m-kolovrat/fa-design-system#fix-table`) to test a change before it's released.
+6. **Eject it** only when the app really needs its own version: copy the source from
+   `node_modules/fa-design-system/components/<path>.tsx` into the app, change its `@/…` imports to
+   `fa-design-system/…`, and import the copy instead. The app then owns that file and stops getting
+   its updates. Ejecting always needs the person's go-ahead, and it's reported as a clash.
+
 ## Priority order
 
 When two rules pull in different directions, settle it with these questions, in order:
@@ -68,7 +99,7 @@ When two rules pull in different directions, settle it with these questions, in 
 1. **fa-components-first** MUST Use a library component before writing markup, and open its
    reference page first. Because library components are the code side of the Figma
    components: they already match the design and handle keyboard, focus and states.
-    - Correct: `import { Button } from "@/components/base/buttons/button";`
+    - Correct: `import { Button } from "fa-design-system/components/base/buttons/button";`
     - Wrong: `<button className="rounded-lg bg-brand-solid px-4 py-2 text-white">Lagre</button>`
 2. **fa-semantic-tokens** MUST Use semantic color classes (`text-primary`, `bg-secondary`,
    `border-secondary`, `text-fg-quaternary`). Never a hex value, a Tailwind palette color
@@ -169,99 +200,99 @@ Each entry links to its reference page. Open it before using the component.
 
 - [Button](references/components/button.md): an action or an action-style link; also
   `ButtonUtility` (icon-only), `CloseButton`, `SocialButton`, app store buttons.
-  `@/components/base/buttons/button`
+  `fa-design-system/components/base/buttons/button`
 - [Button group](references/components/button-group.md): a row of segmented options, such as
-  chart periods. `@/components/base/button-group/button-group`
+  chart periods. `fa-design-system/components/base/button-group/button-group`
 - [Dropdown](references/components/dropdown.md): a menu of commands behind a button.
-  `@/components/base/dropdown/dropdown`
+  `fa-design-system/components/base/dropdown/dropdown`
 
 ### Inputs
 
 - [Input](references/components/input.md): one line of text; also `InputGroup`, `Label`,
-  `HintText`. `@/components/base/input/input`
+  `HintText`. `fa-design-system/components/base/input/input`
 - [Input variants](references/components/input-variants.md): `InputDate`, `InputNumber`,
-  `InputFile`, `InputTags`, `PaymentInput`. `@/components/base/input/*`
+  `InputFile`, `InputTags`, `PaymentInput`. `fa-design-system/components/base/input/*`
 - [Pin input](references/components/pin-input.md): a verification code.
-  `@/components/base/input/pin-input`
+  `fa-design-system/components/base/input/pin-input`
 - [Textarea](references/components/textarea.md): several lines of text.
-  `@/components/base/textarea/textarea`
+  `fa-design-system/components/base/textarea/textarea`
 - [Select](references/components/select.md): `Select`, `Select.ComboBox`, `MultiSelect`,
-  `TagSelect`, `NativeSelect`. `@/components/base/select/select`
+  `TagSelect`, `NativeSelect`. `fa-design-system/components/base/select/select`
 - [Date picker](references/components/date-picker.md): `DatePicker`, `DateRangePicker`.
-  `@/components/application/date-picker/date-picker`
+  `fa-design-system/components/application/date-picker/date-picker`
 - [Slider](references/components/slider.md): a value or range on a track.
-  `@/components/base/slider/slider`
+  `fa-design-system/components/base/slider/slider`
 - [File upload](references/components/file-upload.md): drop zone and file list, `FileTrigger`.
-  `@/components/application/file-upload/file-upload-base`
+  `fa-design-system/components/application/file-upload/file-upload-base`
 - [Form](references/components/form.md): `Form`, `HookForm`, `FormField` (react-hook-form).
-  `@/components/base/form/form`
+  `fa-design-system/components/base/form/form`
 
 ### Selection
 
-- [Checkbox](references/components/checkbox.md). `@/components/base/checkbox/checkbox`
+- [Checkbox](references/components/checkbox.md). `fa-design-system/components/base/checkbox/checkbox`
 - [Radio](references/components/radio.md): `RadioGroup` / `RadioButton`, `RadioCardGroup` /
-  `RadioCard`. `@/components/base/radio-buttons/radio-buttons`
+  `RadioCard`. `fa-design-system/components/base/radio-buttons/radio-buttons`
 - [Toggle](references/components/toggle.md): a setting that applies at once.
-  `@/components/base/toggle/toggle`
+  `fa-design-system/components/base/toggle/toggle`
 - [Tags](references/components/tags.md): removable or selectable labels.
-  `@/components/base/tags/tags`
+  `fa-design-system/components/base/tags/tags`
 
 ### Display
 
 - [Badge](references/components/badge.md): a short status or label; `BadgeWithDot`,
-  `BadgeWithIcon`, `BadgeGroup`. `@/components/base/badges/badges`
+  `BadgeWithIcon`, `BadgeGroup`. `fa-design-system/components/base/badges/badges`
 - [Avatar](references/components/avatar.md): `Avatar`, `AvatarLabelGroup`, `AvatarProfilePhoto`.
-  `@/components/base/avatar/avatar`
+  `fa-design-system/components/base/avatar/avatar`
 - [Featured icon](references/components/featured-icon.md): an icon on a tinted shape for emphasis.
-  `@/components/foundations/featured-icon/featured-icon`
+  `fa-design-system/components/foundations/featured-icon/featured-icon`
 - [Tooltip](references/components/tooltip.md): a short label on hover and focus.
-  `@/components/base/tooltip/tooltip`
+  `fa-design-system/components/base/tooltip/tooltip`
 - [Progress](references/components/progress.md): bars and circles.
-  `@/components/base/progress-indicators/progress-indicators`
+  `fa-design-system/components/base/progress-indicators/progress-indicators`
 - [Rating](references/components/rating.md): `RatingStars`, `RatingBadge`.
-  `@/components/foundations/rating-stars`
+  `fa-design-system/components/foundations/rating-stars`
 - [Table](references/components/table.md): rows of data to scan and sort.
-  `@/components/application/table/table`
+  `fa-design-system/components/application/table/table`
 - [Charts](references/components/charts.md): line, bar, pie, radar, gauges (Recharts).
-  `@/components/application/charts/charts-base`
+  `fa-design-system/components/application/charts/charts-base`
 - [Carousel](references/components/carousel.md): a row of slides.
-  `@/components/application/carousel/carousel-base`
+  `fa-design-system/components/application/carousel/carousel-base`
 - [Flags and logos](references/components/flags-logos.md): `Flag`, publication logos from
   `fa-icons`.
 
 ### Feedback
 
 - [Alert](references/components/alert.md): an in-page message that stays.
-  `@/components/application/alerts/alert`
+  `fa-design-system/components/application/alerts/alert`
 - [Notification](references/components/notification.md): a toast via `notify()`.
-  `@/components/application/notifications/notification`
+  `fa-design-system/components/application/notifications/notification`
 - [Empty state](references/components/empty-state.md): `EmptyState`, `ErrorState`.
-  `@/components/application/empty-state/empty-state`
+  `fa-design-system/components/application/empty-state/empty-state`
 - [Loading indicator](references/components/loading-indicator.md): a standalone spinner.
-  `@/components/application/loading-indicator/loading-indicator`
+  `fa-design-system/components/application/loading-indicator/loading-indicator`
 
 ### Overlays
 
 - [Modal](references/components/modal.md): `Modal` with `ModalHeader` / `ModalBody` /
-  `ModalFooter`. `@/components/application/modals/modal`
+  `ModalFooter`. `fa-design-system/components/application/modals/modal`
 - [Prompt modal](references/components/prompt-modal.md): `PromptModal` with `PromptModalHeader` /
-  `PromptModalActions`. `@/components/application/prompt-modal/prompt-modal`
+  `PromptModalActions`. `fa-design-system/components/application/prompt-modal/prompt-modal`
 - [Slideout menu](references/components/slideout-menu.md): a side panel.
-  `@/components/application/slideout-menus/slideout-menu`
+  `fa-design-system/components/application/slideout-menus/slideout-menu`
 
 ### Navigation
 
 - [Site header](references/components/site-header.md): the publication header with `TickerBar`
-  and `SiteMenuPanel`. `@/components/application/site-header/site-header`
+  and `SiteMenuPanel`. `fa-design-system/components/application/site-header/site-header`
 - [Site footer](references/components/site-footer.md).
-  `@/components/application/site-footer/site-footer`
-- [Tabs](references/components/tabs.md). `@/components/application/tabs/tabs`
+  `fa-design-system/components/application/site-footer/site-footer`
+- [Tabs](references/components/tabs.md). `fa-design-system/components/application/tabs/tabs`
 - [Pagination](references/components/pagination.md).
-  `@/components/application/pagination/pagination`
+  `fa-design-system/components/application/pagination/pagination`
 - [Breadcrumbs](references/components/breadcrumbs.md).
-  `@/components/application/breadcrumbs/breadcrumbs`
+  `fa-design-system/components/application/breadcrumbs/breadcrumbs`
 - [App navigation](references/components/app-navigation.md): sidebar and header navigation for
-  app-style (logged-in) screens. `@/components/application/app-navigation/*`
+  app-style (logged-in) screens. `fa-design-system/components/application/app-navigation/*`
 
 ## Tokens
 

@@ -5,12 +5,12 @@ A person's or company's picture, with initials or an icon when there is no image
 profile page. Figma: Avatars/Avatar, Avatars/Avatar label group, Avatars/Avatar profile photo.
 
 ```ts
-import { Avatar } from "@/components/base/avatar/avatar";
-import { AvatarLabelGroup } from "@/components/base/avatar/avatar-label-group";
-import { AvatarProfilePhoto } from "@/components/base/avatar/avatar-profile-photo";
-import { AvatarAddButton, AvatarCompanyIcon } from "@/components/base/avatar/base-components";
-import { AvatarCount } from "@/components/base/avatar/base-components/avatar-count";
-import { getInitials } from "@/components/base/avatar/utils";
+import { Avatar } from "fa-design-system/components/base/avatar/avatar";
+import { AvatarLabelGroup } from "fa-design-system/components/base/avatar/avatar-label-group";
+import { AvatarProfilePhoto } from "fa-design-system/components/base/avatar/avatar-profile-photo";
+import { AvatarAddButton, AvatarCompanyIcon } from "fa-design-system/components/base/avatar/base-components";
+import { AvatarCount } from "fa-design-system/components/base/avatar/base-components/avatar-count";
+import { getInitials } from "fa-design-system/components/base/avatar/utils";
 ```
 
 ## Use when

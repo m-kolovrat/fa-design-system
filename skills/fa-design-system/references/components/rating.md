@@ -5,8 +5,8 @@ stars and two lines of text (`RatingBadge`). Figma: Star icon (`RatingStars`); t
 code-only.
 
 ```ts
-import { RatingBadge } from "@/components/foundations/rating-badge";
-import { RatingStars, StarIcon, getStarProgress } from "@/components/foundations/rating-stars";
+import { RatingBadge } from "fa-design-system/components/foundations/rating-badge";
+import { RatingStars, StarIcon, getStarProgress } from "fa-design-system/components/foundations/rating-stars";
 ```
 
 ## Use when

@@ -4,7 +4,7 @@ Switches between panels of content on the same page (Oversikt / Nøkkeltall / Ny
 page). Figma: Horizontal tabs, Vertical tabs (both are `Tabs`, with `orientation`).
 
 ```ts
-import { Tabs } from "@/components/application/tabs/tabs";
+import { Tabs } from "fa-design-system/components/application/tabs/tabs";
 
 // also exported by name: TabList (= Tabs.List), Tab (= Tabs.Item), TabPanel (= Tabs.Panel)
 ```
@@ -98,7 +98,7 @@ const [selected, setSelected] = useState<Key>("oversikt");
 </Tabs>
 ```
 
-Imports for the example: `NativeSelect` from `@/components/base/select/select-native`,
+Imports for the example: `NativeSelect` from `fa-design-system/components/base/select/select-native`,
 `type Key` from `react-aria-components`, icons from `fa-icons`.
 
 ## See also

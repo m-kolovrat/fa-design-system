@@ -6,10 +6,10 @@ Kapital and Motor. Figma: Header (Type = Mobile / Tablet / Desktop / Collapsed, 
 Menu panel, \_Nav link, \_Header search, \_Header login.
 
 ```ts
-import type { SiteBrand, SiteNavItem } from "@/components/application/site-header/site-brands";
-import { SiteHeader } from "@/components/application/site-header/site-header";
-import type { SiteMenuContent } from "@/components/application/site-header/site-menu-panel";
-import type { TickerItem } from "@/components/application/site-header/ticker-bar";
+import type { SiteBrand, SiteNavItem } from "fa-design-system/components/application/site-header/site-brands";
+import { SiteHeader } from "fa-design-system/components/application/site-header/site-header";
+import type { SiteMenuContent } from "fa-design-system/components/application/site-header/site-menu-panel";
+import type { TickerItem } from "fa-design-system/components/application/site-header/ticker-bar";
 ```
 
 ## Use when

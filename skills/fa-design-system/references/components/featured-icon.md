@@ -5,7 +5,7 @@ empty state, a feature list). Decorative. Figma: Featured icon, Featured icon ou
 here).
 
 ```ts
-import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
+import { FeaturedIcon } from "fa-design-system/components/foundations/featured-icon/featured-icon";
 ```
 
 ## Use when

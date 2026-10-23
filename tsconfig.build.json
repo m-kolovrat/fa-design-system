@@ -1,0 +1,21 @@
+{
+    // Builds the installable package into dist/ (npm run build). One output file per source file, so
+    // each component keeps its "use client" directive and apps only bundle what they import.
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "incremental": false,
+        "outDir": "dist",
+        "rootDir": ".",
+        "declaration": true,
+        "jsx": "react-jsx",
+        "target": "ES2020",
+        "allowJs": false,
+        "plugins": []
+    },
+    "include": ["components/**/*.ts", "components/**/*.tsx", "hooks/**/*.ts", "utils/**/*.ts", "utils/**/*.tsx", "types/**/*.d.ts"],
+    "exclude": ["node_modules", "dist", "components/internal/**", "**/*.story.tsx", "**/*.demo.tsx"],
+    "tsc-alias": {
+        "resolveFullPaths": true
+    }
+}

@@ -5,8 +5,8 @@ The `<form>` around fields. `Form` is React Aria's form (native or ARIA validati
 Logic only, nothing visual. Figma: none (code-only by design, `docs/figma-parity.md` §3).
 
 ```ts
-import { Form } from "@/components/base/form/form";
-import { FormField, HookForm } from "@/components/base/form/hook-form";
+import { Form } from "fa-design-system/components/base/form/form";
+import { FormField, HookForm } from "fa-design-system/components/base/form/hook-form";
 ```
 
 ## Use when

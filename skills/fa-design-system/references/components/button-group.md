@@ -5,7 +5,7 @@ on a chart, "Liste" / "Rutenett"). Figma: Button group (Icon = False / Leading /
 Dot).
 
 ```ts
-import { ButtonGroup, ButtonGroupItem } from "@/components/base/button-group/button-group";
+import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/button-group/button-group";
 ```
 
 ## Use when
