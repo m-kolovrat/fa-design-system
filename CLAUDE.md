@@ -89,11 +89,11 @@ styles/                # globals.css, theme.css (tokens), typography.css
 tokens/                # figma-tokens.json: the committed Figma variable extract
 scripts/               # check-token-parity.mjs
 utils/                 # cx.ts, is-react-component.ts, countries, timezones
-docs/                  # figma-parity.md
+docs/                  # figma-parity.md, overrides.md
 .storybook/            # Storybook config: theme switcher, viewports, story order
 ```
 
-Related docs: `TOKENS.md` (how design tokens map to Figma and how to change them), `docs/figma-parity.md` (Figma ↔ code gaps), `CONTRIBUTING.md`.
+Related docs: `TOKENS.md` (how design tokens map to Figma and how to change them), `docs/figma-parity.md` (Figma ↔ code gaps), `docs/overrides.md` (style overrides of library components), `CONTRIBUTING.md`.
 
 ### Component files
 
@@ -374,6 +374,14 @@ either side, partial builds, variant differences and settled decisions.
   and let the user decide. Don't map, delete or add variants on your own.
 - **When a gap is closed or a new one is found**, update `docs/figma-parity.md` in the same change,
   including the "Last verified" date.
+
+### Style overrides
+
+Restyling a library component for one context (a different fill, border or text color) is an
+override, tracked in [`docs/overrides.md`](docs/overrides.md), not in the parity doc. Keep each one
+in a single place on each side: a `_` sub-component in Figma that wraps the library component, and
+one config or wrapper in code (e.g. `siteBrands[brand].search`). Never repeat it on instances or
+call sites. When a second place needs the same restyle, propose a real variant instead.
 
 ### Figma first: custom components and assets
 
