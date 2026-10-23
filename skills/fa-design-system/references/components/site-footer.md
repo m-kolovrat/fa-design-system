@@ -5,8 +5,8 @@ links, link columns, the app box and the data-provider credits. Same `brand` and
 `SiteHeader`. Figma: Footer (Type = Mobile / Tablet / Desktop, Brand).
 
 ```ts
-import { SiteFooter } from "@/components/application/site-footer/site-footer";
-import type { SiteNavItem } from "@/components/application/site-header/site-brands";
+import { SiteFooter } from "fa-design-system/components/application/site-footer/site-footer";
+import type { SiteNavItem } from "fa-design-system/components/application/site-header/site-brands";
 ```
 
 ## Use when

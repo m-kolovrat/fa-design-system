@@ -8,16 +8,16 @@ Figma: the Untitled UI sidebar and header navigation frames (see the story `desi
 [site-header](site-header.md) and [site-footer](site-footer.md).
 
 ```ts
-import type { NavItemDividerType, NavItemType } from "@/components/application/app-navigation/config";
-import { HeaderNavigationBase } from "@/components/application/app-navigation/header-navigation";
-import { SidebarNavigationDualTier } from "@/components/application/app-navigation/sidebar-navigation/sidebar-dual-tier";
-import { SidebarNavigationSectionDividers } from "@/components/application/app-navigation/sidebar-navigation/sidebar-section-dividers";
-import { SidebarNavigationSectionsSubheadings } from "@/components/application/app-navigation/sidebar-navigation/sidebar-sections-subheadings";
-import { SidebarNavigationSimple } from "@/components/application/app-navigation/sidebar-navigation/sidebar-simple";
-import { SidebarNavigationSlim } from "@/components/application/app-navigation/sidebar-navigation/sidebar-slim";
+import type { NavItemDividerType, NavItemType } from "fa-design-system/components/application/app-navigation/config";
+import { HeaderNavigationBase } from "fa-design-system/components/application/app-navigation/header-navigation";
+import { SidebarNavigationDualTier } from "fa-design-system/components/application/app-navigation/sidebar-navigation/sidebar-dual-tier";
+import { SidebarNavigationSectionDividers } from "fa-design-system/components/application/app-navigation/sidebar-navigation/sidebar-section-dividers";
+import { SidebarNavigationSectionsSubheadings } from "fa-design-system/components/application/app-navigation/sidebar-navigation/sidebar-sections-subheadings";
+import { SidebarNavigationSimple } from "fa-design-system/components/application/app-navigation/sidebar-navigation/sidebar-simple";
+import { SidebarNavigationSlim } from "fa-design-system/components/application/app-navigation/sidebar-navigation/sidebar-slim";
 
 // Building blocks: NavList, NavItemBase, NavButton, NavAccountCard, MobileNavigationHeader
-// from "@/components/application/app-navigation/sidebar-navigation-base"
+// from "fa-design-system/components/application/app-navigation/sidebar-navigation-base"
 ```
 
 ## Which one

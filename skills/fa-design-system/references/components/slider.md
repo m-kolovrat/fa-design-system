@@ -4,7 +4,7 @@ A value, or a range with two thumbs, chosen by dragging along a track: risikopro
 filter, the share of savings in equities. React Aria `Slider`. Figma: Slider.
 
 ```ts
-import { Slider } from "@/components/base/slider/slider";
+import { Slider } from "fa-design-system/components/base/slider/slider";
 ```
 
 ## Use when

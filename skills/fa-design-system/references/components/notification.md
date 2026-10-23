@@ -6,7 +6,7 @@ Notification (Type = Primary icon / Gray icon / Error / Warning / Success / No i
 Image / Progress indicator).
 
 ```ts
-import { Notification, NotificationToaster, type NotificationType, notify } from "@/components/application/notifications/notification";
+import { Notification, NotificationToaster, type NotificationType, notify } from "fa-design-system/components/application/notifications/notification";
 ```
 
 ## Setup

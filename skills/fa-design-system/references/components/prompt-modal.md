@@ -4,8 +4,8 @@ A short, focused dialog: confirm, delete, publish, or one or two fields. A float
 width. Figma: Prompt modal, \_Prompt modal header, \_Prompt modal actions.
 
 ```ts
-import { PromptModal, PromptModalActions, PromptModalHeader } from "@/components/application/prompt-modal/prompt-modal";
-import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
+import { PromptModal, PromptModalActions, PromptModalHeader } from "fa-design-system/components/application/prompt-modal/prompt-modal";
+import { FeaturedIcon } from "fa-design-system/components/foundations/featured-icon/featured-icon";
 ```
 
 ## Use when

@@ -5,9 +5,9 @@ Figma: Buttons/Button, Buttons/Button destructive (a `color` here), Buttons/Butt
 Buttons/Button close X.
 
 ```ts
-import { Button } from "@/components/base/buttons/button";
-import { ButtonUtility } from "@/components/base/buttons/button-utility";
-import { CloseButton } from "@/components/base/buttons/close-button";
+import { Button } from "fa-design-system/components/base/buttons/button";
+import { ButtonUtility } from "fa-design-system/components/base/buttons/button-utility";
+import { CloseButton } from "fa-design-system/components/base/buttons/close-button";
 ```
 
 ## Use when

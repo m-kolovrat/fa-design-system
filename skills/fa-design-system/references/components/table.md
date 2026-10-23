@@ -5,8 +5,8 @@ sorting and selection come with it). `TableCard` wraps it in a bordered card wit
 Figma: Tables/Table (the 15 Figma cell components are content you compose inside `Table.Cell`).
 
 ```ts
+import { Table, TableCard } from "fa-design-system/components/application/table/table";
 import type { SortDescriptor } from "react-aria-components";
-import { Table, TableCard } from "@/components/application/table/table";
 ```
 
 ## Use when

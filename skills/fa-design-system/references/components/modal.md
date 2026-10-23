@@ -5,7 +5,7 @@ content. Centered from `sm` up; below `sm` a bottom sheet or full screen. Figma:
 Desktop / Mobile sheet / Mobile full screen), \_Modal header, \_Modal footer, \_Sheet handle.
 
 ```ts
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/application/modals/modal";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "fa-design-system/components/application/modals/modal";
 ```
 
 ## Use when

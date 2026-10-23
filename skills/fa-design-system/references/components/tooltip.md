@@ -4,7 +4,7 @@ A short dark label that appears on hover and keyboard focus of its trigger, with
 line. Figma: Tooltips/Tooltip (Help icon is the `tooltip` prop on fields).
 
 ```ts
-import { Tooltip, TooltipTrigger } from "@/components/base/tooltip/tooltip";
+import { Tooltip, TooltipTrigger } from "fa-design-system/components/base/tooltip/tooltip";
 ```
 
 ## Use when

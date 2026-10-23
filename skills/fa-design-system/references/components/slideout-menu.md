@@ -4,7 +4,7 @@ A panel that slides in from the right over a dimmed page: details, filters or a 
 next to a list. Code only, no Figma frame yet.
 
 ```ts
-import { SlideoutMenu } from "@/components/application/slideout-menus/slideout-menu";
+import { SlideoutMenu } from "fa-design-system/components/application/slideout-menus/slideout-menu";
 ```
 
 ## Use when

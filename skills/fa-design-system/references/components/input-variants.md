@@ -4,12 +4,12 @@ Specialised single-line fields that share `Input`'s look, sizes and `label` / `h
 props. Figma: Input date, Input number, Input file, Input tags outer (Input field for tags inside).
 
 ```ts
-import { InputDate } from "@/components/base/input/input-date";
-import { InputFile } from "@/components/base/input/input-file";
-import { InputNumber } from "@/components/base/input/input-number";
-import { PaymentInput } from "@/components/base/input/input-payment";
-import { InputTags } from "@/components/base/input/input-tags";
-import { InputTagsOuter } from "@/components/base/input/input-tags-outer";
+import { InputDate } from "fa-design-system/components/base/input/input-date";
+import { InputFile } from "fa-design-system/components/base/input/input-file";
+import { InputNumber } from "fa-design-system/components/base/input/input-number";
+import { PaymentInput } from "fa-design-system/components/base/input/input-payment";
+import { InputTags } from "fa-design-system/components/base/input/input-tags";
+import { InputTagsOuter } from "fa-design-system/components/base/input/input-tags-outer";
 ```
 
 ## Choose

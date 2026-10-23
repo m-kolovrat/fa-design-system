@@ -12,9 +12,9 @@ import {
     PaginationCardMinimal,
     PaginationPageDefault,
     PaginationPageMinimalCenter,
-} from "@/components/application/pagination/pagination";
-import { PaginationDot } from "@/components/application/pagination/pagination-dot";
-import { PaginationLine } from "@/components/application/pagination/pagination-line";
+} from "fa-design-system/components/application/pagination/pagination";
+import { PaginationDot } from "fa-design-system/components/application/pagination/pagination-dot";
+import { PaginationLine } from "fa-design-system/components/application/pagination/pagination-line";
 ```
 
 ## Which one

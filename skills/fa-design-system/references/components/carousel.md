@@ -5,8 +5,8 @@ Embla Carousel: the library gives structure and behavior, the demo gives the Fig
 Carousel image + \_Carousel arrow (kept on Figma's Pagination page).
 
 ```ts
-import { Carousel, useCarousel } from "@/components/application/carousel/carousel-base";
-import { PaginationDot } from "@/components/application/pagination/pagination-dot";
+import { Carousel, useCarousel } from "fa-design-system/components/application/carousel/carousel-base";
+import { PaginationDot } from "fa-design-system/components/application/pagination/pagination-dot";
 ```
 
 Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `CarouselLg`, and a

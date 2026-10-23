@@ -4,8 +4,8 @@ A drop zone plus a list of files with upload progress (`FileUpload`), and a bare
 opens the file picker from any button (`FileTrigger`). Figma: File upload.
 
 ```ts
-import { FileUpload, getReadableFileSize } from "@/components/application/file-upload/file-upload-base";
-import { FileTrigger } from "@/components/base/file-upload-trigger/file-upload-trigger";
+import { FileUpload, getReadableFileSize } from "fa-design-system/components/application/file-upload/file-upload-base";
+import { FileTrigger } from "fa-design-system/components/base/file-upload-trigger/file-upload-trigger";
 ```
 
 ## Use when

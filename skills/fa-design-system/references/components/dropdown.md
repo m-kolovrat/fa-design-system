@@ -4,8 +4,8 @@ A menu of commands or links that opens from a button ("Mer", the three-dot butto
 Built on React Aria `MenuTrigger` / `Menu`. Figma: Dropdown (button, icon and avatar dropdowns).
 
 ```ts
+import { Dropdown } from "fa-design-system/components/base/dropdown/dropdown";
 import { SubmenuTrigger as AriaSubmenuTrigger } from "react-aria-components";
-import { Dropdown } from "@/components/base/dropdown/dropdown";
 
 // only for submenus
 ```

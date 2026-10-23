@@ -5,7 +5,7 @@ An in-page message that stays until the situation changes or the reader closes i
 featured icon. Figma: Alert (Color × Size = Floating / Full-width).
 
 ```ts
-import { Alert, type AlertColor } from "@/components/application/alerts/alert";
+import { Alert, type AlertColor } from "fa-design-system/components/application/alerts/alert";
 ```
 
 ## Use when

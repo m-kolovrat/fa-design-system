@@ -5,10 +5,10 @@ Choose from a list: `Select` (one value), `Select.ComboBox` (one value, with sea
 `NativeSelect` (the browser's own select). Figma: Select (Type = Default / Search / Tags).
 
 ```ts
-import { MultiSelect } from "@/components/base/select/multi-select";
-import { Select, type SelectItemType } from "@/components/base/select/select";
-import { NativeSelect } from "@/components/base/select/select-native";
-import { TagSelect } from "@/components/base/select/tag-select";
+import { MultiSelect } from "fa-design-system/components/base/select/multi-select";
+import { Select, type SelectItemType } from "fa-design-system/components/base/select/select";
+import { NativeSelect } from "fa-design-system/components/base/select/select-native";
+import { TagSelect } from "fa-design-system/components/base/select/tag-select";
 ```
 
 ## Choose

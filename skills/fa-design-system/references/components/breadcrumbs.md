@@ -4,7 +4,7 @@ Shows where the current page sits in the site and links back up the trail (Forsi
 Equinor). Figma: Breadcrumbs (Divider × Type × Breakpoint).
 
 ```ts
-import { Breadcrumbs } from "@/components/application/breadcrumbs/breadcrumbs";
+import { Breadcrumbs } from "fa-design-system/components/application/breadcrumbs/breadcrumbs";
 ```
 
 ## Use when

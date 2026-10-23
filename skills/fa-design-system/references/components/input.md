@@ -4,10 +4,10 @@ One line of text: name, e-post, søk, ticker, beløp. `Input` bundles label, fie
 `InputGroup` adds addons (prefix text, a native select, a button). Figma: Input field.
 
 ```ts
-import { HintText } from "@/components/base/input/hint-text";
-import { Input, InputBase } from "@/components/base/input/input";
-import { InputGroup } from "@/components/base/input/input-group";
-import { Label } from "@/components/base/input/label";
+import { HintText } from "fa-design-system/components/base/input/hint-text";
+import { Input, InputBase } from "fa-design-system/components/base/input/input";
+import { InputGroup } from "fa-design-system/components/base/input/input-group";
+import { Label } from "fa-design-system/components/base/input/label";
 ```
 
 ## Use when

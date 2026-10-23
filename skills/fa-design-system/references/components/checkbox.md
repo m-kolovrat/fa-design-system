@@ -4,7 +4,7 @@ An on/off choice that is part of a form and takes effect when the form is submit
 vilkår, velg nyhetsbrev). React Aria `Checkbox`. Figma: Checkbox (Type = Checkbox).
 
 ```ts
-import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
 ```
 
 ## Use when

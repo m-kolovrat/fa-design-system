@@ -5,10 +5,10 @@ period with presets. Built on React Aria `DatePicker` / `DateRangePicker`. Figma
 dropdown (single / dual dates).
 
 ```ts
-import { Calendar } from "@/components/application/date-picker/calendar";
-import { DatePicker } from "@/components/application/date-picker/date-picker";
-import { DateRangePicker } from "@/components/application/date-picker/date-range-picker";
-import { RangeCalendar } from "@/components/application/date-picker/range-calendar";
+import { Calendar } from "fa-design-system/components/application/date-picker/calendar";
+import { DatePicker } from "fa-design-system/components/application/date-picker/date-picker";
+import { DateRangePicker } from "fa-design-system/components/application/date-picker/date-range-picker";
+import { RangeCalendar } from "fa-design-system/components/application/date-picker/range-calendar";
 ```
 
 ## Use when

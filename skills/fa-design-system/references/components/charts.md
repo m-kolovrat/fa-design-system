@@ -7,6 +7,7 @@ component there, separate demos here), Chart marker (= `ChartTooltipContent`), p
 gauge and progress circle charts.
 
 ```ts
+import { ChartActiveDot, ChartLegendContent, ChartTooltipContent, selectEvenlySpacedItems } from "fa-design-system/components/application/charts/charts-base";
 import {
     Area,
     AreaChart,
@@ -23,7 +24,6 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
-import { ChartActiveDot, ChartLegendContent, ChartTooltipContent, selectEvenlySpacedItems } from "@/components/application/charts/charts-base";
 ```
 
 Patterns (`components/application/charts/`): `line-charts.demo.tsx` (area/line, `LineChart01`…),
