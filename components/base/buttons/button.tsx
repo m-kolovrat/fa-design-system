@@ -62,6 +62,8 @@ export const styles = sortCx({
                 // Icon styles — Figma: fg-quaternary → fg-quaternary_hover.
                 "*:data-icon:text-fg-quaternary hover:*:data-icon:text-fg-quaternary_hover",
             ].join(" "),
+            // Figma: icon-only buttons draw the icon (and loading spinner) in fg-secondary, unchanged on hover.
+            iconOnlyRoot: "*:data-icon:text-fg-secondary hover:*:data-icon:text-fg-secondary",
         },
         tertiary: {
             root: [
@@ -69,6 +71,8 @@ export const styles = sortCx({
                 // Icon styles — Figma: fg-quaternary → fg-quaternary_hover.
                 "*:data-icon:text-fg-quaternary hover:*:data-icon:text-fg-quaternary_hover",
             ].join(" "),
+            // Figma: icon-only buttons draw the icon (and loading spinner) in fg-secondary, unchanged on hover.
+            iconOnlyRoot: "*:data-icon:text-fg-secondary hover:*:data-icon:text-fg-secondary",
         },
         "link-color": {
             root: [
@@ -235,6 +239,7 @@ export const Button: {
             styles.sizes[size].root,
             styles.colors[color].root,
             isLinkType && styles.sizes[size].linkRoot,
+            isIcon && (styles.colors[color] as { iconOnlyRoot?: string }).iconOnlyRoot,
             (loading || (href && (disabled || loading))) && "pointer-events-none",
             // If in `loading` state, hide everything except the loading icon (and text if `showTextWhileLoading` is true).
             loading && (showTextWhileLoading ? "[&>*:not([data-icon=loading]):not([data-text])]:hidden" : "[&>*:not([data-icon=loading])]:invisible"),
