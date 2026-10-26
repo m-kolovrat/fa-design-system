@@ -10,7 +10,7 @@ The code is kept in sync with the [Fa Design System Figma file](https://www.figm
 Install a released version from its git tag (React 19 and Tailwind CSS v4.3 are peer dependencies):
 
 ```bash
-npm install github:m-kolovrat/fa-design-system#v0.1.0
+npm install github:m-kolovrat/fa-design-system#v0.1.1
 ```
 
 Import the styles in the app's main stylesheet, right after Tailwind. They bring the tokens,

@@ -249,7 +249,8 @@ Untitled UI icons (`@untitledui/icons`) are no longer used. If a design needs an
 Named imports; names are the Figma names in PascalCase (`chevron-down` → `ChevronDown`). Pass an
 icon to a component prop as a reference (`iconLeading={ChevronDown}`), or as JSX with `data-icon`.
 Icons are 20px by default (`size-4` / `size-5` / `size-6` to change), colored with `text-fg-*`
-(`currentColor`), and `aria-hidden` unless given `aria-hidden={false}` and an `aria-label`. The
+(`currentColor`), and hidden from screen readers unless given an `aria-label` (since `fa-icons`
+v0.2.0 that alone adds `role="img"`). Inside a component, name the control, not its icon. The
 stroke is 1.5px at 20px and scales with the size; never override it with `stroke-*`.
 
 The `flag` icon is exported as `FlagIcon` (`Flag` is the country flag component). Name an import
