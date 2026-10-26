@@ -134,6 +134,19 @@ Use background color variables to manage all fill colors for elements in your de
 `pink`, `orange-dark`. They exist for components with a color prop (Badge, FeaturedIcon, charts).
 In page code, prefer a component's `color` prop over these classes.
 
+## Alpha (see-through fills)
+
+For a see-through fill, use `alpha-white` or `alpha-black` with an opacity modifier, never
+`bg-white/50` or `bg-black/20`: `bg-alpha-white/90`, `bg-alpha-black/20`. The step is the Figma
+variable's number (`alpha-white-90` → `bg-alpha-white/90`).
+
+- `alpha-white` is white in light mode and the dark surface color in dark mode: a see-through
+  **surface**, such as a control sitting on a photo (carousel arrows, a play button).
+- `alpha-black` is black in light mode and white in dark mode: a see-through **contrast** layer,
+  such as a darkening wash over an image.
+- Steps in use in the library: `alpha-white/30`, `/50`, `/90`, `alpha-black/20`.
+- The scrim behind a modal is `bg-overlay`, and it belongs to the component; don't add your own.
+
 ## Type
 
 Font: Inter (`font-body`, `font-display`), `font-mono` for code and figures that must align.

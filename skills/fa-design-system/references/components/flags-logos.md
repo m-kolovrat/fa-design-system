@@ -39,8 +39,8 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 - **flags-size** SHOULD Size flags with `size-4` (in badges, 16px) or `size-5` (20px, the Figma
   frame); `size-6` in lists.
 - **flags-label** MUST Keep the country or currency as visible text next to the flag. If the flag
-  stands alone, pass `aria-hidden={false}` and `aria-label="Norge"`. Because flags are
-  `aria-hidden` by default.
+  stands alone, give it `aria-label="Norge"`; `fa-icons` (v0.2.0+) then exposes it as an image.
+  Because flags are hidden from screen readers by default.
 - **logos-current-color** MUST Color single-color logos with a `text-*` class (`text-fg-primary`,
   `text-white` on a brand surface); they use `currentColor`. Never recolor the fixed-color logos
   (Pinpoint, Vipps, the four `KapitalList*`, the orange accent of `HegnarBokLogo`).

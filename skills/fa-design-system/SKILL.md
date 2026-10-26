@@ -117,37 +117,51 @@ When two rules pull in different directions, settle it with these questions, in 
    Because the set is built from Figma, and the stroke scales with the size.
     - Correct: `<Button iconLeading={Plus}>Legg til</Button>`, `<Bell className="size-5 text-fg-quaternary" />`
     - Wrong: `import { Bell } from "lucide-react";`
-5. **fa-label-fields** MUST Give every input, select and textarea a `label` (or `aria-label` when a
+    - The `flag` icon is exported as `FlagIcon`; `Flag` is the country flag component. Rename an
+      icon import that clashes with a component (`Calendar as CalendarIcon`).
+5. **fa-icon-names** MUST Leave an icon unnamed when text next to it says the same thing; icons are
+   hidden from screen readers by default. Name an icon-only button or link on the control
+   (`aria-label` on `Button`, `tooltip` on `ButtonUtility`), never on the icon inside it. Give an
+   icon an `aria-label` only when it carries meaning on its own (a flag standing for a market, a
+   lock marking a Pluss article, a warning next to a figure); `fa-icons` then exposes it as an
+   image. Because a screen reader skips every unnamed icon, so meaning that lives only in an icon,
+   or only in a color, is lost.
+    - Correct: `<ButtonUtility icon={Edit} tooltip="Rediger" />`, `<Lock aria-label="Pluss-artikkel" />`
+    - Wrong: `<Button iconLeading={<Edit data-icon aria-label="Rediger" />} />` (the button still has
+      no name)
+    - Color alone isn't a name: a green or red change value is fine because its sign says the same;
+      a status dot with no text needs text next to it.
+6. **fa-label-fields** MUST Give every input, select and textarea a `label` (or `aria-label` when a
    visible label is impossible). A placeholder is not a label. Errors go through `isInvalid` +
    `hint`. Because screen readers name a field by its label; without one it's announced only as
    "edit text".
     - Correct: `<Input label="E-post" placeholder="navn@firma.no" isInvalid hint="Ugyldig e-post" />`
-6. **fa-state-props** MUST Express states with the component's props (`isDisabled`, `isLoading`,
+7. **fa-state-props** MUST Express states with the component's props (`isDisabled`, `isLoading`,
    `isInvalid`, `isSelected`), never with classes. Because each component maps states to the Figma
    tokens (Button and ButtonGroup use the disabled tokens, inputs use `opacity-50`).
     - Wrong: `<Button className="pointer-events-none opacity-50">`
-7. **fa-instant-hover** NEVER Add `duration-*` or `ease-*` to a hover or color change; use bare
+8. **fa-instant-hover** NEVER Add `duration-*` or `ease-*` to a hover or color change; use bare
    `transition`. The `--transition-duration-*` / `--ease-*` scale is only for movement and overlays
    (a sliding knob, a modal entering). Because hovers in the library are instant by design.
-8. **fa-focus-visible** MUST Keep every interactive element keyboard-reachable with the focus ring
+9. **fa-focus-visible** MUST Keep every interactive element keyboard-reachable with the focus ring
    (`outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2`). Never
    `outline-none` without that replacement. Because the ring is the only sign
    of which element a keyboard user is on.
-9. **fa-links** MUST Use `Button` with `href` and `color="link-color"` / `"link-gray"` for
-   standalone action links ("Se alle", "Les mer"). Plain links inside running text stay `<a>` and
-   follow the `prose` styles. Because there is no separate Link component, and a hand-styled link
-   misses the focus ring and hover token.
-10. **fa-one-primary** SHOULD Keep one `primary`
+10. **fa-links** MUST Use `Button` with `href` and `color="link-color"` / `"link-gray"` for
+    standalone action links ("Se alle", "Les mer"). Plain links inside running text stay `<a>` and
+    follow the `prose` styles. Because there is no separate Link component, and a hand-styled link
+    misses the focus ring and hover token.
+11. **fa-one-primary** SHOULD Keep one `primary`
     Button per view or section; other actions are `secondary`, `tertiary` or a link color. Because a
     single filled button tells the reader what to do next.
-11. **fa-brand-via-prop** MUST Change publication looks only through `brand` and the existing brand
+12. **fa-brand-via-prop** MUST Change publication looks only through `brand` and the existing brand
     config (`siteBrands`). Never restyle a component per brand at the call site. Because overrides
     live in exactly one place (see `docs/overrides.md`).
-12. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix.
+13. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix.
     Because it keeps library components and the primitives they wrap apart.
     - Correct: `import { Button as AriaButton } from "react-aria-components";`
-13. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
-14. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
+14. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
+15. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
     [references/layout.md](references/layout.md): content in bordered cards on the page
     background, cards `gap-6` apart, spans of ⅓, ½, ⅔ or full. Because the same arrangement on
     every page is what makes the publications feel like one product. Flexible for now; report
