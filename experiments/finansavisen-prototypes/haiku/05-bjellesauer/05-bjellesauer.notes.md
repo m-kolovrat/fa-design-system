@@ -36,12 +36,14 @@ Not done: Storybook was not started, so nothing was checked visually in Mobile o
 ## Patterns section
 
 **New patterns** (not in any reference file):
+
 - A two-line number cell: a `BadgeWithIcon` with the signed share change, and the relative change in `text-xs` underneath. Used in the main data table.
 - Investor cell: avatar, name as `Button color="link-gray"`, and the date as a `md:hidden` line. Used in the main data table.
 - Three filters in a row above the table (`grid md:grid-cols-3`), on the page background, with the view switch and the CSV download on a second row.
 - A logged-out teaser under the first two rows of the table, with no blur or gradient.
 
 **Clashes:**
+
 - **Filters above or inside the card.** `page-patterns.md` ("Data table") says "one card with filters on top and the Table". `layout.md` says "filter rows above the cards are the exception". I put the filters above the card, following `layout.md`.
 - **Period control.** `page-patterns.md` gives `ButtonGroup` as the stand-in for the period selector. `SKILL.md` says `ButtonGroup` is for about six options at most. The brief has nine periods, so I used `Select` (rule followed).
 - **Table key vs sort.** The table doc's example imports `SortDescriptor` from `react-aria-components` without the `Aria` prefix. `CLAUDE.md` requires the prefix. I used `AriaSortDescriptor`.
@@ -82,5 +84,5 @@ Not done: Storybook was not started, so nothing was checked visually in Mobile o
 7. **Table row click or detail**: the table doc has `onRowAction` in props but no pattern for what it should do.
 8. **Badge for a sign**: `badge-color-meaning` and `badge-not-only-color` are satisfied by the sign in the text, but the skill does not say whether the sign should be a real minus (U+2212) or a hyphen in Norwegian formatting. I used the locale's output from `Intl` (U+2212).
 9. **`fa-links`**: the rule says standalone action links use `Button href`. Investor names in table cells use `link-gray` `Button`. The skill does not say whether a link inside a table cell counts as standalone; I treated it as standalone.
-11. **Teaser primary**: "one primary per section" was satisfied, but the newsletter `Abonner` button is also primary on the same page. The skill does not say whether the one-primary rule is per page or per section.
-12. **Storybook checks not possible here**: the skill's Step 6 asks for Mobile and Desktop in both themes. I could not check either, so the layout at 375px and 1440px is unverified.
+10. **Teaser primary**: "one primary per section" was satisfied, but the newsletter `Abonner` button is also primary on the same page. The skill does not say whether the one-primary rule is per page or per section.
+11. **Storybook checks not possible here**: the skill's Step 6 asks for Mobile and Desktop in both themes. I could not check either, so the layout at 375px and 1440px is unverified.

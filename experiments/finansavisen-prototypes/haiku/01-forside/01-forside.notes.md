@@ -12,17 +12,17 @@ the viewport switching are unchecked. `npm test` was not run; only `tsc` and `es
 
 All paths are in the library repo, `components/...` (the page imports them as `@/components/...`).
 
-| Used for | Component | Path |
-| :-- | :-- | :-- |
-| Top of page | `SiteHeader` (brand `fa`, ticker, navigation, shortcuts, `menu`, `user`) | `components/application/site-header/site-header.tsx` |
-| Header types | `SiteNavItem`, `TickerItem`, `SiteMenuContent` | `site-header/site-brands.ts`, `site-header/ticker-bar.tsx`, `site-header/site-menu-panel.tsx` |
-| Bottom of page | `SiteFooter` (brand `fa`) | `components/application/site-footer/site-footer.tsx` |
-| Actions and links | `Button` (`href`, `color="link-color"`, `secondary`, `primary`) | `components/base/buttons/button.tsx` |
-| Markers, tickers, Pluss | `Badge`, `BadgeWithDot`, `BadgeWithIcon` | `components/base/badges/badges.tsx` |
-| Commentary byline | `AvatarLabelGroup` + `getInitials` | `components/base/avatar/avatar-label-group.tsx`, `components/base/avatar/utils.ts` |
-| Search field | `Input` (`type="search"`, `icon={Search}`) | `components/base/input/input.tsx` |
-| Class names | `cx` | `utils/cx.ts` |
-| Icons | `ChevronRight`, `Download`, `Lock`, `Play`, `Search`, `Star`, `StarFilled` | `fa-icons` (package) |
+| Used for                | Component                                                                  | Path                                                                                          |
+| :---------------------- | :------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- |
+| Top of page             | `SiteHeader` (brand `fa`, ticker, navigation, shortcuts, `menu`, `user`)   | `components/application/site-header/site-header.tsx`                                          |
+| Header types            | `SiteNavItem`, `TickerItem`, `SiteMenuContent`                             | `site-header/site-brands.ts`, `site-header/ticker-bar.tsx`, `site-header/site-menu-panel.tsx` |
+| Bottom of page          | `SiteFooter` (brand `fa`)                                                  | `components/application/site-footer/site-footer.tsx`                                          |
+| Actions and links       | `Button` (`href`, `color="link-color"`, `secondary`, `primary`)            | `components/base/buttons/button.tsx`                                                          |
+| Markers, tickers, Pluss | `Badge`, `BadgeWithDot`, `BadgeWithIcon`                                   | `components/base/badges/badges.tsx`                                                           |
+| Commentary byline       | `AvatarLabelGroup` + `getInitials`                                         | `components/base/avatar/avatar-label-group.tsx`, `components/base/avatar/utils.ts`            |
+| Search field            | `Input` (`type="search"`, `icon={Search}`)                                 | `components/base/input/input.tsx`                                                             |
+| Class names             | `cx`                                                                       | `utils/cx.ts`                                                                                 |
+| Icons                   | `ChevronRight`, `Download`, `Lock`, `Play`, `Search`, `Star`, `StarFilled` | `fa-icons` (package)                                                                          |
 
 ## 2. Composed by me, and why
 
@@ -55,6 +55,7 @@ All paths are in the library repo, `components/...` (the page imports them as `@
 ## 3. Patterns section (new patterns and clashes)
 
 **New patterns** (no reference file describes these):
+
 - N1. Market strip: a row of 8 label-over-value cells with signed change values, inside one card,
   2/4/8 columns (`MarketCard`). Used at the top of the front page.
 - N2. Sign-up card for logged-out readers: heading, one line, `link-color` login link and one
@@ -65,6 +66,7 @@ All paths are in the library repo, `components/...` (the page imports them as `@
 - N5. Investorchat prompt chips as a labelled row of secondary buttons.
 
 **Clashes** (not resolved; for the design owner):
+
 - C1. Section title size: `layout.md` says "Mest lest" is a section title at `text-xl`; the type
   table says `text-xl` is for section titles and `text-lg font-semibold` for widget titles. Mest lest
   is a widget card in `page-patterns.md`. I used `text-lg` for widget cards and `text-xl font-bold`

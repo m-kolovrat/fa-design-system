@@ -5,6 +5,7 @@
 **Audience.** Retail investors, finance professionals and business leaders, visiting several times a day, mostly on a phone.
 
 **Content and data.**
+
 - Market snapshot: Oslo Børs 2 126,86 (+0,09 %), Brent 114,93 USD (−0,20 %), Nikkei 225, Bitcoin, EUR/NOK 10,40, USD/NOK 9,32, gull, US 10 år.
 - The newsroom's chosen stories. Each has a headline and may have a kicker ("Fredrik Dyve forhandlet i måneder:"), an image, and a marker: Siste, Populært, Mye lest, Børsoppdatering, Pluss or Annonse.
 - Latest Børsoppdatering ("Rally i rigg og oljemygg – full kollaps i sjømat").

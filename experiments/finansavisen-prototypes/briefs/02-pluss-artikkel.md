@@ -5,6 +5,7 @@
 **Audience.** Active private investors and traders reading on a phone, often during market hours.
 
 **Content and data.**
+
 - Kicker "Andreas Wold Hofstad (31):", headline "Shorter shippingaksje for 25 millioner", two-sentence ingress.
 - Section (Shipping), "Publisert 11:39", journalist (Eivind Aakre) with a way to send tips.
 - Photo with caption and credit; body with subheadings and a quote («Ikke opplevd før»).

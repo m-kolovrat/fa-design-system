@@ -5,6 +5,7 @@
 **Audience.** Active private investors checking several times per trading day, mostly on a phone.
 
 **Content and data.**
+
 - Hovedindeksen Oslo Børs 2 124,29, −0,04 %, live 14:10, development over 1D–5Y; also Sverige, Danmark, USA.
 - OBX, Dow Jones, S&P 500, NASDAQ, Brent, gull, EURNOK, USDNOK, Bitcoin, US 10Y, VIX.
 - Vinnere and Tapere (Techstep +15,62 %, Proximar Seafood −89,19 %).

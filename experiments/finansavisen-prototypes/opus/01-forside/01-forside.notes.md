@@ -8,17 +8,17 @@ checked visually.
 
 ## Components used
 
-| Component | Path | Where |
-| :-- | :-- | :-- |
-| `SiteHeader` (+ `TickerItem`, `SiteNavItem`, `SiteMenuContent` types) | `@/components/application/site-header/site-header` | Header, market ticker (market snapshot), nav, shortcuts to Børs / Watchlist / Forum / Bjellesauer / Investorchat, search, Logg inn / avatar |
-| `SiteFooter` | `@/components/application/site-footer/site-footer` | Footer; its app box covers "get the app" |
-| `Button` | `@/components/base/buttons/button` | CTAs, link buttons, prompt chips, follow chips, "Spill av Børsmorgen" |
-| `ButtonUtility` | `@/components/base/buttons/button-utility` | Card-header chevron links, "Lagre i MittFa" on teasers |
-| `Badge`, `BadgeWithDot`, `BadgeWithIcon` | `@/components/base/badges/badges` | Teaser markers, "Live", "Annonse" |
-| `FeaturedIcon` | `@/components/foundations/featured-icon/featured-icon` | Widget card headers, the logged-out invite |
-| `Input` | `@/components/base/input/input` | Investorchat / ticker field |
-| `AvatarLabelGroup`, `getInitials` | `@/components/base/avatar/...` | Commentary byline (Trygve Hegnar) |
-| `fa-icons` | — | Icons, plus `KapitalSmallLogo` and `MotorLogo` |
+| Component                                                             | Path                                                   | Where                                                                                                                                       |
+| :-------------------------------------------------------------------- | :----------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| `SiteHeader` (+ `TickerItem`, `SiteNavItem`, `SiteMenuContent` types) | `@/components/application/site-header/site-header`     | Header, market ticker (market snapshot), nav, shortcuts to Børs / Watchlist / Forum / Bjellesauer / Investorchat, search, Logg inn / avatar |
+| `SiteFooter`                                                          | `@/components/application/site-footer/site-footer`     | Footer; its app box covers "get the app"                                                                                                    |
+| `Button`                                                              | `@/components/base/buttons/button`                     | CTAs, link buttons, prompt chips, follow chips, "Spill av Børsmorgen"                                                                       |
+| `ButtonUtility`                                                       | `@/components/base/buttons/button-utility`             | Card-header chevron links, "Lagre i MittFa" on teasers                                                                                      |
+| `Badge`, `BadgeWithDot`, `BadgeWithIcon`                              | `@/components/base/badges/badges`                      | Teaser markers, "Live", "Annonse"                                                                                                           |
+| `FeaturedIcon`                                                        | `@/components/foundations/featured-icon/featured-icon` | Widget card headers, the logged-out invite                                                                                                  |
+| `Input`                                                               | `@/components/base/input/input`                        | Investorchat / ticker field                                                                                                                 |
+| `AvatarLabelGroup`, `getInitials`                                     | `@/components/base/avatar/...`                         | Commentary byline (Trygve Hegnar)                                                                                                           |
+| `fa-icons`                                                            | —                                                      | Icons, plus `KapitalSmallLogo` and `MotorLogo`                                                                                              |
 
 ## Composed myself (no Figma component), and why
 

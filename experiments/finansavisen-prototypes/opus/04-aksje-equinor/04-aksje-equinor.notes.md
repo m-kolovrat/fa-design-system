@@ -11,27 +11,27 @@ been checked by eye.
 
 ## Components used
 
-| Component | Path | Where |
-| :-- | :-- | :-- |
-| `SiteHeader` (+ `TickerItem`, `SiteNavItem`) | `components/application/site-header/site-header` | Page frame, Børs marked `current` |
-| `SiteFooter` | `components/application/site-footer/site-footer` | Page frame |
-| `Tabs` / `Tabs.List` / `Tabs.Item` / `Tabs.Panel` | `components/application/tabs/tabs` | Oversikt · Nyheter · Analyse · Regnskap og utbytte · Rapporter og kalender |
-| `NativeSelect` | `components/base/select/select-native` | Replaces the tabs below `md` (5 tabs, rule **tabs-mobile**) |
-| `ButtonGroup` / `ButtonGroupItem` | `components/base/button-group/button-group` | Period selector, news filter, Årlig/Kvartal switch |
-| `Button` | `components/base/buttons/button` | Watchlist trigger, "Se alle", "Vis flere nyheter", links, paywall CTA |
-| `ButtonUtility` | `components/base/buttons/button-utility` | Download report, play/pause call, add to calendar |
-| `Dropdown` | `components/base/dropdown/dropdown` | Watchlist menu (multi-select section with checkboxes, plus "Ny watchlist") |
-| `Badge`, `BadgeWithDot` | `components/base/badges/badges` | Ticker badge, KJØP/NØYTRAL/SELG, Live / Forsinket |
-| `Avatar` | `components/base/avatar/avatar` | Company tile ("EQ", square), news source |
-| `FeaturedIcon` | `components/foundations/featured-icon/featured-icon` | Widget card header icons |
-| `Tooltip`, `TooltipTrigger` | `components/base/tooltip/tooltip` | Help on P/E, P/B, Direkteavkastning |
-| `Table` | `components/application/table/table` | Order book, latest trades, recommendations, technicals, dividends |
-| `ProgressBar` | `components/base/progress-indicators/progress-indicators` | Analyst split (Kjøp / Nøytral / Selg out of 24) |
-| `EmptyState` | `components/application/empty-state/empty-state` | News filter with no results |
-| `notify` + `NotificationToaster` | `components/application/notifications/notification` | Watchlist added/removed, calendar added (toaster in the story decorator) |
-| Recharts + `ChartTooltipContent`, `ChartLegendContent`, `selectEvenlySpacedItems` | `components/application/charts/charts-base` | Price chart (area), results (bars) |
-| `useBreakpoint` | `hooks/use-breakpoint` | Chart ticks and bar width |
-| Icons | `fa-icons` | Star/StarFilled, ChevronDown, Lock, Help, News, Download, Play/Pause, CalendarAdd, Check, … |
+| Component                                                                         | Path                                                      | Where                                                                                       |
+| :-------------------------------------------------------------------------------- | :-------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
+| `SiteHeader` (+ `TickerItem`, `SiteNavItem`)                                      | `components/application/site-header/site-header`          | Page frame, Børs marked `current`                                                           |
+| `SiteFooter`                                                                      | `components/application/site-footer/site-footer`          | Page frame                                                                                  |
+| `Tabs` / `Tabs.List` / `Tabs.Item` / `Tabs.Panel`                                 | `components/application/tabs/tabs`                        | Oversikt · Nyheter · Analyse · Regnskap og utbytte · Rapporter og kalender                  |
+| `NativeSelect`                                                                    | `components/base/select/select-native`                    | Replaces the tabs below `md` (5 tabs, rule **tabs-mobile**)                                 |
+| `ButtonGroup` / `ButtonGroupItem`                                                 | `components/base/button-group/button-group`               | Period selector, news filter, Årlig/Kvartal switch                                          |
+| `Button`                                                                          | `components/base/buttons/button`                          | Watchlist trigger, "Se alle", "Vis flere nyheter", links, paywall CTA                       |
+| `ButtonUtility`                                                                   | `components/base/buttons/button-utility`                  | Download report, play/pause call, add to calendar                                           |
+| `Dropdown`                                                                        | `components/base/dropdown/dropdown`                       | Watchlist menu (multi-select section with checkboxes, plus "Ny watchlist")                  |
+| `Badge`, `BadgeWithDot`                                                           | `components/base/badges/badges`                           | Ticker badge, KJØP/NØYTRAL/SELG, Live / Forsinket                                           |
+| `Avatar`                                                                          | `components/base/avatar/avatar`                           | Company tile ("EQ", square), news source                                                    |
+| `FeaturedIcon`                                                                    | `components/foundations/featured-icon/featured-icon`      | Widget card header icons                                                                    |
+| `Tooltip`, `TooltipTrigger`                                                       | `components/base/tooltip/tooltip`                         | Help on P/E, P/B, Direkteavkastning                                                         |
+| `Table`                                                                           | `components/application/table/table`                      | Order book, latest trades, recommendations, technicals, dividends                           |
+| `ProgressBar`                                                                     | `components/base/progress-indicators/progress-indicators` | Analyst split (Kjøp / Nøytral / Selg out of 24)                                             |
+| `EmptyState`                                                                      | `components/application/empty-state/empty-state`          | News filter with no results                                                                 |
+| `notify` + `NotificationToaster`                                                  | `components/application/notifications/notification`       | Watchlist added/removed, calendar added (toaster in the story decorator)                    |
+| Recharts + `ChartTooltipContent`, `ChartLegendContent`, `selectEvenlySpacedItems` | `components/application/charts/charts-base`               | Price chart (area), results (bars)                                                          |
+| `useBreakpoint`                                                                   | `hooks/use-breakpoint`                                    | Chart ticks and bar width                                                                   |
+| Icons                                                                             | `fa-icons`                                                | Star/StarFilled, ChevronDown, Lock, Help, News, Download, Play/Pause, CalendarAdd, Check, … |
 
 ## Composed myself (no Figma component)
 
@@ -87,7 +87,7 @@ All are stand-ins listed in `page-patterns.md`, except where marked **new**.
 **Clashes**
 
 - **Table header labels** — `page-patterns.md` (Data table) says `text-xs font-medium uppercase
-  tracking-wide text-quaternary`; `Table.Head` renders `text-xs font-semibold text-quaternary`,
+tracking-wide text-quaternary`; `Table.Head` renders `text-xs font-semibold text-quaternary`,
   sentence case. I kept the component.
 - **Numbers right-aligned** — `layout.md` says numbers right and each header aligned with its
   column; `Table.Head` wraps its label in a flex group with no alignment prop, so a right-aligned

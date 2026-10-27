@@ -5,6 +5,7 @@ Files: `04-aksje-equinor.tsx` (page `AksjeEquinor`), `04-aksje-equinor.story.tsx
 mobile were never checked visually; everything below is from reading code and reference pages.
 
 ## Components used (`@/components/...`)
+
 - `application/site-header/site-header` (+ `TickerItem`, `SiteNavItem` types), `application/site-footer/site-footer`
 - `application/tabs/tabs` (section navigation), `base/select/select-native` (mobile fallback for tabs)
 - `base/button-group/button-group` (period selector, news filter, Årlig/Kvartal)
@@ -16,25 +17,28 @@ mobile were never checked visually; everything below is from reading code and re
 - `hooks/use-breakpoint`, `utils/cx`; icons from `fa-icons` only.
 
 ## Composed myself (no component / Figma frame yet)
+
 All taken from the stand-ins in `page-patterns.md` unless noted:
+
 - Widget card (`WidgetCard`, section with level-2 classes; header = title + one right slot).
 - Change value (`Change`), period selector (ButtonGroup with label + change), live indicator, news feed item,
   filter chips (ButtonGroup), key-figure list (`dl`), ticker badge, signals as Badge.
 - **Not in the skill, invented here:**
-  - Sticky price strip: a `fixed top-0` bar with ticker badge, price, change and a watch button, shown by an
-    IntersectionObserver when the big price scrolls out of view. Needed for "current price must always be at hand".
-    Uses card-level tokens only, but it has no Figma frame. It sits at `top-0` and would cover the (non-sticky)
-    SiteHeader if that is made sticky; the z-index/offset has to be decided together with the header.
-  - Stat label-over-value grid (`Stat`) in the header band: follows the "label over value" pairing, but as an 8-up grid.
-  - Watchlist toggle: `Dropdown` with `selectionMode="multiple"` behind a `Button` whose icon/label flip Star/StarFilled.
-  - Analyst split: three `ProgressBar`s with a visible text label above and "N analytikere" on the right. Could
-    equally be a stacked bar; no stand-in is given for consensus.
-  - Technical signals table: signal as KJØP/SELG `Badge` per the "Signals" row in layout.md. "Nøytral" overall badge is `gray`.
+    - Sticky price strip: a `fixed top-0` bar with ticker badge, price, change and a watch button, shown by an
+      IntersectionObserver when the big price scrolls out of view. Needed for "current price must always be at hand".
+      Uses card-level tokens only, but it has no Figma frame. It sits at `top-0` and would cover the (non-sticky)
+      SiteHeader if that is made sticky; the z-index/offset has to be decided together with the header.
+    - Stat label-over-value grid (`Stat`) in the header band: follows the "label over value" pairing, but as an 8-up grid.
+    - Watchlist toggle: `Dropdown` with `selectionMode="multiple"` behind a `Button` whose icon/label flip Star/StarFilled.
+    - Analyst split: three `ProgressBar`s with a visible text label above and "N analytikere" on the right. Could
+      equally be a stacked bar; no stand-in is given for consensus.
+    - Technical signals table: signal as KJØP/SELG `Badge` per the "Signals" row in layout.md. "Nøytral" overall badge is `gray`.
 - Section nav: `Tabs.List type="underline"` with no `Tabs.Panel`s (items are `href` anchors; the other areas are other pages).
 
 ## Skill: Patterns section
 
 **New patterns** (not in the reference files):
+
 - Instrument profile with a **sticky compact price strip** (see above), appearing after the main price scrolls away.
 - **Header band containing a chart** (price chart + period selector + key stats + tabs in one white band). page-patterns.md says the
   band holds "name, price, chart, key figures, tabs", but nothing describes the internals or the order; I chose name/actions, price,
@@ -46,6 +50,7 @@ All taken from the stand-ins in `page-patterns.md` unless noted:
 - Locked/subscriber teaser **inside** a widget card as a floating `Alert color="brand"` (an alert nested in a card, i.e. card inside card).
 
 **Clashes:**
+
 - `layout.md` **layout-one-card-level** (no second bordered card in a card) vs the in-card `Alert` (it renders as a bordered card).
   There is no inset-style variant of Alert; paywall box is "centered card" and doesn't fit inline either.
 - `Tabs` rule **tabs-mobile** (NativeSelect below `md` if more than 3-4 tabs) vs 10 navigation areas, and Tabs
@@ -64,6 +69,7 @@ All taken from the stand-ins in `page-patterns.md` unless noted:
   `Alert` stating real-time is on. A delayed variant would need its own indicator.
 
 ## Rules bent
+
 - **fa-layout / layout-full-rows:** all rows fill (4+2, 3+3, 3+3, 2+2+2, 2+2+2). Okay. But `layout-equal-height` ("show a limited number of rows and Vis mer instead of growing") is only partly honored: news shows 4 items and "Se alle" but there is no row-clamp logic.
 - **layout-content-in-cards:** the Alert and the closing link row sit directly on the page background (title/filter-row exception stretched).
 - **Tabs mobile rule** (see above) inverted: I also wrap the desktop tab list in `overflow-x-auto`.
@@ -76,6 +82,7 @@ All taken from the stand-ins in `page-patterns.md` unless noted:
 - Hand-written `h1`/`h2` classes (`text-lg font-semibold text-primary`): the skill never lists a heading style, only "headings = text-primary".
 
 ## Placeholder data to replace
+
 Everything not in the brief: chart series (generated deterministic random walk ending at 444,30; period changes
 other than 1D are invented), news, analyst counts (9/11/4), recommendations (brokers, targets), technical indicator values,
 order depth, latest trades, dividends (amounts and dates), key figures except direkteavkastning and P/E,
@@ -84,6 +91,7 @@ sticky logo (initials "EQ" in place of the Equinor logo; `fa-icons` has no Equin
 Market cap/Pris/bok/beta are invented. All hrefs are anchors or `#`. The "Uten sanntid" / realtime state is hard-coded.
 
 ## Skill: unclear, contradictory or missing
+
 1. No stock/instrument-page page-pattern beyond one table row ("Header band, then card grid") and the example grid in layout.md,
    which in fact lists the cards of this page (Siste nytt, Konsensus, ...). Helpful, but the header band is undefined.
 2. `SKILL.md` Step 1 reads page-patterns.md and layout.md; component rules say "open each reference page". I read about 13 of ~40; no instruction on how
@@ -91,7 +99,7 @@ Market cap/Pris/bok/beta are invented. All hrefs are anchors or `#`. The "Uten s
 3. No Link component and no heading/typography guidance for `h1`/`h2` inside cards (see above). `prose` is mentioned for body text only.
 4. `Table` inside a widget card: `Table` wrapper width/padding is not documented (does `Table` bleed to the card edge? Cell padding vs `p-4 md:p-5` card padding). Unchecked.
 5. Table cells: header alignment uses `className="text-right"` on `Table.Head`, which isn't in the allowed list in `table-no-restyle` (widths, whitespace, hidden classes). Right-aligned numbers are required elsewhere ("Alignment" in layout.md). Needs an explicit allowance or a prop.
-6. `ProgressBar` has `valueFormatter` but no way to have a text label *inside* the bar's row other than my own wrapper; rule `progress-visible-label` says
+6. `ProgressBar` has `valueFormatter` but no way to have a text label _inside_ the bar's row other than my own wrapper; rule `progress-visible-label` says
    "right before the bar". I put it above, which matches. A consensus/split bar (stacked) is a very common finance pattern and is missing.
 7. `Alert` in a card (see clash). Also its icon prop for `Clock`: the docs say pass icon from fa-icons; fine.
 8. `Badge` ticker: `page-patterns.md` shows `<Badge color="brand" size="sm" type="pill-color">`, rule says it should be a link if interactive. I did not link it

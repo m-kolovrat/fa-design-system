@@ -7,24 +7,24 @@ start it), so the light and dark, mobile and desktop look is unverified; `tsc` a
 
 ## Components used
 
-| Component | Path | Where |
-| :-- | :-- | :-- |
-| `SiteHeader` (with ticker, `user` only when signed in) | `components/application/site-header/site-header` | Page frame, Børs marked current |
-| `SiteFooter` | `components/application/site-footer/site-footer` | Page frame |
-| `Tabs` (`underline`) + `NativeSelect` below `md` | `components/application/tabs/tabs`, `components/base/select/select-native` | Siste handler / Investorer / Vinnere og tapere |
-| `TableCard.Root` / `TableCard.Header`, `Table` (`size="sm"`, controlled sorting, `renderEmptyState`) | `components/application/table/table` | Trades table, investors table, teaser table |
-| `PaginationCardDefault` | `components/application/pagination/pagination` | Under the trades table (10 per page) |
-| `Select.ComboBox` | `components/base/select/select` | Filter by stock, filter by investor |
-| `ButtonGroup` / `ButtonGroupItem` | `components/base/button-group/button-group` | Period 1D … Alle from `md` |
-| `NativeSelect` | `components/base/select/select-native` | Period and sort order below `md`, tab switcher below `md` |
-| `DateRangePicker` in `AriaI18nProvider locale="nb-NO"` | `components/application/date-picker/date-range-picker` | Custom date range, draft/commit via `onApply`/`onCancel` |
-| `Button` (`secondary` download, `link-gray` reset, `primary` subscribe, `link-color` login) | `components/base/buttons/button` | Card header slot, filter bar, newsletter, paywall |
-| `Badge` (`brand`, `pill-color`, `sm`) | `components/base/badges/badges` | Ticker badge |
-| `Avatar` (initials) + `getInitials` | `components/base/avatar/avatar`, `.../avatar/utils` | Investor pictures |
-| `FeaturedIcon` (`light`) | `components/foundations/featured-icon/featured-icon` | Widget card headers, paywall box |
-| `EmptyState` | `components/application/empty-state/empty-state` | Table body when filters return nothing |
-| `Input` | `components/base/input/input` | Newsletter e-mail |
-| Icons from `fa-icons` | | `ArrowUp`, `ArrowDown`, `Clock`, `Download`, `Lock`, `Mail`, `Restart`, `Search`, `Users` |
+| Component                                                                                            | Path                                                                       | Where                                                                                     |
+| :--------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
+| `SiteHeader` (with ticker, `user` only when signed in)                                               | `components/application/site-header/site-header`                           | Page frame, Børs marked current                                                           |
+| `SiteFooter`                                                                                         | `components/application/site-footer/site-footer`                           | Page frame                                                                                |
+| `Tabs` (`underline`) + `NativeSelect` below `md`                                                     | `components/application/tabs/tabs`, `components/base/select/select-native` | Siste handler / Investorer / Vinnere og tapere                                            |
+| `TableCard.Root` / `TableCard.Header`, `Table` (`size="sm"`, controlled sorting, `renderEmptyState`) | `components/application/table/table`                                       | Trades table, investors table, teaser table                                               |
+| `PaginationCardDefault`                                                                              | `components/application/pagination/pagination`                             | Under the trades table (10 per page)                                                      |
+| `Select.ComboBox`                                                                                    | `components/base/select/select`                                            | Filter by stock, filter by investor                                                       |
+| `ButtonGroup` / `ButtonGroupItem`                                                                    | `components/base/button-group/button-group`                                | Period 1D … Alle from `md`                                                                |
+| `NativeSelect`                                                                                       | `components/base/select/select-native`                                     | Period and sort order below `md`, tab switcher below `md`                                 |
+| `DateRangePicker` in `AriaI18nProvider locale="nb-NO"`                                               | `components/application/date-picker/date-range-picker`                     | Custom date range, draft/commit via `onApply`/`onCancel`                                  |
+| `Button` (`secondary` download, `link-gray` reset, `primary` subscribe, `link-color` login)          | `components/base/buttons/button`                                           | Card header slot, filter bar, newsletter, paywall                                         |
+| `Badge` (`brand`, `pill-color`, `sm`)                                                                | `components/base/badges/badges`                                            | Ticker badge                                                                              |
+| `Avatar` (initials) + `getInitials`                                                                  | `components/base/avatar/avatar`, `.../avatar/utils`                        | Investor pictures                                                                         |
+| `FeaturedIcon` (`light`)                                                                             | `components/foundations/featured-icon/featured-icon`                       | Widget card headers, paywall box                                                          |
+| `EmptyState`                                                                                         | `components/application/empty-state/empty-state`                           | Table body when filters return nothing                                                    |
+| `Input`                                                                                              | `components/base/input/input`                                              | Newsletter e-mail                                                                         |
+| Icons from `fa-icons`                                                                                |                                                                            | `ArrowUp`, `ArrowDown`, `Clock`, `Download`, `Lock`, `Mail`, `Restart`, `Search`, `Users` |
 
 ## Composed myself (no Figma component)
 
@@ -45,7 +45,7 @@ start it), so the light and dark, mobile and desktop look is unverified; `tsc` a
   block with a lock FeaturedIcon, title, price line, `primary` "Bli abonnent" and "Logg inn" link.
   Filters, sorting, tabs, investor links and download are not shown to logged-out readers.
 - **Investor link and ticker link**: plain `<a>` with the focus-ring classes (`outline-focus-ring
-  focus-visible:outline-2 …`). The ticker link wraps the `Badge`.
+focus-visible:outline-2 …`). The ticker link wraps the `Badge`.
 - **Newsletter card** (⅓) and **Om dataene** card (⅔, inclusion rules + disclaimer) at the bottom.
 - **Page title block**: h1, lead, and "Siste data mottatt: 26.10.2026 · Oppdateres hver natt ca.
   kl. 23.00 … (T+2)" as a meta line with a `Clock` icon.
@@ -54,17 +54,17 @@ start it), so the light and dark, mobile and desktop look is unverified; `tsc` a
 
 **New patterns**
 
-- *Responsive "stacked cell" table*: on mobile, hidden columns' values are folded into the visible
+- _Responsive "stacked cell" table_: on mobile, hidden columns' values are folded into the visible
   cells (row header cell and the main numeric cell) instead of being dropped. page-patterns.md only
   says "Fewer columns; ticker stacked over name" for data tables; it doesn't say what happens to the
   dropped values, or to sorting by them. Used in the trades table.
-- *Mobile sort select*: a `NativeSelect` that mirrors the table's `sortDescriptor` below `md`.
-- *Period selector + date range together*: preset periods and a custom range on the same filter,
+- _Mobile sort select_: a `NativeSelect` that mirrors the table's `sortDescriptor` below `md`.
+- _Period selector + date range together_: preset periods and a custom range on the same filter,
   kept in sync. The period-selector pattern only covers chart periods with a change under each label.
-- *Filter bar inside a `TableCard`*, between `TableCard.Header` and the table, separated by
+- _Filter bar inside a `TableCard`_, between `TableCard.Header` and the table, separated by
   `border-b border-secondary`.
-- *Paywall teaser over a truncated table* (rows shown, then the paywall box inside the same card).
-- *Meta line with an icon* ("Siste data mottatt …" with `Clock`) under the h1.
+- _Paywall teaser over a truncated table_ (rows shown, then the paywall box inside the same card).
+- _Meta line with an icon_ ("Siste data mottatt …" with `Clock`) under the h1.
 
 **Clashes**
 
@@ -74,7 +74,7 @@ start it), so the light and dark, mobile and desktop look is unverified; `tsc` a
   differs: `bg-primary` vs `bg-primary_alt`) and a shadow. I used `TableCard` (component wins per
   anti-patterns.md) and plain cards elsewhere.
 - Table header labels: page-patterns.md says `text-xs font-medium uppercase tracking-wide
-  text-quaternary`; `Table.Head` renders `text-xs font-semibold text-quaternary`, not uppercase. I
+text-quaternary`; `Table.Head` renders `text-xs font-semibold text-quaternary`, not uppercase. I
   kept the component.
 - Row hover: layout.md says `bg-primary_hover`; `Table.Row` uses `hover:bg-secondary` and
   `transition-colors` (not bare `transition`, so it bypasses the 0 ms convention only by name; the

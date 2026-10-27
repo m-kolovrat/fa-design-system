@@ -18,15 +18,15 @@ Page shell "Market overview" (card grid, mostly ⅓ and ½), `bg-secondary_alt` 
 Title row above the cards: `h1` "Børs" + date line, ticker search (`Select.ComboBox`) and the
 "Sanntidskurser" `Toggle` (turned off and with a hint when logged out).
 
-| lg row | Cards (span of 6)                                                    |
-| :----- | :------------------------------------------------------------------- |
-| 1      | Index + chart (4), Watchlist (2)                                     |
-| 2      | Markeder (2), Vinnere (2), Tapere (2)                                |
-| 3      | Børsnyheter (4), Børsmorgen TV (2)                                   |
-| 4      | Mest omsatte (3), Hot stocks (3)                                     |
-| 5      | Mest shortet (4), Rekordnivåer (new highs/lows) (2)                  |
-| 6      | Rapporter og webcasts (2), Sektorer (2), Kommende utbytter (2)       |
-| 7      | Finanskalender (6)                                                   |
+| lg row | Cards (span of 6)                                              |
+| :----- | :------------------------------------------------------------- |
+| 1      | Index + chart (4), Watchlist (2)                               |
+| 2      | Markeder (2), Vinnere (2), Tapere (2)                          |
+| 3      | Børsnyheter (4), Børsmorgen TV (2)                             |
+| 4      | Mest omsatte (3), Hot stocks (3)                               |
+| 5      | Mest shortet (4), Rekordnivåer (new highs/lows) (2)            |
+| 6      | Rapporter og webcasts (2), Sektorer (2), Kommende utbytter (2) |
+| 7      | Finanskalender (6)                                             |
 
 At `md` the index and news cards span both columns. Every other card takes half, so the rows fill
 (Mest shortet is half at `md` even though it's ⅔ at `lg`, to avoid a hole). Below `md` it's one
@@ -34,23 +34,23 @@ column in source order, so the watchlist comes right after the index on a phone.
 
 ## Components used
 
-| Component                                   | Path                                                         | Where                                                                                 |
-| :------------------------------------------ | :----------------------------------------------------------- | :------------------------------------------------------------------------------------ |
-| `SiteHeader` (+ `TickerItem`, `SiteNavItem`) | `@/components/application/site-header/site-header`           | Header, ticker bar, `user` only when logged in, `onSearchPress` focuses the ComboBox  |
-| `SiteFooter`                                | `@/components/application/site-footer/site-footer`           | Footer with the Millistream / delay disclaimer                                        |
-| `Table`                                     | `@/components/application/table/table`                       | Vinnere, Tapere, Mest omsatte, Hot stocks, Mest shortet (sortable), Kommende utbytter |
-| `EmptyState`                                | `@/components/application/empty-state/empty-state`           | Logged-out watchlist ("Lag din egen watchlist – helt gratis" + Logg inn)              |
-| `ChartTooltipContent`, `selectEvenlySpacedItems` + Recharts `AreaChart` | `@/components/application/charts/charts-base` | Index chart                                                            |
-| `ButtonGroup` / `ButtonGroupItem`           | `@/components/base/button-group/button-group`                | Market switch (with flags), period selector, news filter chips, highs/lows switch     |
-| `Button`                                    | `@/components/base/buttons/button`                           | Legg til aksje, Logg inn, Se direkte, market rows as `link-gray` links                |
-| `ButtonUtility`                             | `@/components/base/buttons/button-utility`                   | Chevron "Se alle" link in every card header, play/download on reports                 |
-| `Select`, `Select.ComboBox`                 | `@/components/base/select/select`                            | Switch watchlist; search ticker                                                       |
-| `Toggle`                                    | `@/components/base/toggle/toggle`                            | Real-time prices                                                                      |
-| `Badge`, `BadgeWithDot`                     | `@/components/base/badges/badges`                            | Ticker badges, "Live", "Forsinket 15 min"                                             |
-| `Avatar`, `AvatarLabelGroup`                | `@/components/base/avatar/*`                                 | News source "logo" (initials), company rows in reports                                |
-| `FeaturedIcon`                              | `@/components/foundations/featured-icon/featured-icon`       | Widget card header tiles                                                              |
-| `Flag`                                      | `fa-icons`                                                   | Market switch (norway-nok, sweden-sek, denmark-dkk, united-states-usd)                |
-| `useBreakpoint`, `cx`                       | `@/hooks/use-breakpoint`, `@/utils/cx`                       | Chart ticks/axis width                                                                |
+| Component                                                               | Path                                                   | Where                                                                                 |
+| :---------------------------------------------------------------------- | :----------------------------------------------------- | :------------------------------------------------------------------------------------ |
+| `SiteHeader` (+ `TickerItem`, `SiteNavItem`)                            | `@/components/application/site-header/site-header`     | Header, ticker bar, `user` only when logged in, `onSearchPress` focuses the ComboBox  |
+| `SiteFooter`                                                            | `@/components/application/site-footer/site-footer`     | Footer with the Millistream / delay disclaimer                                        |
+| `Table`                                                                 | `@/components/application/table/table`                 | Vinnere, Tapere, Mest omsatte, Hot stocks, Mest shortet (sortable), Kommende utbytter |
+| `EmptyState`                                                            | `@/components/application/empty-state/empty-state`     | Logged-out watchlist ("Lag din egen watchlist – helt gratis" + Logg inn)              |
+| `ChartTooltipContent`, `selectEvenlySpacedItems` + Recharts `AreaChart` | `@/components/application/charts/charts-base`          | Index chart                                                                           |
+| `ButtonGroup` / `ButtonGroupItem`                                       | `@/components/base/button-group/button-group`          | Market switch (with flags), period selector, news filter chips, highs/lows switch     |
+| `Button`                                                                | `@/components/base/buttons/button`                     | Legg til aksje, Logg inn, Se direkte, market rows as `link-gray` links                |
+| `ButtonUtility`                                                         | `@/components/base/buttons/button-utility`             | Chevron "Se alle" link in every card header, play/download on reports                 |
+| `Select`, `Select.ComboBox`                                             | `@/components/base/select/select`                      | Switch watchlist; search ticker                                                       |
+| `Toggle`                                                                | `@/components/base/toggle/toggle`                      | Real-time prices                                                                      |
+| `Badge`, `BadgeWithDot`                                                 | `@/components/base/badges/badges`                      | Ticker badges, "Live", "Forsinket 15 min"                                             |
+| `Avatar`, `AvatarLabelGroup`                                            | `@/components/base/avatar/*`                           | News source "logo" (initials), company rows in reports                                |
+| `FeaturedIcon`                                                          | `@/components/foundations/featured-icon/featured-icon` | Widget card header tiles                                                              |
+| `Flag`                                                                  | `fa-icons`                                             | Market switch (norway-nok, sweden-sek, denmark-dkk, united-states-usd)                |
+| `useBreakpoint`, `cx`                                                   | `@/hooks/use-breakpoint`, `@/utils/cx`                 | Chart ticks/axis width                                                                |
 
 Icons (all `fa-icons`): ArrowUp, ArrowDown, Calendar (as CalendarIcon), ChevronRight, DocumentCash,
 Download, Flame, GraphDown, GraphLine, GraphUp, Grid, Medal, News, Play, Plus, Search, Star, Tv, Wallet.
@@ -70,7 +70,7 @@ All of these are the stand-ins from `page-patterns.md`, except where noted:
   `aria-label` like "1D, −0,04 %".
 - **Filter chips**: `ButtonGroup selectionMode="single"`. "Min watchlist" is left out when logged out.
 - **Live indicator**: `BadgeWithDot color="error"` "Live" + "Oppdatert 14:10". **Not in the skill:**
-  how to show that prices are *delayed*. I used a gray `Badge` "Forsinket 15 min" in place of the live
+  how to show that prices are _delayed_. I used a gray `Badge` "Forsinket 15 min" in place of the live
   badge, plus a hint on the toggle.
 - **News feed item**: `Avatar` sm with source initials, meta line (time · ticker badge · source),
   bold title link, `line-clamp-2` excerpt.
@@ -83,7 +83,7 @@ All of these are the stand-ins from `page-patterns.md`, except where noted:
   (charts-text-alternative).
 - **Video player** for Børsmorgen: the skill lists the video player as a coverage gap with "no
   stand-in, ask before building". I couldn't ask, so I put in an inset placeholder (`rounded-xl
-  bg-tertiary aspect-video`) with a primary "Se direkte" link button. **Needs a decision.**
+bg-tertiary aspect-video`) with a primary "Se direkte" link button. **Needs a decision.**
 - **Calendar day tiles**: insets (`rounded-xl bg-tertiary p-3`) in a 5-column grid inside one card,
   following the "day tiles" example in layout.md.
 
@@ -101,7 +101,7 @@ All of these are the stand-ins from `page-patterns.md`, except where noted:
   card grid.
 - **Table bleeding to the card edge:** `Table` inside a widget card with `-mx-4 md:-mx-5`, so its
   gray header row runs edge to edge as in a `TableCard`. Not described; the alternative is a table
-  indented by the card padding *plus* the cell padding.
+  indented by the card padding _plus_ the cell padding.
 - **View switch inside a widget card** ("Ny toppnotering / Ny bunnotering") as a `ButtonGroup` under
   the header.
 - **Ratio figure** "9,6x" (turnover vs. average) for Hot stocks. No format guidance exists.
@@ -109,11 +109,11 @@ All of these are the stand-ins from `page-patterns.md`, except where noted:
 **Clashes**
 
 1. **`TableCard.Root` vs. the card surface.** TableCard is `rounded-xl bg-primary shadow-xs ring-1
-   ring-secondary`. layout.md's card is `rounded-2xl border border-secondary bg-primary_alt`, no
+ring-secondary`. layout.md's card is `rounded-2xl border border-secondary bg-primary_alt`, no
    shadow (layout-no-card-shadow), and its dark mode is different (`bg-primary` vs `bg-primary_alt`).
    I didn't use `TableCard`; I put a bare `Table` in my own widget card.
 2. **Table header labels.** page-patterns says `text-xs font-medium uppercase tracking-wide
-   text-quaternary`; `Table.Head` renders `text-xs font-semibold text-quaternary`, not uppercase.
+text-quaternary`; `Table.Head` renders `text-xs font-semibold text-quaternary`, not uppercase.
    I left the component as it is.
 3. **Row hover.** layout.md: row hover is `bg-primary_hover`. `Table.Row` uses `hover:bg-secondary`.
 4. **Two ways of showing a change.** table.md's example puts change in a `BadgeWithIcon` with arrows.

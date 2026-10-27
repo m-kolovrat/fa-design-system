@@ -5,9 +5,10 @@
 **Audience.** Private investors benchmarking against well-known names, checking after the nightly update, mostly on a phone.
 
 **Content and data.**
+
 - Latest registered trades: investor (photo, name), stock (ticker, company), change in shares, relative change, transaction value, new ownership share, new holding, executing company, date.
-  - Aasulv Tveitereid · NOD Nordic Semiconductor · +400 000 (+25 %) · 67,88 M NOK · eierandel 1,00109 % · beholdning 2 000 000 · AAT Invest AS · 22.10.2026.
-  - John Fredriksen · NAS · +743 950 · 8,23 M · 14,32 %.
+    - Aasulv Tveitereid · NOD Nordic Semiconductor · +400 000 (+25 %) · 67,88 M NOK · eierandel 1,00109 % · beholdning 2 000 000 · AAT Invest AS · 22.10.2026.
+    - John Fredriksen · NAS · +743 950 · 8,23 M · 14,32 %.
 - "Siste data mottatt: 26.10.2026". Updated nightly ~23:00, reflecting register changes about two trading days after the trade (T+2).
 - Views of all investors, and of winners and losers.
 - Inclusion rules, disclaimer.
