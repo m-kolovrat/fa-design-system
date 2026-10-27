@@ -105,19 +105,33 @@ App store badges (`GooglePlayButton`, `AppStoreButton`, `GalaxyStoreButton`, `Ap
 | `href`       | string                      | `"#"`   |
 | `aria-label` | string (default is English) |         |
 
-## Social and app store buttons
+## Social buttons
+
+The "Logg inn med …" button of a login form (Google, Facebook, Apple, X).
 
 ```ts
-import { AppStoreButton, GooglePlayButton } from "fa-design-system/components/base/buttons/app-store-buttons";
-// Outline badges: no fill, drawn in the text color (`text-fg-primary`):
-import { AppStoreButton as AppStoreButtonOutline } from "fa-design-system/components/base/buttons/app-store-buttons-outline";
 import { SocialButton } from "fa-design-system/components/base/buttons/social-button";
 ```
 
-- `SocialButton` is the "Logg inn med …" button of a login form: stack them `w-full` in a column,
-  or use icon-only ones in a row with an `aria-label` each. Disable it with `disabled`.
-- App store badges link to the app's store page: always pass `href`, and an `aria-label` in
-  Norwegian ("Last ned i App Store"). Their artwork is the stores' English badge.
+- Stack them `w-full` in a column, or use icon-only ones in a row with an `aria-label` each.
+- Disable it with `disabled`.
+
+## App store buttons
+
+Badges that link to the app's page in App Store, Google Play, Galaxy Store or AppGallery.
+
+```ts
+import { AppStoreButton, GooglePlayButton } from "fa-design-system/components/base/buttons/app-store-buttons";
+```
+
+Outline badges (no fill, drawn in the text color, `text-fg-primary`) come from their own file:
+
+```ts
+import { AppStoreButton as AppStoreButtonOutline } from "fa-design-system/components/base/buttons/app-store-buttons-outline";
+```
+
+- Always pass `href`, and an `aria-label` in Norwegian ("Last ned i App Store").
+- Their artwork is the stores' English badge.
 
 ## Accessibility
 

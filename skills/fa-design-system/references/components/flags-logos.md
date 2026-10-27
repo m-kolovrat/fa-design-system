@@ -32,6 +32,8 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 
 ## Rules
 
+Flags, payment icons and new assets; the logo rules are under [Logos](#logos).
+
 - **flags-by-name** MUST Use `<Flag name="norway-nok" />` with a `FlagName` when the country comes
   from data, or the named export (`NorwayNokFlag`) when it's fixed. Check the name exists in `flags`;
   there is no Croatia flag on purpose, and Hong Kong / Taiwan have flags but no entry in
@@ -41,17 +43,37 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 - **flags-label** MUST Keep the country or currency as visible text next to the flag. If the flag
   stands alone, give it `aria-label="Norge"`; `fa-icons` (v0.2.0+) then exposes it as an image.
   Because flags are hidden from screen readers by default.
+- **assets-from-figma** NEVER Paste an SVG, add a flag or logo component in this repo, or load one
+  from a URL. Because new assets are drawn in Figma, exported to `fa-icons` and released there
+  (see `CLAUDE.md` → Adding or updating icons, flags and logos).
+- **payment-icons-label** SHOULD Pair a payment icon with its name in text ("Visa •••• 4242"); the
+  icons have no title or `aria-hidden`, so add `aria-hidden` when the name is printed.
+
+## Logos
+
+The publication marks of Hegnar Media (Finansavisen, Kapital, Motor, Hegnar and its sub-brands,
+Interiør Magasinet, Pinpoint, Vipps, FA Bok) for a header, footer, newsletter or partner block.
+Each is a `<Name>Logo` component from `fa-icons`, drawn at its Figma size. Figma: Misc icons →
+Logos (`17204-1131`).
+
+```ts
+import { FaLargeLogo, KapitalLargeLogo, MotorLogo } from "fa-icons";
+```
+
 - **logos-current-color** MUST Color single-color logos with a `text-*` class (`text-fg-primary`,
   `text-white` on a brand surface); they use `currentColor`. Never recolor the fixed-color logos
   (Pinpoint, Vipps, the four `KapitalList*`, the orange accent of `HegnarBokLogo`).
 - **logos-size** MUST Size logos by height with auto width (`className="h-6 w-auto"`). Because
   they keep their Figma aspect ratio.
 - **logos-name** MUST Give a logo used as the home link an accessible name (`aria-label="Finansavisen – til forsiden"` on the link). Because the SVG itself is hidden.
-- **assets-from-figma** NEVER Paste an SVG, add a flag or logo component in this repo, or load one
-  from a URL. Because new assets are drawn in Figma, exported to `fa-icons` and released there
-  (see `CLAUDE.md` → Adding or updating icons, flags and logos).
-- **payment-icons-label** SHOULD Pair a payment icon with its name in text ("Visa •••• 4242"); the
-  icons have no title or `aria-hidden`, so add `aria-hidden` when the name is printed.
+- New or changed logos are drawn in Figma and released in `fa-icons`, never added as an SVG here
+  (**assets-from-figma**).
+
+```tsx
+<a href="/" aria-label="Kapital – til forsiden" className="rounded-xs outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2">
+    <KapitalLargeLogo className="h-7 w-auto text-fg-primary" />
+</a>
+```
 
 ## Props
 
@@ -71,10 +93,6 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
     <span className="text-sm font-medium text-primary">NOK</span>
     <span className="text-sm text-tertiary tabular-nums">10,84 per USD</span>
 </div>
-
-<a href="/" aria-label="Kapital – til forsiden" className="rounded-xs outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2">
-    <KapitalLargeLogo className="h-7 w-auto text-fg-primary" />
-</a>
 
 <div className="flex items-center gap-3">
     <VisaIcon aria-hidden />

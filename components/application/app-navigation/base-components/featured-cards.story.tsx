@@ -16,7 +16,7 @@ export default {
     },
     decorators: [
         withOverlayAware((Story: any) => (
-            <div className="min-h-screen w-full bg-primary p-8">
+            <div className="min-h-screen w-full bg-primary p-8 [.docs-story_&]:min-h-0">
                 <div className="w-62">
                     <Story />
                 </div>

@@ -11,7 +11,7 @@ export default {
     parameters: {
         // A part of button.md (the full page is on Base components / Buttons / Button); the props
         // table comes from social-button.tsx.
-        docs: { description: { component: skillDoc(buttonDoc, { sections: ["Social and app store buttons"] }) } },
+        docs: { description: { component: skillDoc(buttonDoc, { sections: ["Social buttons"], headings: false }) } },
     },
     excludeStories: ["GoogleLogo", "GoogleButton", "FacebookButton", "AppleButton"],
     decorators: [

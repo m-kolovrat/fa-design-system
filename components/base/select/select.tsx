@@ -116,7 +116,7 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, size, placeholder, icon, r
     );
 };
 
-const Select = ({
+const SelectComponent = ({
     placeholder = "Select",
     icon,
     size = "md",
@@ -160,12 +160,13 @@ const Select = ({
     );
 };
 
+// Named `Select` (not `_Select`) so the Docs props table is labelled Select.
 /** A field that opens a list to pick one value from. `Select.ComboBox` adds typing to filter; items are `Select.Item`. */
-const _Select = Select as typeof Select & {
+const Select = SelectComponent as typeof SelectComponent & {
     ComboBox: typeof ComboBox;
     Item: typeof SelectItem;
 };
-_Select.ComboBox = ComboBox;
-_Select.Item = SelectItem;
+Select.ComboBox = ComboBox;
+Select.Item = SelectItem;
 
-export { _Select as Select };
+export { Select };

@@ -48,12 +48,13 @@ const meta = {
     title: "Foundations/Logos",
     tags: ["autodocs"],
     parameters: {
-        // The skill page is shown on Foundations / Flags; here only the rules that cover logos.
-        docs: { description: { component: skillDoc(flagsLogosDoc, { sections: ["Rules", "Example"] }) } },
+        // The whole skill page is shown on Foundations / Flags; here only its Logos section
+        // (purpose, import, logo rules, example), as the page intro.
+        docs: { description: { component: skillDoc(flagsLogosDoc, { sections: ["Logos"], headings: false }) } },
     },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8">
+            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),

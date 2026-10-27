@@ -56,7 +56,8 @@ const meta = {
         // comes from the types and JSDoc in button.tsx.
         skillDoc: buttonDoc,
     },
-    args: { color: "primary", size: "md", children: "Button CTA" },
+    // size matches the component default (`sm`), so the Playground and the props table agree.
+    args: { color: "primary", size: "sm", children: "Button CTA" },
     argTypes: {
         // Controls only: types, defaults and descriptions come from docgen.
         children: { control: "text" },

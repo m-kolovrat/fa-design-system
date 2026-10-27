@@ -82,19 +82,26 @@ export interface SkillDocOptions {
     omit?: string[];
     /** Include the text before the first `## `. Defaults to `true`, or `false` when `sections` is set. */
     intro?: boolean;
+    /**
+     * Keep the `## ` heading line of each kept section. Defaults to `true`; `false` turns a section
+     * into the intro of a page that already has its own title (e.g. one component of a multi-component page).
+     */
+    headings?: boolean;
 }
 
 /**
  * @param markdown The page's raw markdown.
  * @param options Which parts to keep; with none, the whole page without its title.
  */
-export const skillDoc = (markdown: string, { dir = "components", sections, omit = [], intro = !sections }: SkillDocOptions = {}) => {
+export const skillDoc = (markdown: string, { dir = "components", sections, omit = [], intro = !sections, headings = true }: SkillDocOptions = {}) => {
     const base = new URL(dir.replace(/\/?$/, "/"), REFERENCES_URL).href;
     const parts = skillDocSections(markdown);
 
     const text = [
         intro ? parts.intro : "",
-        ...parts.sections.filter(({ heading }) => (!sections || sections.includes(heading)) && !omit.includes(heading)).map((s) => s.markdown),
+        ...parts.sections
+            .filter(({ heading }) => (!sections || sections.includes(heading)) && !omit.includes(heading))
+            .map((s) => (headings ? s.markdown : s.markdown.replace(/^## [^\n]*\n*/, ""))),
     ]
         .filter(Boolean)
         .join("\n\n");

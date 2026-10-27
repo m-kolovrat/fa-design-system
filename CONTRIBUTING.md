@@ -180,9 +180,10 @@ parameters: {
 },
 ```
 
-`skillDoc(md, { sections, omit, intro })` keeps or leaves out `## ` sections (headings inside code
-fences don't count) and points relative `.md` links at GitHub; `skillDocSections(md)` returns the
-intro and the sections.
+`skillDoc(md, { sections, omit, intro, headings })` keeps or leaves out `## ` sections (headings
+inside code fences don't count) and points relative `.md` links at GitHub; `headings: false` drops
+the kept sections' `## ` lines, so a section can serve as a page's intro (Social buttons, App store
+buttons). `skillDocSections(md)` returns the intro and the sections.
 
 **Experimental stories** (prototypes, comparisons) stay off the Docs page with
 `MyStory.tags = ["!autodocs"];`. They stay on the canvas and in the sidebar.

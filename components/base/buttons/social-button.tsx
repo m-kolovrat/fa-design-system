@@ -55,16 +55,15 @@ interface CommonProps {
     className?: string;
 }
 
-interface ButtonProps extends CommonProps, DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement> {
-    /** Slot name for react-aria component */
-    slot?: AriaButtonProps["slot"];
-}
+// `slot` and `routerOptions` are picked from React Aria so they work as before but stay out of the
+// Docs props table (it leaves out props declared in node_modules).
+interface ButtonProps
+    extends CommonProps, Pick<AriaButtonProps, "slot">, DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement> {}
 
-interface LinkProps extends CommonProps, DetailedHTMLProps<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "color">, HTMLAnchorElement> {
+interface LinkProps
+    extends CommonProps, Pick<AriaLinkProps, "routerOptions">, DetailedHTMLProps<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "color">, HTMLAnchorElement> {
     /** Renders a link (React Aria `Link`) instead of a button */
     href?: string;
-    /** Options for the configured client side router. */
-    routerOptions?: AriaLinkProps["routerOptions"];
 }
 
 export type SocialButtonProps = ButtonProps | LinkProps;

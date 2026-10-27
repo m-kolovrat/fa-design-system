@@ -10,7 +10,7 @@ export default {
     tags: ["autodocs"],
     parameters: {
         // A part of button.md (the full page is on Base components / Buttons / Button).
-        docs: { description: { component: skillDoc(buttonDoc, { sections: ["Social and app store buttons"] }) } },
+        docs: { description: { component: skillDoc(buttonDoc, { sections: ["App store buttons"], headings: false }) } },
     },
 };
 

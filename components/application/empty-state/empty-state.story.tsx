@@ -44,9 +44,24 @@ const toggles = {
         icon: { name: "Icon", ...iconArgType({ none: false }) },
         showIcon: { name: "Featured icon", control: "boolean" },
         // Story-only toggles (they set the action props), grouped apart from the component's props.
-        actions: { name: "Actions", control: "boolean", table: { category: "Figma toggles (story only)" } },
-        secondaryButton: { name: "Secondary button", control: "boolean", table: { category: "Figma toggles (story only)" } },
-        primaryButton: { name: "Primary button", control: "boolean", table: { category: "Figma toggles (story only)" } },
+        actions: {
+            name: "Actions",
+            description: "Shows the action row (Figma's Actions toggle). In code, pass `primaryAction` / `secondaryAction`.",
+            control: "boolean",
+            table: { category: "Figma toggles (story only)" },
+        },
+        secondaryButton: {
+            name: "Secondary button",
+            description: "Shows the secondary button (sets `secondaryAction`).",
+            control: "boolean",
+            table: { category: "Figma toggles (story only)" },
+        },
+        primaryButton: {
+            name: "Primary button",
+            description: "Shows the primary button (sets `primaryAction`).",
+            control: "boolean",
+            table: { category: "Figma toggles (story only)" },
+        },
     },
 };
 

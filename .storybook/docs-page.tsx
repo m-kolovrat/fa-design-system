@@ -1,4 +1,4 @@
-import { Controls, DocsPage, Markdown, Primary, Stories, Title, useOf } from "@storybook/addon-docs/blocks";
+import { Controls, Description, Markdown, Primary, Stories, Subtitle, Title, useOf } from "@storybook/addon-docs/blocks";
 import { skillDoc } from "../components/internal/skill-doc";
 
 /**
@@ -11,18 +11,37 @@ import { skillDoc } from "../components/internal/skill-doc";
  * When docgen finds no props (a component from another package, such as `Flag` from fa-icons, or
  * a meta without a component), the skill page's own `## Props` section stays on the page instead.
  *
- * Story files without `skillDoc` get Storybook's default autodocs page. Stories tagged
+ * Story files without `skillDoc` get Storybook's default autodocs page, except that the primary
+ * story isn't repeated under "Stories" (DefaultDocsPage). Stories tagged
  * `!autodocs` (experiments, prototypes) stay off both. See CONTRIBUTING.md.
  */
 type WithDocgen = { __docgenInfo?: { props?: Record<string, unknown> } } | undefined;
 
 const hasProps = (component: unknown) => Object.keys((component as WithDocgen)?.__docgenInfo?.props ?? {}).length > 0;
 
+/** Storybook's default Docs page, without the copy of the primary story under "Stories". */
+const DefaultDocsPage = () => {
+    const { csfFile } = useOf("meta", ["meta"]);
+    const isSingleStory = Object.keys(csfFile.stories).length === 1;
+
+    return (
+        <>
+            <Title />
+            <Subtitle />
+            <Description of="meta" />
+            {isSingleStory && <Description of="story" />}
+            <Primary />
+            <Controls />
+            {!isSingleStory && <Stories includePrimary={false} />}
+        </>
+    );
+};
+
 export const SkillDocsPage = () => {
     const { preparedMeta } = useOf("meta", ["meta"]);
     const markdown: unknown = preparedMeta.parameters?.skillDoc;
 
-    if (typeof markdown !== "string") return <DocsPage />;
+    if (typeof markdown !== "string") return <DefaultDocsPage />;
 
     const documented = [preparedMeta.component, ...Object.values(preparedMeta.subcomponents ?? {})].some(hasProps);
 

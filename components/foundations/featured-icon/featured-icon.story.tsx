@@ -12,7 +12,7 @@ const meta = {
     parameters: { skillDoc: featuredIconDoc },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8">
+            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),
