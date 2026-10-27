@@ -4,9 +4,14 @@
  * source for both agents and Storybook.
  *
  * - Drops the leading `# Title` line (the Docs page already shows the component's title).
+ * - Can keep only some `## ` sections, or leave some out (`sections`, `omit`, `intro`).
  * - Rewrites relative links (`select.md`, `../layout.md`) to the file on GitHub, since the
  *   Storybook build has no copy of the skill folder to link to.
  * - Leaves fenced code blocks and inline code untouched.
+ *
+ * The shared Docs page (`.storybook/docs-page.tsx`) uses it for every story file that sets
+ * `parameters.skillDoc`; a secondary component on a multi-component page can show a part of it
+ * through `docs.description.component`. See "Component docs in Storybook" in CONTRIBUTING.md.
  */
 
 const REFERENCES_URL = "https://github.com/m-kolovrat/fa-design-system/blob/main/skills/fa-design-system/references/";
@@ -27,32 +32,75 @@ const rewriteLinks = (text: string, base: string) =>
         )
         .join("");
 
-/**
- * @param markdown The page's raw markdown.
- * @param dir The page's folder relative to `references/` (`"components"` for component pages).
- */
-export const skillDoc = (markdown: string, dir = "components") => {
-    const base = new URL(dir.replace(/\/?$/, "/"), REFERENCES_URL).href;
-
-    // Split on fenced code blocks (``` or ~~~ at the start of a line) so only prose is rewritten.
-    const parts = markdown.replace(/^﻿?\s*# [^\n]*\n+/, "").split(/^(```|~~~)/m);
-
-    let inFence = false;
+/** Calls `fn` on each line with whether that line is inside (or opens/closes) a fenced code block. */
+const eachLine = (markdown: string, fn: (line: string, inFence: boolean) => void) => {
     let fence = "";
-    let out = "";
-    for (let i = 0; i < parts.length; i++) {
-        const part = parts[i];
-        if (part === "```" || part === "~~~") {
-            if (!inFence) {
-                inFence = true;
-                fence = part;
-            } else if (part === fence) {
-                inFence = false;
-            }
-            out += part;
+    for (const line of markdown.split("\n")) {
+        const marker = /^\s*(```|~~~)/.exec(line)?.[1];
+        if (marker && (!fence || marker === fence)) {
+            fence = fence ? "" : marker;
+            fn(line, true);
             continue;
         }
-        out += inFence ? part : rewriteLinks(part, base);
+        fn(line, Boolean(fence));
     }
-    return out;
+};
+
+export interface SkillDocSection {
+    /** The heading text without `## `, e.g. `"Use when"`. */
+    heading: string;
+    /** The section's markdown, starting with its `## ` line. */
+    markdown: string;
+}
+
+/**
+ * Splits a skill page at its `## ` headings (outside code fences). `intro` is everything before
+ * the first one, without the `# Title` line: the purpose, the Figma line and the import block.
+ */
+export const skillDocSections = (markdown: string): { intro: string; sections: SkillDocSection[] } => {
+    const intro: string[] = [];
+    const sections: { heading: string; lines: string[] }[] = [];
+
+    eachLine(markdown.replace(/^﻿?\s*# [^\n]*\n+/, ""), (line, inFence) => {
+        const heading = !inFence && /^## (.+)$/.exec(line)?.[1];
+        if (heading) sections.push({ heading: heading.trim(), lines: [line] });
+        else (sections.at(-1)?.lines ?? intro).push(line);
+    });
+
+    return {
+        intro: intro.join("\n").trim(),
+        sections: sections.map(({ heading, lines }) => ({ heading, markdown: lines.join("\n").trim() })),
+    };
+};
+
+export interface SkillDocOptions {
+    /** The page's folder relative to `references/` (`"components"` for component pages). */
+    dir?: string;
+    /** Keep only these `## ` sections (by heading, in the page's order). Leaves out the intro unless `intro: true`. */
+    sections?: string[];
+    /** Leave out these `## ` sections. */
+    omit?: string[];
+    /** Include the text before the first `## `. Defaults to `true`, or `false` when `sections` is set. */
+    intro?: boolean;
+}
+
+/**
+ * @param markdown The page's raw markdown.
+ * @param options Which parts to keep; with none, the whole page without its title.
+ */
+export const skillDoc = (markdown: string, { dir = "components", sections, omit = [], intro = !sections }: SkillDocOptions = {}) => {
+    const base = new URL(dir.replace(/\/?$/, "/"), REFERENCES_URL).href;
+    const parts = skillDocSections(markdown);
+
+    const text = [
+        intro ? parts.intro : "",
+        ...parts.sections.filter(({ heading }) => (!sections || sections.includes(heading)) && !omit.includes(heading)).map((s) => s.markdown),
+    ]
+        .filter(Boolean)
+        .join("\n\n");
+
+    // Rewrite links in prose only, never inside fenced code.
+    const out: string[] = [];
+    eachLine(text, (line, inFence) => out.push(inFence ? line : rewriteLinks(line, base)));
+    return out.join("\n");
 };
