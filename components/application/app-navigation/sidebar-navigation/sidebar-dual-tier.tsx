@@ -14,7 +14,7 @@ import { NavList } from "../base-components/nav-list";
 import type { NavItemType } from "../config";
 import { SECONDARY_SIDEBAR_SPRING } from "../config";
 
-interface SidebarNavigationDualTierProps {
+export interface SidebarNavigationDualTierProps {
     /** URL of the currently active item. */
     activeUrl?: string;
     /** Feature card to display. */
@@ -31,6 +31,7 @@ interface SidebarNavigationDualTierProps {
     accountItems?: NavAccountType[];
 }
 
+/** Wide sidebar whose sub-items open in a second panel on hover. */
 export const SidebarNavigationDualTier = ({
     activeUrl,
     hideBorder,

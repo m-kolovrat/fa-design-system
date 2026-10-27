@@ -1,19 +1,25 @@
 import type { ComponentProps, FC } from "react";
-import type { StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ButtonGroupItem, ButtonGroup as ButtonGroupRoot } from "@/components/base/button-group/button-group";
 import * as ButtonGroup from "@/components/base/button-group/button-group.demo";
 import { iconArg, iconArgType } from "@/components/internal/icon-controls";
+import buttonGroupDoc from "@/skills/fa-design-system/references/components/button-group.md?raw";
 
 export default {
     title: "Base components/Button groups",
+    component: ButtonGroupRoot,
+    subcomponents: { ButtonGroupItem },
+    tags: ["autodocs"],
+    // The Docs page text is button-group.md; the props tables come from button-group.tsx.
+    parameters: { skillDoc: buttonGroupDoc },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full bg-primary p-4">
+            <div className="flex min-h-screen w-full bg-primary p-4 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),
     ],
-};
+} satisfies Meta<typeof ButtonGroupRoot>;
 
 type ItemProps = ComponentProps<typeof ButtonGroupItem>;
 

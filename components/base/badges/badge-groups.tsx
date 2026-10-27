@@ -103,20 +103,28 @@ const colorClasses: Record<Theme, Record<Color, { root?: string; addon?: string;
     },
 });
 
-interface BadgeGroupProps {
+export interface BadgeGroupProps {
+    /** The message next to the addon */
     children?: string | ReactNode;
+    /** The text of the small badge inside (the addon), e.g. "Nyhet" */
     addonText: string;
+    /** The size variant */
     size?: Size;
+    /** The color, picked by meaning */
     color: Color;
+    /** `light` (tinted) or `modern` (white with a shadow) */
     theme?: Theme;
     /**
-     * Alignment of the badge addon element.
+     * Alignment of the badge addon element: before (`leading`) or after (`trailing`) the message.
      */
     align?: Align;
+    /** The icon after the message: a component or element */
     iconTrailing?: FC<{ className?: string }> | ReactNode;
+    /** Layout classes only */
     className?: string;
 }
 
+/** A message with a small badge (the addon) inside, for announcements ("Nyhet · Les om …"). Not a link: wrap it in one to navigate. */
 export const BadgeGroup = ({
     children,
     addonText,

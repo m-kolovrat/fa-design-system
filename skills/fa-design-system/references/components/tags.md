@@ -46,10 +46,14 @@ color="link-gray" size="sm"` "Fjern alle" after the group.
 | `selectedKeys` / `defaultSelectedKeys` / `onSelectionChange` | React Aria selection               |         |
 | `onRemove`                                                   | `(keys: Set<Key>) => void`         |         |
 
-`single` also prevents an empty selection. Selectable tags show a small checkbox.
-
 `Tag`: `id`, `children` (string), `count` (number badge), `dot` (boolean) with `dotClassName` for
-its color (`text-fg-*`), `avatarSrc`, `avatarContrastBorder`, `isDisabled`, `onClose(id)`.
+its color (`text-fg-*`), `avatarSrc`, `avatarContrastBorder` (default `true`), `isDisabled`,
+`onClose(id)`. `TagList` (React Aria `TagList`) holds the tags.
+
+## Notes
+
+- `selectionMode="single"` also prevents an empty selection.
+- Selectable tags show a small checkbox.
 
 ## Accessibility
 

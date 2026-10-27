@@ -2,12 +2,18 @@
 
 import { cx as clx, sortCx } from "@/utils/cx";
 
-interface ProgressBarProps {
+export interface ProgressCircleProps {
+    /** The current value */
     value: number;
+    /** The minimum value */
     min?: number;
+    /** The maximum value */
     max?: number;
+    /** The ring width (required): `xxs` 64px, `xs` 160, `sm` 200, `md` 240, `lg` 280. The half circle is half as high */
     size: "xxs" | "xs" | "sm" | "md" | "lg";
+    /** Text above the value (below the ring at `xxs`) */
     label?: string;
+    /** Formats the value text; gets the raw value and the percentage. Defaults to a rounded "NN%" */
     valueFormatter?: (value: number, valueInPercentage: number) => string | number;
 }
 
@@ -49,7 +55,8 @@ const sizes = sortCx({
     },
 });
 
-export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valueFormatter }: ProgressBarProps) => {
+/** A ring that fills with the progress, with the value in the middle. */
+export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valueFormatter }: ProgressCircleProps) => {
     const percentage = Math.round(((value - min) * 100) / (max - min));
 
     const sizeConfig = sizes[size];
@@ -112,7 +119,8 @@ export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valu
     );
 };
 
-export const ProgressBarHalfCircle = ({ value, min = 0, max = 100, size, label, valueFormatter }: ProgressBarProps) => {
+/** A half ring (gauge) that fills with the progress, with the value below the arc. */
+export const ProgressBarHalfCircle = ({ value, min = 0, max = 100, size, label, valueFormatter }: ProgressCircleProps) => {
     const percentage = Math.round(((value - min) * 100) / (max - min));
 
     const sizeConfig = sizes[size];

@@ -1,17 +1,49 @@
-import type { FC } from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Notification, NotificationToaster, type NotificationType, notify } from "@/components/application/notifications/notification";
 import { Button } from "@/components/base/buttons/button";
+import notificationDoc from "@/skills/fa-design-system/references/components/notification.md?raw";
+import { cx } from "@/utils/cx";
 
-export default {
+const meta = {
     title: "Application/Notifications",
+    component: Notification,
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props table
+        // comes from the types and JSDoc in notification.tsx.
+        skillDoc: notificationDoc,
+    },
     decorators: [
-        (Story: FC) => (
-            <div className="min-h-screen w-full bg-secondary p-4 sm:p-8">
+        (Story, { viewMode }) => (
+            <div className={cx("w-full bg-secondary p-4 sm:p-8", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         ),
     ],
-};
+    args: {
+        type: "brand",
+        title: "We’ve just released a new update!",
+        description: "Check out the all new dashboard view. Pages now load faster.",
+        progress: 60,
+        meta: "2 mins ago",
+        avatarSrc: "https://www.untitledui.com/images/avatars/katherine-moss?fm=webp&q=80",
+        imageSrc: "https://www.untitledui.com/marketing/spirals.webp",
+    },
+    argTypes: {
+        // Controls only: types, defaults and descriptions come from docgen.
+        title: { control: "text" },
+        description: { control: "text" },
+        meta: { control: "text" },
+        progress: { control: { type: "range", min: 0, max: 100 } },
+        actions: { control: false },
+        icon: { control: false },
+        onClose: { control: false },
+    },
+} satisfies Meta<typeof Notification>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
 
 const noop = () => {};
 
@@ -64,6 +96,11 @@ const examples: { type: NotificationType; title: string; description: string; ac
         actions: ["Dismiss", "View changes"],
     },
 ];
+
+/** Single interactive notification — edit props live in the Controls panel (`meta`, `avatarSrc`, `imageSrc` and `progress` apply to their types). */
+export const Playground: Story = {
+    render: (args) => <Notification {...args} onClose={noop} actions={<LinkActions />} />,
+};
 
 export const AllTypes = () => (
     <div className="flex flex-wrap items-start gap-6">

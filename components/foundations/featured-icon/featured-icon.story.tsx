@@ -1,11 +1,15 @@
 import type { FC } from "react";
-import type { StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { iconArg, iconArgType } from "@/components/internal/icon-controls";
+import featuredIconDoc from "@/skills/fa-design-system/references/components/featured-icon.md?raw";
 import { FeaturedIcon } from "./featured-icon";
 import * as Demos from "./featured-icon.demo";
 
-export default {
+const meta = {
     title: "Base components/Featured Icons",
+    component: FeaturedIcon,
+    tags: ["autodocs"],
+    parameters: { skillDoc: featuredIconDoc },
     decorators: [
         (Story: FC) => (
             <div className="flex min-h-screen w-full overflow-auto bg-primary p-8">
@@ -13,7 +17,9 @@ export default {
             </div>
         ),
     ],
-};
+} satisfies Meta<typeof FeaturedIcon>;
+
+export default meta;
 
 /**
  * Single interactive featured icon — pick the icon (any Fa icon, or "None") and the
@@ -23,9 +29,10 @@ export const Playground: StoryObj<typeof FeaturedIcon> = {
     args: { icon: iconArg("Success"), size: "lg", color: "brand", theme: "light" },
     argTypes: {
         icon: iconArgType(),
-        size: { control: "select", options: ["sm", "md", "lg", "xl"] },
-        color: { control: "select", options: ["brand", "gray", "error", "warning", "success"] },
-        theme: { control: "select", options: ["light", "gradient", "dark", "modern", "modern-neue", "outline"] },
+        // Controls only: types, defaults and descriptions come from docgen.
+        size: { control: "select" },
+        color: { control: "select" },
+        theme: { control: "select" },
         children: { control: false },
     },
     render: (args) => <FeaturedIcon {...args} />,

@@ -33,7 +33,10 @@ interface PaginationContextType {
 const PaginationContext = createContext<PaginationContextType | undefined>(undefined);
 
 export interface PaginationRootProps {
-    /** Number of sibling pages to show on each side of the current page */
+    /**
+     * Number of sibling pages to show on each side of the current page
+     * @default 1
+     */
     siblingCount?: number;
     /** Current active page number */
     page: number;

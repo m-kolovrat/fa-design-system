@@ -11,12 +11,15 @@ const sizes = {
     md: { root: "size-10", icon: "size-5" },
 };
 
-interface AvatarAddButtonProps extends AriaButtonProps {
+export interface AvatarAddButtonProps extends AriaButtonProps {
+    /** The size variant (required), matching the avatars next to it */
     size: "xs" | "sm" | "md";
+    /** The tooltip and accessible name. Defaults to English "Add user", so always pass one */
     title?: string;
     className?: string;
 }
 
+/** The "+" button at the end of a row of avatars, with a tooltip. */
 export const AvatarAddButton = ({ size, className, title = "Add user", ...props }: AvatarAddButtonProps) => (
     <AriaTooltip title={title}>
         <AriaTooltipTrigger

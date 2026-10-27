@@ -9,7 +9,9 @@ import type {
 import { Button as AriaButton, OverlayArrow as AriaOverlayArrow, Tooltip as AriaTooltip, TooltipTrigger as AriaTooltipTrigger } from "react-aria-components";
 import { cx } from "@/utils/cx";
 
-interface TooltipProps extends AriaTooltipTriggerComponentProps, Omit<AriaTooltipProps, "children"> {
+type AriaTriggerProps = AriaTooltipTriggerComponentProps;
+
+export interface TooltipProps extends AriaTooltipTriggerComponentProps, Omit<AriaTooltipProps, "children"> {
     /**
      * The title of the tooltip.
      */
@@ -30,8 +32,34 @@ interface TooltipProps extends AriaTooltipTriggerComponentProps, Omit<AriaToolti
      * @default 300
      */
     delay?: number;
+    /**
+     * Delay in milliseconds before the tooltip closes.
+     * @default 0
+     */
+    closeDelay?: AriaTriggerProps["closeDelay"];
+    /**
+     * Where the tooltip opens: `top`, `bottom`, `left`, `right`, `top left`, `bottom right`, … (React Aria `Placement`).
+     * @default top
+     */
+    placement?: AriaTooltipProps["placement"];
+    /**
+     * Distance in px from the trigger.
+     * @default 6
+     */
+    offset?: AriaTooltipProps["offset"];
+    /** `"focus"` opens the tooltip on focus only, not on hover */
+    trigger?: AriaTriggerProps["trigger"];
+    /** Keeps the tooltip from opening */
+    isDisabled?: AriaTriggerProps["isDisabled"];
+    /** Whether it is open (controlled) */
+    isOpen?: AriaTriggerProps["isOpen"];
+    /** Whether it is open at first (uncontrolled) */
+    defaultOpen?: AriaTriggerProps["defaultOpen"];
+    /** Called when it opens or closes */
+    onOpenChange?: AriaTriggerProps["onOpenChange"];
 }
 
+/** A short label that appears on hover or focus of its trigger (a `TooltipTrigger` or a library button). */
 export const Tooltip = ({
     title,
     description,
@@ -100,8 +128,14 @@ export const Tooltip = ({
     );
 };
 
-interface TooltipTriggerProps extends AriaButtonProps {}
+export interface TooltipTriggerProps extends AriaButtonProps {
+    /** Called when the trigger is pressed */
+    onPress?: AriaButtonProps["onPress"];
+    /** Layout classes; the button is unstyled (`h-max w-max`) */
+    className?: AriaButtonProps["className"];
+}
 
+/** An unstyled button that opens a `Tooltip` around non-button content (an icon, a value). Give it an `aria-label`. */
 export const TooltipTrigger = ({ children, className, ...buttonProps }: TooltipTriggerProps) => {
     return (
         <AriaButton {...buttonProps} className={(values) => cx("h-max w-max outline-hidden", typeof className === "function" ? className(values) : className)}>

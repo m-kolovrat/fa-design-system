@@ -4,6 +4,8 @@ import { Plus, Upload } from "fa-icons";
 import { iconArgType } from "@/components/internal/icon-controls";
 import buttonDoc from "@/skills/fa-design-system/references/components/button.md?raw";
 import { Button } from "./button";
+import { ButtonUtility } from "./button-utility";
+import { CloseButton } from "./close-button";
 
 /**
  * Canonical interactive story for the Button.
@@ -45,6 +47,8 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 const meta = {
     title: "Base components/Buttons/Button",
     component: Button,
+    // The same skill page covers these; each gets its own tab in the props table.
+    subcomponents: { ButtonUtility, CloseButton },
     tags: ["autodocs"],
     parameters: {
         layout: "centered",

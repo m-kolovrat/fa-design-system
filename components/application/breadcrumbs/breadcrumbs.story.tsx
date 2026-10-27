@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Home } from "fa-icons";
-import { Breadcrumbs } from "./breadcrumbs";
+import breadcrumbsDoc from "@/skills/fa-design-system/references/components/breadcrumbs.md?raw";
+import { type BreadcrumbItemProps, Breadcrumbs } from "./breadcrumbs";
 
 /**
  * Breadcrumbs built from the Figma "Breadcrumbs" component set
@@ -39,11 +40,24 @@ const Trail = () => [
     </Breadcrumbs.Item>,
 ];
 
+/**
+ * `Breadcrumbs.Item`, for its props table on the Docs page (docgen only reads exported
+ * components, and the item is reached through `Breadcrumbs`). Not a story.
+ */
+export const BreadcrumbsItemDoc = (props: BreadcrumbItemProps) => <Breadcrumbs.Item {...props} />;
+
 const meta = {
     title: "Application/Breadcrumbs",
     component: Breadcrumbs,
+    subcomponents: { "Breadcrumbs.Item": BreadcrumbsItemDoc },
+    excludeStories: ["BreadcrumbsItemDoc"],
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
+    parameters: {
+        layout: "centered",
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props table
+        // comes from the types and JSDoc in breadcrumbs.tsx.
+        skillDoc: breadcrumbsDoc,
+    },
     args: { type: "text", divider: "chevron", maxVisibleItems: 3, children: null },
     argTypes: {
         type: { control: "select", options: types },

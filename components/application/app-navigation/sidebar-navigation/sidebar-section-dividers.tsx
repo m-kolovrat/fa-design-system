@@ -8,13 +8,14 @@ import { NavAccountCard } from "../base-components/nav-account-card";
 import { NavList } from "../base-components/nav-list";
 import type { NavItemDividerType, NavItemType } from "../config";
 
-interface SidebarNavigationSectionDividersProps {
+export interface SidebarNavigationSectionDividersProps {
     /** URL of the currently active item. */
     activeUrl?: string;
     /** List of items to display. */
     items: (NavItemType | NavItemDividerType)[];
 }
 
+/** Flat list split by `{ divider: true }` entries. */
 export const SidebarNavigationSectionDividers = ({ activeUrl, items }: SidebarNavigationSectionDividersProps) => {
     const MAIN_SIDEBAR_WIDTH = 276;
 

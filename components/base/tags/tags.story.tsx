@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { Selection } from "react-aria-components";
+import tagsDoc from "@/skills/fa-design-system/references/components/tags.md?raw";
 import { Tag, TagGroup, TagList } from "./tags";
 
 /**
@@ -63,23 +64,28 @@ const TagsPreview = ({ size, selectionMode, variant, closable }: TagsPreviewProp
     );
 };
 
-const meta = {
+const meta: Meta<TagsPreviewProps> = {
     title: "Base components/Tags",
-    component: TagsPreview,
+    // The props tables document the library parts (TagsPreview is only this file's wrapper).
+    component: TagGroup as unknown as Meta<TagsPreviewProps>["component"],
+    subcomponents: { Tag },
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
+    // The Docs page text is tags.md.
+    parameters: { layout: "centered", skillDoc: tagsDoc },
+    render: (args) => <TagsPreview {...args} />,
     args: { size: "md", selectionMode: "none", variant: "label", closable: false },
     argTypes: {
+        // Controls for the wrapper's flat args (variant and closable are not TagGroup props).
         size: { control: "select", options: sizes },
         selectionMode: { control: "select", options: selectionModes },
         variant: { control: "select", options: variants },
         closable: { control: "boolean" },
     },
-} satisfies Meta<typeof TagsPreview>;
+};
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<TagsPreviewProps>;
 
 /** Single interactive tag group — edit props live in the Controls panel. */
 export const Playground: Story = {};

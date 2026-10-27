@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Checkbox } from "./checkbox";
+import checkboxDoc from "@/skills/fa-design-system/references/components/checkbox.md?raw";
+import { Checkbox, CheckboxBase } from "./checkbox";
 
 /**
  * Canonical interactive story for the Checkbox.
@@ -24,8 +25,10 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 const meta = {
     title: "Base components/Checkboxes",
     component: Checkbox,
+    subcomponents: { CheckboxBase },
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
+    // The Docs page text is checkbox.md; the props tables come from checkbox.tsx.
+    parameters: { layout: "centered", skillDoc: checkboxDoc },
     args: {
         size: "sm",
         label: "Remember me",
@@ -35,12 +38,9 @@ const meta = {
         defaultSelected: false,
     },
     argTypes: {
-        size: { control: "select", options: sizes },
+        // Controls only: types, defaults and descriptions come from docgen.
         label: { control: "text" },
         hint: { control: "text" },
-        isIndeterminate: { control: "boolean" },
-        isDisabled: { control: "boolean" },
-        defaultSelected: { control: "boolean" },
     },
 } satisfies Meta<typeof Checkbox>;
 

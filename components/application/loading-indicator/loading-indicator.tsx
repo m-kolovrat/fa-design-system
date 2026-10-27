@@ -25,7 +25,7 @@ const styles = {
     },
 };
 
-interface LoadingIndicatorProps {
+export interface LoadingIndicatorProps {
     /**
      * The visual style of the loading indicator.
      * @default 'line-simple'
@@ -42,6 +42,7 @@ interface LoadingIndicatorProps {
     label?: string;
 }
 
+/** A spinner for content that is loading, with an optional label under it. */
 export const LoadingIndicator = ({ type = "line-simple", size = "sm", label }: LoadingIndicatorProps) => {
     const renderSpinner = () => {
         if (type === "line-spinner") {

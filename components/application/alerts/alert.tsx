@@ -22,13 +22,14 @@ const defaultIcons: Record<AlertColor, FC<{ className?: string }>> = {
     success: Success,
 };
 
-interface AlertProps {
-    /** @default "gray" */
+export interface AlertProps {
+    /** The color, picked by meaning (`error`, `warning`, `success`, `brand` news, `gray` neutral). Only changes the icon. */
     color?: AlertColor;
-    /** Figma "Size". `floating` is a card; `full-width` is a banner with a bottom border. @default "floating" */
+    /** Figma "Size". `floating` is a card; `full-width` is a banner with a bottom border, inside `max-w-container`. */
     variant?: "floating" | "full-width";
+    /** The whole point in one sentence (the bold line). */
     title: ReactNode;
-    /** Figma "Supporting text". */
+    /** Figma "Supporting text": details or the next step. */
     description?: ReactNode;
     /** Figma "Actions". Floating uses `link-gray` + `link-color` buttons (`size="sm"`); full-width uses `secondary` + `primary` (`size="md"`). */
     actions?: ReactNode;
@@ -36,9 +37,11 @@ interface AlertProps {
     icon?: FC<{ className?: string }>;
     /** Shows the close button (Figma "X close button") and is called when it's pressed. */
     onClose?: () => void;
+    /** Layout classes only (`mb-6`); never a fill. */
     className?: string;
 }
 
+/** An in-page message: a card (`floating`) or a banner across the top of the page (`full-width`). */
 export const Alert = ({ color = "gray", variant = "floating", title, description, actions, icon, onClose, className }: AlertProps) => {
     const Icon = icon ?? defaultIcons[color];
     const featuredIcon = <FeaturedIcon icon={Icon} color={color} theme="light" size="sm" />;

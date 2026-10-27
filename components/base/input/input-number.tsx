@@ -33,8 +33,8 @@ const styles = {
 
 export interface InputNumberBaseProps extends AriaNumberFieldProps {
     /**
-     * Input size.
-     * @default "sm"
+     * Input size: `sm` 36px, `md` 40px, `lg` 44px.
+     * @default md
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text. */
@@ -43,9 +43,11 @@ export interface InputNumberBaseProps extends AriaNumberFieldProps {
     inputClassName?: string;
     /** Class name for the input wrapper. */
     wrapperClassName?: string;
+    /** Ref to the input. */
     ref?: Ref<HTMLInputElement>;
+    /** Ref to the box around the input. */
     groupRef?: Ref<HTMLDivElement>;
-    /** Orientation of buttons. */
+    /** Where the steppers sit: `vertical` (chevrons on the right) or `horizontal` (− and + on each side). */
     orientation?: "horizontal" | "vertical";
 }
 
@@ -137,14 +139,38 @@ export const InputNumberBase = ({
     );
 };
 
-interface InputProps extends InputNumberBaseProps, Pick<AriaDateFieldProps<DateValue>, "granularity"> {
+export interface InputNumberProps extends InputNumberBaseProps, Pick<AriaDateFieldProps<DateValue>, "granularity"> {
     /** Label text for the input */
     label?: string;
     /** Helper text displayed below the input */
     hint?: ReactNode;
+    /** Whether to hide required indicator from label */
     hideRequiredIndicator?: boolean;
+    /** Has no effect on a number field */
+    granularity?: AriaDateFieldProps<DateValue>["granularity"];
+    /** The number (controlled) */
+    value?: AriaNumberFieldProps["value"];
+    /** The initial number (uncontrolled) */
+    defaultValue?: AriaNumberFieldProps["defaultValue"];
+    /** Called with the new number */
+    onChange?: AriaNumberFieldProps["onChange"];
+    /** The smallest allowed value; steppers and arrow keys respect it */
+    minValue?: AriaNumberFieldProps["minValue"];
+    /** The largest allowed value */
+    maxValue?: AriaNumberFieldProps["maxValue"];
+    /** The amount the steppers and arrow keys change the value by */
+    step?: AriaNumberFieldProps["step"];
+    /** `Intl.NumberFormatOptions`: `{ style: "currency", currency: "NOK" }`, `{ style: "percent" }` */
+    formatOptions?: AriaNumberFieldProps["formatOptions"];
+    /** Whether the field is required: adds `*` to the label */
+    isRequired?: AriaNumberFieldProps["isRequired"];
+    /** Whether the field is invalid */
+    isInvalid?: AriaNumberFieldProps["isInvalid"];
+    /** Whether the field is disabled */
+    isDisabled?: AriaNumberFieldProps["isDisabled"];
 }
 
+/** A number with stepper buttons and locale formatting; React Aria `NumberField`. */
 export const InputNumber = ({
     size = "md",
     placeholder,
@@ -158,7 +184,7 @@ export const InputNumber = ({
     wrapperClassName,
     orientation = "vertical",
     ...props
-}: InputProps) => {
+}: InputNumberProps) => {
     return (
         <AriaNumberField
             {...props}

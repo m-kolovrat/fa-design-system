@@ -50,11 +50,15 @@ import { FileTrigger } from "fa-design-system/components/base/file-upload-trigge
 | `onSizeLimitExceed`     | `(files: FileList) => void` |                |
 
 List items (`ListItemProgressBar` / `ListItemProgressFill`): `name`, `size` (bytes), `progress`
-(0–100), `failed`, `type` (file type for the icon), `fileIconVariant`, `onDelete`, `onRetry`.
-`getReadableFileSize(bytes)` formats a size.
+(0–100), `failed`, `type` (file type for the icon), `fileIconVariant`, `onDelete`, `onRetry`,
+`className`.
 
 `FileTrigger`: `acceptedFileTypes` (string[]), `allowsMultiple`, `acceptDirectory`,
 `defaultCamera` (`user` · `environment`), `onSelect(files: FileList | null)`.
+
+## Notes
+
+- `getReadableFileSize(bytes)` (from `file-upload-base`) formats a size for the list items.
 
 ## Figma parity
 

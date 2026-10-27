@@ -45,7 +45,11 @@ import { Slider } from "fa-design-system/components/base/slider/slider";
 | `onChange` / `onChangeEnd` | `(value: number \| number[]) => void`          |             |
 | `isDisabled`               | boolean                                        |             |
 
-Plus React Aria `Slider` props (`orientation` is not styled; keep it horizontal).
+Plus React Aria `Slider` props.
+
+## Notes
+
+- `orientation` is not styled; keep the slider horizontal.
 
 ## Accessibility
 

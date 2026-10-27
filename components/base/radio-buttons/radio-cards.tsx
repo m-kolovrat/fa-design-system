@@ -51,13 +51,29 @@ const styles = {
     },
 };
 
-interface RadioCardGroupProps extends AriaRadioGroupProps {
-    /** @default "sm" */
+export interface RadioCardGroupProps extends AriaRadioGroupProps {
+    /**
+     * The size of every `RadioCard` in it
+     * @default sm
+     */
     size?: RadioCardSize;
+    /** The `RadioCard`s */
     children: ReactNode;
+    /** Layout classes; cards stack with `gap-3` (`grid gap-3 md:grid-cols-3` for a row) */
     className?: string;
+    /** The chosen value (controlled) */
+    value?: AriaRadioGroupProps["value"];
+    /** The initially chosen value (uncontrolled) */
+    defaultValue?: AriaRadioGroupProps["defaultValue"];
+    /** Called with the chosen value */
+    onChange?: AriaRadioGroupProps["onChange"];
+    /** The form field name */
+    name?: AriaRadioGroupProps["name"];
+    /** Disables every card */
+    isDisabled?: AriaRadioGroupProps["isDisabled"];
 }
 
+/** A set of `RadioCard`s of which one can be chosen. Name it with `aria-label` or a visible heading. */
 export const RadioCardGroup = ({ size = "sm", children, className, ...props }: RadioCardGroupProps) => (
     <RadioCardContext.Provider value={{ size }}>
         <AriaRadioGroup {...props} className={cx("flex flex-col gap-3", className)}>
@@ -66,7 +82,7 @@ export const RadioCardGroup = ({ size = "sm", children, className, ...props }: R
     </RadioCardContext.Provider>
 );
 
-interface RadioCardProps extends Omit<AriaRadioProps, "children"> {
+export interface RadioCardProps extends Omit<AriaRadioProps, "children"> {
     /**
      * Figma "Type":
      * - `radio` — radio circle on the left (Radio button)
@@ -75,12 +91,16 @@ interface RadioCardProps extends Omit<AriaRadioProps, "children"> {
      * - `avatar` — avatar on the left, check on the right (Avatar)
      * - `payment` — payment method icon, optional actions (Payment icon)
      * - `card` — header with icon and title, body with price and badge (Icon card)
-     * @default "radio"
+     * @default radio
      */
     type?: "radio" | "checkbox" | "icon" | "avatar" | "payment" | "card";
+    /** The value the group reports when this card is chosen (required) */
+    value: AriaRadioProps["value"];
+    /** The card's title (required) */
     title: ReactNode;
     /** Shown inline after the title, e.g. "$10/month" or "@olivia". Not used by `payment` and `card`. */
     subtitle?: ReactNode;
+    /** Supporting text under the title */
     description?: ReactNode;
     /** Featured icon for `icon` and `card`. */
     icon?: FC<{ className?: string }>;
@@ -96,9 +116,13 @@ interface RadioCardProps extends Omit<AriaRadioProps, "children"> {
     period?: ReactNode;
     /** Top-right of the body for `card`, e.g. a `BadgeWithDot`. */
     badge?: ReactNode;
+    /** Disables the card (Figma's disabled tokens, not `opacity-50`) */
+    isDisabled?: AriaRadioProps["isDisabled"];
+    /** Layout classes only */
     className?: string;
 }
 
+/** A bordered card option in a `RadioCardGroup`, with an icon, avatar, payment icon or price. */
 export const RadioCard = ({
     type = "radio",
     title,

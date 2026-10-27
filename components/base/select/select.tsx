@@ -17,11 +17,36 @@ import { type CommonProps, SelectContext, type SelectItemType, sizes } from "./s
 
 export { SelectContext, sizes, type CommonProps, type SelectItemType } from "./select-shared";
 
+type SelectAriaProps = AriaSelectProps<SelectItemType>;
+
 export interface SelectProps extends Omit<AriaSelectProps<SelectItemType>, "children" | "items">, RefAttributes<HTMLDivElement>, CommonProps {
+    /** The options (`SelectItemType[]`: `id`, `label`, `supportingText`, `icon`, `avatarUrl`, `isDisabled`) */
     items?: SelectItemType[];
+    /** Classes on the popover (its width) */
     popoverClassName?: string;
+    /** Leading icon component or element shown before the value */
     icon?: FC | ReactNode;
+    /** A render function for each item: `(item) => <Select.Item … />` */
     children: ReactNode | ((item: SelectItemType) => ReactNode);
+    /**
+     * Placeholder text when no value is selected.
+     * @default Select
+     */
+    placeholder?: string;
+    /** The selected item id (controlled) */
+    value?: SelectAriaProps["value"];
+    /** The initially selected item id (uncontrolled) */
+    defaultValue?: SelectAriaProps["defaultValue"];
+    /** Called with the selected item id */
+    onChange?: SelectAriaProps["onChange"];
+    /** The form field name */
+    name?: SelectAriaProps["name"];
+    /** Whether a value is required: adds `*` to the label */
+    isRequired?: SelectAriaProps["isRequired"];
+    /** Whether the select is disabled */
+    isDisabled?: SelectAriaProps["isDisabled"];
+    /** Whether the select is invalid: the `hint` turns red */
+    isInvalid?: SelectAriaProps["isInvalid"];
 }
 
 interface SelectValueProps {
@@ -135,6 +160,7 @@ const Select = ({
     );
 };
 
+/** A field that opens a list to pick one value from. `Select.ComboBox` adds typing to filter; items are `Select.Item`. */
 const _Select = Select as typeof Select & {
     ComboBox: typeof ComboBox;
     Item: typeof SelectItem;

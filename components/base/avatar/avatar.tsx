@@ -7,16 +7,21 @@ import { AvatarOnlineIndicator, VerifiedTick } from "./base-components";
 import { AvatarCount } from "./base-components/avatar-count";
 
 export interface AvatarProps {
+    /** The size variant: `xs` 24px, `sm` 32, `md` 40, `lg` 48, `xl` 56, `2xl` 64 */
     size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+    /** Layout classes only (margins, the `-space-x-*` overlap); never size or fill */
     className?: string;
     /**
      * The class name for the main child of the avatar.
      */
     contentClassName?: string;
+    /** The image URL. Pass `initials` too: they show when the image is missing or fails */
     src?: string | null;
+    /** The person's name, or `""` when the name is printed next to the avatar */
     alt?: string;
     /**
-     * Display an inner contrast border around the avatar image.
+     * Display an inner contrast border around the avatar image. Currently has no effect: the
+     * image always gets its inner outline.
      */
     contrastBorder?: boolean;
     /**
@@ -43,7 +48,7 @@ export interface AvatarProps {
      */
     verified?: boolean;
     /**
-     * Display a count badge.
+     * Display a count badge: a small red notification bubble, not a "+N" overflow.
      */
     count?: number;
     /**
@@ -77,6 +82,7 @@ const styles = {
     "2xl": { root: "size-16", rootWithBorder: "p-0.5", initials: "text-display-xs font-semibold", icon: "size-8" },
 };
 
+/** A person's or company's picture, with initials or an icon when there is no image. */
 export const Avatar = ({
     size = "md",
     src,

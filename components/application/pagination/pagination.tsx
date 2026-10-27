@@ -10,7 +10,7 @@ import { cx } from "@/utils/cx";
 import type { PaginationRootProps } from "./pagination-base";
 import { Pagination } from "./pagination-base";
 
-type PaginationProps = Partial<Omit<PaginationRootProps, "children">>;
+export type PaginationProps = Partial<Omit<PaginationRootProps, "children">>;
 
 const PaginationItem = ({ value, isCurrent }: { value: number; isCurrent: boolean }) => {
     return (
@@ -67,6 +67,7 @@ const MobilePagination = ({ page = 1, total = 10, className, onPageChange }: Mob
     );
 };
 
+/** Under a page-level list (article archive, search results): link-gray prev / page numbers / next. */
 export const PaginationPageDefault = ({ page = 1, total = 10, className, ...props }: PaginationProps) => {
     const isDesktop = useBreakpoint("md");
 
@@ -129,6 +130,7 @@ export const PaginationPageDefault = ({ page = 1, total = 10, className, ...prop
     );
 };
 
+/** Under a page-level list, with outlined prev / next buttons. */
 export const PaginationPageMinimalCenter = ({ page = 1, total = 10, className, ...props }: PaginationProps) => {
     const isDesktop = useBreakpoint("md");
 
@@ -180,6 +182,7 @@ export const PaginationPageMinimalCenter = ({ page = 1, total = 10, className, .
     );
 };
 
+/** The bottom row inside a card or `Table`: prev / page numbers / next. Ignores `className`. */
 export const PaginationCardDefault = ({ page = 1, total = 10, ...props }: PaginationProps) => {
     const isDesktop = useBreakpoint("md");
 
@@ -231,14 +234,17 @@ export const PaginationCardDefault = ({ page = 1, total = 10, ...props }: Pagina
     );
 };
 
-interface PaginationCardMinimalProps {
+export interface PaginationCardMinimalProps {
     /** The current page. */
     page?: number;
     /** The total number of pages. */
     total?: number;
     /** The number of items per page. */
     pageSize?: number;
-    /** The alignment of the pagination. */
+    /**
+     * The alignment of the pagination.
+     * @default left
+     */
     align?: "left" | "center" | "right";
     /** The class name of the pagination component. */
     className?: string;
@@ -248,15 +254,19 @@ interface PaginationCardMinimalProps {
     onPageSizeChange?: (pageSize: number) => void;
 }
 
+/** Card bottom without page numbers: "Page X of Y" and a page-size select between prev and next. */
 export const PaginationCardMinimal = ({
     page = 1,
     total = 10,
     pageSize = 10,
-    align = "left",
+    // Defaulted below, not here: react-docgen-typescript merges the destructuring defaults of every
+    // component in a file, so three different `align` defaults would show the wrong one.
+    align: alignProp,
     onPageChange,
     className,
     onPageSizeChange,
 }: PaginationCardMinimalProps) => {
+    const align = alignProp ?? "left";
     return (
         <div className={cx("border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4", className)}>
             <MobilePagination page={page} total={total} onPageChange={onPageChange} />
@@ -307,12 +317,17 @@ export const PaginationCardMinimal = ({
     );
 };
 
-interface PaginationButtonGroupProps extends Partial<Omit<PaginationRootProps, "children">> {
-    /** The alignment of the pagination. */
+export interface PaginationButtonGroupProps extends Partial<Omit<PaginationRootProps, "children">> {
+    /**
+     * The alignment of the pagination.
+     * @default left
+     */
     align?: "left" | "center" | "right";
 }
 
-export const PaginationButtonGroup = ({ align = "left", page = 1, total = 10, ...props }: PaginationButtonGroupProps) => {
+/** Card bottom as one segmented `ButtonGroup`. */
+export const PaginationButtonGroup = ({ align: alignProp, page = 1, total = 10, ...props }: PaginationButtonGroupProps) => {
+    const align = alignProp ?? "left"; // See PaginationCardMinimal for why this isn't a destructuring default.
     const isDesktop = useBreakpoint("md");
 
     return (
@@ -359,14 +374,17 @@ export const PaginationButtonGroup = ({ align = "left", page = 1, total = 10, ..
     );
 };
 
-interface PaginationCardAdvancedProps {
+export interface PaginationCardAdvancedProps {
     /** The current page. */
     page?: number;
     /** The total number of pages. */
     total?: number;
     /** The number of items per page. */
     pageSize?: number;
-    /** The alignment of the pagination. */
+    /**
+     * The alignment of the pagination.
+     * @default space-between
+     */
     align?: "space-between" | "center";
     /** The class name of the pagination component. */
     className?: string;
@@ -376,15 +394,18 @@ interface PaginationCardAdvancedProps {
     onPageSizeChange?: (pageSize: number) => void;
 }
 
+/** Data tables: page input, rows per page, first / last. */
 export const PaginationCardAdvanced = ({
     page = 1,
     total = 10,
     pageSize = 10,
-    align = "space-between",
+    align: alignProp,
     onPageChange,
     className,
     onPageSizeChange,
 }: PaginationCardAdvancedProps) => {
+    const align = alignProp ?? "space-between"; // See PaginationCardMinimal for why this isn't a destructuring default.
+
     return (
         <div className={cx("border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4", className)}>
             <Pagination.Root

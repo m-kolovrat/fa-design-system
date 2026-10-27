@@ -1,37 +1,54 @@
-import type { FC, ReactNode } from "react";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/application/modals/modal";
+import type { ReactNode } from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Modal, ModalBody, ModalFooter, ModalHeader, type ModalProps } from "@/components/application/modals/modal";
 import { Button } from "@/components/base/buttons/button";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
 import { Input } from "@/components/base/input/input";
 import { TextArea } from "@/components/base/textarea/textarea";
+import modalDoc from "@/skills/fa-design-system/references/components/modal.md?raw";
+import { cx } from "@/utils/cx";
 
-export default {
+const meta = {
     title: "Application/Modals",
+    component: Modal,
+    subcomponents: { ModalHeader, ModalBody, ModalFooter },
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props tables
+        // come from the types and JSDoc in modal.tsx.
+        skillDoc: modalDoc,
+    },
     decorators: [
-        (Story: FC) => (
-            <div className="flex min-h-screen w-full items-start bg-primary p-4">
+        (Story, { viewMode }) => (
+            <div className={cx("flex w-full items-start bg-primary p-4", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         ),
     ],
-};
+    args: { mobile: "sheet", isDismissable: true, children: null },
+    argTypes: {
+        // Controls only: types, defaults and descriptions come from docgen.
+        children: { control: false },
+        isOpen: { control: false },
+        onOpenChange: { control: false },
+    },
+} satisfies Meta<typeof Modal>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
 
 const Example = ({
     trigger,
-    mobile,
-    className,
     children,
-}: {
+    ...props
+}: Omit<ModalProps, "children"> & {
     trigger: ReactNode;
-    mobile?: "sheet" | "fullscreen";
-    className?: string;
     children: (close: () => void) => ReactNode;
 }) => (
     <Modal.Trigger>
         {trigger}
-        <Modal mobile={mobile} className={className}>
-            {({ close }) => children(close)}
-        </Modal>
+        <Modal {...props}>{({ close }) => children(close)}</Modal>
     </Modal.Trigger>
 );
 
@@ -46,21 +63,24 @@ const Footer = ({ close, confirm }: { close: () => void; confirm: string }) => (
     </ModalFooter>
 );
 
-/** Centered on desktop, a bottom sheet on mobile (switch the viewport to see it). */
-export const Default = () => (
-    <Example trigger={<Button color="secondary">Invite team members</Button>} className="sm:max-w-140">
-        {(close) => (
-            <>
-                <ModalHeader title="Invite team members" badge="10/20 seats" description="Invite colleagues to collaborate on this project." />
-                <ModalBody>
-                    <Input label="Email" placeholder="olivia@untitledui.com" isRequired />
-                    <Input label="Email" placeholder="phoenix@untitledui.com" isRequired />
-                </ModalBody>
-                <Footer close={close} confirm="Send invites" />
-            </>
-        )}
-    </Example>
-);
+/** Centered on desktop, a bottom sheet on mobile (switch the viewport to see it). The controls set the `Modal` props. */
+export const Default: Story = {
+    args: { className: "sm:max-w-140" },
+    render: ({ children: _children, ...args }) => (
+        <Example {...args} trigger={<Button color="secondary">Invite team members</Button>}>
+            {(close) => (
+                <>
+                    <ModalHeader title="Invite team members" badge="10/20 seats" description="Invite colleagues to collaborate on this project." />
+                    <ModalBody>
+                        <Input label="Email" placeholder="olivia@untitledui.com" isRequired />
+                        <Input label="Email" placeholder="phoenix@untitledui.com" isRequired />
+                    </ModalBody>
+                    <Footer close={close} confirm="Send invites" />
+                </>
+            )}
+        </Example>
+    ),
+};
 Default.parameters = {
     design: { desktop: "17279-7253", mobile: "17279-7282" },
 };

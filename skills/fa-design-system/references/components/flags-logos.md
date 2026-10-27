@@ -46,8 +46,7 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
   (Pinpoint, Vipps, the four `KapitalList*`, the orange accent of `HegnarBokLogo`).
 - **logos-size** MUST Size logos by height with auto width (`className="h-6 w-auto"`). Because
   they keep their Figma aspect ratio.
-- **logos-name** MUST Give a logo used as the home link an accessible name (`aria-label="Finansavisen
-– til forsiden"` on the link). Because the SVG itself is hidden.
+- **logos-name** MUST Give a logo used as the home link an accessible name (`aria-label="Finansavisen – til forsiden"` on the link). Because the SVG itself is hidden.
 - **assets-from-figma** NEVER Paste an SVG, add a flag or logo component in this repo, or load one
   from a URL. Because new assets are drawn in Figma, exported to `fa-icons` and released there
   (see `CLAUDE.md` → Adding or updating icons, flags and logos).

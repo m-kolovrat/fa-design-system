@@ -17,11 +17,41 @@ const styles = sortCx({
         "absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full rounded-md bg-primary px-2 py-1.5 text-xs font-semibold text-secondary shadow-lg ring-1 ring-secondary_alt",
 });
 
-interface SliderProps extends AriaSliderProps {
+export interface SliderProps extends AriaSliderProps {
+    /** Where the value shows: `default` (hidden), `bottom` (below the thumb), `top-floating` (a bubble above) */
     labelPosition?: keyof typeof styles;
+    /** Formats the value text; overrides `formatOptions` */
     labelFormatter?: (value: number) => string;
+    /** The value (controlled): a number, or `[min, max]` for a range */
+    value?: AriaSliderProps["value"];
+    /** The initial value (uncontrolled) */
+    defaultValue?: AriaSliderProps["defaultValue"];
+    /**
+     * The smallest value
+     * @default 0
+     */
+    minValue?: AriaSliderProps["minValue"];
+    /**
+     * The largest value
+     * @default 100
+     */
+    maxValue?: AriaSliderProps["maxValue"];
+    /**
+     * The amount each step changes the value by
+     * @default 1
+     */
+    step?: AriaSliderProps["step"];
+    /** `Intl.NumberFormatOptions` for the value text. Defaults to a whole percent */
+    formatOptions?: AriaSliderProps["formatOptions"];
+    /** Called while the value changes */
+    onChange?: AriaSliderProps["onChange"];
+    /** Called when the person lets go */
+    onChangeEnd?: AriaSliderProps["onChangeEnd"];
+    /** Disables the slider */
+    isDisabled?: AriaSliderProps["isDisabled"];
 }
 
+/** Picks a number, or a range with two thumbs, by dragging along a track. */
 export const Slider = ({ labelPosition = "default", minValue = 0, maxValue = 100, labelFormatter, formatOptions, ...rest }: SliderProps) => {
     // Format thumb value as percentage by default.
     const defaultFormatOptions: Intl.NumberFormatOptions = {

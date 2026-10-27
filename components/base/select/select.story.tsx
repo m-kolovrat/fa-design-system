@@ -1,15 +1,31 @@
 import type { FC } from "react";
-import type { StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { MultiSelect } from "@/components/base/select/multi-select";
 import { Select } from "@/components/base/select/select";
+import { NativeSelect } from "@/components/base/select/select-native";
 import * as Selects from "@/components/base/select/select.demo";
+import { TagSelect } from "@/components/base/select/tag-select";
 import { iconArg, iconArgType } from "@/components/internal/icon-controls";
+import selectDoc from "@/skills/fa-design-system/references/components/select.md?raw";
 
 export default {
     title: "Base components/Select",
-};
+    component: Select,
+    // Each part of the compound component, and the sibling selects on the same skill page, gets a tab.
+    subcomponents: {
+        "Select.ComboBox": Select.ComboBox,
+        "Select.Item": Select.Item,
+        MultiSelect,
+        TagSelect,
+        NativeSelect,
+    },
+    tags: ["autodocs"],
+    // The Docs page text is select.md; the props tables come from the components' types and JSDoc.
+    parameters: { skillDoc: selectDoc },
+} satisfies Meta<typeof Select>;
 
 const DefaultDecorator = (Story: FC) => (
-    <div className="flex min-h-screen w-full bg-primary p-4">
+    <div className="flex min-h-screen w-full bg-primary p-4 [.docs-story_&]:min-h-0">
         <div className="w-80">
             <Story />
         </div>
@@ -17,7 +33,7 @@ const DefaultDecorator = (Story: FC) => (
 );
 
 const WiderDecorator = (Story: FC) => (
-    <div className="flex min-h-screen w-full bg-primary p-4">
+    <div className="flex min-h-screen w-full bg-primary p-4 [.docs-story_&]:min-h-0">
         <div className="w-100">
             <Story />
         </div>
@@ -44,15 +60,8 @@ export const Playground: StoryObj<typeof Select> = {
         isInvalid: false,
     },
     argTypes: {
-        size: { control: "select", options: ["sm", "md", "lg"] },
-        label: { control: "text" },
-        placeholder: { control: "text" },
-        hint: { control: "text" },
-        tooltip: { control: "text" },
+        // Controls only: types, defaults and descriptions come from docgen.
         icon: iconArgType(),
-        isRequired: { control: "boolean" },
-        isDisabled: { control: "boolean" },
-        isInvalid: { control: "boolean" },
         children: { control: false },
         items: { control: false },
     },

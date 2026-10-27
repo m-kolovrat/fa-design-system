@@ -1,51 +1,76 @@
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Settings, Success, Trash, Users } from "fa-icons";
-import { PromptModal, PromptModalActions, PromptModalHeader } from "@/components/application/prompt-modal/prompt-modal";
+import { PromptModal, PromptModalActions, PromptModalHeader, type PromptModalProps } from "@/components/application/prompt-modal/prompt-modal";
 import { Button } from "@/components/base/buttons/button";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
 import { Input } from "@/components/base/input/input";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
+import promptModalDoc from "@/skills/fa-design-system/references/components/prompt-modal.md?raw";
+import { cx } from "@/utils/cx";
 
-export default {
+const meta = {
     title: "Application/Prompt modals",
+    component: PromptModal,
+    subcomponents: { PromptModalHeader, PromptModalActions },
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props tables
+        // come from the types and JSDoc in prompt-modal.tsx.
+        skillDoc: promptModalDoc,
+    },
     decorators: [
-        (Story: FC) => (
-            <div className="flex min-h-screen w-full items-start bg-primary p-4">
+        (Story, { viewMode }) => (
+            <div className={cx("flex w-full items-start bg-primary p-4", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         ),
     ],
-};
+    args: { isDismissable: true, children: null },
+    argTypes: {
+        // Controls only: types, defaults and descriptions come from docgen.
+        children: { control: false },
+        isOpen: { control: false },
+        onOpenChange: { control: false },
+    },
+} satisfies Meta<typeof PromptModal>;
 
-const Example = ({ trigger, className, children }: { trigger: ReactNode; className?: string; children: (close: () => void) => ReactNode }) => (
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+const Example = ({ trigger, children, ...props }: Omit<PromptModalProps, "children"> & { trigger: ReactNode; children: (close: () => void) => ReactNode }) => (
     <PromptModal.Trigger>
         {trigger}
-        <PromptModal className={className}>{({ close }) => children(close)}</PromptModal>
+        <PromptModal {...props}>{({ close }) => children(close)}</PromptModal>
     </PromptModal.Trigger>
 );
 
-export const Default = () => (
-    <Example trigger={<Button color="secondary">Open prompt modal</Button>}>
-        {(close) => (
-            <>
-                <PromptModalHeader
-                    icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
-                    title="Blog post published"
-                    description="This blog post has been published. Team members will be able to edit this post and republish changes."
-                    paddingBottom={false}
-                />
-                <PromptModalActions>
-                    <Button size="lg" color="secondary" onClick={close}>
-                        Cancel
-                    </Button>
-                    <Button size="lg" onClick={close}>
-                        Confirm
-                    </Button>
-                </PromptModalActions>
-            </>
-        )}
-    </Example>
-);
+/** The controls set the `PromptModal` props. */
+export const Default: Story = {
+    render: ({ children: _children, ...args }) => (
+        <Example {...args} trigger={<Button color="secondary">Open prompt modal</Button>}>
+            {(close) => (
+                <>
+                    <PromptModalHeader
+                        icon={<FeaturedIcon icon={Success} color="success" theme="light" size="lg" />}
+                        title="Blog post published"
+                        description="This blog post has been published. Team members will be able to edit this post and republish changes."
+                        paddingBottom={false}
+                    />
+                    <PromptModalActions>
+                        <Button size="lg" color="secondary" onClick={close}>
+                            Cancel
+                        </Button>
+                        <Button size="lg" onClick={close}>
+                            Confirm
+                        </Button>
+                    </PromptModalActions>
+                </>
+            )}
+        </Example>
+    ),
+};
 
 export const Destructive = () => (
     <Example trigger={<Button color="primary-destructive">Delete item</Button>}>

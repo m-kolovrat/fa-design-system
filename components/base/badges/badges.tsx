@@ -100,13 +100,28 @@ const withBadgeTypes = {
 export type BadgeColor<T extends BadgeTypes> = BadgeTypeToColorMap<typeof withPillTypes>[T];
 
 interface BadgeProps<T extends BadgeTypes> {
+    /**
+     * The shape: `pill-color` (round), `color` (square corners), `modern` (white, shadow)
+     * @default pill-color
+     */
     type?: T;
+    /**
+     * The size variant
+     * @default md
+     */
     size?: Sizes;
+    /**
+     * The color, picked by meaning (see Rules)
+     * @default gray
+     */
     color?: BadgeColor<T>;
+    /** The text: one to three words */
     children: ReactNode;
+    /** Layout classes only (margins) */
     className?: string;
 }
 
+/** A short label for a status or category. */
 export const Badge = <T extends BadgeTypes>(props: BadgeProps<T>) => {
     const { type = "pill-color", size = "md", color = "gray", children } = props;
     const colors = withPillTypes[type];
@@ -132,13 +147,28 @@ export const Badge = <T extends BadgeTypes>(props: BadgeProps<T>) => {
 };
 
 interface BadgeWithDotProps<T extends BadgeTypes> {
+    /**
+     * The shape: `pill-color` (round), `color` (square corners), `modern` (white, shadow)
+     * @default pill-color
+     */
     type?: T;
+    /**
+     * The size variant
+     * @default md
+     */
     size?: Sizes;
+    /**
+     * The color, picked by meaning (see Rules)
+     * @default gray
+     */
     color?: BadgeTypeToColorMap<typeof withBadgeTypes>[T];
+    /** Layout classes only (margins) */
     className?: string;
+    /** The text: one to three words */
     children: ReactNode;
 }
 
+/** A badge with a colored dot before the text. */
 export const BadgeWithDot = <T extends BadgeTypes>(props: BadgeWithDotProps<T>) => {
     const { size = "md", color = "gray", type = "pill-color", className, children } = props;
 
@@ -171,15 +201,32 @@ export const BadgeWithDot = <T extends BadgeTypes>(props: BadgeWithDotProps<T>) 
 };
 
 interface BadgeWithIconProps<T extends BadgeTypes> {
+    /**
+     * The shape: `pill-color` (round), `color` (square corners), `modern` (white, shadow)
+     * @default pill-color
+     */
     type?: T;
+    /**
+     * The size variant
+     * @default md
+     */
     size?: Sizes;
+    /**
+     * The color, picked by meaning (see Rules)
+     * @default gray
+     */
     color?: BadgeTypeToColorMap<typeof withBadgeTypes>[T];
+    /** Icon component shown before the text (a reference, not JSX). Use this or `iconTrailing` */
     iconLeading?: IconComponentType;
+    /** Icon component shown after the text (a reference, not JSX) */
     iconTrailing?: IconComponentType;
+    /** The text: one to three words */
     children: ReactNode;
+    /** Layout classes only (margins) */
     className?: string;
 }
 
+/** A badge with an icon before or after the text. */
 export const BadgeWithIcon = <T extends BadgeTypes>(props: BadgeWithIconProps<T>) => {
     const { size = "md", color = "gray", type = "pill-color", iconLeading: IconLeading, iconTrailing: IconTrailing, children, className } = props;
 
@@ -232,13 +279,31 @@ export const BadgeWithIcon = <T extends BadgeTypes>(props: BadgeWithIconProps<T>
 };
 
 interface BadgeWithFlagProps<T extends BadgeTypes> {
+    /**
+     * The shape: `pill-color` (round), `color` (square corners), `modern` (white, shadow)
+     * @default pill-color
+     */
     type?: T;
+    /**
+     * The size variant
+     * @default md
+     */
     size?: Sizes;
+    /**
+     * The flag, by its `fa-icons` name (`"norway-nok"`). Always pass it
+     * @default australia-aud
+     */
     flag?: FlagName;
+    /**
+     * The color, picked by meaning (see Rules)
+     * @default gray
+     */
     color?: BadgeTypeToColorMap<typeof withPillTypes>[T];
+    /** The text: one to three words */
     children: ReactNode;
 }
 
+/** A badge with a country flag before the text. */
 export const BadgeWithFlag = <T extends BadgeTypes>(props: BadgeWithFlagProps<T>) => {
     const { size = "md", color = "gray", flag = "australia-aud", type = "pill-color", children } = props;
 
@@ -270,13 +335,28 @@ export const BadgeWithFlag = <T extends BadgeTypes>(props: BadgeWithFlagProps<T>
 };
 
 interface BadgeWithImageProps<T extends BadgeTypes> {
+    /**
+     * The shape: `pill-color` (round), `color` (square corners), `modern` (white, shadow)
+     * @default pill-color
+     */
     type?: T;
+    /**
+     * The size variant
+     * @default md
+     */
     size?: Sizes;
+    /** The image URL; its `alt` is fixed to "Badge image" */
     imgSrc: string;
+    /**
+     * The color, picked by meaning (see Rules)
+     * @default gray
+     */
     color?: BadgeTypeToColorMap<typeof withPillTypes>[T];
+    /** The text: one to three words */
     children: ReactNode;
 }
 
+/** A badge with a small round image before the text. */
 export const BadgeWithImage = <T extends BadgeTypes>(props: BadgeWithImageProps<T>) => {
     const { size = "md", color = "gray", type = "pill-color", imgSrc, children } = props;
 
@@ -308,13 +388,30 @@ export const BadgeWithImage = <T extends BadgeTypes>(props: BadgeWithImageProps<
 };
 
 interface BadgeWithButtonProps<T extends BadgeTypes> {
+    /**
+     * The shape: `pill-color` (round), `color` (square corners), `modern` (white, shadow)
+     * @default pill-color
+     */
     type?: T;
+    /**
+     * The size variant
+     * @default md
+     */
     size?: Sizes;
+    /**
+     * The button's icon component
+     * @default Close
+     */
     icon?: IconComponentType;
+    /**
+     * The color, picked by meaning (see Rules)
+     * @default gray
+     */
     color?: BadgeTypeToColorMap<typeof withPillTypes>[T];
+    /** The text: one to three words */
     children: ReactNode;
     /**
-     * The label for the button.
+     * The accessible name of the × button ("Fjern Equinor"). Always pass it.
      */
     buttonLabel?: string;
     /**
@@ -323,6 +420,7 @@ interface BadgeWithButtonProps<T extends BadgeTypes> {
     onButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
+/** A removable badge with an × button after the text. */
 export const BadgeWithButton = <T extends BadgeTypes>(props: BadgeWithButtonProps<T>) => {
     const { size = "md", color = "gray", type = "pill-color", icon: Icon = CloseX, buttonLabel, children } = props;
 
@@ -365,13 +463,28 @@ export const BadgeWithButton = <T extends BadgeTypes>(props: BadgeWithButtonProp
 };
 
 interface BadgeIconProps<T extends BadgeTypes> {
+    /**
+     * The shape: `pill-color` (round), `color` (square corners), `modern` (white, shadow)
+     * @default pill-color
+     */
     type?: T;
+    /**
+     * The size variant
+     * @default md
+     */
     size?: Sizes;
+    /** The icon component (required) */
     icon: IconComponentType;
+    /**
+     * The color, picked by meaning (see Rules)
+     * @default gray
+     */
     color?: BadgeTypeToColorMap<typeof withPillTypes>[T];
+    /** Not rendered: `BadgeIcon` shows only its icon */
     children?: ReactNode;
 }
 
+/** An icon-only badge. It has no text and no accessible name. */
 export const BadgeIcon = <T extends BadgeTypes>(props: BadgeIconProps<T>) => {
     const { size = "md", color = "gray", type = "pill-color", icon: Icon } = props;
 

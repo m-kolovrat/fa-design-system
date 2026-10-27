@@ -3,7 +3,17 @@
 import type { AnchorHTMLAttributes } from "react";
 import { cx } from "@/utils/cx";
 
-export const GooglePlayButton = ({ size = "md", ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & { size?: "md" | "lg" }) => {
+/** Props of every app store badge (`GooglePlayButton`, `AppStoreButton`, `GalaxyStoreButton`, `AppGalleryButton`). */
+export interface AppStoreButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+    /** `md` 40px or `lg` 44px high */
+    size?: "md" | "lg";
+    /** The store page. Defaults to `"#"`, so always pass it */
+    href?: string;
+    /** The accessible name. Replaces the English default (e.g. "Download on the App Store") */
+    "aria-label"?: string;
+}
+
+export const GooglePlayButton = ({ size = "md", ...props }: AppStoreButtonProps) => {
     return (
         <a
             aria-label="Get it on Google Play"
@@ -73,7 +83,7 @@ export const GooglePlayButton = ({ size = "md", ...props }: AnchorHTMLAttributes
     );
 };
 
-export const AppStoreButton = ({ size = "md", ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & { size?: "md" | "lg" }) => {
+export const AppStoreButton = ({ size = "md", ...props }: AppStoreButtonProps) => {
     return (
         <a
             aria-label="Download on the App Store"
@@ -179,7 +189,7 @@ export const AppStoreButton = ({ size = "md", ...props }: AnchorHTMLAttributes<H
     );
 };
 
-export const GalaxyStoreButton = ({ size = "md", ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & { size?: "md" | "lg" }) => {
+export const GalaxyStoreButton = ({ size = "md", ...props }: AppStoreButtonProps) => {
     return (
         <a
             aria-label="Available on Galaxy Store"
@@ -278,7 +288,7 @@ export const GalaxyStoreButton = ({ size = "md", ...props }: AnchorHTMLAttribute
     );
 };
 
-export const AppGalleryButton = ({ size = "md", ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & { size?: "md" | "lg" }) => {
+export const AppGalleryButton = ({ size = "md", ...props }: AppStoreButtonProps) => {
     return (
         <a
             aria-label="Explore it on AppGallery"

@@ -34,7 +34,7 @@ export const CalendarContextProvider = ({ children }: PropsWithChildren) => {
     return <AriaCalendarContext.Provider value={{ value, onChange, focusedValue, onFocusChange }}>{children}</AriaCalendarContext.Provider>;
 };
 
-interface CalendarProps extends AriaCalendarProps<DateValue> {
+export interface CalendarProps extends AriaCalendarProps<DateValue> {
     /** The dates to highlight. */
     highlightedDates?: DateValue[];
     /**
@@ -44,6 +44,7 @@ interface CalendarProps extends AriaCalendarProps<DateValue> {
     children?: ReactNode;
 }
 
+/** A one-month calendar, for inline use or inside a custom picker. */
 export const Calendar = ({ highlightedDates, className, children, ...props }: CalendarProps) => {
     const context = useSlottedContext(AriaCalendarContext);
 

@@ -5,6 +5,15 @@ import * as FeatureCard from "./featured-cards.demo";
 
 export default {
     title: "Application/Application navigation/Base components",
+    tags: ["autodocs"],
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    "Demo cards for the sidebar's `featureCard` slot, not library components (see `docs/figma-parity.md` §2). Usage rules: see Application / Application navigation.",
+            },
+        },
+    },
     decorators: [
         withOverlayAware((Story: any) => (
             <div className="min-h-screen w-full bg-primary p-8">

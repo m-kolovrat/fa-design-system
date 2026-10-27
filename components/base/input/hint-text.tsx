@@ -5,14 +5,18 @@ import type { TextProps as AriaTextProps } from "react-aria-components";
 import { Text as AriaText } from "react-aria-components";
 import { cx } from "@/utils/cx";
 
-interface HintTextProps extends AriaTextProps {
+export interface HintTextProps extends AriaTextProps {
     /** Indicates that the hint text is an error message. */
     isInvalid?: boolean;
+    /** Ref to the text element */
     ref?: Ref<HTMLElement>;
+    /** The text size */
     size?: "sm" | "md";
+    /** The hint text */
     children: ReactNode;
 }
 
+/** The text below a field; red when `isInvalid`. For composing a custom React Aria field. */
 export const HintText = ({ isInvalid, className, size = "md", ...props }: HintTextProps) => {
     return (
         <AriaText

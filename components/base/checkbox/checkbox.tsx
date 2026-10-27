@@ -5,14 +5,21 @@ import { Checkbox as AriaCheckbox, type CheckboxProps as AriaCheckboxProps } fro
 import { cx } from "@/utils/cx";
 
 export interface CheckboxBaseProps {
+    /** The size variant: `sm` 16px, `md` 20px */
     size?: "sm" | "md";
+    /** Layout classes only */
     className?: string;
+    /** Draws the focus ring (pass the parent's focus-visible state) */
     isFocusVisible?: boolean;
+    /** Draws the check */
     isSelected?: boolean;
+    /** Draws the disabled look */
     isDisabled?: boolean;
+    /** Draws the dash */
     isIndeterminate?: boolean;
 }
 
+/** The visual box only, for use inside other components (menus, cards); never a form control on its own. */
 export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminate, size = "sm", isFocusVisible = false }: CheckboxBaseProps) => {
     return (
         <div
@@ -56,13 +63,38 @@ export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminat
 };
 CheckboxBase.displayName = "CheckboxBase";
 
-interface CheckboxProps extends AriaCheckboxProps {
+export interface CheckboxProps extends AriaCheckboxProps {
+    /** Ref to the `<label>` that wraps the box and its text */
     ref?: Ref<HTMLLabelElement>;
+    /** The size variant: `sm` 16px box, `md` 20px box */
     size?: "sm" | "md";
+    /** The label next to the box. Without it, pass an `aria-label` */
     label?: ReactNode;
+    /** One line of explanation below the label */
     hint?: ReactNode;
+    /** Whether it is checked (controlled) */
+    isSelected?: AriaCheckboxProps["isSelected"];
+    /** Whether it is checked at first (uncontrolled) */
+    defaultSelected?: AriaCheckboxProps["defaultSelected"];
+    /** Called with the new checked state */
+    onChange?: AriaCheckboxProps["onChange"];
+    /** Shows a dash: for a parent whose children are partly selected */
+    isIndeterminate?: AriaCheckboxProps["isIndeterminate"];
+    /** Disables the checkbox (`opacity-50`) */
+    isDisabled?: AriaCheckboxProps["isDisabled"];
+    /** Marks it required for form validation */
+    isRequired?: AriaCheckboxProps["isRequired"];
+    /** Marks it invalid; explain why in text near it */
+    isInvalid?: AriaCheckboxProps["isInvalid"];
+    /** Shows the state but can't be changed */
+    isReadOnly?: AriaCheckboxProps["isReadOnly"];
+    /** The form field name */
+    name?: AriaCheckboxProps["name"];
+    /** The value sent with the form when checked */
+    value?: AriaCheckboxProps["value"];
 }
 
+/** A box the person checks to turn one option on or off, with an optional label and hint. */
 export const Checkbox = ({ label, hint, size = "sm", className, ...ariaCheckboxProps }: CheckboxProps) => {
     const sizes = {
         sm: {

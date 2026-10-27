@@ -4,13 +4,14 @@ import { cx } from "@/utils/cx";
 import type { PaginationRootProps } from "./pagination-base";
 import { Pagination } from "./pagination-base";
 
-interface PaginationLineProps extends Omit<PaginationRootProps, "children"> {
+export interface PaginationLineProps extends Omit<PaginationRootProps, "children"> {
     /** The size of the pagination line. */
     size?: "md" | "lg";
     /** Whether the pagination is displayed in a card. */
     framed?: boolean;
 }
 
+/** Position in a carousel or onboarding steps (few pages), as line segments. */
 export const PaginationLine = ({ framed, className, size = "md", ...props }: PaginationLineProps) => {
     const sizes = {
         md: {

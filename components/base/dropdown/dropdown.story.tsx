@@ -1,4 +1,6 @@
 import type { FC } from "react";
+import type { Meta } from "@storybook/nextjs-vite";
+import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { DropdownAccountBreadcrumb } from "@/components/base/dropdown/dropdown-account-breadcrumb";
 import { DropdownAccountButton } from "@/components/base/dropdown/dropdown-account-button";
 import { DropdownAccountCardMD } from "@/components/base/dropdown/dropdown-account-card-md";
@@ -14,17 +16,24 @@ import { DropdownIconAdvanced } from "@/components/base/dropdown/dropdown-icon-a
 import { DropdownIconSimple } from "@/components/base/dropdown/dropdown-icon-simple";
 import { DropdownSearchAdvanced } from "@/components/base/dropdown/dropdown-search-advanced";
 import { DropdownSearchSimple } from "@/components/base/dropdown/dropdown-search-simple";
+import dropdownDoc from "@/skills/fa-design-system/references/components/dropdown.md?raw";
 
 export default {
     title: "Base components/Dropdown menus",
+    // The props tables document the parts you compose; `Dropdown.Item` is the one with most props.
+    component: Dropdown.Item,
+    subcomponents: { "Dropdown.Menu": Dropdown.Menu, "Dropdown.Popover": Dropdown.Popover, "Dropdown.DotsButton": Dropdown.DotsButton },
+    tags: ["autodocs"],
+    // The Docs page text is dropdown.md.
+    parameters: { skillDoc: dropdownDoc },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full items-start justify-center bg-primary p-8">
+            <div className="flex min-h-screen w-full items-start justify-center bg-primary p-8 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),
     ],
-};
+} satisfies Meta<typeof Dropdown.Item>;
 
 export const DropdownButtonSimpleStory = () => <DropdownButtonSimple />;
 DropdownButtonSimpleStory.storyName = "Dropdown menu button simple";

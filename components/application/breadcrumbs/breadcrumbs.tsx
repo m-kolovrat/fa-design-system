@@ -63,13 +63,16 @@ const Divider = () => {
     return <Icon aria-hidden="true" className={styles.dividers[divider]} />;
 };
 
-interface BreadcrumbItemProps extends Omit<AriaLinkProps, "children" | "className"> {
+export interface BreadcrumbItemProps extends Omit<AriaLinkProps, "children" | "className"> {
     /** Leading icon. An item with an icon and no children renders icon-only — pass `aria-label`. */
     icon?: FC<{ className?: string }> | ReactNode;
+    /** The label. Leave it out (with an `icon` and an `aria-label`) for an icon-only item. */
     children?: ReactNode;
+    /** Layout classes only. */
     className?: string;
 }
 
+/** One link in the trail (`Breadcrumbs.Item`). The last item is the current page. */
 const BreadcrumbItem = ({ icon: Icon, children, className, ...props }: BreadcrumbItemProps) => {
     const { type } = useContext(BreadcrumbsContext);
     const isIconOnly = Boolean(Icon) && !children;
@@ -117,7 +120,7 @@ const BreadcrumbEllipsis = ({ onPress }: { onPress: () => void }) => {
     );
 };
 
-interface BreadcrumbsProps extends Omit<AriaBreadcrumbsProps<object>, "children" | "items" | "className"> {
+export interface BreadcrumbsProps extends Omit<AriaBreadcrumbsProps<object>, "children" | "items" | "className"> {
     /** Visual style. `text-line` adds top and bottom borders. */
     type?: BreadcrumbType;
     /** Separator between items. */
@@ -127,10 +130,13 @@ interface BreadcrumbsProps extends Omit<AriaBreadcrumbsProps<object>, "children"
      * The first `maxVisibleItems - 1` items and the current (last) item stay visible.
      */
     maxVisibleItems?: number;
+    /** The `Breadcrumbs.Item`s, first to current. The last item is the current page. */
     children: ReactNode;
+    /** Classes on the wrapping `nav` (layout). */
     className?: string;
 }
 
+/** A trail of links from the home page to the current page. */
 const BreadcrumbsRoot = ({ type = "text", divider = "chevron", maxVisibleItems, children, className, ...props }: BreadcrumbsProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
 

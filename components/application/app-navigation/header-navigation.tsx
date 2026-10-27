@@ -25,7 +25,7 @@ type NavItem = {
     icon?: FC<{ className?: string }>;
     /** Badge to display. */
     badge?: ReactNode;
-    /** List of sub-items to display. */
+    /** Sub-items for the second row; overrides the active item's own sub-items. */
     items?: NavItem[];
 };
 
@@ -37,12 +37,12 @@ const isItemActive = (href: string, activeUrl?: string) => {
     return false;
 };
 
-interface HeaderNavigationBaseProps {
+export interface HeaderNavigationBaseProps {
     /** URL of the currently active item. */
     activeUrl?: string;
-    /** List of items to display. */
+    /** List of items to display: `{ label, href, current?, icon?, badge?, items? }`. */
     items: NavItem[];
-    /** List of sub-items to display. */
+    /** Sub-items for the second row; overrides the active item's own sub-items. */
     subItems?: NavItem[];
     /** Whether to hide the bottom border. */
     hideBorder?: boolean;
@@ -94,6 +94,7 @@ const DefaultActions = ({ activeUrl }: { activeUrl?: string }) => {
     );
 };
 
+/** Top bar with items; sub-items of the active item show in a second row (`secondaryType` `buttons` · `tabs`). */
 export const HeaderNavigationBase = ({
     activeUrl,
     items,

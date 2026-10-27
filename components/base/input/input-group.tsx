@@ -7,13 +7,14 @@ import { TextField } from "@/components/base/input/input";
 import { Label } from "@/components/base/input/label";
 import { cx, sortCx } from "@/utils/cx";
 
-interface InputPrefixProps extends HTMLAttributes<HTMLDivElement> {
+export interface InputPrefixProps extends HTMLAttributes<HTMLDivElement> {
     /** The position of the prefix. */
     position?: "leading" | "trailing";
     /** Indicates that the prefix is disabled. */
     isDisabled?: boolean;
 }
 
+/** Text joined to the side of an `InputGroup` (`https://`, `NOK`). */
 export const InputPrefix = ({ children, ...props }: InputPrefixProps) => (
     <span
         {...props}
@@ -37,7 +38,7 @@ export const InputPrefix = ({ children, ...props }: InputPrefixProps) => (
 );
 
 // `${string}ClassName` is used to omit any className prop that ends with a `ClassName` suffix
-interface InputGroupProps extends TextFieldProps {
+export interface InputGroupProps extends TextFieldProps {
     /** A prefix text that is displayed in the same box as the input.*/
     prefix?: string;
     /** A leading addon that is displayed with visual separation from the input. */
@@ -56,6 +57,7 @@ interface InputGroupProps extends TextFieldProps {
     hideRequiredIndicator?: boolean;
 }
 
+/** An input with a prefix inside the box, or addons (`InputGroup.Prefix`, a `NativeSelect`, a `Button`) joined to it. */
 export const InputGroup = ({ size = "md", prefix, leadingAddon, trailingAddon, label, hint, hideRequiredIndicator, children, ...props }: InputGroupProps) => {
     const hasLeading = !!leadingAddon;
     const hasTrailing = !!trailingAddon;

@@ -2,7 +2,9 @@ import type { ComponentProps, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ArrowRight } from "fa-icons";
 import { iconArg, iconArgType } from "@/components/internal/icon-controls";
-import { Badge, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWithIcon, BadgeWithImage } from "./badges";
+import badgeDoc from "@/skills/fa-design-system/references/components/badge.md?raw";
+import { BadgeGroup } from "./badge-groups";
+import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWithIcon, BadgeWithImage } from "./badges";
 
 /**
  * Canonical interactive story for the Badge.
@@ -17,8 +19,6 @@ import { Badge, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWithIcon, Bad
  * that's by design in `badges.tsx`, not a bug.
  */
 
-const sizes = ["sm", "md", "lg"] as const;
-const types = ["pill-color", "color", "modern"] as const;
 const colors = ["gray", "brand", "error", "warning", "success", "blue-light", "purple", "pink", "orange-dark"] as const;
 
 const IMG_SRC = "https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80";
@@ -34,8 +34,10 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 const meta = {
     title: "Base components/Badges",
     component: Badge,
+    subcomponents: { BadgeWithDot, BadgeWithIcon, BadgeWithFlag, BadgeWithImage, BadgeWithButton, BadgeIcon, BadgeGroup },
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
+    // The Docs page text is badge.md; the props tables come from the components' types and JSDoc.
+    parameters: { layout: "centered", skillDoc: badgeDoc },
     args: {
         type: "pill-color",
         size: "md",
@@ -43,9 +45,7 @@ const meta = {
         children: "Label",
     },
     argTypes: {
-        type: { control: "select", options: types },
-        size: { control: "select", options: sizes },
-        color: { control: "select", options: colors },
+        // Controls only: types, defaults and descriptions come from docgen.
         children: { control: "text" },
     },
 } satisfies Meta<typeof Badge>;

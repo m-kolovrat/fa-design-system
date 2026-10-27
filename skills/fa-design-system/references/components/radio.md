@@ -40,13 +40,12 @@ import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radi
 ## Props
 
 `RadioGroup`: `size` (`sm` · `md`, default `sm`), `value`, `defaultValue`, `onChange`, `name`,
-`isDisabled`, `isRequired`, `isInvalid`, `aria-label`. Stacks vertically with `gap-4`
-(`orientation` only changes arrow-key direction; it isn't styled).
+`isDisabled`, `isRequired`, `isInvalid`, `aria-label`, `orientation`.
 
-`RadioButton`: `value`, `label`, `hint`, `isDisabled`.
+`RadioButton`: `value` (required), `label`, `hint`, `isDisabled`, `size` (the group's `size` wins).
+`RadioButtonBase` is the circle alone.
 
 `RadioCardGroup`: `size` (`sm` · `md`, default `sm`) plus the same React Aria `RadioGroup` props.
-Stacks with `gap-3`; pass `className="grid gap-3 md:grid-cols-3"` for a row of cards.
 
 `RadioCard`:
 
@@ -63,6 +62,13 @@ Stacks with `gap-3`; pass `className="grid gap-3 md:grid-cols-3"` for a row of c
 | `actions`                  | ReactNode (`payment`)                                                              |         |
 | `price`, `period`, `badge` | ReactNode (`card`)                                                                 |         |
 | `isDisabled`               | boolean (Figma disabled tokens, not `opacity-50`)                                  |         |
+
+## Notes
+
+- `RadioGroup` stacks vertically with `gap-4`; `orientation` only changes the arrow-key direction,
+  it isn't styled.
+- `RadioCardGroup` stacks with `gap-3`; pass `className="grid gap-3 md:grid-cols-3"` for a row of
+  cards.
 
 ## Accessibility
 

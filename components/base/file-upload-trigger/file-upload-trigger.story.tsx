@@ -6,9 +6,20 @@ import { FileTrigger } from "@/components/base/file-upload-trigger/file-upload-t
 
 export default {
     title: "Base components/File upload trigger",
+    component: FileTrigger,
+    tags: ["autodocs"],
+    parameters: {
+        // file-upload.md covers FileTrigger next to FileUpload; its full page is on the FileUpload docs.
+        docs: {
+            description: {
+                component:
+                    "Opens the file picker from any button (`FileTrigger`). Give it exactly one pressable child, usually a `Button`. For a drop area with progress use `FileUpload`; usage rules: see **Application / File upload** (`file-upload.md`).",
+            },
+        },
+    },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full items-start bg-primary p-4">
+            <div className="flex min-h-screen w-full items-start bg-primary p-4 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),

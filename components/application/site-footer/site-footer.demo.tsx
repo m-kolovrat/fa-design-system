@@ -1,7 +1,7 @@
 "use client";
 
 import type { SiteBrand, SiteNavItem } from "@/components/application/site-header/site-brands";
-import { SiteFooter } from "./site-footer";
+import { SiteFooter, type SiteFooterProps } from "./site-footer";
 
 export const footerLinks: SiteNavItem[][] = [
     [
@@ -19,7 +19,8 @@ export const footerLinks: SiteNavItem[][] = [
     ],
 ];
 
-export const SiteFooterDemo = ({ brand = "fa" }: { brand?: SiteBrand }) => (
+/** The footer with sample content; any `SiteFooter` prop passed overrides the sample. */
+export const SiteFooterDemo = ({ brand = "fa", ...props }: Partial<SiteFooterProps> & { brand?: SiteBrand }) => (
     <SiteFooter
         brand={brand}
         links={footerLinks}
@@ -35,5 +36,6 @@ export const SiteFooterDemo = ({ brand = "fa" }: { brand?: SiteBrand }) => (
             { platform: "linkedin", href: "https://linkedin.com" },
         ]}
         appImageSrc="/images/fa-app-preview.png"
+        {...props}
     />
 );

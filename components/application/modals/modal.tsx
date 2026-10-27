@@ -20,7 +20,7 @@ import { cx } from "@/utils/cx";
  * below `sm` it becomes a bottom sheet or a full-screen view. For short confirmations, use `PromptModal`.
  */
 
-interface ModalProps extends Omit<AriaModalOverlayProps, "children" | "className"> {
+export interface ModalProps extends Omit<AriaModalOverlayProps, "children" | "className"> {
     /**
      * How the modal renders below the `sm` breakpoint (Figma "Breakpoint"):
      * - `sheet` — Mobile sheet: full width from the bottom, top corners rounded, grab handle,
@@ -30,11 +30,21 @@ interface ModalProps extends Omit<AriaModalOverlayProps, "children" | "className
      * @default "sheet"
      */
     mobile?: "sheet" | "fullscreen";
-    /** Desktop width of the modal. @default "sm:max-w-120" (480px, the Figma frame) */
+    /** Desktop width of the modal (`sm:max-w-*`). Defaults to `sm:max-w-120` (480px, the Figma frame). */
     className?: string;
+    /** `ModalHeader`, `ModalBody` and `ModalFooter`, or `({ close }) => …` to close from a button. */
     children: ReactNode | ((renderProps: AriaDialogRenderProps) => ReactNode);
+    /** Whether a click on the overlay closes the modal. Escape closes it either way. */
+    isDismissable?: boolean;
+    /** Stops Escape from closing the modal. */
+    isKeyboardDismissDisabled?: boolean;
+    /** Controlled open state. Leave it out inside `Modal.Trigger`, which opens and closes it. */
+    isOpen?: boolean;
+    /** Called when the modal opens or closes (controlled use, with `isOpen`). */
+    onOpenChange?: (isOpen: boolean) => void;
 }
 
+/** A fixed header and footer around a scrolling body; a bottom sheet or full screen on mobile. */
 const ModalComponent = ({ mobile = "sheet", className, children, isDismissable = true, ...props }: ModalProps) => (
     <AriaModalOverlay
         {...props}
@@ -85,18 +95,22 @@ const SheetHandle = () => (
     </div>
 );
 
-interface ModalHeaderProps {
+export interface ModalHeaderProps {
+    /** The modal's title; also its accessible name. */
     title: ReactNode;
     /** Shown next to the title. A string renders a small brand `Badge`; pass an element for anything else. */
     badge?: ReactNode;
+    /** Supporting text under the title. */
     description?: ReactNode;
     /** Figma "Close button". Closes the modal via the React Aria `close` slot. @default true */
     showCloseButton?: boolean;
     /** Figma "Divider" — a border-secondary line under the header. @default true */
     divider?: boolean;
+    /** Layout classes only. */
     className?: string;
 }
 
+/** Figma `_Modal header`: title, optional badge and description, and the close button. */
 export const ModalHeader = ({ title, badge, description, showCloseButton = true, divider = true, className }: ModalHeaderProps) => (
     <div className={cx("flex shrink-0 items-start gap-4 px-4 py-5 sm:px-6", divider && "border-b border-secondary", className)}>
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -123,8 +137,10 @@ export const ModalHeader = ({ title, badge, description, showCloseButton = true,
     </div>
 );
 
-interface ModalBodyProps {
+export interface ModalBodyProps {
+    /** The content. The body is already `flex-col gap-4` with padding. */
     children: ReactNode;
+    /** Layout classes only. */
     className?: string;
 }
 
@@ -133,14 +149,16 @@ export const ModalBody = ({ children, className }: ModalBodyProps) => (
     <div className={cx("flex min-h-0 flex-auto flex-col gap-4 overflow-y-auto px-4 py-5 sm:px-6", className)}>{children}</div>
 );
 
-interface ModalFooterProps {
+export interface ModalFooterProps {
     /** Figma "Actions" slot: usually the buttons, secondary first and primary last. Use `size="lg"` to match Figma. */
     children: ReactNode;
     /** Figma "Divider" — a border-secondary line above the footer. @default true */
     divider?: boolean;
+    /** Layout classes only. */
     className?: string;
 }
 
+/** Figma `_Modal footer`: the actions. Equal-width buttons on mobile, right aligned from `sm` up. */
 export const ModalFooter = ({ children, divider = true, className }: ModalFooterProps) => (
     <div
         className={cx(

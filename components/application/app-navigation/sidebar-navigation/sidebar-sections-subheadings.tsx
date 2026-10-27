@@ -8,13 +8,14 @@ import { NavAccountCard } from "../base-components/nav-account-card";
 import { NavItemBase } from "../base-components/nav-item";
 import type { NavItemType } from "../config";
 
-interface SidebarNavigationSectionsSubheadingsProps {
+export interface SidebarNavigationSectionsSubheadingsProps {
     /** URL of the currently active item. */
     activeUrl?: string;
     /** List of items to display. */
     items: Array<{ label: string; items: NavItemType[] }>;
 }
 
+/** Groups with a small uppercase heading each. */
 export const SidebarNavigationSectionsSubheadings = ({ activeUrl = "/", items }: SidebarNavigationSectionsSubheadingsProps) => {
     const MAIN_SIDEBAR_WIDTH = 276;
 

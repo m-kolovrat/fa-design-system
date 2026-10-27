@@ -47,7 +47,9 @@ import { LoadingIndicator } from "fa-design-system/components/application/loadin
 | `size`  | `sm` · `md` · `lg` · `xl`                          | `sm`          |
 | `label` | string, shown under the spinner (`text-secondary`) |               |
 
-No `className`; position it with a wrapper.
+## Notes
+
+- It takes no `className`; position it with a wrapper.
 
 ## Accessibility
 
