@@ -1,6 +1,7 @@
 import { withThemeByClassName } from "@storybook/addon-themes";
 import "../styles/globals.css";
 import "./colors.css";
+import { ThemedDocsContainer } from "./docs-container";
 import themes from "./themes";
 import Wrapper from "./wrapper";
 
@@ -80,6 +81,7 @@ export const parameters = {
             ],
         },
     },
+    docs: { container: ThemedDocsContainer },
     controls: {
         matchers: {
             color: /(background|color)$/i,

@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Plus, Upload } from "fa-icons";
 import { iconArgType } from "@/components/internal/icon-controls";
+import { skillDoc } from "@/components/internal/skill-doc";
+import buttonDoc from "@/skills/fa-design-system/references/components/button.md?raw";
 import { Button } from "./button";
 
 /**
@@ -45,17 +47,50 @@ const meta = {
     title: "Base components/Buttons/Button",
     component: Button,
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
+    parameters: {
+        layout: "centered",
+        // The Docs page text is the skill page, so agents and Storybook read the same source.
+        docs: { description: { component: skillDoc(buttonDoc) } },
+    },
     args: { color: "primary", size: "md", children: "Button CTA" },
     argTypes: {
-        color: { control: "select", options: colors },
-        size: { control: "select", options: sizes },
-        children: { control: "text" },
-        iconLeading: iconArgType(),
-        iconTrailing: iconArgType(),
-        isDisabled: { control: "boolean" },
-        isLoading: { control: "boolean" },
-        showTextWhileLoading: { control: "boolean" },
+        // react-docgen can't read the overloaded `Button` signature, so the props table gets its
+        // types and descriptions here (from the JSDoc in button.tsx).
+        color: {
+            control: "select",
+            options: colors,
+            description: "The color variant of the button",
+            table: { type: { summary: colors.map((c) => `"${c}"`).join(" | ") }, defaultValue: { summary: '"primary"' } },
+        },
+        size: {
+            control: "select",
+            options: sizes,
+            description: "The size variant of the button",
+            table: { type: { summary: sizes.map((s) => `"${s}"`).join(" | ") }, defaultValue: { summary: '"sm"' } },
+        },
+        children: { control: "text", table: { type: { summary: "ReactNode" } } },
+        iconLeading: {
+            ...iconArgType(),
+            description: "Icon component or element to show before the text",
+            table: { type: { summary: "FC<{ className?: string }> | ReactNode" } },
+        },
+        iconTrailing: {
+            ...iconArgType(),
+            description: "Icon component or element to show after the text",
+            table: { type: { summary: "FC<{ className?: string }> | ReactNode" } },
+        },
+        isDisabled: { control: "boolean", description: "Disables the button and shows a disabled state", table: { type: { summary: "boolean" } } },
+        isLoading: { control: "boolean", description: "Shows a loading spinner and disables the button", table: { type: { summary: "boolean" } } },
+        showTextWhileLoading: {
+            control: "boolean",
+            description: "When true, keeps the text visible during loading state",
+            table: { type: { summary: "boolean" } },
+        },
+        noTextPadding: {
+            control: "boolean",
+            description: "Removes horizontal padding from the text content (always on for link colors)",
+            table: { type: { summary: "boolean" } },
+        },
     },
 } satisfies Meta<typeof Button>;
 
