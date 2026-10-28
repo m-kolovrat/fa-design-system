@@ -36,8 +36,9 @@ npx fa-design-system setup
 ```
 
 This links the `fa-design-system` skill (usage rules, tokens, layout, a page per component) into
-`.claude/skills/` and adds a short block to the app's `AGENTS.md`. The skill comes from the
-installed version, so it always matches the components. When a component doesn't fit, the skill's
+`.claude/skills/`, writes the core rules and a component index into the app's `AGENTS.md`, and adds
+`@AGENTS.md` to `CLAUDE.md` so Claude Code reads it. The skill comes from the installed version, so
+it always matches the components. Run setup again after updating the package to refresh the index. When a component doesn't fit, the skill's
 "Changing a component" section lists the options, from props to ejecting a single component.
 
 ## Working on the library

@@ -14,28 +14,28 @@ report the difference.
 ```tsx
 <div className="min-h-dvh bg-secondary_alt">
     <SiteHeader brand="fa" navigation={navigation} shortcuts={shortcuts} tickerItems={ticker} />
-    <main className="mx-auto w-full px-4 py-6 md:px-8">{/* page content */}</main>
+    <main className="mx-auto w-full max-w-[1376px] px-4 py-6 md:px-8">{/* page content */}</main>
     <SiteFooter brand="fa" links={footerLinks} publisherInfo={publisher} copyright={copyright} disclaimer={disclaimer} />
 </div>
 ```
 
-- The page background and the cards follow the surface levels in [layout.md](layout.md). Page
-  width isn't fixed yet; take it from the design.
+- The page background and the cards follow the surface levels in [layout.md](layout.md). The
+  main width is 1376, 1280 or 980 px depending on the page type ("Page width" in layout.md).
 - One `SiteHeader` and one `SiteFooter` per page, with the same `brand`. An article takes the brand
   of its publication (a Kapital article shows `brand="kapital"`).
 - One `h1` per page.
 
 ## Page shells
 
-| Page type                                      | Layout ([layout.md](layout.md))                                                           | Below `lg`                              |
-| :--------------------------------------------- | :---------------------------------------------------------------------------------------- | :-------------------------------------- |
-| Front page                                     | Main and sidebar: teaser stream ⅔, widget cards ⅓                                         | One column, sidebar under the stream    |
-| Market overview (Børs, Rapporter)              | Card grid, mostly ⅓ and ½ cards                                                           | Two columns from `md`, then one         |
-| Instrument profile                             | Header band (name, price, chart, key figures, tabs), then the card grid                   | Two columns from `md`, then one         |
-| Investor profile                               | Header band (avatar, name, key figures), then stacked full-width table cards              | Stacked                                 |
-| Feed or discussion (Siste nytt, Forum, MittFA) | Main and sidebar, or one main card                                                        | One column                              |
-| Data table (Aksjer, Bjellesauer)               | One card with filters on top and the `Table`                                              | Fewer columns; ticker stacked over name |
-| Article                                        | White reading page; header and image wider than the body text; embedded widgets as insets | One column with `px-4`                  |
+| Page type                                      | Layout ([layout.md](layout.md))                                                           | Below `lg`                           |
+| :--------------------------------------------- | :---------------------------------------------------------------------------------------- | :----------------------------------- |
+| Front page                                     | Main and sidebar: teaser stream ⅔, widget cards ⅓                                         | One column, sidebar under the stream |
+| Market overview (Børs, Rapporter)              | Card grid, mostly ⅓ and ½ cards                                                           | Two columns from `md`, then one      |
+| Instrument profile                             | Header band (name, price, chart, key figures, link tabs), then the card grid              | Two columns from `md`, then one      |
+| Investor profile                               | Header band (avatar, name, key figures), then stacked full-width table cards              | Stacked                              |
+| Feed or discussion (Siste nytt, Forum, MittFA) | Main and sidebar, or one main card                                                        | One column                           |
+| Data table (Aksjer, Bjellesauer)               | One card with filters on top and the `Table`                                              | Two-column rows; tap opens a sheet   |
+| Article                                        | White reading page; header and image wider than the body text; embedded widgets as insets | One column with `px-4`               |
 
 ## Patterns
 
@@ -64,6 +64,60 @@ widget card, group with an inset (`rounded-xl bg-tertiary p-3`), not a second bo
 text-quaternary`, cells `text-sm`, numbers right-aligned with `tabular-nums`, sortable headers
 (`allowsSorting`). Show a ticker as a ticker badge, a company with its round logo (`Avatar size="xs"`).
 
+From `md` up, show every column with no sideways scroll. Below `md`, the table becomes a list: see
+"Data table on mobile".
+
+### Data table on mobile
+
+Below `md`, the table becomes a list: each row shows only the key information, and tapping it opens
+a sheet with the rest. Example: a Bjellesauer trade shows the investor and the company on the left,
+the trade value and the change in shares on the right; the sheet shows the full transaction.
+
+- **Row, left:** what the row is about. Two columns may share it, one over the other (investor over
+  company): the main one in `text-sm font-medium text-primary`, the second in `text-sm text-tertiary`.
+  Logo or avatar before them when the table has one.
+- **Row, right:** the one or two key figures, one over the other (value over change), right-aligned
+  with `tabular-nums`. The signed change is never hidden.
+- **Labels:** one header line above the list names what each side holds, both values with a slash
+  ("Investor / aksje", "Verdi / aksjer").
+- **Sheet:** `Modal` with `mobile="sheet"`, titled with what the row is ("Transaksjon"). Inside, in
+  this order: the key figure, larger, with its change; the related items (investor, company) as rows
+  that link to their pages; then every other column as label-and-value rows; then the table's
+  footnote, if it has one.
+
+```tsx
+const [selected, setSelected] = useState<Stock | null>(null);
+
+<Table aria-label="Aksjer" className="max-md:hidden">{/* every column */}</Table>
+
+<ul className="divide-y divide-secondary md:hidden">
+    {stocks.map((s) => (
+        <li key={s.ticker}>
+            <AriaButton
+                onPress={() => setSelected(s)}
+                className="flex w-full items-center justify-between gap-4 py-3 text-left outline-focus-ring focus-visible:outline-2 focus-visible:-outline-offset-2"
+            >
+                <span className="flex min-w-0 flex-col">
+                    <span className="truncate text-sm font-medium text-primary">{s.name}</span>
+                    <span className="text-xs text-tertiary">{s.ticker}</span>
+                </span>
+                <span className="flex flex-col items-end text-sm">
+                    <span className="font-medium text-primary tabular-nums">{s.lastLabel}</span>
+                    <Change percent={s.change} />
+                </span>
+            </AriaButton>
+        </li>
+    ))}
+</ul>
+
+<Modal isOpen={selected !== null} onOpenChange={(open) => !open && setSelected(null)} mobile="sheet">
+    <ModalHeader title={selected?.name} description={selected?.ticker} />
+    <ModalBody>{/* <dl>: the other columns as label-and-value rows */}</ModalBody>
+</Modal>
+```
+
+The `Modal` stays mounted and opens through `isOpen` (`fa-overlays-mounted`).
+
 ### Ticker badge
 
 ```tsx
@@ -76,17 +130,28 @@ Uppercase ticker, brand pill. Always a link to the stock page when it's interact
 
 ### Change value — no component yet
 
-A signed number colored by direction, in Norwegian format.
+A signed number colored by direction: the relative change alone (`+0,42 %`), or the absolute
+change followed by the relative one in brackets (`+0,03 (+0,42 %)`). Always a colored `span`, never
+a `Badge` or `BadgeWithIcon`.
 
 ```tsx
-const change = (v: number) => (
-    <span className={cx("tabular-nums", v > 0 && "text-success-primary", v < 0 && "text-error-primary", v === 0 && "text-tertiary")}>
-        {new Intl.NumberFormat("nb-NO", { style: "percent", minimumFractionDigits: 2, signDisplay: "exceptZero" }).format(v / 100)}
+const nb = (v: number, options: Intl.NumberFormatOptions = {}) =>
+    new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: "exceptZero", ...options }).format(v);
+
+/** `percent` in percent (0.42 for +0,42 %), `value` in the instrument's currency. */
+const Change = ({ percent, value }: { percent: number; value?: number }) => (
+    <span className={cx("tabular-nums", percent > 0 && "text-success-primary", percent < 0 && "text-error-primary", percent === 0 && "text-tertiary")}>
+        {value === undefined ? nb(percent / 100, { style: "percent" }) : `${nb(value)} (${nb(percent / 100, { style: "percent" })})`}
     </span>
 );
 ```
 
-Never color by hand with green/red palette classes; never drop the sign.
+- Format with `nb-NO` as everywhere else: comma decimals, a space as thousands separator, a real
+  minus sign (`−`), a space before `%`, and two decimals. The output is `+0,03 (+0,42 %)`,
+  `−1 234,50 (−2,10 %)`, `0,00 %`.
+- Color follows the sign: green up, red down, `text-tertiary` for 0. The sign is always shown, so
+  the color is never the only signal.
+- Never color by hand with green/red palette classes; never drop the sign.
 
 ### Filter chips — no component yet
 
@@ -95,10 +160,11 @@ watchlist"). Stand-in: `ButtonGroup` with `selectionMode="single"`. Dropdown chi
 "Marked 4") are a `Dropdown` with a `Button color="secondary" size="sm"` trigger and a `Badge` for the
 count. Country chips add `<Flag name="norway-nok" />` (check the flag name in `fa-icons`).
 
-### Period selector — no component yet
+### Period selector
 
-Chart periods (1D, 5D, 6M, YTD, 1Y, 5Y) with each period's change under the label. Stand-in:
-`ButtonGroup` items whose content is the label plus a change value. Below `md`, keep it on one row.
+Use `PeriodSelector` ([period-selector](components/period-selector.md)), directly under the chart
+it controls. Periods, in this fixed order: 1D, 5D, 1M, 3M, 6M, YTD, 1Y, 3Y, 5Y, 10Y; pass only the
+ones the chart has data for, optionally with each period's change.
 
 ### Live indicator — no component yet
 

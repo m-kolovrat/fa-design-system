@@ -42,21 +42,26 @@ import { CircleProgressBar } from "fa-design-system/components/base/progress-ind
 
 `ProgressBar`
 
-| Prop             | Values                                                                    | Default         |
-| :--------------- | :------------------------------------------------------------------------ | :-------------- |
-| `value`          | number (required)                                                         |                 |
-| `min` / `max`    | number                                                                    | `0` / `100`     |
-| `labelPosition`  | `right` · `bottom` · `top-floating` · `bottom-floating` (none = bar only) |                 |
-| `valueFormatter` | `(value, percentage) => string \| number`                                 | rounded `"NN%"` |
-| `className`      | classes on the track (width)                                              |                 |
+| Prop                | Values                                                                    | Default         |
+| :------------------ | :------------------------------------------------------------------------ | :-------------- |
+| `value`             | number (required)                                                         |                 |
+| `min` / `max`       | number                                                                    | `0` / `100`     |
+| `labelPosition`     | `right` · `bottom` · `top-floating` · `bottom-floating` (none = bar only) |                 |
+| `valueFormatter`    | `(value, percentage) => string \| number`                                 | rounded `"NN%"` |
+| `className`         | classes on the track (width)                                              |                 |
+| `progressClassName` | classes on the fill (see **progress-no-recolor**)                         |                 |
 
-`ProgressBarBase` is the bare bar (same props, no text).
+`valueFormatter` gets the unrounded percentage. `ProgressBarBase` is the bare bar (same props
+without `labelPosition`, no text; `valueFormatter` is ignored).
 
-`ProgressBarCircle` / `ProgressBarHalfCircle`: `value`, `min`, `max`, `valueFormatter`, `label`
+`ProgressBarCircle` / `ProgressBarHalfCircle`: `value` (required), `min` / `max` (`0` / `100`),
+`valueFormatter` (gets the percentage already rounded), `label`
 (text above the value; below the ring at `xxs`), `size` (required) `xxs` (64px) · `xs` (160) · `sm`
-(200) · `md` (240) · `lg` (280). The half circle is the same width and half the height.
+(200) · `md` (240) · `lg` (280). The half circle is the same width and half the height. No
+`className`: size the ring with `size` only.
 
-`CircleProgressBar` (`simple-circle`): only `value` (0–100).
+`CircleProgressBar` (`simple-circle`): `value` (required) and `min` / `max` (`0` / `100`). The
+percent is rounded, like the other circles. No `label` or `valueFormatter`.
 
 ## Notes
 

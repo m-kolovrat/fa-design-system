@@ -23,8 +23,6 @@ import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
 
 ## Rules
 
-- **checkbox-label** MUST Pass `label`, or `aria-label` for a bare checkbox (table rows, "Velg
-  alle"). Because the box alone has no name.
 - **checkbox-state-props** MUST Use `isSelected` / `defaultSelected` / `onChange(isSelected)` and
   `isIndeterminate` for a parent of partly selected children. Never draw the check yourself.
 - **checkbox-group-label** SHOULD Put a group of related checkboxes under a visible heading, in a

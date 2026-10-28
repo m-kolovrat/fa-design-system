@@ -18,12 +18,17 @@ export interface LabelProps extends AriaLabelProps {
     tooltip?: string;
     /** The tooltip's second line */
     tooltipDescription?: string;
+    /**
+     * Accessible name for the help icon button that opens the tooltip.
+     * @default the `tooltip` text
+     */
+    tooltipLabel?: string;
     /** Ref to the `<label>` */
     ref?: Ref<HTMLLabelElement>;
 }
 
 /** The field label, for composing a custom React Aria field; it links up through React Aria slots. */
-export const Label = ({ isInvalid, isRequired, tooltip, tooltipDescription, className, ...props }: LabelProps) => {
+export const Label = ({ isInvalid, isRequired, tooltip, tooltipDescription, tooltipLabel, className, ...props }: LabelProps) => {
     return (
         <AriaLabel
             // Used for conditionally hiding/showing the label element via CSS:
@@ -56,7 +61,9 @@ export const Label = ({ isInvalid, isRequired, tooltip, tooltipDescription, clas
                         // but we don't that. We want the tooltip be enabled even if the parent
                         // field is disabled.
                         isDisabled={false}
-                        className="cursor-pointer text-fg-quaternary transition hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover"
+                        aria-label={tooltipLabel ?? tooltip}
+                        // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
+                        className="cursor-pointer text-fg-quaternary outline-focus-ring transition hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid"
                     >
                         <Help className="size-4" />
                     </TooltipTrigger>

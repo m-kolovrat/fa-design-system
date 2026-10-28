@@ -1,7 +1,7 @@
 # Button group
 
-A row of joined toggle buttons that switches a view or filter of the same content (1D / 1U / 1Å
-on a chart, "Liste" / "Rutenett"). Figma: Button group (Icon = False / Leading / Trailing / Only /
+A row of joined toggle buttons that switches a view or filter of the same content ("Liste" /
+"Rutenett", NOK / USD). Figma: Button group (Icon = False / Leading / Trailing / Only /
 Dot).
 
 ```ts
@@ -10,8 +10,8 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
 
 ## Use when
 
-- The reader picks one of 2–6 short options that change what the content below shows: chart
-  period, list or grid, currency.
+- The reader picks one of 2–6 short options that change what the content below shows: list or
+  grid, currency.
 - A small set of filters can be on at the same time: `selectionMode="multiple"`.
 
 ## Use something else when
@@ -19,19 +19,18 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
 - The options swap whole panels of different content: `Tabs`.
 - The buttons start actions (Lagre, Del, Slett) rather than choose a state: separate `Button`s.
 - More than about six options, or long labels: `Select`.
+- Chart periods (1D, 1M, 1Y): [period selector](period-selector.md).
 - One on/off setting: `Toggle`.
 
 ## Rules
 
-- **button-group-label** MUST Give the group an `aria-label` ("Periode", "Visning"). Because it
+- **button-group-label** MUST Give the group an `aria-label` ("Visning", "Valuta"). Because it
   renders as a radio group (single) or toolbar (multiple), and the options mean little without
   the question.
-- **button-group-keep-one** SHOULD For a view or period switcher, control `selectedKeys` with
+- **button-group-keep-one** SHOULD For a view switcher, control `selectedKeys` with
   `onSelectionChange` and set `disallowEmptySelection`. Because clicking the current option would
-  otherwise clear it and leave the chart with no period.
+  otherwise clear it and leave nothing selected.
 - **button-group-ids** MUST Give every `ButtonGroupItem` a unique `id`; selection keys refer to it.
-- **button-group-icon-only** MUST Give an icon-only item an `aria-label`. Because the icon is
-  `aria-hidden`.
 - **button-group-icons** MUST Pass icons through `iconLeading` / `iconTrailing` (component
   reference, or JSX for a `Dot`). Because the item sizes, pads and colors icons only through
   those props.
@@ -40,8 +39,8 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
 - **button-group-disabled-by-prop** MUST Disable with `isDisabled` (on the group or an item), never
   classes. Because disabled items use Figma's disabled tokens (`bg-disabled_subtle`,
   `text-disabled`), not `opacity-50`.
-- **button-group-short-labels** SHOULD Keep labels to one or two words in sentence case ("1U",
-  "I år", "Tabell").
+- **button-group-short-labels** SHOULD Keep labels to one or two words in sentence case ("Liste",
+  "NOK", "Tabell").
 
 ## Props
 
@@ -68,19 +67,18 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
 ## Example
 
 ```tsx
-const [period, setPeriod] = useState<Set<Key>>(new Set(["1y"]));
+const [currency, setCurrency] = useState<Set<Key>>(new Set(["nok"]));
 
 <ButtonGroup
-    aria-label="Periode"
+    aria-label="Valuta"
     size="sm"
-    selectedKeys={period}
-    onSelectionChange={setPeriod}
+    selectedKeys={currency}
+    onSelectionChange={setCurrency}
     disallowEmptySelection
 >
-    <ButtonGroupItem id="1d">1D</ButtonGroupItem>
-    <ButtonGroupItem id="1m">1M</ButtonGroupItem>
-    <ButtonGroupItem id="1y">1Å</ButtonGroupItem>
-    <ButtonGroupItem id="5y">5Å</ButtonGroupItem>
+    <ButtonGroupItem id="nok">NOK</ButtonGroupItem>
+    <ButtonGroupItem id="usd">USD</ButtonGroupItem>
+    <ButtonGroupItem id="eur">EUR</ButtonGroupItem>
 </ButtonGroup>
 
 <ButtonGroup aria-label="Visning" defaultSelectedKeys={["list"]} disallowEmptySelection>

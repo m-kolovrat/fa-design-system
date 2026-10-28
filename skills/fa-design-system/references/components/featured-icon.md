@@ -37,8 +37,6 @@ import { FeaturedIcon } from "fa-design-system/components/foundations/featured-i
   the component tags it `data-icon` and sizes it per `size`; a JSX element is wrapped but not sized.
 - **featured-icon-decorative** MUST Keep the meaning in the text next to it (title, message).
   Because the icon is `aria-hidden` and the wrapper is a plain `div`.
-- **featured-icon-no-restyle** NEVER Change fill, ring or size with `className`. Use `size`,
-  `color` and `theme`; `className` is for layout (`mb-4`, `self-start`).
 
 ## Props
 

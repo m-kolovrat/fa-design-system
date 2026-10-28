@@ -63,14 +63,17 @@ const styles = {
     lg: { group: "gap-3 h-24.5", slot: "size-24 px-2 py-3 text-display-xl font-medium", caret: "text-display-xl font-medium" },
 };
 
+/** `Omit` that keeps input-otp's `render` / `children` union intact. */
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+
 type OTPInputProps = ComponentPropsWithRef<typeof OTPInput>;
 
-export type PinInputGroupProps = OTPInputProps & {
+export type PinInputGroupProps = DistributiveOmit<OTPInputProps, "maxLength"> & {
     /**
      * The number of digits
      * @default 4
      */
-    maxLength?: OTPInputProps["maxLength"];
+    maxLength?: number;
     /** Allowed characters as a regex string, e.g. `REGEXP_ONLY_DIGITS` from `input-otp` */
     pattern?: OTPInputProps["pattern"];
     /** The code (controlled) */
@@ -173,7 +176,7 @@ Label.displayName = "Label";
 const Description = (props: ComponentPropsWithRef<typeof HintText>) => {
     const { id, size } = usePinInputContext();
 
-    return <HintText {...props} id={"pin-input-description-" + id} role="description" className={cx(size === "xxxs" && "text-xs")} />;
+    return <HintText {...props} id={"pin-input-description-" + id} role="description" className={cx(size === "xxxs" && "text-xs", props.className)} />;
 };
 Description.displayName = "Description";
 

@@ -20,8 +20,8 @@ export interface AvatarProps {
     /** The person's name, or `""` when the name is printed next to the avatar */
     alt?: string;
     /**
-     * Display an inner contrast border around the avatar image. Currently has no effect: the
-     * image always gets its inner outline.
+     * Display an inner contrast border around the avatar image.
+     * @default true
      */
     contrastBorder?: boolean;
     /**
@@ -91,6 +91,7 @@ export const Avatar = ({
     placeholder,
     placeholderIcon: PlaceholderIcon,
     border,
+    contrastBorder = true,
     badge,
     status,
     verified,
@@ -152,7 +153,8 @@ export const Avatar = ({
         >
             <div
                 className={cx(
-                    "relative inline-flex size-full shrink-0 items-center justify-center overflow-hidden rounded-sm bg-tertiary outline-[0.5px] -outline-offset-[0.5px] outline-black/16 before:inset-[0.5px]",
+                    "relative inline-flex size-full shrink-0 items-center justify-center overflow-hidden rounded-sm bg-tertiary before:inset-[0.5px]",
+                    contrastBorder && "outline-[0.5px] -outline-offset-[0.5px] outline-black/16",
                     rounded && "rounded-full",
                     canShowImage &&
                         size !== "xs" &&

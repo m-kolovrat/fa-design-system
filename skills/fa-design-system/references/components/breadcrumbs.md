@@ -22,11 +22,10 @@ import { Breadcrumbs } from "fa-design-system/components/application/breadcrumbs
 ## Rules
 
 - **breadcrumbs-current-last** MUST Make the current page the last `Breadcrumbs.Item`. Because the
-  last item is marked current (`aria-current="page"`, brand color, no divider after it).
+  last item is marked current (`aria-current="page"`, no divider after it): brand text and icon
+  with `text` / `text-line`, a gray `bg-primary_hover` fill with gray text with `button`.
 - **breadcrumbs-items-only** MUST Pass only `Breadcrumbs.Item` elements as children, each with
   `href`. Because collapsing counts children and each item renders a React Aria link.
-- **breadcrumbs-icon-label** MUST Give an icon-only item (`icon` without children, usually
-  `Home`) an `aria-label` ("Forside"). Because the icon is hidden from screen readers.
 - **breadcrumbs-collapse** SHOULD Set `maxVisibleItems` (3 or 4) on deep trails, especially on
   mobile. Because the list wraps instead of scrolling; the collapsed middle opens with "…".
 - **breadcrumbs-one-style** SHOULD Use one `type` and `divider` across a product. Because the trail

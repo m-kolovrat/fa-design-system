@@ -40,8 +40,11 @@ const tickSizeMap = {
 } as const;
 
 export interface AvatarProfilePhotoProps extends AvatarProps {
-    /** The size variant: `sm` 72px, `md` 96, `lg` 160 */
-    size: "sm" | "md" | "lg";
+    /**
+     * The size variant: `sm` 72px, `md` 96, `lg` 160.
+     * @default md
+     */
+    size?: "sm" | "md" | "lg";
 }
 
 /** The large photo in the header of a profile or journalist page. Uses `src`, `alt`, `initials`, `placeholderIcon`, `placeholder`, `status`, `verified` and `badge`; the other `Avatar` props have no effect. */

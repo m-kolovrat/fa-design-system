@@ -145,8 +145,10 @@ export const InputBase = ({
             {tooltip && type !== "password" && (
                 <Tooltip title={tooltip} placement="top">
                     <TooltipTrigger
+                        aria-label={tooltip}
+                        // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
                         className={cx(
-                            "absolute cursor-pointer text-fg-quaternary transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover",
+                            "absolute cursor-pointer text-fg-quaternary outline-focus-ring transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid",
                             sizes[inputSize].iconTrailing,
                             context?.tooltipClassName,
                             tooltipClassName,
@@ -175,7 +177,7 @@ export const InputBase = ({
                     aria-label="Toggle password visibility"
                     onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                     className={cx(
-                        "absolute flex cursor-pointer items-center justify-center text-fg-quaternary transition hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover focus:outline-hidden",
+                        "absolute flex cursor-pointer items-center justify-center text-fg-quaternary outline-focus-ring transition hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2",
                         sizes[inputSize].iconTrailing,
                     )}
                 >

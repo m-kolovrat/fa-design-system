@@ -65,7 +65,7 @@ placement).
 `InputGroup`: `size`, `label`, `hint`, `prefix` (text inside the box), `leadingAddon` /
 `trailingAddon` (`InputGroup.Prefix`, a `NativeSelect` or a `Button`), plus `TextField` props.
 `InputBase`: `placeholder`, `icon`, `tooltip`, `type`. `Label` (`isRequired`, `tooltip`,
-`tooltipDescription`) and `HintText` (`isInvalid`, `size` `sm` · `md`) are for composing a custom
+`tooltipDescription`, `tooltipLabel`: the help icon's accessible name, default the `tooltip` text) and `HintText` (`isInvalid`, `size` `sm` · `md`) are for composing a custom
 React Aria field; they wire up through React Aria slots.
 
 ## Accessibility

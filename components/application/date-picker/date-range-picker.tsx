@@ -14,7 +14,7 @@ import { RangeCalendar, RangePresetButton } from "./range-calendar";
 
 const now = today(getLocalTimeZone());
 
-const highlightedDates = [today(getLocalTimeZone())];
+const defaultHighlightedDates = [today(getLocalTimeZone())];
 
 export interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue> {
     /** The size of the trigger button (Button sizes). */
@@ -37,10 +37,21 @@ export interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue
     isDateUnavailable?: AriaDateRangePickerProps<DateValue>["isDateUnavailable"];
     /** Disables the trigger button. */
     isDisabled?: AriaDateRangePickerProps<DateValue>["isDisabled"];
+    /** The dates to mark with a dot in the calendar. Defaults to today. */
+    highlightedDates?: DateValue[];
 }
 
 /** A button that opens a two-month range calendar with presets (today, this week, last month, …) and Cancel / Apply. */
-export const DateRangePicker = ({ value: valueProp, defaultValue, onChange, onApply, onCancel, size = "sm", ...props }: DateRangePickerProps) => {
+export const DateRangePicker = ({
+    value: valueProp,
+    defaultValue,
+    onChange,
+    onApply,
+    onCancel,
+    size = "sm",
+    highlightedDates = defaultHighlightedDates,
+    ...props
+}: DateRangePickerProps) => {
     const { locale } = useLocale();
     const formatter = useDateFormatter({
         month: "short",

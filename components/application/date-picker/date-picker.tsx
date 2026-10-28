@@ -10,7 +10,7 @@ import { Button, type ButtonProps } from "@/components/base/buttons/button";
 import { cx } from "@/utils/cx";
 import { Calendar } from "./calendar";
 
-const highlightedDates = [today(getLocalTimeZone())];
+const defaultHighlightedDates = [today(getLocalTimeZone())];
 
 export interface DatePickerProps extends AriaDatePickerProps<DateValue> {
     /** The function to call when the apply button is clicked. The popover closes after it. */
@@ -33,10 +33,21 @@ export interface DatePickerProps extends AriaDatePickerProps<DateValue> {
     isDateUnavailable?: AriaDatePickerProps<DateValue>["isDateUnavailable"];
     /** Disables the trigger button. */
     isDisabled?: AriaDatePickerProps<DateValue>["isDisabled"];
+    /** The dates to mark with a dot in the calendar. Defaults to today. */
+    highlightedDates?: DateValue[];
 }
 
 /** A button that opens a calendar popover with Cancel / Apply, for picking one date. */
-export const DatePicker = ({ value: valueProp, defaultValue, onChange, onApply, onCancel, size = "sm", ...props }: DatePickerProps) => {
+export const DatePicker = ({
+    value: valueProp,
+    defaultValue,
+    onChange,
+    onApply,
+    onCancel,
+    size = "sm",
+    highlightedDates = defaultHighlightedDates,
+    ...props
+}: DatePickerProps) => {
     const formatter = useDateFormatter({
         month: "short",
         day: "numeric",

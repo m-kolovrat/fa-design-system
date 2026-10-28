@@ -43,17 +43,21 @@ import { FormField, HookForm } from "fa-design-system/components/base/form/hook-
 ## Props
 
 `Form`: React Aria `Form` props: `onSubmit`, `action`, `validationBehavior` (`native` · `aria`,
-default `native`), `validationErrors`, `className`, plus `<form>` attributes.
+default `native`), `validationErrors`, `className`, `ref`, plus `<form>` attributes.
 
-`HookForm`: `form` (the `useForm()` return), plus the same `Form` props.
+`HookForm`: `form` (the `useForm()` return) and `children` (both required), plus the same `Form`
+props except `ref`.
 
-`FormField`: `name`, `control`, `children` as `({ field, fieldState }) => ReactNode` (or plain
-nodes).
+`FormField`: `name`, `control` and `children` (all required). `children` is
+`({ field, fieldState, formState }) => ReactNode` or plain nodes. `field` also carries
+`validationBehavior: "aria"`; pass it on (or set `validationBehavior="aria"` on `HookForm`) so
+the browser's native check doesn't block submit before react-hook-form validates.
 
 ## Notes
 
-- `useFormFieldContext()` gives a field's `id`, `name`, `control` and state (`invalid`, `error`, …) inside a `FormField`, for
-  a custom field component.
+- `useFormFieldContext()` (same import) gives a field's `id`, `name`, `control` and state
+  (`invalid`, `error`, `isDirty`, `isTouched`) inside a `FormField`, for a custom field component;
+  outside one it throws.
 
 ## Accessibility
 

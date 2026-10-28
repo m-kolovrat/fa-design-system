@@ -18,7 +18,7 @@ import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radi
 ## Use something else when
 
 - More than about six options: `Select`. Several can be picked: `Checkbox`.
-- Switching a view right away (chart period): `ButtonGroup`. A single on/off: `Toggle`.
+- Switching a view right away (Liste / Kort): `ButtonGroup`; chart periods: [period selector](period-selector.md). A single on/off: `Toggle`.
 
 ## Rules
 

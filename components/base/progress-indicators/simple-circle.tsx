@@ -2,15 +2,21 @@
 
 /** A fixed 64px ring with the percent in the middle. */
 export const CircleProgressBar = (props: {
-    /** The progress in percent, 0–100 */
+    /** The current value, between `min` and `max` */
     value: number;
-    /** Always 0 */
-    min?: 0;
-    /** Always 100 */
-    max?: 100;
+    /**
+     * The value at an empty ring.
+     * @default 0
+     */
+    min?: number;
+    /**
+     * The value at a full ring.
+     * @default 100
+     */
+    max?: number;
 }) => {
     const { value, min = 0, max = 100 } = props;
-    const percentage = ((value - min) * 100) / (max - min);
+    const percentage = Math.round(((value - min) * 100) / (max - min));
 
     return (
         <div role="progressbar" aria-valuenow={value} aria-valuemin={min} aria-valuemax={max} className="relative flex w-max items-center justify-center">

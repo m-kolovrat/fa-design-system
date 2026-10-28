@@ -64,11 +64,12 @@ Without it `notify()` shows nothing. It places toasts top right, 24px in (8px on
 | `description`       | ReactNode                                                                                     |         |
 | `type`              | `brand` · `gray` · `error` · `warning` · `success` · `none` · `avatar` · `image` · `progress` | `brand` |
 | `actions`           | ReactNode (buttons)                                                                           |         |
-| `icon`              | icon component, overrides the type's icon                                                     |         |
-| `avatarSrc`, `meta` | for `avatar` (meta = "for 2 min siden"); the avatar always shows the online dot               |         |
+| `icon`              | icon component, overrides the type's icon; ignored for `none`, `avatar` and `image`           |         |
+| `avatarSrc`, `meta` | for `avatar` only (meta = "for 2 min siden"); the avatar always shows the online dot          |         |
 | `imageSrc`          | for `image` (decorative, `alt=""`)                                                            |         |
 | `progress`          | 0–100, for `progress`                                                                         | `0`     |
 | `onClose`           | shows the close button (inline use)                                                           |         |
+| `className`         | classes on the card                                                                           |         |
 
 ## Notes
 

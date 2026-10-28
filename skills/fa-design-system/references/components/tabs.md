@@ -1,7 +1,7 @@
 # Tabs
 
-Switches between panels of content on the same page (Oversikt / Nøkkeltall / Nyheter on a stock
-page). Figma: Horizontal tabs, Vertical tabs (both are `Tabs`, with `orientation`).
+Switches between panels of content on the same page, or between the pages of one section (Oversikt
+/ Nøkkeltall / Nyheter / Forum on a stock page). Figma: Horizontal tabs, Vertical tabs (both are `Tabs`, with `orientation`).
 
 ```ts
 import { Tabs } from "fa-design-system/components/application/tabs/tabs";
@@ -13,13 +13,15 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
 
 - Content splits into a few peer sections and only one should show at a time.
 - A settings or profile screen with sections down the side (`orientation="vertical"`).
+- Optionally, navigation between the pages of one section, such as the sub-pages of an instrument
+  or of Bjellesauer: link tabs (see **tabs-as-links**).
 
 ## Use something else when
 
-- Switching a view or filter of the same content (1D / 1U / 1Å on a chart, Liste / Kort):
-  `ButtonGroup`.
-- Moving between pages of the site: links in `SiteHeader` navigation, or `NavButton` /
-  `secondaryType="tabs"` in [app-navigation](app-navigation.md).
+- Switching a view or filter of the same content (Liste / Kort): `ButtonGroup`. Chart periods
+  (1D / 1M / 1Y): [period selector](period-selector.md).
+- The site's main navigation (Børs, Forum, Bjellesauer): `SiteHeader`; in logged-in app screens,
+  [app-navigation](app-navigation.md).
 - Paging through a long list: [pagination](pagination.md).
 
 ## Rules
@@ -30,17 +32,34 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
   horizontal-only and `line` vertical-only; there are no other types.
 - **tabs-orientation-on-root** MUST Set `orientation` on `Tabs`, not only on `Tabs.List`. Because
   `Tabs` drives keyboard arrows and the list reads the orientation from it.
-- **tabs-ids** MUST Give each `Tabs.Item` an `id` and the matching `Tabs.Panel` the same `id`.
+- **tabs-ids** MUST Give each `Tabs.Item` an `id` and the matching `Tabs.Panel` the same `id`
+  (link tabs share one panel, see **tabs-as-links**).
   Because that pairs tab and panel for selection and `aria-controls`.
 - **tabs-label** MUST Name the list with `aria-label` on `Tabs.List` ("Aksjeinformasjon").
   Because a tab list without a name is announced only as "tab list".
 - **tabs-mobile** SHOULD Below `md`, show a `NativeSelect` with the same options and hide the tabs
   (`max-md:hidden`) when there are more than three or four tabs. Because tabs don't scroll or wrap,
   and the storybook demos use exactly this pattern.
+- **tabs-as-links** Tabs can optionally be page navigation. The default is tabs that switch
+  panels on one page; make them link tabs only when each tab has its own URL (the sub-pages of an
+  instrument or of Bjellesauer). Then give each `Tabs.Item` an `href`, set `selectedKey` on `Tabs`
+  from the current route, and render one `Tabs.Panel` with `id={selectedKey}` around the page
+  content. Because each tab is then a real link (back button, open in new tab, shareable URL) with
+  the same look and keyboard behavior.
+
+    ```tsx
+    <Tabs selectedKey={pathname}>
+        <Tabs.List type="underline" aria-label="Equinor">
+            <Tabs.Item id="/aksje/EQNR" href="/aksje/EQNR" label="Oversikt" />
+            <Tabs.Item id="/aksje/EQNR/nyheter" href="/aksje/EQNR/nyheter" label="Nyheter" />
+            <Tabs.Item id="/aksje/EQNR/forum" href="/aksje/EQNR/forum" label="Forum" />
+        </Tabs.List>
+        <Tabs.Panel id={pathname}>{children}</Tabs.Panel>
+    </Tabs>
+    ```
+
 - **tabs-badge** SHOULD Use `badge` only for counts ("Nyheter 3"). Because badges are hidden below
   `md` and turn brand only on `underline`, `line` and `button-brand`.
-- **tabs-icons** MUST Pass `icon` as a component reference (`icon={GraphLine}`) or JSX with
-  `data-icon`. Because the tab sizes and colors icons through `data-icon`.
 - **tabs-no-restyle** NEVER Restyle selected or hover states with `className`; pick another `type`.
   Because the selected look matches Figma (and pagination's active page).
 

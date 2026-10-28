@@ -110,8 +110,11 @@ export interface BadgeGroupProps {
     addonText: string;
     /** The size variant */
     size?: Size;
-    /** The color, picked by meaning */
-    color: Color;
+    /**
+     * The color, picked by meaning.
+     * @default brand
+     */
+    color?: Color;
     /** `light` (tinted) or `modern` (white with a shadow) */
     theme?: Theme;
     /**

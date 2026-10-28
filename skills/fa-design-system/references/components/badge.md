@@ -12,7 +12,6 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
 ## Use when
 
 - A row, card or heading needs a status ("Betalt", "Utløpt"), a category or a count.
-- A value change needs a colored chip: `BadgeWithIcon` with `ArrowUp` / `ArrowDown`.
 - A currency or market needs a flag next to its code: `BadgeWithFlag`.
 - A small announcement above a heading: `BadgeGroup` ("Nyhet" + "Les om de nye børsvarslene").
 
@@ -22,6 +21,7 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
 - The message needs a sentence and an action: `Alert`, or `notify()` for a passing confirmation.
 - A number on an avatar or icon ("+5"): `AvatarCount` (see [avatar](avatar.md)).
 - It should be clickable: a `Button` (badges have no press handler; only `BadgeWithButton`'s ×).
+- A price or value change (`+0,42 %`): a colored span, see "Change value" in `page-patterns.md`.
 
 ## Rules
 
@@ -61,10 +61,10 @@ Per variant: `BadgeWithIcon` `iconLeading` / `iconTrailing` (one of them); `Badg
 `BadgeWithButton` `buttonLabel`, `onButtonClick`, `icon` (default `Close`); `BadgeIcon` `icon`
 (required). `className` exists on `Badge`, `BadgeWithDot` and `BadgeWithIcon` only.
 
-`BadgeGroup`: `addonText` (required), `children` (the message), `color` (required by the type;
-`brand` · `gray` · `error` · `warning` · `success`, `brand` when left out), `theme` `light` ·
-`modern` (default `light`), `size` `md` · `lg` (default `md`), `align` `leading` · `trailing`
-(where the addon sits, default `leading`), `iconTrailing` (default `ArrowRight`).
+`BadgeGroup`: `addonText` (required), `children` (the message), `color` `brand` · `gray` ·
+`error` · `warning` · `success` (default `brand`), `theme` `light` · `modern` (default `light`),
+`size` `md` · `lg` (default `md`), `align` `leading` · `trailing` (where the addon sits, default
+`leading`), `iconTrailing` (default `ArrowRight`).
 
 ## Accessibility
 
@@ -79,7 +79,6 @@ Per variant: `BadgeWithIcon` `iconLeading` / `iconTrailing` (one of them); `Badg
 ```tsx
 <div className="flex items-center gap-2">
     <span className="text-sm font-semibold text-primary">EQNR</span>
-    <BadgeWithIcon color="success" size="sm" iconLeading={ArrowUp}>+2,4 %</BadgeWithIcon>
     <BadgeWithFlag flag="norway-nok" size="sm">NOK</BadgeWithFlag>
 </div>
 
