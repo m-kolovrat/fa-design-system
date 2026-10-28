@@ -54,8 +54,6 @@ import { SidebarNavigationSlim } from "fa-design-system/components/application/a
 - **app-nav-items-data** MUST Describe items as `NavItemType` (`label`, `href`, `icon`, `badge`,
   `items`). Use `NavItemDividerType` (`{ divider: true }`) only with `SidebarNavigationSectionDividers`
   or `NavList`. Because each variant renders from that shape and has no other content slot.
-- **app-nav-icons** MUST Take item icons from `fa-icons`, as component references
-  (`icon: Bookmark`). Because the nav sizes and colors them itself.
 - **app-nav-layout** SHOULD Render the sidebar as a sibling before the page content in a flex row;
   it is `fixed` on desktop and adds its own placeholder width. Because it handles its own mobile
   header below `lg`.
@@ -67,7 +65,8 @@ import { SidebarNavigationSlim } from "fa-design-system/components/application/a
 ## Props
 
 Sidebars: `activeUrl`, `items` (required). `SidebarNavigationSimple` adds `footerItems`,
-`featureCard` (node), `showAccountCard` (default `true`), `hideBorder`, `className`.
+`featureCard` (node), `showAccountCard` (default `true`), `hideBorder`, `className`, and
+`avatarRounded` (passed to the account card's avatar; `false` gives the square avatar, default round).
 `SidebarNavigationDualTier` adds `footerItems`, `featureCard`, `hideBorder`, `accountItems`,
 `selectedAccountId`. `SidebarNavigationSlim` adds `footerItems`, `hideBorder`, `hideRightBorder`.
 `SidebarNavigationSectionsSubheadings` takes `items: { label: string; items: NavItemType[] }[]`
@@ -78,7 +77,7 @@ Sidebars: `activeUrl`, `items` (required). `SidebarNavigationSimple` adds `foote
 (default `false`), `secondaryType` `buttons` · `tabs` (default `buttons`), `hideBorder`.
 
 `NavButton` (for `actions`): `href`, `icon`, `label` (tooltip and `aria-label`), `current`,
-`tooltipPlacement` (default `right`; use `bottom` in a header), `children`.
+`tooltipPlacement` (default `right`; use `bottom` in a header), `onClick`, `children`.
 
 ## Accessibility
 

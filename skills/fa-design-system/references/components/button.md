@@ -35,13 +35,6 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 - **button-states-by-prop** MUST Use `isDisabled` and `isLoading`, never classes. `isLoading` makes
   the button non-interactive; add `showTextWhileLoading` when the label should stay. Because the
   disabled look uses Figma's `bg-disabled_subtle` / `fg-disabled` tokens, not `opacity-50`.
-- **button-icons** MUST Pass icons as a component reference (`iconLeading={Plus}`), or as JSX with
-  `data-icon` (`iconLeading={<Plus data-icon className="size-5" />}`). Because the button sizes and
-  colors icons only through those hooks.
-- **button-icon-label** MUST Give an icon-only button an `aria-label` (or use `ButtonUtility` with
-  `tooltip`). Because screen readers otherwise announce "button".
-- **button-no-restyle** NEVER Override fill, border, radius or padding with `className`; `className`
-  is for layout (`w-full`, `self-start`, margins). Because sizes and colors match Figma exactly.
 - **button-verb-label** SHOULD Say what pressing it does ("Last ned rapport", "Start abonnement"),
   capitalizing only the first word as Norwegian does. Avoid vague labels like "OK" or "Klikk her".
 
@@ -57,18 +50,27 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 | `isLoading`            | boolean (spinner, non-interactive)                                                                                                                                |           |
 | `showTextWhileLoading` | boolean                                                                                                                                                           |           |
 | `href`                 | string: renders a link (React Aria `Link`)                                                                                                                        |           |
-| `noTextPadding`        | boolean (on by default for link colors)                                                                                                                           |           |
+| `noTextPadding`        | boolean (drops the label's `px-0.5`; always on for link colors, `false` has no effect there)                                                                      |           |
 
 Plus React Aria `Button` props (`onPress`, `type`, `form`, …) or `Link` props when `href` is set.
 Use `onPress`, not `onClick`.
 
-`ButtonUtility`: `size` `xs` · `sm`, `color` `secondary` · `tertiary`, `icon`, `tooltip`,
-`tooltipPlacement`.
+| Part            | Props                                                                                                    | Default                |
+| :-------------- | :------------------------------------------------------------------------------------------------------- | :--------------------- |
+| `ButtonUtility` | `size`: `xs` (16px icon) · `sm` (20px icon)                                                              | `sm`                   |
+|                 | `color`: `secondary` · `tertiary`                                                                        | `secondary`            |
+|                 | `icon`, `tooltip` (also the `aria-label`), `tooltipPlacement`, `isDisabled`, `href` (renders a link)     | `tooltipPlacement` top |
+| `CloseButton`   | `size`: `sm` (36px) · `md` (40px) · `lg` (44px)                                                          | `sm`                   |
+|                 | `theme`: `light` · `dark` (on dark or image backgrounds)                                                 | `light`                |
+|                 | `label`: the `aria-label` (English "Close" when not set)                                                 |                        |
+|                 | `slot`: React Aria slot; `"close"` closes a parent `Dialog` / `Modal` without a handler, `null` opts out | `"close"`              |
+|                 | plus React Aria `Button` props (`onPress`)                                                               |                        |
 
 ## Accessibility
 
 - Focus ring is built in; don't remove it.
-- Loading sets the button disabled; announce the result elsewhere (a `notify()` toast or inline
+- Loading puts the button in React Aria's pending state (`isPending`: non-interactive, still
+  focusable); announce the result elsewhere (a `notify()` toast or inline
   text) when the action finishes.
 - `type="submit"` on the submit button of a form.
 

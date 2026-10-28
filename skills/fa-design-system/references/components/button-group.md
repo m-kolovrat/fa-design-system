@@ -30,8 +30,6 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
   `onSelectionChange` and set `disallowEmptySelection`. Because clicking the current option would
   otherwise clear it and leave the chart with no period.
 - **button-group-ids** MUST Give every `ButtonGroupItem` a unique `id`; selection keys refer to it.
-- **button-group-icon-only** MUST Give an icon-only item an `aria-label`. Because the icon is
-  `aria-hidden`.
 - **button-group-icons** MUST Pass icons through `iconLeading` / `iconTrailing` (component
   reference, or JSX for a `Dot`). Because the item sizes, pads and colors icons only through
   those props.

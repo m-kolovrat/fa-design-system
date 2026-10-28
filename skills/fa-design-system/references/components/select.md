@@ -45,8 +45,8 @@ import { TagSelect } from "fa-design-system/components/base/select/tag-select";
 
 Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 36px · `md` 40px ·
 `lg` 44px; default `md`, `TagSelect` `sm`), `label`, `hint` (string), `tooltip`, `placeholder`,
-`items` (`SelectItemType[]`), `isRequired`, `hideRequiredIndicator`, `isDisabled`, `isInvalid`,
-`popoverClassName`, children as `(item) => <Select.Item …/>`.
+`items` (`SelectItemType[]`), `isRequired`, `hideRequiredIndicator` (not on `TagSelect`),
+`isDisabled`, `isInvalid`, `popoverClassName`, children as `(item) => <Select.Item …/>`.
 
 - `Select`: `icon` (leading), `value` / `defaultValue` / `onChange`, `name`.
 - `Select.ComboBox`: `icon`, `shortcut` (shows "⌘K", default `true`; set `false` unless bound),
@@ -54,8 +54,8 @@ Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 3
 - `MultiSelect`: `selectedKeys`, `onSelectionChange`, `showSearch` (`true`), `showFooter`
   (`true`), `onReset`, `onSelectAll`, `selectedCountFormatter`, `supportingText`,
   `emptyStateTitle`, `emptyStateDescription`. Items: `MultiSelect.Item`.
-- `TagSelect`: `selectedItems` (`ListData`), `onItemInserted`, `onItemCleared`, `shortcut`.
-  Items: `TagSelect.Item`.
+- `TagSelect`: `selectedItems` (`ListData`), `onItemInserted`, `onItemCleared`, `shortcut`
+  (default off), `icon`, `valueFormatter` (tag text). Items: `TagSelect.Item`.
 - `NativeSelect`: `options` (`{ label, value }[]`), `label`, `hint`, `size`, plus `<select>` props.
 
 `SelectItemType` / item props: `id`, `label`, `supportingText`, `icon`, `avatarUrl`,

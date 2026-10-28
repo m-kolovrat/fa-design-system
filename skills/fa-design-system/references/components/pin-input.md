@@ -24,7 +24,7 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
   `PinInput.Slot` per digit) + optional `PinInput.Description`. Because the label and description
   are linked to the hidden input through the root's ids.
 - **pin-slots-match** MUST Render exactly `maxLength` slots with `index` 0 … n−1. Because a missing
-  slot hides a typed digit, and `maxLength` defaults to 4.
+  slot hides a typed digit, and `maxLength` (default 4) sets how many digits are accepted.
 - **pin-label** MUST Always render `PinInput.Label`. Because it replaces the group's built-in
   English name ("Enter your pin").
 - **pin-digits** SHOULD Pass `pattern={REGEXP_ONLY_DIGITS}` for numeric codes and
@@ -40,18 +40,18 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 ## Props
 
-| Part                   | Props                                                                                                              | Default       |
-| :--------------------- | :----------------------------------------------------------------------------------------------------------------- | :------------ |
-| `PinInput` (root)      | `size`: `xxxs` (36px) · `xxs` (40px) · `xs` (44px) · `sm` (64px) · `md` (80px) · `lg` (96px)                       | `md`          |
-|                        | `disabled`, `invalid`: boolean                                                                                     |               |
-| `PinInput.Group`       | `maxLength`, `pattern`, `value`, `onChange(value: string)`, `onComplete`, `autoFocus`, `autoComplete`, `inputMode` | `maxLength` 4 |
-| `PinInput.Slot`        | `index` (required)                                                                                                 |               |
-| `PinInput.Label`       | `Label` props (`isRequired`, `tooltip`)                                                                            |               |
-| `PinInput.Description` | `HintText` props (`isInvalid`)                                                                                     |               |
-| `PinInput.Separator`   | none                                                                                                               |               |
+| Part                   | Props                                                                                                                            | Default |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------- | :------ |
+| `PinInput` (root)      | `size`: `xxxs` (36px) · `xxs` (40px) · `xs` (44px) · `sm` (64px) · `md` (80px) · `lg` (96px)                                     | `md`    |
+|                        | `disabled`, `invalid`: boolean                                                                                                   |         |
+| `PinInput.Group`       | `maxLength` (default `4`), `pattern`, `value`, `onChange(value: string)`, `onComplete`, `autoFocus`, `autoComplete`, `inputMode` |         |
+| `PinInput.Slot`        | `index` (required)                                                                                                               |         |
+| `PinInput.Label`       | `Label` props (`isRequired`, `tooltip`)                                                                                          |         |
+| `PinInput.Description` | `HintText` props (`isInvalid`, `className` merges with the size class)                                                           |         |
+| `PinInput.Separator`   | none                                                                                                                             |         |
 
 Sizes are the digit box height. Disabled boxes use Figma's disabled tokens (`bg-disabled_subtle`,
-`fg-disabled_subtle`, `border-disabled`), not `opacity-50`.
+`fg-disabled_subtle`, `ring-disabled`), not `opacity-50`.
 
 ## Accessibility
 

@@ -15,4 +15,5 @@ turns `@/` imports into relative ones). `dist/` is not committed.
 - `styles/index.css` holds everything the components need except `@import "tailwindcss"`;
   `styles/globals.css` adds that for Storybook. Put new global CSS in `index.css`.
 - `npx fa-design-system setup` (`scripts/setup.mjs`) links the skill into an app's
-  `.claude/skills/` and adds the `AGENTS.md` block.
+  `.claude/skills/`, writes the `AGENTS.md` block (rules plus a component index built from the
+  skill's index) and imports it from `CLAUDE.md`. Apps re-run it after updating.

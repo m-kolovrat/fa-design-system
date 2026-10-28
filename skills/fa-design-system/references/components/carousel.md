@@ -30,10 +30,11 @@ Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `Car
 - **carousel-structure** MUST Nest as `Carousel.Root` > `Carousel.Content` > `Carousel.Item`, with
   `PrevTrigger`, `NextTrigger` and the indicator inside `Root`. Because they read state from the
   root's context (`useCarousel` throws outside it).
-- **carousel-labels** MUST Give the root an `aria-label` ("Bilder fra prøvekjøringen") and render the
-  arrows through the render prop or `asChild` with Norwegian labels (`aria-label="Forrige bilde"`).
-  Because the built-in labels are English ("Previous slide", "Go to slide1") and the default
-  trigger button doesn't accept `aria-label`.
+- **carousel-labels** MUST Give the root an `aria-label` ("Bilder fra prøvekjøringen") and give the
+  arrows a Norwegian label (`aria-label="Forrige bilde"`): as a prop on `PrevTrigger` /
+  `NextTrigger`, on the `asChild` child, or on your own `<button>` in the render prop. Because the
+  built-in labels are English ("Previous slide", "Next slide", "Go to slide 1") and only apply when
+  you pass none.
 - **carousel-indicator** SHOULD Use `PaginationDot` for the dots, as the demo's `CarouselIndicator`
   does (`page={selectedIndex + 1}`, `total={scrollSnaps.length}`, `onPageChange` →
   `api.scrollTo`). `framed` when it sits on a photo. Because it is the Figma dot pagination.
@@ -46,13 +47,13 @@ Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `Car
 
 ## Props
 
-| Part                           | Props                                                                                                                      |
-| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- |
-| `Carousel.Root`                | `opts` (Embla options: `loop`, `align`, …), `plugins`, `orientation` `horizontal` · `vertical`, `setApi`, `div` props      |
-| `Carousel.Content`             | `overflowHidden` (default `true`), `className` (gap: `gap-2`)                                                              |
-| `Carousel.Item`                | `div` props; `basis-full` by default, set `basis-1/2 md:basis-1/3` for several per view                                    |
-| `PrevTrigger` / `NextTrigger`  | `children` (node, or `({ isDisabled, onClick }) => node`), `asChild`, `className` (string or `({ isDisabled }) => string`) |
-| `IndicatorGroup` / `Indicator` | low-level dots; prefer `PaginationDot`                                                                                     |
+| Part                           | Props                                                                                                                                                                  |
+| :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Carousel.Root`                | `opts` (Embla options: `loop`, `align`, …), `plugins`, `orientation` `horizontal` · `vertical`, `setApi`, `div` props                                                  |
+| `Carousel.Content`             | `overflowHidden` (default `true`), `className` (gap: `gap-2`)                                                                                                          |
+| `Carousel.Item`                | `div` props; `basis-full` by default, set `basis-1/2 md:basis-1/3` for several per view                                                                                |
+| `PrevTrigger` / `NextTrigger`  | `children` (node, or `({ isDisabled, onClick }) => node`), `asChild`, `aria-label`, `className` (string or `({ isDisabled }) => string`; ignored with the render prop) |
+| `IndicatorGroup` / `Indicator` | low-level dots; prefer `PaginationDot`                                                                                                                                 |
 
 `useCarousel()` returns `api`, `selectedIndex`, `scrollSnaps`, `canScrollPrev`, `canScrollNext`,
 `scrollPrev`, `scrollNext`. `PaginationDot`: `size` `md` · `lg`, `framed`, `isBrand`.
@@ -61,22 +62,26 @@ Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `Car
 
 - Root is `role="region"`, slides `role="group"` with `aria-roledescription`. Left/Right arrow keys
   page when focus is inside the carousel.
-- Disabled arrows (first/last slide without `loop`) get `disabled`.
+- Disabled arrows (first/last slide without `loop`) get `disabled`; with the render prop, pass
+  `isDisabled` to your button's `disabled` yourself.
 
 ## Example
 
 ```tsx
+const arrow =
+    "absolute top-1/2 z-10 flex size-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-alpha-white/90 p-2 text-fg-secondary outline-focus-ring backdrop-blur-xs focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+
 <Carousel.Root aria-label="Bilder fra prøvekjøringen av Volvo EX30" className="relative aspect-[1.6] max-w-160">
     <Carousel.PrevTrigger>
         {({ onClick, isDisabled }) => (
-            <button type="button" aria-label="Forrige bilde" onClick={onClick} disabled={isDisabled} className={arrowClasses("left-4")}>
+            <button type="button" aria-label="Forrige bilde" onClick={onClick} disabled={isDisabled} className={`${arrow} left-4`}>
                 <ChevronLeft className="size-5" />
             </button>
         )}
     </Carousel.PrevTrigger>
     <Carousel.NextTrigger>
         {({ onClick, isDisabled }) => (
-            <button type="button" aria-label="Neste bilde" onClick={onClick} disabled={isDisabled} className={arrowClasses("right-4")}>
+            <button type="button" aria-label="Neste bilde" onClick={onClick} disabled={isDisabled} className={`${arrow} right-4`}>
                 <ChevronRight className="size-5" />
             </button>
         )}
@@ -91,10 +96,11 @@ Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `Car
             </Carousel.Item>
         ))}
     </Carousel.Content>
-</Carousel.Root>
+</Carousel.Root>;
 ```
 
-`arrowClasses` and `CarouselIndicator`: copied from `carousel.demo.tsx`.
+`arrow` is `CarouselMd`'s trigger classes without the side; `CarouselIndicator` is copied from
+`carousel.demo.tsx`.
 
 ## See also
 

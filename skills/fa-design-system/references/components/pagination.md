@@ -76,11 +76,16 @@ import { PaginationLine } from "fa-design-system/components/application/paginati
 
 ## Accessibility
 
-- The current page has `aria-current="page"`; prev/next disable at the ends.
+- The current page has `aria-current="page"` and each page number is labelled "Page 3". Prev/next
+  disable at the ends, and page changes stay within 1..total (the advanced page input ignores
+  anything that isn't a number).
 - Built-in labels and visible text are English ("Previous", "Next", "Page 3 of 10", "Rows per page",
   "Go to previous page") with no prop to translate them; tell the person when a Norwegian page
   needs them.
-- `PaginationCardAdvanced`'s first/last and arrow buttons are icon-only without a label from code.
+- Prev/next arrows get the English `aria-label` "Previous Page" / "Next Page" from code (it also
+  replaces the visible "Previous" / "Next" as the name). No exported variant lets you change it.
+- `PaginationCardAdvanced`'s icon-only first/last buttons get the English `aria-label` "First Page" /
+  "Last Page" from code, matching prev/next.
 
 ## Example
 

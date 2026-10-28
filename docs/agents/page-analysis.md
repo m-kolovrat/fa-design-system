@@ -1,7 +1,7 @@
 # Finansavisen page analysis
 
-Working notes behind `skills/fa-design-system/references/page-patterns.md` and the provisional
-rules in `anti-patterns.md`. Not shipped as agent instructions; this is the evidence.
+Working notes behind `skills/fa-design-system/references/page-patterns.md` and the content and
+style rules in `SKILL.md`. Not shipped as agent instructions; this is the evidence.
 
 **Captured:** 2026-10-23 on finansavisen.no at 1440 px and 390 px wide. Logged out: front page,
 Siste nytt, Børs, Aksjer, Rapporter, Forum, and a Kapital opinion article (paywall). Logged in
@@ -109,6 +109,10 @@ round logos and avatars.
 
 ## 5. What this means for the provisional rules
 
+The `anti-*` rules below were in `anti-patterns.md`, since folded into `SKILL.md`: nested cards is
+`layout-one-card-level` in `layout.md`, emoji and hype are `fa-plain-copy`, scroll reveal is part of
+`fa-no-invented-effects`.
+
 | Rule                 | Evidence                                                                              | Decision                                                                                     |
 | :------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------- |
 | anti-icon-decoration | Widget headers use tinted icon tiles (Vinnere, Tapere, Sektorer)                      | **Removed.** Replaced by the widget card header pattern                                      |
@@ -117,7 +121,7 @@ round logos and avatars.
 | anti-emoji           | Forum categories use emoji (🏥 Helse, ⚓ Shipping, 🌍 ESG)                            | **Kept as SHOULD**, forum categories noted as the existing exception; design owner to decide |
 | anti-scroll-reveal   | None seen                                                                             | Kept provisional                                                                             |
 | anti-hype            | Copy is factual ("Lag din egen watchlist – helt gratis")                              | Kept provisional                                                                             |
-| fa-one-primary       | One filled button per area (header "Logg inn", "Lag watchlist", "Ny tråd")            | **Confirmed**                                                                                |
+| button-one-primary   | One filled button per area (header "Logg inn", "Lag watchlist", "Ny tråd")            | **Confirmed**                                                                                |
 | Uppercase text       | Table headers and tickers are uppercase                                               | Allowed for table headers and tickers only (recorded in tokens.md)                           |
 
 ## 6. Gaps to raise with the design owner
