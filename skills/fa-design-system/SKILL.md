@@ -25,7 +25,7 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
   Everything else is shared.
 - Import paths below are the package paths (`fa-design-system/components/...`). Inside the library
   repo itself (its demos and stories), the same files are imported as `@/components/...`.
-- Mentions of `docs/figma-parity.md`, `docs/overrides.md`, `TOKENS.md` and `CLAUDE.md` refer to
+- Mentions of `docs/figma-parity.md`, `docs/overrides.md`, `docs/icons.md`, `TOKENS.md` and `CLAUDE.md` refer to
   files in the library repo. In an app they're under `node_modules/fa-design-system/`; open them
   only when a reference page sends you there.
 
@@ -140,8 +140,8 @@ When two rules pull in different directions, settle it with these questions, in 
    `isInvalid`, `isSelected`), never with classes. Because each component maps states to the Figma
    tokens (Button and ButtonGroup use the disabled tokens, inputs use `opacity-50`).
     - Wrong: `<Button className="pointer-events-none opacity-50">`
-8. **fa-instant-hover** NEVER Add `duration-*` or `ease-*` to a hover or color change; use bare
-   `transition`. The `--transition-duration-*` / `--ease-*` scale is only for movement and overlays
+8. **fa-instant-hover** NEVER Add `duration-*` or `ease-*` to a hover or color change, or use
+   `transition-all`; use bare `transition`. The `--transition-duration-*` / `--ease-*` scale is only for movement and overlays
    (a sliding knob, a modal entering). Because hovers in the library are instant by design.
 9. **fa-focus-visible** MUST Keep every interactive element keyboard-reachable with the focus ring
    (`outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2`). Never
@@ -151,17 +151,14 @@ When two rules pull in different directions, settle it with these questions, in 
     standalone action links ("Se alle", "Les mer"). Plain links inside running text stay `<a>` and
     follow the `prose` styles. Because there is no separate Link component, and a hand-styled link
     misses the focus ring and hover token.
-11. **fa-one-primary** SHOULD Keep one `primary`
-    Button per view or section; other actions are `secondary`, `tertiary` or a link color. Because a
-    single filled button tells the reader what to do next.
-12. **fa-brand-via-prop** MUST Change publication looks only through `brand` and the existing brand
+11. **fa-brand-via-prop** MUST Change publication looks only through `brand` and the existing brand
     config (`siteBrands`). Never restyle a component per brand at the call site. Because overrides
     live in exactly one place (see `docs/overrides.md`).
-13. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix.
+12. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix.
     Because it keeps library components and the primitives they wrap apart.
     - Correct: `import { Button as AriaButton } from "react-aria-components";`
-14. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
-15. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
+13. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
+14. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
     [references/layout.md](references/layout.md): content in bordered cards on the page
     background, cards `gap-6` apart, spans of ⅓, ½, ⅔ or full. Because the same arrangement on
     every page is what makes the publications feel like one product. Flexible for now; report
@@ -202,9 +199,7 @@ Hard limits only; taste rules live in the anti-patterns file. Effects and motion
 component already has (the modal overlay blur, the ticker bar's scroll) are part of the system.
 
 - No gradient, blur, shadow or animation that no component or Figma frame has.
-- No second icon set.
 - No `dark:` color variants, no inline `style={{ color }}`.
-- No `transition-all` on hover.
 
 ## Component index
 
@@ -310,17 +305,5 @@ Each entry links to its reference page. Open it before using the component.
 
 ## Tokens
 
-The full closed list is in [references/tokens.md](references/tokens.md). The short version:
-
-- **Text:** `text-primary` (headings), `text-secondary` (labels), `text-tertiary` (body and
-  supporting text), `text-quaternary` (subtle), `text-brand-*`, `text-error-primary`,
-  `text-success-primary`, `text-warning-primary`, `text-*_on-brand` on brand surfaces.
-- **Icons and other non-text:** `text-fg-*` (`fg-quaternary` for icons in buttons and inputs).
-- **Backgrounds:** `bg-primary` (page), `bg-secondary` (sections), `bg-brand-solid`,
-  `bg-*-primary` / `bg-*-secondary` for status tints.
-- **Borders:** `border-secondary` (default, cards, dividers), `border-primary` (inputs).
-- **Type:** `text-xs` … `text-xl`, `text-display-xs` … `text-display-2xl`.
-- **Radius:** `rounded-xxs` … `rounded-4xl`, `rounded-full`. **Shadow:** `shadow-xs` …
-  `shadow-3xl`. **Page gutter:** `px-4 md:px-8`; page width isn't fixed yet. **Gap between cards:** `gap-6`.
-- **Spacing:** Tailwind's numeric scale (4px base). Arbitrary values such as `p-[13px]` only to
-  match a Figma measurement that has no step.
+The closed list, with what each token is for, the type, radius and shadow scales, spacing, page
+gutter and breakpoints: [references/tokens.md](references/tokens.md).

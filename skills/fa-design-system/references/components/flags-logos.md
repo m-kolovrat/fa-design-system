@@ -50,7 +50,7 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 – til forsiden"` on the link). Because the SVG itself is hidden.
 - **assets-from-figma** NEVER Paste an SVG, add a flag or logo component in this repo, or load one
   from a URL. Because new assets are drawn in Figma, exported to `fa-icons` and released there
-  (see `CLAUDE.md` → Adding or updating icons, flags and logos).
+  (see `docs/icons.md` in the library repo).
 - **payment-icons-label** SHOULD Pair a payment icon with its name in text ("Visa •••• 4242"); the
   icons have no title or `aria-hidden`, so add `aria-hidden` when the name is printed.
 

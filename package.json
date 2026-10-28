@@ -50,6 +50,7 @@
     "skills",
     "docs/figma-parity.md",
     "docs/overrides.md",
+    "docs/icons.md",
     "TOKENS.md",
     "CLAUDE.md",
     "scripts/setup.mjs",
