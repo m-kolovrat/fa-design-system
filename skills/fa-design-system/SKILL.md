@@ -242,7 +242,7 @@ own; use the stand-in and say so.
   overflow (not `AvatarCount`, which is a notification bubble).
 - Progress steps, command bar, activity feed, messaging, calendar views, code snippet, text
   editor, video player: no stand-in. Ask before building.
-- Finansavisen patterns with no component yet: widget card, filter chip, change value (`+1,65 %`),
+- Finansavisen patterns with no component yet: filter chip, change value (`+1,65 %`),
   live indicator, news feed item, article teaser and header, key-figure row, logo
   stack, follow chips, AI prompt chips, paywall box.
   [references/page-patterns.md](references/page-patterns.md) gives the stand-in for each. Compose
@@ -303,6 +303,8 @@ Each entry links to its reference page. Open it before using the component.
   `fa-design-system/components/base/avatar/avatar`
 - [Featured icon](references/components/featured-icon.md): an icon on a tinted shape for emphasis.
   `fa-design-system/components/foundations/featured-icon/featured-icon`
+- [Card header](references/components/card-header.md): the title row of every card, with up to
+  three actions. `fa-design-system/components/application/card-header/card-header`
 - [Tooltip](references/components/tooltip.md): a short label on hover and focus.
   `fa-design-system/components/base/tooltip/tooltip`
 - [Progress](references/components/progress.md): bars and circles.

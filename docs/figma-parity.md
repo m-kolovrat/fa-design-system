@@ -138,6 +138,7 @@ All icons come from `fa-icons` (Figma "Icons V2"). These Untitled UI icons had n
 
 Not code gaps, but worth fixing in Figma:
 
+- **Card header (draft)** on the "Test" page (2026-10-28, first called "Widget header") has the same anatomy as Card header on the Tables page, with md icon-only actions. Merge the two into one Card header; code has `CardHeader` for content cards and still `TableCard.Header` for table cards.
 - **Period selector and \_Period item** live on the "Test" page as drafts (2026-10-28). Move them to the Components section once reviewed; code (`PeriodSelector`) already matches them.
 - **New input sets** (Input date, Input file, Input number, Input tags outer) only have Size / State / Orientation variants. They don't have the Label, Hint text and icon booleans that Input field has.
 - **Small verification code sizes** (xxxs / xxs / xs): the dash between digit groups in the 6-digit variants is scaled down to fit. Code keeps the large dash at every size (no small code example shows one).

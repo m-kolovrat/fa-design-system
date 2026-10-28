@@ -156,7 +156,7 @@ Font: Inter (`font-body`, `font-display`), `font-mono` for code and figures that
 | `text-xs font-medium`      | Meta (time, source, "Publisert …"), badges, table header labels. The most used size                             |
 | `text-sm`                  | Table cells, excerpts, list rows; `font-semibold` for tickers and row titles                                    |
 | `text-md`                  | Text in cards and widgets; `font-bold` for small teaser headlines                                               |
-| `text-lg font-semibold`    | Widget card titles ("Vinnere", "Mest omsatte")                                                                  |
+| `text-lg font-semibold`    | Card titles (`CardHeader`) ("Vinnere", "Mest omsatte")                                                          |
 | `text-lg`                  | Live article body size (18/30); the library `prose` class sets 16/24, so keep `prose` and report the difference |
 | `text-xl`                  | Section titles ("Mest lest"), article subheadings (`font-bold`)                                                 |
 | `text-display-xs` – `-sm`  | Page titles, key figures, article lead (`text-display-xs font-medium text-tertiary`)                            |

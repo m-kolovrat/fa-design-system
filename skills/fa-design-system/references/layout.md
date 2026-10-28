@@ -47,7 +47,8 @@ Rules:
 - **layout-no-card-shadow** SHOULD Separate cards with the gap and the border, not with a shadow.
   Shadows belong to overlays.
 - **layout-card-dividers** SHOULD Separate rows inside a card with `border-b border-secondary`; the
-  padding sits on the card (`p-4 md:p-5`), not on each row.
+  padding sits on the card (`p-4 md:p-5`), or on the body under a `CardHeader` (`px-4 py-5 md:px-6`),
+  not on each row.
 - **layout-reading-page** SHOULD Set article pages on a white page (`bg-primary_alt`); widgets
   inside the article are insets.
 - **layout-emphasis-rare** SHOULD Use at most one or two emphasis cards per view.
@@ -92,6 +93,7 @@ A 6-column grid. A card spans 2 (⅓), 3 (½), 4 (⅔) or 6 (full) columns:
 There is no `Card` component yet; a card is a `section` with the level-2 classes.
 
 ```tsx
+// A card with a CardHeader has no padding of its own; its body is px-4 py-5 md:px-6.
 const card = "rounded-2xl border border-secondary bg-primary_alt p-4 md:p-5";
 
 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
@@ -137,15 +139,15 @@ Data pages and some profiles (an investor in Bjellesauer): full-width cards one 
 
 The same pairings appear on every page. Use these instead of inventing a new arrangement.
 
-| Pairing                    | Example                                                     | How                                                                                                                       |
-| :------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
-| Label over value           | "Åpne" / 7,20 · "Aksjer i porteføljen" / 20                 | Label `text-xs` or `text-sm` `font-medium text-tertiary`, value `font-semibold text-primary` under it. Label always first |
-| Label and value on one row | Pris/bok 1Y ······ 3,59                                     | Label left, value right with `tabular-nums`; divider between rows; help tooltip on the label when it needs explaining     |
-| Meta over title            | 14:44 · DOFG · Børsmelding / DOF Group ASA – Sale of vessel | Meta `text-xs text-tertiary`, items separated by `·`; title under it                                                      |
-| Name over identifier       | Equinor / EQNR · Forumhai / 15:07                           | Name `text-sm font-medium text-primary`, identifier `text-xs text-tertiary` under it                                      |
-| Heading with inline meta   | Siste nytt 23. okt 15:09 · Innlegg og svar (1.912)          | Heading, then the meta on the same baseline in a smaller `text-tertiary` style; counts in parentheses                     |
-| Value with its change      | 7,16 +0,03 (+0,42 %)                                        | Value first, then the signed, colored change: absolute, then percent in parentheses                                       |
-| Card header, right slot    | "Levert av Finwire" · → · "Last ned" · sort dropdown        | Exactly one item: a source credit, a link, one action or one control                                                      |
+| Pairing                    | Example                                                     | How                                                                                                                                                                       |
+| :------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Label over value           | "Åpne" / 7,20 · "Aksjer i porteføljen" / 20                 | Label `text-xs` or `text-sm` `font-medium text-tertiary`, value `font-semibold text-primary` under it. Label always first                                                 |
+| Label and value on one row | Pris/bok 1Y ······ 3,59                                     | Label left, value right with `tabular-nums`; divider between rows; help tooltip on the label when it needs explaining                                                     |
+| Meta over title            | 14:44 · DOFG · Børsmelding / DOF Group ASA – Sale of vessel | Meta `text-xs text-tertiary`, items separated by `·`; title under it                                                                                                      |
+| Name over identifier       | Equinor / EQNR · Forumhai / 15:07                           | Name `text-sm font-medium text-primary`, identifier `text-sm text-tertiary` under it; an instrument adds its logo before (instrument cell in `page-patterns.md`)          |
+| Heading with inline meta   | Siste nytt 23. okt 15:09 · Innlegg og svar (1.912)          | Heading, then the meta on the same baseline in a smaller `text-tertiary` style; counts in parentheses                                                                     |
+| Value with its change      | 7,16 +0,03 (+0,42 %)                                        | Value first, then the signed, colored change: absolute, then percent in parentheses                                                                                       |
+| Card header, right slot    | → · "Last ned" · filter · sort dropdown                     | Up to three actions in `CardHeader`'s `actions`: md icon-only `Button`s, or a labelled `Button` / `Dropdown`; a source credit ("Levert av Finwire") goes in `description` |
 
 And:
 

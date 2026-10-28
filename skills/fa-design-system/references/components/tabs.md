@@ -40,6 +40,10 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
 - **tabs-mobile** SHOULD Below `md`, show a `NativeSelect` with the same options and hide the tabs
   (`max-md:hidden`) when there are more than three or four tabs. Because tabs don't scroll or wrap,
   and the storybook demos use exactly this pattern.
+- **tabs-type-by-place** MUST Pick the type by where the tabs sit, always `size="sm"`: near the top
+  of the page, switching the whole content below (instrument sub-pages, Bjellesauer views):
+  horizontal `type="underline"`; inside a card: `type="button-minimal"`, in the card body under the
+  `CardHeader`. Because the same job then looks the same on every page.
 - **tabs-as-links** Tabs can optionally be page navigation. The default is tabs that switch
   panels on one page; make them link tabs only when each tab has its own URL (the sub-pages of an
   instrument or of Bjellesauer). Then give each `Tabs.Item` an `href`, set `selectedKey` on `Tabs`

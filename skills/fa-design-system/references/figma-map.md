@@ -74,6 +74,16 @@ Read every table the same way:
 | \_Button group base `Icon=Dot` / `Trailing` | `iconLeading={<Dot … />}` / `iconTrailing={Icon}`                                               |
 | \_Button group base `State=Disabled`        | `isDisabled` on the item                                                                        |
 
+## Card header
+
+| Figma                                 | Code                                                                            |
+| ------------------------------------- | ------------------------------------------------------------------------------- |
+| Card header (draft on "Test")         | `CardHeader`, `fa-design-system/components/application/card-header/card-header` |
+| `Title` / `Supporting text` / `Badge` | `title` / `description` / `badge`                                               |
+| `Action 1` … `Action 3`               | the buttons passed in `actions` (md icon-only `Button`s; `Hierarchy` → `color`) |
+| `Divider`                             | `divider`                                                                       |
+| `Breakpoint=Mobile` / `Desktop`       | nothing: 16px sides below `md`, 24px from `md`                                  |
+
 ## Period selector
 
 Figma draft on the "Test" page.
@@ -399,18 +409,18 @@ icon); the other badge exports take only `color="gray"`.
 
 ## Tables
 
-| Figma                                  | Code                                                                                             |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| Table                                  | `Table` (+ `TableCard.Root`), `fa-design-system/components/application/table/table`              |
-| `Example=…`                            | content only; table.md has the patterns                                                          |
-| `Dividers=Divider line`                | default                                                                                          |
-| `Dividers=Alternating fills`           | no prop, see Mismatches                                                                          |
-| Table header cell                      | `Table.Head` (`label`, `tooltip`)                                                                |
-| `Size=sm/md`                           | `size` on `Table` (or `Table.Header` / `Table.Row` / `Table.Cell`)                               |
-| `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                 |
-| Table cell                             | `Table.Cell` with the content composed inside (decided, parity §6)                               |
-| Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                        |
-| Card header                            | closest: `TableCard.Header` (`title`, `badge`, `description`, `contentTrailing`), see Mismatches |
+| Figma                                  | Code                                                                                                                                                            |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Table                                  | `Table` (+ `TableCard.Root`), `fa-design-system/components/application/table/table`                                                                             |
+| `Example=…`                            | content only; table.md has the patterns                                                                                                                         |
+| `Dividers=Divider line`                | default                                                                                                                                                         |
+| `Dividers=Alternating fills`           | no prop, see Mismatches                                                                                                                                         |
+| Table header cell                      | `Table.Head` (`label`, `tooltip`)                                                                                                                               |
+| `Size=sm/md`                           | `size` on `Table` (or `Table.Header` / `Table.Row` / `Table.Cell`)                                                                                              |
+| `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                                                                                |
+| Table cell                             | `Table.Cell` with the content composed inside (decided, parity §6)                                                                                              |
+| Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                                                                                       |
+| Card header                            | `CardHeader` for content cards (`title`, `badge`, `description`, `actions`, `divider`); in a table card, `TableCard.Header` (`contentTrailing`), see Mismatches |
 
 ## Tabs, tags, tooltips
 
@@ -476,7 +486,6 @@ Report these; use the stand-in only where one is given (SKILL.md → Coverage ga
 - **Social button groups**: no stand-in; a row of `SocialButton`s is the closest.
 - **Date picker modal**: no stand-in; `DatePicker` / `DateRangePicker` open a popover at every width.
 - **Nav featured cards** (13 types): two exist only as Storybook demos, none exported. Parity §2.
-- **Card header** as a standalone card header: only `TableCard.Header` exists.
 - **Mac App Store** badge. Parity §2.
 - **Missing From Code pages**: Activity feeds, Calendars (month / week / day views), Code
   snippets, Command menus, Messaging, Progress steps, Text editors, Video players. No stand-in; ask
@@ -505,7 +514,7 @@ Figma options with no code value, and code values Figma lacks. Don't map them yo
   (`components/application/table/table.demo.tsx:172`).
 - Table cell lead action `Type=Radio/Toggle`: only checkbox selection
   (`components/application/table/table.tsx:151`).
-- Card header `Avatar`, `Dropdown icon`, `Divider=False`: `TableCard.Header` has none of them
+- Card header `Avatar`, `Dropdown icon`: neither `CardHeader` nor `TableCard.Header` has them; `Divider=False` exists only on `CardHeader`
   (`components/application/table/table.tsx:62`).
 - Header `Buy=False`: "Kjøp" always renders
   (`components/application/site-header/site-header.tsx:226`).
