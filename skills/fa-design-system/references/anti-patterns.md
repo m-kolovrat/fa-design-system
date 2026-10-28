@@ -48,8 +48,10 @@ wrong: the component wins. Taste rules not yet checked against the live pages ar
   (`1 234,50 kr`, `+2,4 %`) and dates near today. Because Finansavisen content is long
   Norwegian headlines, company names and figures; shorter or English sample text hides wrapping and
   number alignment problems.
-- **anti-untitled-examples** NEVER Copy Untitled UI sample content (`olivia@untitledui.com`,
-  "Olivia Rhye", Untitled logos). Because it reads as a template, not Finansavisen.
+- **anti-external-sample-images** NEVER Load sample avatars or logos from another site. In the
+  library's stories and demos, use the placeholder portraits in `public/images/avatars/`
+  (`kari-nordmann.svg` …); in an app, use `initials` on `Avatar` until real photos exist. Because
+  an outside image can disappear or change, and it ships someone else's content.
 
 ## Behavior
 

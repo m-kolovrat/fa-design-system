@@ -161,7 +161,7 @@ export const CustomBody = () => (
                     description="They’ll get an email with a link to join your workspace."
                 />
                 <div className="flex flex-col gap-4 px-4 sm:px-6">
-                    <Input label="Email" placeholder="olivia@untitledui.com" />
+                    <Input label="Email" placeholder="kari.nordmann@finansavisen.no" />
                 </div>
                 <PromptModalActions>
                     <Button size="lg" color="secondary" onClick={close}>

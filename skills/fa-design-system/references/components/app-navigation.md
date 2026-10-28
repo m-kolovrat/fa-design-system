@@ -2,7 +2,8 @@
 
 Sidebar and top-bar navigation for app-style, logged-in screens (portfolio tools, account
 settings, internal dashboards). Below `lg` each one turns into a mobile header with a drawer.
-Figma: the Untitled UI sidebar and header navigation frames (see the story `design` ids).
+Figma: the sidebar and header navigation frames (see the story `design` ids); they haven't had
+a Fa redesign yet.
 
 **Not for the newspaper.** finansavisen.no, Kapital and Motor pages use
 [site-header](site-header.md) and [site-footer](site-footer.md).
@@ -46,8 +47,8 @@ import { SidebarNavigationSlim } from "fa-design-system/components/application/a
 - **app-nav-account-card** MUST Never ship the built-in account card with its placeholder people.
   Use `showAccountCard={false}` on `SidebarNavigationSimple`, or pass real `accountItems` and
   `selectedAccountId` to `SidebarNavigationDualTier`. The other sidebars always render placeholder
-  accounts: tell the person before using them. Because `NavAccountCard` defaults to Untitled UI
-  sample users.
+  accounts: tell the person before using them. Because `NavAccountCard` defaults to placeholder
+  users.
 - **app-nav-header-actions** MUST Pass `actions` to `HeaderNavigationBase`. Because the default
   actions link to demo routes (`/settings-01`, `/notifications-01`) with a hard-coded "2" badge.
 - **app-nav-items-data** MUST Describe items as `NavItemType` (`label`, `href`, `icon`, `badge`,
@@ -120,7 +121,7 @@ const items: NavItemType[] = [
 
 ## Figma parity
 
-Story frames point at the Untitled UI navigation frames. `docs/figma-parity.md` §2 lists navigation
+Story frames point at navigation frames that haven't had a Fa redesign yet. `docs/figma-parity.md` §2 lists navigation
 featured cards as only partly in code (two demo cards in `featured-cards.demo.tsx`, not exported
 components); don't import them as library parts.
 

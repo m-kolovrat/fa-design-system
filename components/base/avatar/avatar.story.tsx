@@ -13,7 +13,7 @@ import { AvatarLabelGroup } from "./avatar-label-group";
 
 const sizes = ["xs", "sm", "md", "lg", "xl", "2xl"] as const;
 
-const AVATAR_SRC = "https://www.untitledui.com/images/avatars/lana-steiner?fm=webp&q=80";
+const AVATAR_SRC = "/images/avatars/ingrid-berg.svg";
 
 /** Small captioned cell so it's obvious which avatar is which. */
 const Labeled = ({ label, children }: { label: string; children: ReactNode }) => (
@@ -98,7 +98,7 @@ export const LabelGroup: Story = {
     render: () => (
         <div className="flex flex-col gap-6">
             {(["sm", "md", "lg", "xl"] as const).map((size) => (
-                <AvatarLabelGroup key={size} size={size} src={AVATAR_SRC} title="Lana Steiner" subtitle="lana@untitledui.com" />
+                <AvatarLabelGroup key={size} size={size} src={AVATAR_SRC} title="Ingrid Berg" subtitle="ingrid.berg@finansavisen.no" />
             ))}
         </div>
     ),

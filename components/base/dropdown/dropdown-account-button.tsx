@@ -8,7 +8,7 @@ import { Button } from "@/components/base/buttons/button";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
 
 export const DropdownAccountButton = () => {
-    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["olivia"]));
+    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["kari"]));
     const [selectedTheme, setSelectedTheme] = useState<Selection>(new Set(["light-mode"]));
 
     return (
@@ -49,11 +49,11 @@ export const DropdownAccountButton = () => {
                             Switch Account
                         </Dropdown.SectionHeader>
 
-                        <Dropdown.Item id="olivia" avatarUrl="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80" selectionIndicator="radio">
-                            Olivia Rhye
+                        <Dropdown.Item id="kari" avatarUrl="/images/avatars/kari-nordmann.svg" selectionIndicator="radio">
+                            Kari Nordmann
                         </Dropdown.Item>
-                        <Dropdown.Item id="sienna" avatarUrl="https://www.untitledui.com/images/avatars/sienna-hewitt?fm=webp&q=80" selectionIndicator="radio">
-                            Sienna Hewitt
+                        <Dropdown.Item id="thea" avatarUrl="/images/avatars/thea-haugen.svg" selectionIndicator="radio">
+                            Thea Haugen
                         </Dropdown.Item>
                     </Dropdown.Section>
                     <Dropdown.Item icon={Plus}>Add account</Dropdown.Item>

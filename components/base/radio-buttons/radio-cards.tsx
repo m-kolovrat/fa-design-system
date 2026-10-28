@@ -79,7 +79,7 @@ interface RadioCardProps extends Omit<AriaRadioProps, "children"> {
      */
     type?: "radio" | "checkbox" | "icon" | "avatar" | "payment" | "card";
     title: ReactNode;
-    /** Shown inline after the title, e.g. "$10/month" or "@olivia". Not used by `payment` and `card`. */
+    /** Shown inline after the title, e.g. "$10/month" or "@kari". Not used by `payment` and `card`. */
     subtitle?: ReactNode;
     description?: ReactNode;
     /** Featured icon for `icon` and `card`. */

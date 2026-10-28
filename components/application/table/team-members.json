@@ -1,11 +1,11 @@
 {
     "items": [
         {
-            "name": "Olivia Rhye",
-            "username": "@olivia",
+            "name": "Kari Nordmann",
+            "username": "@kari",
             "status": "active",
-            "role": "Product Designer",
-            "email": "olivia@untitledui.com",
+            "role": "Designer",
+            "email": "kari.nordmann@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -15,14 +15,14 @@
                 { "name": "Engineering", "color": "warning" },
                 { "name": "Finance", "color": "orange-dark" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/kari-nordmann.svg"
         },
         {
-            "name": "Phoenix Baker",
-            "username": "@phoenix",
+            "name": "Ola Hansen",
+            "username": "@ola",
             "status": "active",
-            "role": "Product Manager",
-            "email": "phoenix@untitledui.com",
+            "role": "Redaktør",
+            "email": "ola.hansen@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -32,14 +32,14 @@
                 { "name": "Engineering", "color": "warning" },
                 { "name": "Finance", "color": "orange-dark" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/phoenix-baker?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/ola-hansen.svg"
         },
         {
-            "name": "Lana Steiner",
-            "username": "@lana",
+            "name": "Ingrid Berg",
+            "username": "@ingrid",
             "status": "active",
-            "role": "Frontend Developer",
-            "email": "lana@untitledui.com",
+            "role": "Utvikler",
+            "email": "ingrid.berg@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -47,43 +47,28 @@
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/lana-steiner?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/ingrid-berg.svg"
         },
         {
-            "name": "Demi Wilkinson",
-            "username": "@demi",
+            "name": "Magnus Johansen",
+            "username": "@magnus",
             "status": "active",
-            "role": "Backend Developer",
-            "email": "demi@untitledui.com",
+            "role": "Utvikler",
+            "email": "magnus.johansen@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
                 { "name": "Marketing", "color": "pink" },
                 { "name": "Support", "color": "success" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/demi-wilkinson?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/magnus-johansen.svg"
         },
         {
-            "name": "Candice Wu",
-            "username": "@candice",
+            "name": "Sofie Larsen",
+            "username": "@sofie",
             "status": "active",
-            "role": "Fullstack Developer",
-            "email": "candice@untitledui.com",
-            "teams": [
-                { "name": "Design", "color": "purple" },
-                { "name": "Product", "color": "blue-light" },
-                { "name": "Marketing", "color": "pink" },
-                { "name": "Sales", "color": "error" },
-                { "name": "Support", "color": "success" }
-            ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/candice-wu"
-        },
-        {
-            "name": "Natali Craig",
-            "username": "@natali",
-            "status": "active",
-            "role": "UX Designer",
-            "email": "natali@untitledui.com",
+            "role": "Utvikler",
+            "email": "sofie.larsen@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -91,14 +76,29 @@
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/natali-craig?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/sofie-larsen.svg"
         },
         {
-            "name": "Drew Cano",
-            "username": "@drew",
+            "name": "Henrik Olsen",
+            "username": "@henrik",
             "status": "active",
-            "role": "UX Copywriter",
-            "email": "drew@untitledui.com",
+            "role": "Designer",
+            "email": "henrik.olsen@finansavisen.no",
+            "teams": [
+                { "name": "Design", "color": "purple" },
+                { "name": "Product", "color": "blue-light" },
+                { "name": "Marketing", "color": "pink" },
+                { "name": "Sales", "color": "error" },
+                { "name": "Support", "color": "success" }
+            ],
+            "avatarUrl": "/images/avatars/henrik-olsen.svg"
+        },
+        {
+            "name": "Ida Pedersen",
+            "username": "@ida",
+            "status": "active",
+            "role": "Journalist",
+            "email": "ida.pedersen@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -108,14 +108,14 @@
                 { "name": "Engineering", "color": "warning" },
                 { "name": "Finance", "color": "orange-dark" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/drew-cano"
+            "avatarUrl": "/images/avatars/ida-pedersen.svg"
         },
         {
-            "name": "Orlando Diggs",
-            "username": "@orlando",
+            "name": "Erik Nilsen",
+            "username": "@erik",
             "status": "active",
-            "role": "UI Designer",
-            "email": "orlando@untitledui.com",
+            "role": "Analytiker",
+            "email": "erik.nilsen@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -125,14 +125,14 @@
                 { "name": "Engineering", "color": "warning" },
                 { "name": "Finance", "color": "orange-dark" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/orlando-diggs?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/erik-nilsen.svg"
         },
         {
-            "name": "Andi Lane",
-            "username": "@andi",
+            "name": "Nora Kristiansen",
+            "username": "@nora",
             "status": "active",
-            "role": "Product Manager",
-            "email": "andi@untitledui.com",
+            "role": "Journalist",
+            "email": "nora.kristiansen@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -142,14 +142,14 @@
                 { "name": "Engineering", "color": "warning" },
                 { "name": "Finance", "color": "orange-dark" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/andi-lane?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/nora-kristiansen.svg"
         },
         {
-            "name": "Kate Morrison",
-            "username": "@kate",
+            "name": "Jonas Andersen",
+            "username": "@jonas",
             "status": "active",
-            "role": "QA Engineer",
-            "email": "kate@untitledui.com",
+            "role": "Annonseselger",
+            "email": "jonas.andersen@finansavisen.no",
             "teams": [
                 { "name": "Design", "color": "purple" },
                 { "name": "Product", "color": "blue-light" },
@@ -157,7 +157,7 @@
                 { "name": "Sales", "color": "error" },
                 { "name": "Support", "color": "success" }
             ],
-            "avatarUrl": "https://www.untitledui.com/images/avatars/kate-morrison?fm=webp&q=80&w=100"
+            "avatarUrl": "/images/avatars/jonas-andersen.svg"
         }
     ],
     "total": 10

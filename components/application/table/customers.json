@@ -1,67 +1,67 @@
 {
     "items": [
         {
-            "name": "Ephemeral",
-            "website": "ephemeral.io",
+            "name": "Equinor",
+            "website": "equinor.com",
             "status": "Customer",
-            "aboutTitle": "Content curating app",
-            "aboutDescription": "Brings all your news into one place",
+            "aboutTitle": "Energy",
+            "aboutDescription": "Oil, gas and renewables",
             "licenseUse": 70,
-            "logoUrl": "https://www.untitledui.com/logos/images/Ephemeral.jpg"
+            "initials": "EQ"
         },
         {
-            "name": "Stack3d Lab",
-            "website": "stack3dlab.com",
+            "name": "DNB",
+            "website": "dnb.no",
             "status": "Churned",
-            "aboutTitle": "Design software",
-            "aboutDescription": "Super lightweight design app",
+            "aboutTitle": "Banking",
+            "aboutDescription": "Norway's largest financial group",
             "licenseUse": 60,
-            "logoUrl": "https://www.untitledui.com/logos/images/3Portals.jpg"
+            "initials": "DN"
         },
         {
-            "name": "Warpspeed",
-            "website": "getwarpspeed.com",
+            "name": "Telenor",
+            "website": "telenor.com",
             "status": "Customer",
-            "aboutTitle": "Data prediction",
-            "aboutDescription": "AI and machine learning data",
+            "aboutTitle": "Telecom",
+            "aboutDescription": "Mobile and broadband services",
             "licenseUse": 30,
-            "logoUrl": "https://www.untitledui.com/logos/images/Warpspeed.jpg"
+            "initials": "TE"
         },
         {
-            "name": "CloudWatch",
-            "website": "cloudwatch.app",
+            "name": "Norsk Hydro",
+            "website": "hydro.com",
             "status": "Customer",
-            "aboutTitle": "Productivity app",
-            "aboutDescription": "Time management and productivity",
+            "aboutTitle": "Aluminium",
+            "aboutDescription": "Aluminium and renewable energy",
             "licenseUse": 80,
-            "logoUrl": "https://www.untitledui.com/logos/images/CloudWatch.jpg"
+            "initials": "NH"
         },
         {
-            "name": "ContrastAI",
-            "website": "contrastai.com",
+            "name": "Orkla",
+            "website": "orkla.com",
             "status": "Churned",
-            "aboutTitle": "Web app integrations",
-            "aboutDescription": "Connect web apps seamlessly",
+            "aboutTitle": "Consumer goods",
+            "aboutDescription": "Branded food and household goods",
             "licenseUse": 20,
-            "logoUrl": "https://www.untitledui.com/logos/images/ContrastAI.jpg"
+            "initials": "OR"
         },
         {
-            "name": "Convergence",
-            "website": "convergence.io",
+            "name": "Mowi",
+            "website": "mowi.com",
             "status": "Customer",
-            "aboutTitle": "Sales CRM",
-            "aboutDescription": "Web-based sales doc management",
+            "aboutTitle": "Seafood",
+            "aboutDescription": "Farmed Atlantic salmon",
             "licenseUse": 10,
-            "logoUrl": "https://www.untitledui.com/logos/images/Convergence.jpg"
+            "initials": "MO"
         },
         {
-            "name": "Sisyphus",
-            "website": "sisyphus.com",
+            "name": "Kongsberg Gruppen",
+            "website": "kongsberg.com",
             "status": "Customer",
-            "aboutTitle": "Automation and workflow",
-            "aboutDescription": "Time tracking, invoicing and expenses",
+            "aboutTitle": "Technology",
+            "aboutDescription": "Maritime, defence and digital",
             "licenseUse": 40,
-            "logoUrl": "https://www.untitledui.com/logos/images/Sisyphus.jpg"
+            "initials": "KG"
         }
     ],
     "total": 7

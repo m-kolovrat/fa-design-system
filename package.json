@@ -1,7 +1,7 @@
 {
   "name": "fa-design-system",
   "version": "0.1.1",
-  "description": "The Fa Design System: React components built with Tailwind CSS and React Aria, kept in sync with the Fa Design System Figma file. Based on Untitled UI React (MIT).",
+  "description": "The Fa Design System: React components built with Tailwind CSS and React Aria, kept in sync with the Fa Design System Figma file.",
   "sideEffects": [
     "**/*.css"
   ],

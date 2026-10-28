@@ -10,23 +10,23 @@ import { RadioButtonBase } from "../radio-buttons/radio-buttons";
 
 const accounts = [
     {
-        id: "caitlyn",
-        name: "Caitlyn King",
-        email: "caitlyn@untitledui.com",
-        avatar: "https://www.untitledui.com/images/avatars/caitlyn-king?fm=webp&q=80",
+        id: "sander",
+        name: "Sander Bakken",
+        email: "sander.bakken@finansavisen.no",
+        avatar: "/images/avatars/sander-bakken.svg",
         status: "online",
     },
     {
-        id: "sienna",
-        name: "Sienna Hewitt",
-        email: "sienna@untitledui.com",
-        avatar: "https://www.untitledui.com/images/avatars/transparent/sienna-hewitt?bg=%23E0E0E0",
+        id: "thea",
+        name: "Thea Haugen",
+        email: "thea.haugen@finansavisen.no",
+        avatar: "/images/avatars/thea-haugen.svg",
         status: "online",
     },
 ];
 
 export const DropdownAccountBreadcrumb = () => {
-    const [selectedAccountKey, setSelectedAccountKey] = useState<string>("caitlyn");
+    const [selectedAccountKey, setSelectedAccountKey] = useState<string>("sander");
 
     const selectedAccount = accounts.find((account) => account.id === selectedAccountKey);
 

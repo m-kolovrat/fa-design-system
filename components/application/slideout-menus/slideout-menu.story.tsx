@@ -25,8 +25,8 @@ export const Default = () => (
                         <p className="text-sm text-tertiary">A right-hand slideout built from the SlideoutMenu primitive.</p>
                     </SlideoutMenu.Header>
                     <SlideoutMenu.Content>
-                        <Input name="name" label="Name" placeholder="Olivia Rhye" />
-                        <Input name="email" type="email" label="Email" placeholder="olivia@untitledui.com" />
+                        <Input name="name" label="Name" placeholder="Kari Nordmann" />
+                        <Input name="email" type="email" label="Email" placeholder="kari.nordmann@finansavisen.no" />
                     </SlideoutMenu.Content>
                     <SlideoutMenu.Footer>
                         <div className="flex justify-end gap-3">
