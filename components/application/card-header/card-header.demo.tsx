@@ -22,9 +22,9 @@ const winners = [
 /** An instrument: logo, full name over the ticker (the Figma table cell "Avatar" type). */
 const Instrument = ({ name, ticker }: { name: string; ticker: string }) => (
     <div className="flex min-w-0 items-center gap-3">
-        <Avatar initials={ticker.slice(0, 2)} alt="" size="md" />
+        <Avatar initials={ticker.slice(0, 2)} alt="" size="sm" />
         <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-primary">{name}</p>
+            <p className="truncate text-sm text-primary">{name}</p>
             <p className="text-sm text-tertiary">{ticker}</p>
         </div>
     </div>
@@ -50,7 +50,7 @@ export const CardWithLink = () => (
         <CardHeader
             titleId="card-winners"
             title="Vinnere"
-            actions={<Button color="secondary" size="md" iconLeading={ChevronRight} href="/bors/vinnere" aria-label="Se alle vinnere" />}
+            actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="/bors/vinnere" aria-label="Se alle vinnere" />}
         />
         <div className={cardBody}>
             <InstrumentRows />
@@ -58,18 +58,17 @@ export const CardWithLink = () => (
     </section>
 );
 
-/** Two actions and supporting text. */
+/** Two actions and a badge. */
 export const CardWithActions = () => (
     <section aria-labelledby="card-news" className={cx(card, "w-full max-w-2xl")}>
         <CardHeader
             titleId="card-news"
             title="Siste nytt"
             badge="Live"
-            description="Børsmeldinger og nyheter om selskapene i watchlisten din."
             actions={
                 <>
-                    <Button color="secondary" size="md" iconLeading={Filter} aria-label="Filtrer" />
-                    <Button color="secondary" size="md" iconLeading={Download} aria-label="Last ned" />
+                    <Button color="secondary" size="sm" iconLeading={Filter} aria-label="Filtrer" />
+                    <Button color="secondary" size="sm" iconLeading={Download} aria-label="Last ned" />
                 </>
             }
         />
@@ -85,9 +84,9 @@ export const CardWithTabs = () => (
             title="Bjellesauenes handler"
             actions={
                 <>
-                    <Button color="tertiary" size="md" iconLeading={Settings} aria-label="Innstillinger" />
-                    <Button color="secondary" size="md" iconLeading={Download} aria-label="Last ned" />
-                    <Button color="primary" size="md" iconLeading={Plus} aria-label="Legg til i watchlist" />
+                    <Button color="tertiary" size="sm" iconLeading={Settings} aria-label="Innstillinger" />
+                    <Button color="secondary" size="sm" iconLeading={Download} aria-label="Last ned" />
+                    <Button color="primary" size="sm" iconLeading={Plus} aria-label="Legg til i watchlist" />
                 </>
             }
         />

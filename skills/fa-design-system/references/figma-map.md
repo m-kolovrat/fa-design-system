@@ -76,13 +76,13 @@ Read every table the same way:
 
 ## Card header
 
-| Figma                                 | Code                                                                            |
-| ------------------------------------- | ------------------------------------------------------------------------------- |
-| Card header (draft on "Test")         | `CardHeader`, `fa-design-system/components/application/card-header/card-header` |
-| `Title` / `Supporting text` / `Badge` | `title` / `description` / `badge`                                               |
-| `Action 1` … `Action 3`               | the buttons passed in `actions` (md icon-only `Button`s; `Hierarchy` → `color`) |
-| `Divider`                             | `divider`                                                                       |
-| `Breakpoint=Mobile` / `Desktop`       | nothing: 16px sides below `md`, 24px from `md`                                  |
+| Figma                           | Code                                                                            |
+| ------------------------------- | ------------------------------------------------------------------------------- |
+| Card header (draft on "Test")   | `CardHeader`, `fa-design-system/components/application/card-header/card-header` |
+| `Title` / `Badge`               | `title` / `badge`                                                               |
+| `Action 1` … `Action 3`         | the buttons passed in `actions` (sm icon-only `Button`s; `Hierarchy` → `color`) |
+| `Divider`                       | `divider`                                                                       |
+| `Breakpoint=Mobile` / `Desktop` | nothing: 16px sides below `md`, 24px from `md`                                  |
 
 ## Period selector
 
@@ -409,18 +409,18 @@ icon); the other badge exports take only `color="gray"`.
 
 ## Tables
 
-| Figma                                  | Code                                                                                                                                                            |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Table                                  | `Table` (+ `TableCard.Root`), `fa-design-system/components/application/table/table`                                                                             |
-| `Example=…`                            | content only; table.md has the patterns                                                                                                                         |
-| `Dividers=Divider line`                | default                                                                                                                                                         |
-| `Dividers=Alternating fills`           | no prop, see Mismatches                                                                                                                                         |
-| Table header cell                      | `Table.Head` (`label`, `tooltip`)                                                                                                                               |
-| `Size=sm/md`                           | `size` on `Table` (or `Table.Header` / `Table.Row` / `Table.Cell`)                                                                                              |
-| `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                                                                                |
-| Table cell                             | `Table.Cell` with the content composed inside (decided, parity §6)                                                                                              |
-| Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                                                                                       |
-| Card header                            | `CardHeader` for content cards (`title`, `badge`, `description`, `actions`, `divider`); in a table card, `TableCard.Header` (`contentTrailing`), see Mismatches |
+| Figma                                  | Code                                                                                                                                             |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Table                                  | `Table` (+ `TableCard.Root`), `fa-design-system/components/application/table/table`                                                              |
+| `Example=…`                            | content only; table.md has the patterns                                                                                                          |
+| `Dividers=Divider line`                | default                                                                                                                                          |
+| `Dividers=Alternating fills`           | no prop, see Mismatches                                                                                                                          |
+| Table header cell                      | `Table.Head` (`label`, `tooltip`)                                                                                                                |
+| `Size=sm/md`                           | `size` on `Table` (or `Table.Header` / `Table.Row` / `Table.Cell`)                                                                               |
+| `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                                                                 |
+| Table cell                             | `Table.Cell`: `Lead text` / `Supporting text` / the avatar or icon → `leadText` / `supportingText` / `leading`; other types composed inside      |
+| Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                                                                        |
+| Card header                            | `CardHeader` for content cards (`title`, `badge`, `actions`, `divider`); in a table card, `TableCard.Header` (`contentTrailing`), see Mismatches |
 
 ## Tabs, tags, tooltips
 

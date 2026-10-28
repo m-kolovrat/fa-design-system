@@ -314,10 +314,22 @@ export interface TableCellProps extends AriaCellProps, Omit<TdHTMLAttributes<HTM
     ref?: Ref<HTMLTableCellElement>;
     /** Overrides the size from the table or card. */
     size?: "sm" | "md";
+    /** The main line (Figma "Lead text"): `text-sm text-primary`, regular. */
+    leadText?: ReactNode;
+    /** A second line under the lead text (Figma "Supporting text"): `text-sm text-tertiary`. */
+    supportingText?: ReactNode;
+    /**
+     * A visual before the text (Figma `Type=Avatar`, `File type icon`, `Payment method`): an `Avatar` the size of
+     * the cell (`sm` in an sm table, `md` in an md one), a file-type icon or a payment icon.
+     */
+    leading?: ReactNode;
 }
 
-/** `Table.Cell`: free content (text, `Avatar`, `Badge`, `ButtonUtility`), `text-sm text-tertiary` by default. */
-const TableCell = ({ className, children, size: sizeProp, ...props }: TableCellProps) => {
+/**
+ * `Table.Cell`: `text-sm text-primary` by default. Give it `leadText`, `supportingText` and `leading` for the Figma
+ * text and avatar cells; put anything else (a `Badge`, a change value, `ButtonUtility`) in `children`.
+ */
+const TableCell = ({ className, children, size: sizeProp, leadText, supportingText, leading, ...props }: TableCellProps) => {
     const context = useContext(TableContext);
     const { selectionBehavior } = useTableOptions();
 
@@ -328,7 +340,7 @@ const TableCell = ({ className, children, size: sizeProp, ...props }: TableCellP
             {...props}
             className={(state) =>
                 cx(
-                    "relative text-sm text-tertiary outline-focus-ring focus-visible:z-1 focus-visible:outline-2 focus-visible:-outline-offset-2",
+                    "relative text-sm text-primary outline-focus-ring focus-visible:z-1 focus-visible:outline-2 focus-visible:-outline-offset-2",
                     size === "sm" && "px-5 py-3",
                     size === "md" && "px-6 py-4",
 
@@ -338,7 +350,26 @@ const TableCell = ({ className, children, size: sizeProp, ...props }: TableCellP
                 )
             }
         >
-            {children}
+            {(state) => {
+                const content = typeof children === "function" ? children(state) : children;
+                if (leadText === undefined && supportingText === undefined && leading === undefined) return content;
+
+                // Figma Table cell: the leading visual 12px before a stack of lead and supporting text, each one line.
+                // `w-0 min-w-full` keeps the text out of the column's natural width, so a long name truncates to the
+                // column instead of widening it; give the column its width on `Table.Head` (`w-full`, `w-1/3`, `min-w-48`).
+                return (
+                    <div className="flex w-0 min-w-full items-center gap-3">
+                        {leading && <div className="shrink-0">{leading}</div>}
+                        {(leadText !== undefined || supportingText !== undefined) && (
+                            <div className="min-w-0 flex-1">
+                                {leadText !== undefined && <p className="truncate text-sm text-primary">{leadText}</p>}
+                                {supportingText !== undefined && <p className="truncate text-sm text-tertiary">{supportingText}</p>}
+                            </div>
+                        )}
+                        {content}
+                    </div>
+                );
+            }}
         </AriaCell>
     );
 };

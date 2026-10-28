@@ -71,15 +71,12 @@ export const Table01DividerLine = () => {
                 <Table.Body items={sortedItems}>
                     {(item) => (
                         <Table.Row id={item.username}>
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar src={item.avatarUrl} alt={item.name} size="md" />
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.name}</p>
-                                        <p className="text-sm text-tertiary">{item.username}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="md" />}
+                                leadText={item.name}
+                                supportingText={item.username}
+                            />
                             <Table.Cell>
                                 <BadgeWithDot size="sm" color={item.status === "active" ? "success" : "gray"} type="modern">
                                     {item.status === "active" ? "Active" : "Inactive"}
@@ -170,15 +167,12 @@ export const Table01AlternatingFills = () => {
                 <Table.Body items={sortedItems}>
                     {(item) => (
                         <Table.Row id={item.username} className="odd:bg-secondary">
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar src={item.avatarUrl} alt={item.name} size="md" />
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.name}</p>
-                                        <p className="text-sm text-tertiary">{item.username}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="md" />}
+                                leadText={item.name}
+                                supportingText={item.username}
+                            />
                             <Table.Cell>
                                 <BadgeWithDot size="sm" color={item.status === "active" ? "success" : "gray"} type="modern">
                                     {item.status === "active" ? "Active" : "Inactive"}
@@ -270,12 +264,11 @@ export const Table01DividerLineSm = () => {
                 <Table.Body items={sortedItems}>
                     {(item) => (
                         <Table.Row id={item.username}>
-                            <Table.Cell>
-                                <div className="flex items-center gap-2">
-                                    <Avatar src={item.avatarUrl} alt={item.name} size="sm" />
-                                    <p className="text-sm font-medium whitespace-nowrap text-primary">{item.name}</p>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="sm" />}
+                                leadText={item.name}
+                            />
                             <Table.Cell>
                                 <BadgeWithDot size="sm" color={item.status === "active" ? "success" : "gray"} type="modern">
                                     {item.status === "active" ? "Active" : "Inactive"}
@@ -357,9 +350,9 @@ export const Table02DividerLine = () => {
 
             <Table aria-label="Team members" selectionMode="none" sortDescriptor={sortDescriptor} onSortChange={setSortDescriptor}>
                 <Table.Header>
-                    <Table.Head id="name" label="Company" isRowHeader allowsSorting />
+                    <Table.Head id="name" label="Company" isRowHeader allowsSorting className="w-full max-w-1/4" />
                     <Table.Head id="status" label="Status" allowsSorting />
-                    <Table.Head id="aboutTitle" label="About" allowsSorting />
+                    <Table.Head id="aboutTitle" label="About" allowsSorting className="w-1/4" />
                     <Table.Head id="users" label="Users" className="md:hidden xl:table-cell" />
                     <Table.Head id="licenseUse" label="License use" allowsSorting className="min-w-55" />
                     <Table.Head id="actions" />
@@ -367,24 +360,18 @@ export const Table02DividerLine = () => {
                 <Table.Body items={sortedItems}>
                     {(item) => (
                         <Table.Row id={item.name}>
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar initials={item.initials} alt={item.name} size="md" />
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.name}</p>
-                                        <p className="text-sm text-tertiary">{item.website}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={<Avatar initials={item.initials} alt={item.name} size="md" />}
+                                leadText={item.name}
+                                supportingText={item.website}
+                            />
                             <Table.Cell>
                                 <BadgeWithDot size="sm" color={item.status === "Customer" ? "success" : "gray"}>
                                     {item.status}
                                 </BadgeWithDot>
                             </Table.Cell>
-                            <Table.Cell className="whitespace-nowrap">
-                                <p className="text-sm font-medium text-primary">{item.aboutTitle}</p>
-                                <p className="text-sm text-tertiary">{item.aboutDescription}</p>
-                            </Table.Cell>
+                            <Table.Cell className="whitespace-nowrap" leadText={item.aboutTitle} supportingText={item.aboutDescription} />
                             <Table.Cell className="pr-0 md:hidden xl:table-cell">
                                 <div className="flex -space-x-1">
                                     <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/kari-nordmann.svg" alt="Kari Nordmann" />
@@ -462,9 +449,9 @@ export const Table02AlternatingFills = () => {
             />
             <Table aria-label="Team members" selectionMode="none" sortDescriptor={sortDescriptor} onSortChange={setSortDescriptor}>
                 <Table.Header className="bg-primary">
-                    <Table.Head id="name" label="Company" isRowHeader allowsSorting />
+                    <Table.Head id="name" label="Company" isRowHeader allowsSorting className="w-full max-w-1/4" />
                     <Table.Head id="status" label="Status" allowsSorting />
-                    <Table.Head id="aboutTitle" label="About" allowsSorting />
+                    <Table.Head id="aboutTitle" label="About" allowsSorting className="w-1/4" />
                     <Table.Head id="users" label="Users" className="md:hidden xl:table-cell" />
                     <Table.Head id="licenseUse" label="License use" allowsSorting className="min-w-55" />
                     <Table.Head id="actions" />
@@ -472,24 +459,18 @@ export const Table02AlternatingFills = () => {
                 <Table.Body items={sortedItems}>
                     {(item) => (
                         <Table.Row id={item.name} className="odd:bg-secondary">
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar initials={item.initials} alt={item.name} size="md" />
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.name}</p>
-                                        <p className="text-sm text-tertiary">{item.website}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={<Avatar initials={item.initials} alt={item.name} size="md" />}
+                                leadText={item.name}
+                                supportingText={item.website}
+                            />
                             <Table.Cell>
                                 <BadgeWithDot size="sm" color={item.status === "Customer" ? "success" : "gray"} type="modern">
                                     {item.status}
                                 </BadgeWithDot>
                             </Table.Cell>
-                            <Table.Cell className="whitespace-nowrap">
-                                <p className="text-sm font-medium text-primary">{item.aboutTitle}</p>
-                                <p className="text-sm text-tertiary">{item.aboutDescription}</p>
-                            </Table.Cell>
+                            <Table.Cell className="whitespace-nowrap" leadText={item.aboutTitle} supportingText={item.aboutDescription} />
                             <Table.Cell className="pr-0 md:hidden xl:table-cell">
                                 <div className="flex -space-x-1">
                                     <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/kari-nordmann.svg" alt="Kari Nordmann" />
@@ -568,14 +549,14 @@ export const Table03DividerLine = () => {
                     <Table.Head id="id" label="Invoice" isRowHeader allowsSorting />
                     <Table.Head id="date" label="Date" allowsSorting />
                     <Table.Head id="status" label="Status" allowsSorting />
-                    <Table.Head id="customer" label="Customer" />
+                    <Table.Head id="customer" label="Customer" className="w-1/4" />
                     <Table.Head id="purchase" label="Purchase" className="md:hidden xl:table-cell" />
                     <Table.Head id="actions" />
                 </Table.Header>
                 <Table.Body items={sortedItems}>
                     {(item) => (
                         <Table.Row id={item.id}>
-                            <Table.Cell className="font-medium text-primary">#{item.id}</Table.Cell>
+                            <Table.Cell>#{item.id}</Table.Cell>
                             <Table.Cell className="whitespace-nowrap">
                                 {new Date(item.date).toLocaleString(undefined, { year: "numeric", month: "short", day: "numeric" })}
                             </Table.Cell>
@@ -594,15 +575,12 @@ export const Table03DividerLine = () => {
                                     </BadgeWithIcon>
                                 )}
                             </Table.Cell>
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="md" />
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.customer.name}</p>
-                                        <p className="text-sm text-tertiary">{item.customer.email}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={<Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="md" />}
+                                leadText={item.customer.name}
+                                supportingText={item.customer.email}
+                            />
                             <Table.Cell className="whitespace-nowrap md:hidden xl:table-cell">{item.purchase}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex items-center justify-end gap-3">
@@ -666,14 +644,14 @@ export const Table03AlternatingFills = () => {
                     <Table.Head id="id" label="Invoice" isRowHeader allowsSorting />
                     <Table.Head id="date" label="Date" allowsSorting />
                     <Table.Head id="status" label="Status" allowsSorting />
-                    <Table.Head id="customer" label="Customer" />
+                    <Table.Head id="customer" label="Customer" className="w-1/4" />
                     <Table.Head id="purchase" label="Purchase" className="md:hidden xl:table-cell" />
                     <Table.Head id="actions" />
                 </Table.Header>
                 <Table.Body items={sortedItems}>
                     {(item) => (
                         <Table.Row id={item.id} className="odd:bg-secondary">
-                            <Table.Cell className="font-medium text-primary">#{item.id}</Table.Cell>
+                            <Table.Cell>#{item.id}</Table.Cell>
                             <Table.Cell className="whitespace-nowrap">{item.date}</Table.Cell>
                             <Table.Cell>
                                 {item.status === "paid" ? (
@@ -690,15 +668,12 @@ export const Table03AlternatingFills = () => {
                                     </BadgeWithIcon>
                                 )}
                             </Table.Cell>
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="md" />
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.customer.name}</p>
-                                        <p className="text-sm text-tertiary">{item.customer.email}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={<Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="md" />}
+                                leadText={item.customer.name}
+                                supportingText={item.customer.email}
+                            />
                             <Table.Cell className="whitespace-nowrap md:hidden xl:table-cell">{item.purchase}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex items-center justify-end gap-3">
@@ -738,7 +713,7 @@ export const Table04DividerLine = () => {
             />
             <Table aria-label="Team members" selectionMode="multiple">
                 <Table.Header>
-                    <Table.Head id="name" label="File name" isRowHeader />
+                    <Table.Head id="name" label="File name" isRowHeader className="w-full max-w-1/4" />
                     <Table.Head id="size" label="File size" />
                     <Table.Head id="uploadedAt" label="Date uploaded" />
                     <Table.Head id="updatedAt" label="Last updated" className="md:hidden xl:table-cell" />
@@ -748,17 +723,17 @@ export const Table04DividerLine = () => {
                 <Table.Body items={uploadedFiles.items}>
                     {(item) => (
                         <Table.Row id={item.name}>
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <FileIcon type={item.name.split(".")[1]} theme="light" className="size-10 dark:hidden" />
-                                    <FileIcon type={item.name.split(".")[1]} theme="dark" className="size-10 not-dark:hidden" />
-
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.name}</p>
-                                        <p className="text-sm text-tertiary">{item.size}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={
+                                    <>
+                                        <FileIcon type={item.name.split(".")[1]} theme="light" className="size-10 dark:hidden" />
+                                        <FileIcon type={item.name.split(".")[1]} theme="dark" className="size-10 not-dark:hidden" />
+                                    </>
+                                }
+                                leadText={item.name}
+                                supportingText={item.size}
+                            />
                             <Table.Cell className="whitespace-nowrap">{item.size}</Table.Cell>
                             <Table.Cell className="whitespace-nowrap">{item.uploadedAt}</Table.Cell>
                             <Table.Cell className="whitespace-nowrap md:hidden xl:table-cell">{item.updatedAt}</Table.Cell>
@@ -794,7 +769,7 @@ export const Table04AlternatingFills = () => {
             />
             <Table aria-label="Team members" selectionMode="multiple">
                 <Table.Header className="bg-primary">
-                    <Table.Head id="name" label="File name" isRowHeader />
+                    <Table.Head id="name" label="File name" isRowHeader className="w-full max-w-1/4" />
                     <Table.Head id="size" label="File size" />
                     <Table.Head id="uploadedAt" label="Date uploaded" />
                     <Table.Head id="updatedAt" label="Last updated" className="md:hidden xl:table-cell" />
@@ -804,17 +779,17 @@ export const Table04AlternatingFills = () => {
                 <Table.Body items={uploadedFiles.items}>
                     {(item) => (
                         <Table.Row id={item.name} className="odd:bg-secondary">
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <FileIcon type={item.name.split(".")[1]} theme="light" className="size-10 dark:hidden" />
-                                    <FileIcon type={item.name.split(".")[1]} theme="dark" className="size-10 not-dark:hidden" />
-
-                                    <div className="whitespace-nowrap">
-                                        <p className="text-sm font-medium text-primary">{item.name}</p>
-                                        <p className="text-sm text-tertiary">{item.size}</p>
-                                    </div>
-                                </div>
-                            </Table.Cell>
+                            <Table.Cell
+                                className="whitespace-nowrap"
+                                leading={
+                                    <>
+                                        <FileIcon type={item.name.split(".")[1]} theme="light" className="size-10 dark:hidden" />
+                                        <FileIcon type={item.name.split(".")[1]} theme="dark" className="size-10 not-dark:hidden" />
+                                    </>
+                                }
+                                leadText={item.name}
+                                supportingText={item.size}
+                            />
                             <Table.Cell className="whitespace-nowrap">{item.size}</Table.Cell>
                             <Table.Cell className="whitespace-nowrap">{item.uploadedAt}</Table.Cell>
                             <Table.Cell className="whitespace-nowrap md:hidden xl:table-cell">{item.updatedAt}</Table.Cell>

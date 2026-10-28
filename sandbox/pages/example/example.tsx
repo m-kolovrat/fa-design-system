@@ -38,7 +38,7 @@ export const ExamplePage = () => {
                 <h1 className="mb-6 text-display-xs font-semibold text-primary">Børs</h1>
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-6">
                     <section aria-labelledby="index" className={cx(card, "lg:col-span-4")}>
-                        <CardHeader titleId="index" title="Hovedindeksen (OSEBX)" description="Kursutvikling og periode" />
+                        <CardHeader titleId="index" title="Hovedindeksen (OSEBX)" />
                         <div className={cardBody}>
                             <div className="flex h-48 items-center justify-center rounded-xl bg-tertiary text-sm text-tertiary">Graf ({period})</div>
                             <PeriodSelector className="mt-4" periods={periods} selectedPeriod={period} onPeriodChange={setPeriod} />
@@ -48,13 +48,13 @@ export const ExamplePage = () => {
                         <CardHeader
                             titleId="winners"
                             title="Vinnere"
-                            actions={<Button color="secondary" size="md" iconLeading={ChevronRight} href="#" aria-label="Se alle vinnere" />}
+                            actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="#" aria-label="Se alle vinnere" />}
                         />
                         <ul className={cx(cardBody, "flex flex-col")}>
                             {winners.map((s) => (
                                 <li key={s.ticker} className="flex items-center justify-between gap-4 border-b border-secondary py-3 last:border-b-0">
                                     <div className="flex min-w-0 items-center gap-3">
-                                        <Avatar initials={s.ticker.slice(0, 2)} alt="" size="md" />
+                                        <Avatar initials={s.ticker.slice(0, 2)} alt="" size="sm" />
                                         <div className="min-w-0">
                                             <p className="truncate text-sm font-medium text-primary">{s.name}</p>
                                             <p className="text-sm text-tertiary">{s.ticker}</p>
