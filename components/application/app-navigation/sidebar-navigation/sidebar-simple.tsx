@@ -38,6 +38,7 @@ export const SidebarNavigationSimple = ({
     showAccountCard = true,
     hideBorder = false,
     className,
+    avatarRounded,
 }: SidebarNavigationProps) => {
     const MAIN_SIDEBAR_WIDTH = 280;
 
@@ -81,7 +82,7 @@ export const SidebarNavigationSimple = ({
 
                 {featureCard}
 
-                {showAccountCard && <NavAccountCard />}
+                {showAccountCard && <NavAccountCard avatarRounded={avatarRounded} />}
             </div>
         </aside>
     );

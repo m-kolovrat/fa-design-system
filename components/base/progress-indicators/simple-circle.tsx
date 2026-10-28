@@ -1,8 +1,8 @@
 "use client";
 
-export const CircleProgressBar = (props: { value: number; min?: 0; max?: 100 }) => {
+export const CircleProgressBar = (props: { value: number; min?: number; max?: number }) => {
     const { value, min = 0, max = 100 } = props;
-    const percentage = ((value - min) * 100) / (max - min);
+    const percentage = Math.round(((value - min) * 100) / (max - min));
 
     return (
         <div role="progressbar" aria-valuenow={value} aria-valuemin={min} aria-valuemax={max} className="relative flex w-max items-center justify-center">

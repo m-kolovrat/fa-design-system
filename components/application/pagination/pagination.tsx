@@ -49,7 +49,8 @@ const MobilePagination = ({ page = 1, total = 10, className, onPageChange }: Mob
                 iconLeading={ArrowLeft}
                 color="secondary"
                 size="sm"
-                onClick={() => onPageChange?.(Math.max(0, page - 1))}
+                isDisabled={page <= 1}
+                onClick={() => onPageChange?.(Math.min(total, Math.max(1, page - 1)))}
             />
 
             <span className="text-sm text-fg-secondary">
@@ -61,7 +62,8 @@ const MobilePagination = ({ page = 1, total = 10, className, onPageChange }: Mob
                 iconLeading={ArrowRight}
                 color="secondary"
                 size="sm"
-                onClick={() => onPageChange?.(Math.min(total, page + 1))}
+                isDisabled={page >= total}
+                onClick={() => onPageChange?.(Math.max(1, Math.min(total, page + 1)))}
             />
         </nav>
     );
@@ -398,7 +400,13 @@ export const PaginationCardAdvanced = ({
                     <InputBase
                         aria-label="Page"
                         value={page.toString()}
-                        onChange={(event) => onPageChange?.(Number(event.target.value))}
+                        onChange={(event) => {
+                            const value = event.target.value.trim();
+                            const next = Number(value);
+                            // Ignore an empty field or anything that isn't a number; clamp the rest to 1..total.
+                            if (value === "" || !Number.isFinite(next)) return;
+                            onPageChange?.(Math.min(total, Math.max(1, Math.trunc(next))));
+                        }}
                         size="sm"
                         wrapperClassName="min-w-9"
                         inputClassName="text-center min-w-9 field-sizing-content"
@@ -432,7 +440,14 @@ export const PaginationCardAdvanced = ({
 
                 <div className={cx("flex flex-1 items-center gap-4 md:ml-auto md:justify-end", align === "center" && "md:justify-center")}>
                     <div className="flex gap-2">
-                        <Button iconLeading={ChevronDoubleLeft} color="secondary" size="sm" isDisabled={page === 1} onClick={() => onPageChange?.(1)} />
+                        <Button
+                            aria-label="First Page"
+                            iconLeading={ChevronDoubleLeft}
+                            color="secondary"
+                            size="sm"
+                            isDisabled={page === 1}
+                            onClick={() => onPageChange?.(1)}
+                        />
                         <Pagination.PrevTrigger asChild>
                             <Button iconLeading={ChevronLeft} color="secondary" size="sm" />
                         </Pagination.PrevTrigger>
@@ -465,6 +480,7 @@ export const PaginationCardAdvanced = ({
                             <Button iconTrailing={ChevronRight} color="secondary" size="sm" />
                         </Pagination.NextTrigger>
                         <Button
+                            aria-label="Last Page"
                             iconTrailing={ChevronDoubleRight}
                             color="secondary"
                             size="sm"
