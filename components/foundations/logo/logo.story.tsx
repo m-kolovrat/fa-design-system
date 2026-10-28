@@ -1,4 +1,5 @@
 import type { FC, SVGProps } from "react";
+import type { Meta } from "@storybook/nextjs-vite";
 import {
     FaBokLogo,
     FaLargeLogo,
@@ -19,6 +20,8 @@ import {
     VippsLargeLogo,
     VippsSmallLogo,
 } from "fa-icons";
+import { skillDoc } from "@/components/internal/skill-doc";
+import flagsLogosDoc from "@/skills/fa-design-system/references/components/flags-logos.md?raw";
 
 const logos: { name: string; logo: FC<SVGProps<SVGSVGElement>>; fixed: boolean }[] = [
     { name: "fa-bok", logo: FaBokLogo, fixed: false },
@@ -41,16 +44,24 @@ const logos: { name: string; logo: FC<SVGProps<SVGSVGElement>>; fixed: boolean }
     { name: "vipps-small", logo: VippsSmallLogo, fixed: true },
 ];
 
-export default {
+const meta = {
     title: "Foundations/Logos",
+    tags: ["autodocs"],
+    parameters: {
+        // The whole skill page is shown on Foundations / Flags; here only its Logos section
+        // (purpose, import, logo rules, example), as the page intro.
+        docs: { description: { component: skillDoc(flagsLogosDoc, { sections: ["Logos"], headings: false }) } },
+    },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8">
+            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),
     ],
-};
+} satisfies Meta;
+
+export default meta;
 
 const Grid = ({ items }: { items: typeof logos }) => (
     <div className="flex flex-wrap content-start gap-6">
@@ -65,7 +76,7 @@ const Grid = ({ items }: { items: typeof logos }) => (
     </div>
 );
 
-/** Single-color logos follow the text color (\`currentColor\`), so set it with a \`text-*\` class where they are used. */
+/** Single-color logos follow the text color (`currentColor`), so set it with a \`text-*\` class where they are used. */
 export const CurrentColor = () => <Grid items={logos.filter((l) => !l.fixed)} />;
 
 CurrentColor.parameters = {

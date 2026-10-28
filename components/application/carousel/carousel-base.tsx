@@ -10,12 +10,15 @@ type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 type CarouselOptions = UseCarouselParameters[0];
 type CarouselPlugin = UseCarouselParameters[1];
 
-type CarouselProps = {
+export type CarouselProps = {
     /** The options for the Embla carousel. */
     opts?: CarouselOptions;
     /** The plugins for the Embla carousel. */
     plugins?: CarouselPlugin;
-    /** The orientation of the carousel. */
+    /**
+     * The orientation of the carousel.
+     * @default horizontal
+     */
     orientation?: "horizontal" | "vertical";
     /** The function to set the API for the carousel. */
     setApi?: (api: CarouselApi) => void;
@@ -52,6 +55,7 @@ export const useCarousel = () => {
     return context;
 };
 
+/** `Carousel.Root`: holds the Embla carousel state; everything else goes inside it. */
 const CarouselRoot = ({ orientation = "horizontal", opts, setApi, plugins, className, children, ...props }: ComponentPropsWithRef<"div"> & CarouselProps) => {
     const [carouselRef, api] = useEmblaCarousel(
         {
@@ -143,13 +147,17 @@ const CarouselRoot = ({ orientation = "horizontal", opts, setApi, plugins, class
     );
 };
 
-interface CarouselContentProps extends ComponentPropsWithRef<"div"> {
+export interface CarouselContentProps extends ComponentPropsWithRef<"div"> {
     /** The class name of the content. */
     className?: string;
-    /** Whether to hide the overflow. */
+    /**
+     * Whether to hide the overflow. Turn off to let neighbouring slides peek out.
+     * @default true
+     */
     overflowHidden?: boolean;
 }
 
+/** `Carousel.Content`: the scrolling track (set the gap here, e.g. `gap-2`). */
 const CarouselContent = ({ className, overflowHidden = true, ...props }: CarouselContentProps) => {
     const { carouselRef, orientation } = useCarousel();
 
@@ -160,6 +168,7 @@ const CarouselContent = ({ className, overflowHidden = true, ...props }: Carouse
     );
 };
 
+/** `Carousel.Item`: one slide; `basis-full` by default, `basis-1/2 md:basis-1/3` for several per view. */
 const CarouselItem = ({ className, ...props }: ComponentPropsWithRef<"div">) => {
     return <div role="group" aria-roledescription="slide" className={cx("min-w-0 shrink-0 grow-0 basis-full", className)} {...props} />;
 };
@@ -169,7 +178,7 @@ interface TriggerRenderProps {
     onClick: () => void;
 }
 
-interface TriggerProps {
+export interface TriggerProps {
     /** The ref of the trigger. */
     ref?: Ref<HTMLButtonElement>;
     /** If true, the child element will be cloned and passed down the prop of the trigger. */

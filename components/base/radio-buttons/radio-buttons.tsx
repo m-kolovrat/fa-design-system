@@ -16,13 +16,19 @@ export interface RadioGroupContextType {
 const RadioGroupContext = createContext<RadioGroupContextType | null>(null);
 
 export interface RadioButtonBaseProps {
+    /** The size variant: `sm` 16px, `md` 20px */
     size?: "sm" | "md";
+    /** Layout classes only */
     className?: string;
+    /** Draws the focus ring (pass the parent's state) */
     isFocusVisible?: boolean;
+    /** Draws the dot */
     isSelected?: boolean;
+    /** Draws the disabled look */
     isDisabled?: boolean;
 }
 
+/** The visual circle only, for use inside other components (menus, cards); not a control on its own. */
 export const RadioButtonBase = ({ className, isFocusVisible, isSelected, isDisabled, size = "sm" }: RadioButtonBaseProps) => {
     return (
         <div
@@ -42,13 +48,22 @@ export const RadioButtonBase = ({ className, isFocusVisible, isSelected, isDisab
 };
 RadioButtonBase.displayName = "RadioButtonBase";
 
-interface RadioButtonProps extends AriaRadioProps {
+export interface RadioButtonProps extends AriaRadioProps {
+    /** The size variant; inside a `RadioGroup` the group's `size` wins */
     size?: "sm" | "md";
+    /** The option's label */
     label?: ReactNode;
+    /** One line of explanation below the label */
     hint?: ReactNode;
+    /** Ref to the `<label>` */
     ref?: Ref<HTMLLabelElement>;
+    /** The value the group reports when this option is chosen (required) */
+    value: AriaRadioProps["value"];
+    /** Disables this option (`opacity-50`) */
+    isDisabled?: AriaRadioProps["isDisabled"];
 }
 
+/** One option in a `RadioGroup`, with a label and hint. */
 export const RadioButton = ({ label, hint, className, size = "sm", ...ariaRadioProps }: RadioButtonProps) => {
     const context = useContext(RadioGroupContext);
 
@@ -107,11 +122,35 @@ export const RadioButton = ({ label, hint, className, size = "sm", ...ariaRadioP
 };
 RadioButton.displayName = "RadioButton";
 
-interface RadioGroupProps extends RadioGroupContextType, AriaRadioGroupProps {
+export interface RadioGroupProps extends RadioGroupContextType, AriaRadioGroupProps {
+    /**
+     * The size of every `RadioButton` in it: `sm` 16px, `md` 20px
+     * @default sm
+     */
+    size?: "sm" | "md";
+    /** The `RadioButton`s */
     children: ReactNode;
+    /** Layout classes; the options stack with `gap-4` */
     className?: string;
+    /** The chosen value (controlled) */
+    value?: AriaRadioGroupProps["value"];
+    /** The initially chosen value (uncontrolled) */
+    defaultValue?: AriaRadioGroupProps["defaultValue"];
+    /** Called with the chosen value */
+    onChange?: AriaRadioGroupProps["onChange"];
+    /** The form field name */
+    name?: AriaRadioGroupProps["name"];
+    /** Disables every option */
+    isDisabled?: AriaRadioGroupProps["isDisabled"];
+    /** Marks the choice required for form validation */
+    isRequired?: AriaRadioGroupProps["isRequired"];
+    /** Marks the group invalid */
+    isInvalid?: AriaRadioGroupProps["isInvalid"];
+    /** Changes only the arrow-key direction; the options always stack vertically */
+    orientation?: AriaRadioGroupProps["orientation"];
 }
 
+/** A set of `RadioButton`s of which one can be chosen. Name it with `aria-label` or a visible heading. */
 export const RadioGroup = ({ children, className, size = "sm", ...props }: RadioGroupProps) => {
     return (
         <RadioGroupContext.Provider value={{ size }}>
@@ -121,3 +160,6 @@ export const RadioGroup = ({ children, className, size = "sm", ...props }: Radio
         </RadioGroupContext.Provider>
     );
 };
+// react-docgen-typescript gives every function in this file the first `.displayName` it finds unless
+// the function sets its own; without this, RadioGroup is documented as "RadioButtonBase" and dropped.
+RadioGroup.displayName = "RadioGroup";

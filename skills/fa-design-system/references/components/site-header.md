@@ -83,6 +83,8 @@ The Figma Type is responsive CSS, not a prop.
 | `subscribeHref` | string ("Kjøp")                      | `"#"`   |
 | `className`     | layout only (`sticky top-0 z-30`)    |         |
 
+## Types
+
 `SiteNavItem`: `label`, `href`, `current?`, `items?: SiteNavItem[]` (desktop dropdown).
 `TickerItem`: `label`, `value`, `change` (formatted strings), `direction: "up" | "down"`, `href?`.
 
@@ -92,8 +94,10 @@ The Figma Type is responsive CSS, not a prop.
 from `fa-icons`; partners open in a new tab), `highlights?` (bold links), `eAvis?`
 (`{ date, weekday, href, coverSrc? }`), `searchAction?` (default `"/sok"`).
 
-`TickerBar` and `SiteMenuPanel` are exported, but `SiteHeader` renders both; use them through
-`tickerItems` and `menu`. Nav dropdowns (`NavDropdown`) and nav links are internal.
+## Notes
+
+- `TickerBar` and `SiteMenuPanel` are exported, but `SiteHeader` renders both; use them through
+  `tickerItems` and `menu`. Nav dropdowns (`NavDropdown`) and nav links are internal.
 
 ## Accessibility
 

@@ -60,9 +60,12 @@ import type { SortDescriptor } from "react-aria-components";
 | `Table.Row`        | `id`, `highlightSelectedRow` (default `true`), `size`, `className`                                                                                    |
 | `Table.Cell`       | `size`, `className`; content is free (text, `Avatar`, `Badge`, `ButtonUtility`)                                                                       |
 
-Row height: 72px at `md`, 56px at `sm`. Cell text is `text-sm text-tertiary`; make the main value
-`font-medium text-primary`. Put pagination (`PaginationPageMinimalCenter`, `PaginationCardMinimal`)
-inside `TableCard.Root` after the table.
+## Notes
+
+- Row height: 72px at `md`, 56px at `sm`. Cell text is `text-sm text-tertiary`; make the main
+  value `font-medium text-primary`.
+- Put pagination (`PaginationPageMinimalCenter`, `PaginationCardMinimal`) inside `TableCard.Root`
+  after the table.
 
 ## Accessibility
 

@@ -115,9 +115,11 @@ export interface SiteHeaderProps {
      * @default false
      */
     collapsed?: boolean;
-    /** @default "/" */
+    /** Where the logo links. */
     homeHref?: string;
+    /** Where "Logg inn" points (signed out). */
     loginHref?: string;
+    /** Where the "Kjøp" (subscribe) button points. */
     subscribeHref?: string;
     /** Content of the panel the Meny button opens. Without it, the button only calls `onMenuPress`. */
     menu?: SiteMenuContent;
@@ -125,6 +127,7 @@ export interface SiteHeaderProps {
     onMenuPress?: () => void;
     /** Called when the search button is pressed (mobile, where the search field is hidden). */
     onSearchPress?: () => void;
+    /** Layout classes only (`sticky top-0 z-30`). */
     className?: string;
 }
 

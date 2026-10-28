@@ -2,7 +2,10 @@ import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Plus, Upload } from "fa-icons";
 import { iconArgType } from "@/components/internal/icon-controls";
+import buttonDoc from "@/skills/fa-design-system/references/components/button.md?raw";
 import { Button } from "./button";
+import { ButtonUtility } from "./button-utility";
+import { CloseButton } from "./close-button";
 
 /**
  * Canonical interactive story for the Button.
@@ -44,18 +47,22 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 const meta = {
     title: "Base components/Buttons/Button",
     component: Button,
+    // The same skill page covers these; each gets its own tab in the props table.
+    subcomponents: { ButtonUtility, CloseButton },
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
-    args: { color: "primary", size: "md", children: "Button CTA" },
+    parameters: {
+        layout: "centered",
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props table
+        // comes from the types and JSDoc in button.tsx.
+        skillDoc: buttonDoc,
+    },
+    // size matches the component default (`sm`), so the Playground and the props table agree.
+    args: { color: "primary", size: "sm", children: "Button CTA" },
     argTypes: {
-        color: { control: "select", options: colors },
-        size: { control: "select", options: sizes },
+        // Controls only: types, defaults and descriptions come from docgen.
         children: { control: "text" },
         iconLeading: iconArgType(),
         iconTrailing: iconArgType(),
-        isDisabled: { control: "boolean" },
-        isLoading: { control: "boolean" },
-        showTextWhileLoading: { control: "boolean" },
     },
 } satisfies Meta<typeof Button>;
 
@@ -108,6 +115,8 @@ export const IconStroke: Story = {
     ),
 };
 IconStroke.storyName = "Icon stroke (1.5px prototype)";
+// Experimental: stays on the canvas and in the sidebar, off the Docs page.
+IconStroke.tags = ["!autodocs"];
 
 /** The primary button in each interactive state. */
 export const States: Story = {

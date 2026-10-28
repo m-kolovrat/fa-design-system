@@ -15,9 +15,12 @@ const themes = {
     dark: "text-fg-white/70 hover:text-fg-white hover:bg-white/20 touch-pressed:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 outline-focus-ring",
 };
 
-interface CloseButtonProps extends AriaButtonProps {
+export interface CloseButtonProps extends AriaButtonProps {
+    /** `light` for light surfaces, `dark` for the button on a dark or image background */
     theme?: "light" | "dark";
+    /** The size variant: `sm` 36px, `md` 40px, `lg` 44px */
     size?: "sm" | "md" | "lg";
+    /** The accessible name. Defaults to English "Close", so pass "Lukk" */
     label?: string;
     /**
      * The React Aria slot the button fills. Defaults to `"close"` so it
@@ -29,6 +32,7 @@ interface CloseButtonProps extends AriaButtonProps {
     slot?: string | null;
 }
 
+/** The X that closes a modal, alert, notification or panel. Closes a parent `Dialog` through its `close` slot. */
 export const CloseButton = ({ label, className, size = "sm", theme = "light", slot = "close", ...otherProps }: CloseButtonProps) => {
     return (
         <AriaButton

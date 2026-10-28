@@ -1,6 +1,8 @@
 import { withOverlayAware } from "@/components/internal/decorators";
 import * as Demos from "./header-navigation.demo";
 
+// The "Application navigation" Docs page (app-navigation.md, sidebars and header) is hosted by
+// sidebar-navigation.story.tsx, which shares this title.
 export default {
     title: "Application/Application navigation",
     decorators: [

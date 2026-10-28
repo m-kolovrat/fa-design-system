@@ -2,7 +2,7 @@
 
 import { HegnarAnonseLogo, HegnarBokLogo, HegnarVideoproduksjonLogo, InteriorMagasinetLogo, KapitalLargeLogo, MotorLogo } from "fa-icons";
 import type { SiteBrand, SiteNavItem } from "./site-brands";
-import { SiteHeader } from "./site-header";
+import { SiteHeader, type SiteHeaderProps } from "./site-header";
 import type { SiteMenuContent } from "./site-menu-panel";
 import type { TickerItem } from "./ticker-bar";
 
@@ -203,13 +203,14 @@ export const shortcuts: SiteNavItem[] = [
     { label: "Chat", href: "/chat" },
 ];
 
-interface SiteHeaderDemoProps {
+interface SiteHeaderDemoProps extends Partial<SiteHeaderProps> {
     brand?: SiteBrand;
     collapsed?: boolean;
     signedIn?: boolean;
 }
 
-export const SiteHeaderDemo = ({ brand = "fa", collapsed, signedIn }: SiteHeaderDemoProps) => (
+/** The header with sample content; any `SiteHeader` prop passed overrides the sample. */
+export const SiteHeaderDemo = ({ brand = "fa", collapsed, signedIn, ...props }: SiteHeaderDemoProps) => (
     <SiteHeader
         brand={brand}
         collapsed={collapsed}
@@ -218,5 +219,6 @@ export const SiteHeaderDemo = ({ brand = "fa", collapsed, signedIn }: SiteHeader
         shortcuts={shortcuts}
         menu={menu}
         user={signedIn ? { initials: "X", href: "/min-side" } : undefined}
+        {...props}
     />
 );

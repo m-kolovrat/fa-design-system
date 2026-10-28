@@ -1,8 +1,14 @@
 import type { FC } from "react";
+import { Slider } from "@/components/base/slider/slider";
 import * as Sliders from "@/components/base/slider/slider.demo";
+import sliderDoc from "@/skills/fa-design-system/references/components/slider.md?raw";
 
 export default {
     title: "Base components/Sliders",
+    component: Slider,
+    tags: ["autodocs"],
+    // The Docs page text is slider.md; the props table comes from slider.tsx.
+    parameters: { skillDoc: sliderDoc },
     decorators: [
         (Story: FC) => (
             <div className="bg-primary p-16">

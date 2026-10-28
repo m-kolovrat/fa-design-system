@@ -26,8 +26,8 @@ import { CheckboxBase } from "../checkbox/checkbox";
 import { RadioButtonBase } from "../radio-buttons/radio-buttons";
 import { ToggleBase } from "../toggle/toggle";
 
-interface DropdownItemProps extends AriaMenuItemProps {
-    /** The label of the item to be displayed. */
+export interface DropdownItemProps extends AriaMenuItemProps {
+    /** The label of the item to be displayed (or pass it as `children`). */
     label?: string;
     /** An addon to be displayed on the right side of the item. */
     addon?: string;
@@ -37,10 +37,24 @@ interface DropdownItemProps extends AriaMenuItemProps {
     icon?: FC<{ className?: string }>;
     /** Avatar URL to be displayed on the left side of the item. */
     avatarUrl?: string;
-    /** The selection indicator to be displayed on the item. */
+    /**
+     * The selection indicator to be displayed on the item when the menu has a `selectionMode`.
+     * @default checkmark
+     */
     selectionIndicator?: "checkmark" | "checkbox" | "radio" | "toggle" | "none";
+    /** The item's key, used by `onAction` and `selectedKeys` */
+    id?: AriaMenuItemProps["id"];
+    /** Called when the item is chosen */
+    onAction?: AriaMenuItemProps["onAction"];
+    /** Makes the item a link */
+    href?: AriaMenuItemProps["href"];
+    /** The text for type-to-select when the label isn't plain text */
+    textValue?: AriaMenuItemProps["textValue"];
+    /** Disables the item (`opacity-50`) */
+    isDisabled?: AriaMenuItemProps["isDisabled"];
 }
 
+/** One command in the menu, with an optional icon, avatar, shortcut and selection indicator. */
 const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled, selectionIndicator = "checkmark", ...props }: DropdownItemProps) => {
     const SelectionIndicator = useCallback(
         (state: MenuItemRenderProps & { className?: string }) => {
@@ -118,8 +132,18 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
     );
 };
 
-interface DropdownMenuProps<T extends object> extends AriaMenuProps<T> {}
+export interface DropdownMenuProps<T extends object> extends AriaMenuProps<T> {
+    /** `single` or `multiple` makes the items selectable; they show their `selectionIndicator` */
+    selectionMode?: AriaMenuProps<T>["selectionMode"];
+    /** The selected item ids (controlled) */
+    selectedKeys?: AriaMenuProps<T>["selectedKeys"];
+    /** Called with the new set of selected ids */
+    onSelectionChange?: AriaMenuProps<T>["onSelectionChange"];
+    /** Called with the id of the item that was chosen */
+    onAction?: AriaMenuProps<T>["onAction"];
+}
 
+/** The list of items inside `Dropdown.Popover`. */
 const DropdownMenu = <T extends object>(props: DropdownMenuProps<T>) => {
     return (
         <AriaMenu
@@ -131,8 +155,19 @@ const DropdownMenu = <T extends object>(props: DropdownMenuProps<T>) => {
     );
 };
 
-interface DropdownPopoverProps extends AriaPopoverProps {}
+export interface DropdownPopoverProps extends AriaPopoverProps {
+    /**
+     * Where the menu opens relative to its trigger
+     * @default bottom right
+     */
+    placement?: AriaPopoverProps["placement"];
+    /** Distance in px from the trigger */
+    offset?: AriaPopoverProps["offset"];
+    /** Width and other layout classes (the default width is `w-62`) */
+    className?: AriaPopoverProps["className"];
+}
 
+/** The floating panel that holds `Dropdown.Menu`. */
 const DropdownPopover = (props: DropdownPopoverProps) => {
     return (
         <AriaPopover
@@ -158,6 +193,7 @@ const DropdownSeparator = (props: AriaSeparatorProps) => {
     return <AriaSeparator {...props} className={cx("my-1 h-px w-full bg-border-secondary", props.className)} />;
 };
 
+/** A "⋮" trigger button with the accessible name "Open menu". */
 const DropdownDotsButton = (props: AriaButtonProps & RefAttributes<HTMLButtonElement>) => {
     return (
         <AriaButton

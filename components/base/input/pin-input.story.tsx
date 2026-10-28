@@ -1,11 +1,24 @@
 import type { FC } from "react";
+import { PinInput } from "@/components/base/input/pin-input";
 import * as PinInputs from "@/components/base/input/pin-input.demo";
+import pinInputDoc from "@/skills/fa-design-system/references/components/pin-input.md?raw";
 
 export default {
-    title: "Base components/Inputs",
+    // Its own entry (it shared "Base components/Inputs" with inputs.story.tsx), so it gets its own Docs page.
+    title: "Base components/Inputs/Pin input",
+    component: PinInput,
+    subcomponents: {
+        "PinInput.Group": PinInput.Group,
+        "PinInput.Slot": PinInput.Slot,
+        "PinInput.Label": PinInput.Label,
+        "PinInput.Description": PinInput.Description,
+    },
+    tags: ["autodocs"],
+    // The Docs page text is pin-input.md; the props tables come from pin-input.tsx.
+    parameters: { skillDoc: pinInputDoc },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full bg-primary p-4">
+            <div className="flex min-h-screen w-full bg-primary p-4 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),

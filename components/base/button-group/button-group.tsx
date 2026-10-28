@@ -53,13 +53,22 @@ type ButtonSize = keyof typeof styles.sizes;
 
 const ButtonGroupContext = createContext<{ size: ButtonSize }>({ size: "md" });
 
-interface ButtonGroupItemProps extends ToggleButtonProps, RefAttributes<HTMLButtonElement> {
+export interface ButtonGroupItemProps extends ToggleButtonProps, RefAttributes<HTMLButtonElement> {
+    /** The item's key; `selectedKeys` refer to it. Unique within the group */
+    id?: ToggleButtonProps["id"];
+    /** Icon component or element before the text (JSX for a `Dot`) */
     iconLeading?: FC<{ className?: string }> | ReactNode;
+    /** Icon component or element after the text */
     iconTrailing?: FC<{ className?: string }> | ReactNode;
+    /** Disables this item (Figma's disabled tokens, not `opacity-50`) */
+    isDisabled?: ToggleButtonProps["isDisabled"];
+    /** Not recommended: use `onPress` instead */
     onClick?: () => void;
+    /** Layout classes only; never restyle a single item */
     className?: string;
 }
 
+/** One option in a `ButtonGroup`: a toggle button with optional icons. */
 export const ButtonGroupItem = ({
     iconLeading: IconLeading,
     iconTrailing: IconTrailing,
@@ -96,11 +105,29 @@ export const ButtonGroupItem = ({
     );
 };
 
-interface ButtonGroupProps extends Omit<ToggleButtonGroupProps, "orientation">, RefAttributes<HTMLDivElement> {
+export interface ButtonGroupProps extends Omit<ToggleButtonGroupProps, "orientation">, RefAttributes<HTMLDivElement> {
+    /** The size of every item: `sm` 36px, `md` 40px, `lg` 44px */
     size?: ButtonSize;
+    /**
+     * Whether one item or several can be selected
+     * @default single
+     */
+    selectionMode?: ToggleButtonGroupProps["selectionMode"];
+    /** The selected item ids (controlled) */
+    selectedKeys?: ToggleButtonGroupProps["selectedKeys"];
+    /** The initially selected item ids (uncontrolled) */
+    defaultSelectedKeys?: ToggleButtonGroupProps["defaultSelectedKeys"];
+    /** Called with the new set of selected ids */
+    onSelectionChange?: ToggleButtonGroupProps["onSelectionChange"];
+    /** Keeps one item selected: pressing the selected item doesn't clear it */
+    disallowEmptySelection?: ToggleButtonGroupProps["disallowEmptySelection"];
+    /** Disables every item */
+    isDisabled?: ToggleButtonGroupProps["isDisabled"];
+    /** Layout classes only */
     className?: string;
 }
 
+/** A row of joined toggle buttons for choosing one or a few views or filters (1D / 1U / 1Å). */
 export const ButtonGroup = ({ children, size = "md", className, ...otherProps }: ButtonGroupProps) => {
     return (
         <ButtonGroupContext.Provider value={{ size }}>

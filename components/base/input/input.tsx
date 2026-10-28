@@ -19,8 +19,8 @@ export interface InputBaseProps extends Omit<AriaInputProps, "size"> {
     /** Whether the input is required. */
     isRequired?: boolean;
     /**
-     * Input size.
-     * @default "sm"
+     * Input size: `sm` 36px, `md` 40px, `lg` 44px.
+     * @default md
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text. */
@@ -33,14 +33,17 @@ export interface InputBaseProps extends Omit<AriaInputProps, "size"> {
     wrapperClassName?: string;
     /** Class name for the tooltip. */
     tooltipClassName?: string;
-    /** Keyboard shortcut to display. */
+    /** Keyboard shortcut to display; `true` shows "⌘K". */
     shortcut?: string | boolean;
+    /** Ref to the `<input>`. */
     ref?: Ref<HTMLInputElement>;
+    /** Ref to the box around the input. */
     groupRef?: Ref<HTMLDivElement>;
     /** Icon component to display on the left side of the input. */
     icon?: ComponentType<HTMLAttributes<HTMLOrSVGElement>>;
 }
 
+/** The input box alone (no label or hint), for composing a custom React Aria field or an `InputGroup`. */
 export const InputBase = ({
     ref,
     tooltip,
@@ -248,8 +251,32 @@ export interface InputProps
     hint?: ReactNode;
     /** Whether to hide required indicator from label */
     hideRequiredIndicator?: boolean;
+    /** Whether the input is required: adds `*` to the label */
+    isRequired?: AriaTextFieldProps["isRequired"];
+    /** Whether the input is invalid: red border, and the `hint` turns red */
+    isInvalid?: AriaTextFieldProps["isInvalid"];
+    /** Whether the input is disabled (`opacity-50`) */
+    isDisabled?: AriaTextFieldProps["isDisabled"];
+    /** Whether the value can be selected but not changed */
+    isReadOnly?: AriaTextFieldProps["isReadOnly"];
+    /**
+     * The input type (`email`, `password`, `search`, …)
+     * @default text
+     */
+    type?: AriaTextFieldProps["type"];
+    /** The value (controlled) */
+    value?: AriaTextFieldProps["value"];
+    /** The initial value (uncontrolled) */
+    defaultValue?: AriaTextFieldProps["defaultValue"];
+    /** Called with the new value as a string */
+    onChange?: AriaTextFieldProps["onChange"];
+    /** The form field name */
+    name?: AriaTextFieldProps["name"];
+    /** Classes on the outer wrapper: width, grid placement */
+    className?: AriaTextFieldProps["className"];
 }
 
+/** A single-line text field with label, hint, optional leading icon, tooltip and shortcut. */
 export const Input = ({
     size = "md",
     placeholder,

@@ -1,6 +1,14 @@
 "use client";
 
-export const CircleProgressBar = (props: { value: number; min?: 0; max?: 100 }) => {
+/** A fixed 64px ring with the percent in the middle. */
+export const CircleProgressBar = (props: {
+    /** The progress in percent, 0–100 */
+    value: number;
+    /** Always 0 */
+    min?: 0;
+    /** Always 100 */
+    max?: 100;
+}) => {
     const { value, min = 0, max = 100 } = props;
     const percentage = ((value - min) * 100) / (max - min);
 

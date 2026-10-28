@@ -19,12 +19,22 @@ import { cx } from "@/utils/cx";
  * footer around a scrolling body, use `Modal`.
  */
 
-interface PromptModalProps extends Omit<AriaModalOverlayProps, "children" | "className"> {
-    /** Width of the card. @default "max-w-100" */
+export interface PromptModalProps extends Omit<AriaModalOverlayProps, "children" | "className"> {
+    /** Width of the card (`max-w-*`). Defaults to `max-w-100` (400px). */
     className?: string;
+    /** `PromptModalHeader`, an optional body and `PromptModalActions`, or `({ close }) => …` to close from a button. */
     children: ReactNode | ((renderProps: AriaDialogRenderProps) => ReactNode);
+    /** Whether a click on the overlay closes the prompt. Escape closes it either way. */
+    isDismissable?: boolean;
+    /** Stops Escape from closing the prompt. */
+    isKeyboardDismissDisabled?: boolean;
+    /** Controlled open state. Leave it out inside `PromptModal.Trigger`, which opens and closes it. */
+    isOpen?: boolean;
+    /** Called when the prompt opens or closes (controlled use, with `isOpen`). */
+    onOpenChange?: (isOpen: boolean) => void;
 }
 
+/** A short, focused modal: a header (usually with a featured icon), an optional body and the actions. */
 const PromptModalComponent = ({ className, children, isDismissable = true, ...props }: PromptModalProps) => (
     <AriaModalOverlay
         {...props}
@@ -58,7 +68,7 @@ const PromptModalComponent = ({ className, children, isDismissable = true, ...pr
     </AriaModalOverlay>
 );
 
-interface PromptModalHeaderProps {
+export interface PromptModalHeaderProps {
     /**
      * Figma "Type": `left` = Left aligned, `center` = Center aligned, `horizontal` = Horizontal left aligned
      * (icon beside the text from `sm` up, stacked on mobile like Figma's mobile breakpoint).
@@ -67,7 +77,9 @@ interface PromptModalHeaderProps {
     align?: "left" | "center" | "horizontal";
     /** Usually a `<FeaturedIcon size="lg" />`. */
     icon?: ReactNode;
+    /** The prompt's title; also its accessible name. */
     title: ReactNode;
+    /** Supporting text under the title. */
     description?: ReactNode;
     /** Figma "X close button". Closes the parent prompt modal via the React Aria `close` slot. @default true */
     showCloseButton?: boolean;
@@ -75,9 +87,11 @@ interface PromptModalHeaderProps {
     paddingBottom?: boolean;
     /** Figma "Divider" — a border-secondary line under the header. @default false */
     divider?: boolean;
+    /** Layout classes only. */
     className?: string;
 }
 
+/** Figma `_Prompt modal header`: icon, title, description and the close button. */
 export const PromptModalHeader = ({
     align = "left",
     icon,
@@ -117,7 +131,7 @@ export const PromptModalHeader = ({
     </div>
 );
 
-interface PromptModalActionsProps {
+export interface PromptModalActionsProps {
     /**
      * Figma "Type":
      * - `vertical` — Vertical fill container: full-width buttons stacked, first child on top.
@@ -134,9 +148,11 @@ interface PromptModalActionsProps {
     divider?: boolean;
     /** The buttons. Use `size="lg"` to match Figma; destructive prompts pass `color="primary-destructive"`. */
     children: ReactNode;
+    /** Layout classes only. */
     className?: string;
 }
 
+/** Figma `_Prompt modal actions`: the buttons, in one of three layouts. */
 export const PromptModalActions = ({ layout = "horizontal", leading, divider = false, children, className }: PromptModalActionsProps) => (
     <div className={cx("flex flex-col pt-6 sm:pt-8", className)}>
         {divider && <div className="mb-4 w-full border-t border-secondary sm:mb-6" />}

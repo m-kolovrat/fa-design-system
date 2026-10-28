@@ -5,16 +5,24 @@ import type { SwitchProps as AriaSwitchProps } from "react-aria-components";
 import { Switch as AriaSwitch } from "react-aria-components";
 import { cx } from "@/utils/cx";
 
-interface ToggleBaseProps {
+export interface ToggleBaseProps {
+    /** The size variant: `sm` 36×20, `md` 44×24 */
     size?: "sm" | "md";
+    /** Thinner track with a bordered knob */
     slim?: boolean;
+    /** Layout classes only */
     className?: string;
+    /** Draws the hover state (pass the parent's state) */
     isHovered?: boolean;
+    /** Draws the focus ring (pass the parent's state) */
     isFocusVisible?: boolean;
+    /** Draws it on */
     isSelected?: boolean;
+    /** Draws the disabled look */
     isDisabled?: boolean;
 }
 
+/** The visual switch only, used inside `Dropdown` items (`selectionIndicator="toggle"`); not a control on its own. */
 export const ToggleBase = ({ className, isHovered, isDisabled, isFocusVisible, isSelected, slim, size = "sm" }: ToggleBaseProps) => {
     const styles = {
         default: {
@@ -89,13 +97,32 @@ const styles = {
     },
 };
 
-interface ToggleProps extends AriaSwitchProps {
+export interface ToggleProps extends AriaSwitchProps {
+    /** The size variant: `sm` 36×20, `md` 44×24 */
     size?: "sm" | "md";
+    /** The label next to the switch. Without it, pass an `aria-label` */
     label?: string;
+    /** One line of explanation below the label */
     hint?: ReactNode;
+    /** Thinner track with a bordered knob */
     slim?: boolean;
+    /** Whether it is on (controlled) */
+    isSelected?: AriaSwitchProps["isSelected"];
+    /** Whether it is on at first (uncontrolled) */
+    defaultSelected?: AriaSwitchProps["defaultSelected"];
+    /** Called with the new state */
+    onChange?: AriaSwitchProps["onChange"];
+    /** Disables the toggle (`opacity-50`) */
+    isDisabled?: AriaSwitchProps["isDisabled"];
+    /** Shows the state but can't be changed */
+    isReadOnly?: AriaSwitchProps["isReadOnly"];
+    /** The form field name */
+    name?: AriaSwitchProps["name"];
+    /** The value sent with the form when on */
+    value?: AriaSwitchProps["value"];
 }
 
+/** A switch for a setting that applies at once, with an optional label and hint. */
 export const Toggle = ({ label, hint, className, size = "sm", slim, ...ariaSwitchProps }: ToggleProps) => {
     return (
         <AriaSwitch

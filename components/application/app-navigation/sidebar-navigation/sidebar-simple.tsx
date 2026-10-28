@@ -11,7 +11,7 @@ import { NavItemBase } from "../base-components/nav-item";
 import { NavList } from "../base-components/nav-list";
 import type { NavItemType } from "../config";
 
-interface SidebarNavigationProps {
+export interface SidebarNavigationProps {
     /** URL of the currently active item. */
     activeUrl?: string;
     /** List of items to display. */
@@ -26,10 +26,11 @@ interface SidebarNavigationProps {
     hideBorder?: boolean;
     /** Additional CSS classes to apply to the sidebar. */
     className?: string;
-    /** Whether to round the account card avatar. */
+    /** Whether to round the account card avatar. Not applied yet: the sidebar ignores it. */
     avatarRounded?: boolean;
 }
 
+/** Default sidebar: logo, search, items (one level of collapsible sub-items), footer items, feature card. */
 export const SidebarNavigationSimple = ({
     activeUrl,
     items,

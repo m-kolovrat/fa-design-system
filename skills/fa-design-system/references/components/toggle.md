@@ -29,6 +29,10 @@ import { Toggle } from "fa-design-system/components/base/toggle/toggle";
   ("Kursvarsel slått på"), and show failures the same way after rolling back.
 - **toggle-hint** SHOULD Use `hint` to say what changes ("Du får push-varsel når kursen endrer seg
   mer enn 5 %").
+- **toggle-base-visual** NEVER Use `ToggleBase` as a control on its own. It is the visual switch
+  only, used inside `Dropdown` items (`selectionIndicator="toggle"`).
+- **toggle-motion** SHOULD Leave the knob's slide as it is. It moves with the motion tokens; that is
+  movement, not a hover, so it keeps its duration.
 - **toggle-slim** SHOULD Keep `slim` for compact spots such as menu rows; use the default switch in
   settings pages.
 
@@ -45,9 +49,8 @@ import { Toggle } from "fa-design-system/components/base/toggle/toggle";
 | `isDisabled`, `isReadOnly`       | boolean (disabled is `opacity-50`)    |         |
 | `name`, `value`                  | string, for form data                 |         |
 
-Plus React Aria `Switch` props. `ToggleBase` is the visual switch only, used inside `Dropdown`
-items (`selectionIndicator="toggle"`); not a control on its own. The knob slides with the motion
-tokens; that is movement, not a hover, so it keeps its duration.
+Plus React Aria `Switch` props. `ToggleBase` (the switch alone): `size`, `slim`, `isSelected`,
+`isDisabled`, `isHovered`, `isFocusVisible`, `className`.
 
 ## Accessibility
 

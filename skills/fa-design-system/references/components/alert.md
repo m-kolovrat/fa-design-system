@@ -56,7 +56,9 @@ import { Alert, type AlertColor } from "fa-design-system/components/application/
 | `onClose`     | `() => void`; shows the close button                                        |            |
 | `className`   | layout                                                                      |            |
 
-The full-width banner hides its icon below `md` and stacks the actions full width.
+## Notes
+
+- The full-width banner hides its icon below `md` and stacks the actions full width.
 
 ## Accessibility
 

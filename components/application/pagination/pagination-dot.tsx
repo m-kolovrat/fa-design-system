@@ -4,7 +4,7 @@ import { cx } from "@/utils/cx";
 import type { PaginationRootProps } from "./pagination-base";
 import { Pagination } from "./pagination-base";
 
-interface PaginationDotProps extends Omit<PaginationRootProps, "children"> {
+export interface PaginationDotProps extends Omit<PaginationRootProps, "children"> {
     /** The size of the pagination dot. */
     size?: "md" | "lg";
     /** Whether the pagination uses brand colors. */
@@ -13,6 +13,7 @@ interface PaginationDotProps extends Omit<PaginationRootProps, "children"> {
     framed?: boolean;
 }
 
+/** Position in a carousel or onboarding steps (few pages), as dots. */
 export const PaginationDot = ({ framed, className, size = "md", isBrand, ...props }: PaginationDotProps) => {
     const sizes = {
         md: {

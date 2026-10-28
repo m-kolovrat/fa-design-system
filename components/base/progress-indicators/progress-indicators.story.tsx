@@ -1,12 +1,21 @@
 import type { FC } from "react";
+import progressDoc from "@/skills/fa-design-system/references/components/progress.md?raw";
+import { ProgressBarCircle, ProgressBarHalfCircle } from "./progress-circles";
+import { ProgressBar, ProgressBarBase } from "./progress-indicators";
 import * as Demos from "./progress-indicators.demo";
+import { CircleProgressBar as SimpleCircleProgressBar } from "./simple-circle";
 
 export default {
     title: "Base components/Progress indicators",
+    component: ProgressBar,
+    subcomponents: { ProgressBarBase, ProgressBarCircle, ProgressBarHalfCircle, CircleProgressBar: SimpleCircleProgressBar },
+    tags: ["autodocs"],
+    // The Docs page text is progress.md; the props tables come from the components' types and JSDoc.
+    parameters: { skillDoc: progressDoc },
 };
 
 const DefaultDecorator = (Story: FC) => (
-    <div className="flex min-h-screen w-screen bg-primary p-16">
+    <div className="flex min-h-screen w-screen bg-primary p-16 [.docs-story_&]:min-h-0 [.docs-story_&]:w-full">
         <div className="w-full max-w-xs">
             <Story />
         </div>
@@ -14,7 +23,7 @@ const DefaultDecorator = (Story: FC) => (
 );
 
 const WiderDecorator = (Story: FC) => (
-    <div className="flex min-h-screen w-full bg-primary p-16">
+    <div className="flex min-h-screen w-full bg-primary p-16 [.docs-story_&]:min-h-0">
         <div className="w-100">
             <Story />
         </div>

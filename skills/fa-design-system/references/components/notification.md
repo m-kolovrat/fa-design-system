@@ -70,8 +70,11 @@ Without it `notify()` shows nothing. It places toasts top right, 24px in (8px on
 | `progress`          | 0–100, for `progress`                                                                         | `0`     |
 | `onClose`           | shows the close button (inline use)                                                           |         |
 
-`notify(props, { duration? })`: same props without `onClose`; returns the toast id. Width 400px
-(`image`: 496px), full width on mobile.
+## Notes
+
+- `notify(props, { duration? })` takes the same props without `onClose` (the close button
+  dismisses the toast) and returns the toast id. `duration` defaults to 6000 ms.
+- Width 400px (`image`: 496px), full width on mobile.
 
 ## Accessibility
 

@@ -33,13 +33,17 @@ export const usePinInputContext = () => {
     return context;
 };
 
-interface RootProps extends ComponentPropsWithRef<"div"> {
+export interface PinInputProps extends ComponentPropsWithRef<"div"> {
+    /** The digit box height: `xxxs` 36px, `xxs` 40, `xs` 44, `sm` 64, `md` 80, `lg` 96 */
     size?: PinInputSize;
+    /** Disables every box (Figma's disabled tokens, not `opacity-50`) */
     disabled?: boolean;
+    /** Shows the boxes in the error style */
     invalid?: boolean;
 }
 
-const Root = ({ className, size = "md", disabled = false, invalid = false, ...props }: RootProps) => {
+/** A code of a few digits in separate boxes (verification code, PIN), built from `PinInput.Group` and `PinInput.Slot`. */
+const PinInput = ({ className, size = "md", disabled = false, invalid = false, ...props }: PinInputProps) => {
     const id = useId();
 
     return (
@@ -48,7 +52,7 @@ const Root = ({ className, size = "md", disabled = false, invalid = false, ...pr
         </PinInputContext.Provider>
     );
 };
-Root.displayName = "Root";
+PinInput.displayName = "PinInput";
 
 const styles = {
     xxxs: { group: "gap-1.5 h-9", slot: "size-9 px-3 py-2 text-sm rounded-md font-medium text-placeholder/50", caret: "text-sm font-medium" },
@@ -59,12 +63,36 @@ const styles = {
     lg: { group: "gap-3 h-24.5", slot: "size-24 px-2 py-3 text-display-xl font-medium", caret: "text-display-xl font-medium" },
 };
 
-type GroupProps = ComponentPropsWithRef<typeof OTPInput> & {
+type OTPInputProps = ComponentPropsWithRef<typeof OTPInput>;
+
+export type PinInputGroupProps = OTPInputProps & {
+    /**
+     * The number of digits
+     * @default 4
+     */
+    maxLength?: OTPInputProps["maxLength"];
+    /** Allowed characters as a regex string, e.g. `REGEXP_ONLY_DIGITS` from `input-otp` */
+    pattern?: OTPInputProps["pattern"];
+    /** The code (controlled) */
+    value?: OTPInputProps["value"];
+    /** Called with the code as a string */
+    onChange?: OTPInputProps["onChange"];
+    /** Called when every box is filled */
+    onComplete?: OTPInputProps["onComplete"];
+    /** Focuses the first box on mount */
+    autoFocus?: OTPInputProps["autoFocus"];
+    /** `one-time-code` lets the browser fill a code from an SMS */
+    autoComplete?: OTPInputProps["autoComplete"];
+    /** The on-screen keyboard (`numeric`) */
+    inputMode?: OTPInputProps["inputMode"];
+    /** The hidden input's `size` attribute */
     width?: number;
+    /** Classes on the hidden input */
     inputClassName?: string;
 };
 
-const Group = ({ inputClassName, containerClassName, width, maxLength = 4, ...props }: GroupProps) => {
+/** Holds the slots and the hidden input; takes the value, length and pattern. */
+const Group = ({ inputClassName, containerClassName, width, maxLength = 4, ...props }: PinInputGroupProps) => {
     const { id, size, disabled } = usePinInputContext();
 
     return (
@@ -84,7 +112,15 @@ const Group = ({ inputClassName, containerClassName, width, maxLength = 4, ...pr
 };
 Group.displayName = "Group";
 
-const Slot = ({ index, className, ...props }: ComponentPropsWithRef<"div"> & { index: number }) => {
+/** One digit box. */
+const Slot = ({
+    index,
+    className,
+    ...props
+}: ComponentPropsWithRef<"div"> & {
+    /** The box's position, from 0 (required) */
+    index: number;
+}) => {
     const { size, disabled, invalid } = usePinInputContext();
     const { slots, isFocused } = useContext(OTPInputContext);
 
@@ -115,6 +151,7 @@ const FakeCaret = ({ size = "md" }: { size?: PinInputSize }) => {
     return <div className={cx("pointer-events-none h-[1em] w-0.5 animate-caret-blink bg-fg-brand-primary", styles[size].caret)} />;
 };
 
+/** A dash between groups of slots. */
 const Separator = (props: ComponentPropsWithRef<"div">) => {
     return (
         <div role="separator" {...props} className={cx("text-center text-display-xl font-medium text-utility-gray-300", props.className)}>
@@ -124,6 +161,7 @@ const Separator = (props: ComponentPropsWithRef<"div">) => {
 };
 Separator.displayName = "Separator";
 
+/** The field label (`Label` props), linked to the input. */
 const Label = (props: ComponentPropsWithRef<typeof LabelBase>) => {
     const { id } = usePinInputContext();
 
@@ -131,6 +169,7 @@ const Label = (props: ComponentPropsWithRef<typeof LabelBase>) => {
 };
 Label.displayName = "Label";
 
+/** The hint below the boxes (`HintText` props), linked as the description. */
 const Description = (props: ComponentPropsWithRef<typeof HintText>) => {
     const { id, size } = usePinInputContext();
 
@@ -138,13 +177,8 @@ const Description = (props: ComponentPropsWithRef<typeof HintText>) => {
 };
 Description.displayName = "Description";
 
-const PinInput = Root as typeof Root & {
-    Slot: typeof Slot;
-    Label: typeof Label;
-    Group: typeof Group;
-    Separator: typeof Separator;
-    Description: typeof Description;
-};
+// Parts as statics assigned to the declaration itself (not to a cast copy), so the props table
+// generator (react-docgen-typescript) documents each part as `PinInput.Group`, `PinInput.Slot`, …
 PinInput.Slot = Slot;
 PinInput.Label = Label;
 PinInput.Group = Group;

@@ -4,7 +4,7 @@ import type { DetailedReactHTMLElement, HTMLAttributes, ReactNode } from "react"
 import React, { cloneElement, useRef } from "react";
 import { filterDOMProps } from "@react-aria/utils";
 
-interface FileTriggerProps {
+export interface FileTriggerProps {
     /**
      * Specifies what mime type of files are allowed.
      */

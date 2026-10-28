@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Toggle } from "./toggle";
+import toggleDoc from "@/skills/fa-design-system/references/components/toggle.md?raw";
+import { Toggle, ToggleBase } from "./toggle";
 
 /**
  * Canonical interactive story for the Toggle.
@@ -24,8 +25,10 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 const meta = {
     title: "Base components/Toggles",
     component: Toggle,
+    subcomponents: { ToggleBase },
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
+    // The Docs page text is toggle.md; the props tables come from toggle.tsx.
+    parameters: { layout: "centered", skillDoc: toggleDoc },
     args: {
         size: "sm",
         label: "Remember me",
@@ -35,12 +38,8 @@ const meta = {
         defaultSelected: false,
     },
     argTypes: {
-        size: { control: "select", options: sizes },
-        label: { control: "text" },
+        // Controls only: types, defaults and descriptions come from docgen.
         hint: { control: "text" },
-        slim: { control: "boolean" },
-        isDisabled: { control: "boolean" },
-        defaultSelected: { control: "boolean" },
     },
 } satisfies Meta<typeof Toggle>;
 

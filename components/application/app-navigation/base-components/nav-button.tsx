@@ -5,12 +5,12 @@ import { Pressable } from "react-aria-components";
 import { Tooltip } from "@/components/base/tooltip/tooltip";
 import { cx } from "@/utils/cx";
 
-interface NavButtonProps {
+export interface NavButtonProps {
     /** Whether the collapsible nav item is open. */
     open?: boolean;
     /** URL to navigate to when the button is clicked. */
     href?: string;
-    /** Label text for the button. */
+    /** The button's tooltip and `aria-label`. */
     label?: string;
     /** Icon component to display. */
     icon?: FC<{ className?: string }>;
@@ -20,12 +20,13 @@ interface NavButtonProps {
     onClick?: MouseEventHandler;
     /** Additional CSS classes to apply to the button. */
     className?: string;
-    /** Placement of the tooltip. */
+    /** Placement of the tooltip. Use `bottom` in a header. */
     tooltipPlacement?: "top" | "right" | "bottom" | "left";
     /** Content to display. */
     children?: ReactNode;
 }
 
+/** An icon (or icon and text) button for the navigation, with a tooltip. */
 export const NavButton = ({ current, label, href, icon: Icon, className, tooltipPlacement = "right", onClick, children }: NavButtonProps) => {
     const iconOnly = !children;
 

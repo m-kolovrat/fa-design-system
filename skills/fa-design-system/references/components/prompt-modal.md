@@ -56,11 +56,12 @@ import { FeaturedIcon } from "fa-design-system/components/foundations/featured-i
 
 `PromptModalHeader`: `title` (required), `description`, `icon`, `align` `left` · `center` ·
 `horizontal` (default `left`; Figma Left aligned / Center aligned / Horizontal left aligned),
-`showCloseButton` (default `true`), `paddingBottom` (default `true`), `divider` (default `false`).
+`showCloseButton` (default `true`), `paddingBottom` (default `true`), `divider` (default `false`),
+`className`.
 
 `PromptModalActions`: `layout` `vertical` · `horizontal` · `horizontal-right` (default
 `horizontal`), `leading` (left content for `horizontal-right`, e.g. a `Checkbox`), `divider`
-(default `false`), `children` (the buttons).
+(default `false`), `children` (the buttons), `className`.
 
 ## Accessibility
 

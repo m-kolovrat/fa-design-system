@@ -26,4 +26,18 @@
             Arial,
             sans-serif !important;
     }
+
+    /* Docs pages at phone width: wide tables (skill-page tables, the props table) scroll inside
+       the column instead of widening the page, and long inline code wraps. */
+    @media (max-width: 600px) {
+        .sbdocs-content table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .sbdocs-content :is(p, li) > code {
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+    }
 </style>

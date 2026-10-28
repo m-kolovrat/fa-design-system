@@ -32,18 +32,23 @@ export interface SiteFooterProps {
     disclaimer: ReactNode;
     /** Where "Les mer." after the disclaimer points. Hidden when omitted. */
     disclaimerHref?: string;
+    /** Social media links (`x`, `facebook`, `instagram`, `tiktok`, `linkedin`), in order. */
     socialLinks?: { platform: keyof typeof socialIcons; href: string }[];
+    /** Where "Kontakt oss" points. */
     contactHref?: string;
-    /** @default "Bruk Finansavisen-appen" */
+    /** Title of the app box. */
     appTitle?: string;
-    /** @default "Få nyhetsvarsler og en personalisert FA-opplevelse" */
+    /** Text of the app box. */
     appDescription?: string;
+    /** Link of the App Store badge. */
     appStoreHref?: string;
+    /** Link of the Google Play badge. */
     googlePlayHref?: string;
-    /** Screenshot of the app, shown in the app box on desktop. */
+    /** Screenshot of the app, shown in the app box on desktop (decorative). */
     appImageSrc?: string;
-    /** @default "/" */
+    /** Where the logo links. */
     homeHref?: string;
+    /** Layout classes only. */
     className?: string;
 }
 

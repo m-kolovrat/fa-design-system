@@ -12,14 +12,20 @@ const styles = {
     xl: { root: "gap-4", title: "text-lg", subtitle: "text-md" },
 };
 
-interface AvatarLabelGroupProps extends AvatarProps {
+export interface AvatarLabelGroupProps extends AvatarProps {
+    /** The size variant (required); `xs` and `2xl` don't exist here */
     size: "sm" | "md" | "lg" | "xl";
+    /** Whether the avatar should be rounded */
     rounded?: boolean;
+    /** The name, on the first line */
     title: string | ReactNode;
+    /** The second line: role, e-mail */
     subtitle: string | ReactNode;
+    /** Classes on the avatar; `className` sets the whole group */
     avatarClassName?: string;
 }
 
+/** An avatar with a name and a second line. Always draws the avatar's `border`. */
 export const AvatarLabelGroup = ({ title, subtitle, className, rounded, avatarClassName, ...props }: AvatarLabelGroupProps) => {
     return (
         <figure className={cx("group flex min-w-0 flex-1 items-center", styles[props.size].root, className)}>

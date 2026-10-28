@@ -51,7 +51,11 @@ import { EmptyState, ErrorState } from "fa-design-system/components/application/
 | `primaryAction`   | ReactNode (`<Button size="md">`)                   |           |
 | `secondaryAction` | ReactNode (`<Button size="md" color="secondary">`) |           |
 
-Plus `div` attributes (`className` for spacing, e.g. `py-12`). Max width 512px, centered.
+Plus `div` attributes (`className` for spacing, e.g. `py-12`). `ErrorState` takes the same props.
+
+## Notes
+
+- Max width 512px, centered. Spacing around it comes from `className` (`py-12`).
 
 ## Accessibility
 

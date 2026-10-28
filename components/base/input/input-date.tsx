@@ -28,8 +28,8 @@ export interface InputDateBaseProps extends Omit<AriaDateInputProps, "children">
     /** Tooltip message on hover. */
     tooltip?: string;
     /**
-     * Input size.
-     * @default "sm"
+     * Input size: `sm` 36px, `md` 40px, `lg` 44px.
+     * @default md
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text. */
@@ -42,7 +42,9 @@ export interface InputDateBaseProps extends Omit<AriaDateInputProps, "children">
     tooltipClassName?: string;
     /** Keyboard shortcut to display. */
     shortcut?: string | boolean;
+    /** Ref to the input. */
     ref?: Ref<HTMLInputElement>;
+    /** Ref to the box around the input. */
     groupRef?: Ref<HTMLDivElement>;
     /** Icon component to display on the left side of the input. */
     icon?: ComponentType<HTMLAttributes<HTMLOrSVGElement>>;
@@ -187,7 +189,9 @@ export const InputDateBase = ({
     );
 };
 
-interface InputProps
+type AriaDateProps = AriaDateFieldProps<DateValue>;
+
+export interface InputDateProps
     extends
         AriaDateFieldProps<DateValue>,
         Pick<
@@ -202,8 +206,27 @@ interface InputProps
     hideRequiredIndicator?: boolean;
     /** Class name for the input. */
     inputClassName?: string;
+    /** The date (controlled): a `DateValue` such as `parseDate("2026-10-23")`, never a `Date` */
+    value?: AriaDateProps["value"];
+    /** The initial date (uncontrolled) */
+    defaultValue?: AriaDateProps["defaultValue"];
+    /** Called with the new `DateValue` (or `null`) */
+    onChange?: AriaDateProps["onChange"];
+    /** The earliest allowed date */
+    minValue?: AriaDateProps["minValue"];
+    /** The latest allowed date */
+    maxValue?: AriaDateProps["maxValue"];
+    /** The smallest unit shown (`day`, `hour`, `minute`, `second`) */
+    granularity?: AriaDateProps["granularity"];
+    /** Whether the field is required: adds `*` to the label */
+    isRequired?: AriaDateProps["isRequired"];
+    /** Whether the field is invalid */
+    isInvalid?: AriaDateProps["isInvalid"];
+    /** Whether the field is disabled */
+    isDisabled?: AriaDateProps["isDisabled"];
 }
 
+/** A typed date in segments (dd.mm.åååå with a Norwegian locale); React Aria `DateField`. */
 export const InputDate = ({
     size = "md",
     placeholder,
@@ -221,7 +244,7 @@ export const InputDate = ({
     wrapperClassName,
     tooltipClassName,
     ...props
-}: InputProps) => {
+}: InputDateProps) => {
     return (
         <AriaDateField
             {...props}

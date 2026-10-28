@@ -54,9 +54,14 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 | `isDateUnavailable`      | `(date) => boolean`                             |         |
 | `isDisabled`             | boolean                                         |         |
 
-Plus React Aria `DatePicker` / `DateRangePicker` props. `DateRangePicker` shows presets (today,
-yesterday, this/last week, month, year, all time) beside the calendar. `Calendar` takes `highlightedDates` (`DateValue[]`); `RangeCalendar` takes `presets`,
-`showPresetsOnDesktop`, `visibleDuration`.
+Plus React Aria `DatePicker` / `DateRangePicker` props. `Calendar` takes `highlightedDates`
+(`DateValue[]`); `RangeCalendar` takes `presets`, `showPresetsOnDesktop`,
+`showOutOfRangeDates`, `visibleDuration`.
+
+## Notes
+
+- `DateRangePicker` shows presets (today, yesterday, this/last week, month, year, all time) beside
+  the calendar.
 
 ## Accessibility
 

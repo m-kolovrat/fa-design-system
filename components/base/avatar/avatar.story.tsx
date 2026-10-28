@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import avatarDoc from "@/skills/fa-design-system/references/components/avatar.md?raw";
 import { Avatar } from "./avatar";
 import { AvatarLabelGroup } from "./avatar-label-group";
+import { AvatarProfilePhoto } from "./avatar-profile-photo";
+import { AvatarAddButton } from "./base-components";
 
 /**
  * Canonical interactive story for the Avatar.
@@ -26,8 +29,10 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 const meta = {
     title: "Base components/Avatars",
     component: Avatar,
+    subcomponents: { AvatarLabelGroup, AvatarProfilePhoto, AvatarAddButton },
     tags: ["autodocs"],
-    parameters: { layout: "centered" },
+    // The Docs page text is avatar.md; the props tables come from the components' types and JSDoc.
+    parameters: { layout: "centered", skillDoc: avatarDoc },
     args: {
         size: "lg",
         src: AVATAR_SRC,
@@ -37,15 +42,8 @@ const meta = {
         rounded: true,
     },
     argTypes: {
-        size: { control: "select", options: sizes },
+        // Controls only: types, defaults and descriptions come from docgen.
         src: { control: "text" },
-        alt: { control: "text" },
-        initials: { control: "text" },
-        status: { control: "select", options: ["online", "offline"] },
-        verified: { control: "boolean" },
-        border: { control: "boolean" },
-        rounded: { control: "boolean" },
-        count: { control: "number" },
     },
 } satisfies Meta<typeof Avatar>;
 

@@ -50,14 +50,18 @@ import { CircleProgressBar } from "fa-design-system/components/base/progress-ind
 | `valueFormatter` | `(value, percentage) => string \| number`                                 | rounded `"NN%"` |
 | `className`      | classes on the track (width)                                              |                 |
 
-`ProgressBarBase` is the bare bar (same props, no text). The track is 8px high, full width.
+`ProgressBarBase` is the bare bar (same props, no text).
 
 `ProgressBarCircle` / `ProgressBarHalfCircle`: `value`, `min`, `max`, `valueFormatter`, `label`
 (text above the value; below the ring at `xxs`), `size` (required) `xxs` (64px) · `xs` (160) · `sm`
 (200) · `md` (240) · `lg` (280). The half circle is the same width and half the height.
 
-`CircleProgressBar` (`simple-circle`): a fixed 64px ring with the percent in the middle; only
-`value` (0–100).
+`CircleProgressBar` (`simple-circle`): only `value` (0–100).
+
+## Notes
+
+- The bar's track is 8px high and full width; set the width with `className`.
+- `CircleProgressBar` is a fixed 64px ring with the percent in the middle.
 
 ## Accessibility
 

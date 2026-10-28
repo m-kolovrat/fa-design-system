@@ -119,14 +119,21 @@ const styles = sortCx({
 
 interface FeaturedIconProps {
     ref?: Ref<HTMLDivElement>;
+    /** Extra content drawn inside the box, after the icon. */
     children?: ReactNode;
+    /** Classes for layout only (`mb-4`, `self-start`). Don't restyle fill, ring or size with it. */
     className?: string;
+    /** The icon: a component reference (`icon={Bell}`, sized per `size`) or an element (wrapped, not sized). */
     icon?: FC<{ className?: string }> | ReactNode;
+    /** The size of the box: sm 32px, md 40px, lg 48px, xl 56px. */
     size?: "sm" | "md" | "lg" | "xl";
+    /** The tone of the message. `modern` and `modern-neue` are gray only. */
     color: "brand" | "gray" | "success" | "warning" | "error";
+    /** The look: `light`, `gradient` and `outline` are round; `dark`, `modern` and `modern-neue` are rounded squares. */
     theme?: "light" | "gradient" | "dark" | "outline" | "modern" | "modern-neue";
 }
 
+/** An icon on a tinted circle or tile that marks the topic or tone of a block. Decorative. */
 export const FeaturedIcon = (props: FeaturedIconProps) => {
     const { size = "sm", theme: variant = "light", color = "brand", icon: Icon, ...otherProps } = props;
 

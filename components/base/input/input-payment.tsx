@@ -79,8 +79,17 @@ export const formatCardNumber = (number: string) => {
     return cleaned;
 };
 
-interface PaymentInputProps extends InputProps {}
+export interface PaymentInputProps extends InputProps {
+    /** Called with the card number as digits only; the spaces are display formatting */
+    onChange?: InputProps["onChange"];
+    /**
+     * The longest value including the spaces
+     * @default 19
+     */
+    maxLength?: InputProps["maxLength"];
+}
 
+/** A card number field, grouped in fours, with the card brand icon detected. Takes `Input` props. */
 export const PaymentInput = ({
     onChange,
     value,

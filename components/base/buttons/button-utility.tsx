@@ -27,31 +27,36 @@ export interface CommonProps {
     color?: "secondary" | "tertiary";
     /** The icon to display in the button */
     icon?: FC<{ className?: string }> | ReactNode;
-    /** The tooltip to display when hovering over the button */
+    /** The tooltip to display when hovering over the button. Also the button's accessible name (`aria-label`) */
     tooltip?: string;
     /** The placement of the tooltip */
     tooltipPlacement?: Placement;
+    /** Layout classes only (margins, placement); never fill, border or padding */
+    className?: string;
 }
+
+// `slot` and `routerOptions` are picked from React Aria so they work as before but stay out of the
+// Docs props table (it leaves out props declared in node_modules).
 
 /**
  * Props for the button variant (non-link)
  */
-export interface ButtonProps extends CommonProps, DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement> {
-    /** Slot name for react-aria component */
-    slot?: AriaButtonProps["slot"];
-}
+export interface ButtonProps
+    extends CommonProps, Pick<AriaButtonProps, "slot">, DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement> {}
 
 /**
  * Props for the link variant (anchor tag)
  */
-interface LinkProps extends CommonProps, DetailedHTMLProps<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "color">, HTMLAnchorElement> {
-    /** Options for the configured client side router. */
-    routerOptions?: AriaLinkProps["routerOptions"];
+interface LinkProps
+    extends CommonProps, Pick<AriaLinkProps, "routerOptions">, DetailedHTMLProps<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "color">, HTMLAnchorElement> {
+    /** Renders a link (React Aria `Link`) instead of a button */
+    href?: string;
 }
 
 /** Union type of button and link props */
 export type Props = ButtonProps | LinkProps;
 
+/** An icon-only button for toolbars and rows (edit, more, copy), with a tooltip that also names it. */
 export const ButtonUtility = ({
     tooltip,
     className,

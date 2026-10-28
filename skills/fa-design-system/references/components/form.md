@@ -42,13 +42,18 @@ import { FormField, HookForm } from "fa-design-system/components/base/form/hook-
 
 ## Props
 
-`Form`: React Aria `Form` props: `onSubmit`, `action`, `validationBehavior` (`native` · `aria`),
-`validationErrors`, `className`, plus `<form>` attributes.
+`Form`: React Aria `Form` props: `onSubmit`, `action`, `validationBehavior` (`native` · `aria`,
+default `native`), `validationErrors`, `className`, plus `<form>` attributes.
 
 `HookForm`: `form` (the `useForm()` return), plus the same `Form` props.
 
 `FormField`: `name`, `control`, `children` as `({ field, fieldState }) => ReactNode` (or plain
-nodes). `useFormFieldContext()` gives a field's state inside a `FormField`.
+nodes).
+
+## Notes
+
+- `useFormFieldContext()` gives a field's `id`, `name`, `control` and state (`invalid`, `error`, …) inside a `FormField`, for
+  a custom field component.
 
 ## Accessibility
 

@@ -96,5 +96,5 @@ Shared: `size` (`sm` · `md` · `lg`), `label`, `hint`, `isRequired`, `hideRequi
 
 ## See also
 
-Storybook: Base components / Inputs. Related: [input](input.md), [date-picker](date-picker.md),
+Storybook: Base components / Inputs / Variants. Related: [input](input.md), [date-picker](date-picker.md),
 [file-upload](file-upload.md), [tags](tags.md).

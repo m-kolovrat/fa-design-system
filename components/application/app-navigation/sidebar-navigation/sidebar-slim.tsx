@@ -17,7 +17,7 @@ import { NavList } from "../base-components/nav-list";
 import type { NavItemType } from "../config";
 import { SECONDARY_SIDEBAR_SPRING } from "../config";
 
-interface SidebarNavigationSlimProps {
+export interface SidebarNavigationSlimProps {
     /** URL of the currently active item. */
     activeUrl?: string;
     /** List of items to display. */
@@ -30,6 +30,7 @@ interface SidebarNavigationSlimProps {
     hideRightBorder?: boolean;
 }
 
+/** Icon rail (68px); sub-items fly out on hover. Every item needs an `icon`. */
 export const SidebarNavigationSlim = ({ activeUrl, items, footerItems = [], hideBorder, hideRightBorder }: SidebarNavigationSlimProps) => {
     const activeItem = [...items, ...footerItems].find((item) => item.href === activeUrl || item.items?.some((subItem) => subItem.href === activeUrl));
     const [currentItem, setCurrentItem] = useState(activeItem ?? items[1] ?? items[0]);

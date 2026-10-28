@@ -95,8 +95,8 @@ const MobilePresetButton = ({ value, children, ...props }: MobilePresetButtonPro
     );
 };
 
-interface RangeCalendarProps extends AriaRangeCalendarProps<DateValue> {
-    /** The dates to highlight. */
+export interface RangeCalendarProps extends AriaRangeCalendarProps<DateValue> {
+    /** Accepted for parity with `Calendar`, but not applied: `RangeCalendar` doesn't highlight dates yet. */
     highlightedDates?: DateValue[];
     /** The date presets to display. */
     presets?: Record<string, { label: string; value: { start: DateValue; end: DateValue } }>;
@@ -104,8 +104,11 @@ interface RangeCalendarProps extends AriaRangeCalendarProps<DateValue> {
     showOutOfRangeDates?: boolean;
     /** Whether to show presets on desktop. */
     showPresetsOnDesktop?: boolean;
+    /** How many months show at once, e.g. `{ months: 2 }`. */
+    visibleDuration?: AriaRangeCalendarProps<DateValue>["visibleDuration"];
 }
 
+/** A range calendar, for inline use or inside a custom range picker; can show presets. */
 export const RangeCalendar = ({ presets, visibleDuration, showOutOfRangeDates = false, showPresetsOnDesktop = false, ...props }: RangeCalendarProps) => {
     const isDesktop = useBreakpoint("md");
     const context = useSlottedContext(RangeCalendarContext);

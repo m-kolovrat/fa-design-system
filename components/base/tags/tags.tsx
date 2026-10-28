@@ -14,6 +14,7 @@ import { cx } from "@/utils/cx";
 import { TagCheckbox } from "./base-components/tag-checkbox";
 import { TagCloseX } from "./base-components/tag-close-x";
 
+/** The 16px avatar inside a tag. */
 export const TagAvatar = ({ src, alt, contrastBorder = true, className }: ImgHTMLAttributes<HTMLImageElement> & { contrastBorder?: boolean }) => {
     const [isFailed, setIsFailed] = useState(false);
 
@@ -35,14 +36,26 @@ export const TagAvatar = ({ src, alt, contrastBorder = true, className }: ImgHTM
 };
 
 export interface TagItem {
+    /** The tag's key, used by selection and `onClose` */
     id: string;
+    /** The tag's text */
     label: string;
+    /** A number badge after the text */
     count?: number;
+    /** A small avatar before the text */
     avatarSrc?: string;
+    /**
+     * A thin outline around the avatar
+     * @default true
+     */
     avatarContrastBorder?: boolean;
+    /** A colored dot before the text */
     dot?: boolean;
+    /** The dot's color as a `text-fg-*` class (default `text-fg-success-secondary`) */
     dotClassName?: string;
+    /** Disables the tag */
     isDisabled?: boolean;
+    /** Shows an × button; called with the tag's `id` */
     onClose?: (id: string) => void;
 }
 
@@ -54,11 +67,27 @@ const TagGroupContext = createContext<{
     size: "sm",
 });
 
-interface TagGroupProps extends AriaTagGroupProps, RefAttributes<HTMLDivElement> {
+export interface TagGroupProps extends AriaTagGroupProps, RefAttributes<HTMLDivElement> {
+    /** The group's accessible name (required; not shown) */
     label: string;
+    /** The size of every tag in it */
     size?: "sm" | "md" | "lg";
+    /**
+     * Whether tags can be selected; `single` also prevents an empty selection
+     * @default none
+     */
+    selectionMode?: AriaTagGroupProps["selectionMode"];
+    /** The selected tag ids (controlled) */
+    selectedKeys?: AriaTagGroupProps["selectedKeys"];
+    /** The initially selected tag ids (uncontrolled) */
+    defaultSelectedKeys?: AriaTagGroupProps["defaultSelectedKeys"];
+    /** Called with the new set of selected ids */
+    onSelectionChange?: AriaTagGroupProps["onSelectionChange"];
+    /** Called with the ids of tags removed with Backspace or Delete */
+    onRemove?: AriaTagGroupProps["onRemove"];
 }
 
+/** A group of tags (`TagGroup` > `TagList` > `Tag`), optionally selectable or removable. */
 export const TagGroup = ({ label, selectionMode = "none", size = "sm", children, ...otherProps }: TagGroupProps) => {
     return (
         <TagGroupContext.Provider value={{ selectionMode, size }}>
@@ -69,6 +98,7 @@ export const TagGroup = ({ label, selectionMode = "none", size = "sm", children,
     );
 };
 
+/** The list inside a `TagGroup` that holds the `Tag`s (React Aria `TagList`). */
 export const TagList = AriaTagList;
 
 const styles = {
@@ -110,8 +140,14 @@ const styles = {
     },
 };
 
-interface TagProps extends AriaTagProps, RefAttributes<object>, Omit<TagItem, "label" | "id"> {}
+export interface TagProps extends AriaTagProps, RefAttributes<object>, Omit<TagItem, "label" | "id"> {
+    /** The tag's key, used by selection and `onClose` */
+    id?: AriaTagProps["id"];
+    /** Disables the tag */
+    isDisabled?: TagItem["isDisabled"];
+}
 
+/** A compact label for a keyword, filter or person, with an optional count, dot, avatar or × button. */
 export const Tag = ({
     id,
     avatarSrc,

@@ -1,16 +1,47 @@
-import type { FC } from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import fileUploadDoc from "@/skills/fa-design-system/references/components/file-upload.md?raw";
+import { cx } from "@/utils/cx";
 import { Draggable } from "./draggable";
+import { FileListItemProgressBar, FileListItemProgressFill, FileUploadDropZone } from "./file-upload-base";
 import * as FileUploads from "./file-upload.demo";
 
-export default {
+const meta = {
     title: "Application/File upload",
+    component: FileUploadDropZone,
+    subcomponents: { FileListItemProgressBar, FileListItemProgressFill },
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props tables
+        // come from the types and JSDoc in file-upload-base.tsx.
+        skillDoc: fileUploadDoc,
+    },
     decorators: [
-        (Story: FC) => (
-            <div data-drag-constraint className="flex min-h-screen w-full flex-col items-center gap-12 bg-primary p-8">
+        (Story, { viewMode }) => (
+            <div data-drag-constraint className={cx("flex w-full flex-col items-center gap-12 bg-primary p-8", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         ),
     ],
+    args: { hint: "PDF, PNG or JPG (max. 10 MB)", accept: ".pdf,image/*", allowsMultiple: true, isDisabled: false },
+    argTypes: {
+        // Controls only: types, defaults and descriptions come from docgen.
+        onDropFiles: { control: false },
+        onDropUnacceptedFiles: { control: false },
+        onSizeLimitExceed: { control: false },
+    },
+} satisfies Meta<typeof FileUploadDropZone>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+/** `FileUpload.DropZone` alone — edit props live in the Controls panel. */
+export const Playground: Story = {
+    render: (args) => (
+        <div className="w-full max-w-xl">
+            <FileUploadDropZone {...args} />
+        </div>
+    ),
 };
 
 export const FileUploadProgressBar = () => (
