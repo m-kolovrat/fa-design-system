@@ -18,7 +18,7 @@ const sizes = ["sm", "md", "lg"] as const;
 const selectionModes = ["none", "single", "multiple"] as const;
 const variants = ["label", "dot", "count", "avatar"] as const;
 
-const AVATAR_SRC = "https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80";
+const AVATAR_SRC = "/images/avatars/kari-nordmann.svg";
 
 const ITEMS = [
     { id: "tag-01", label: "Design" },

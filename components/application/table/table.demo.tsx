@@ -369,7 +369,7 @@ export const Table02DividerLine = () => {
                         <Table.Row id={item.name}>
                             <Table.Cell>
                                 <div className="flex items-center gap-3">
-                                    <Avatar src={item.logoUrl} alt={item.name} size="md" />
+                                    <Avatar initials={item.initials} alt={item.name} size="md" />
                                     <div className="whitespace-nowrap">
                                         <p className="text-sm font-medium text-primary">{item.name}</p>
                                         <p className="text-sm text-tertiary">{item.website}</p>
@@ -387,36 +387,16 @@ export const Table02DividerLine = () => {
                             </Table.Cell>
                             <Table.Cell className="pr-0 md:hidden xl:table-cell">
                                 <div className="flex -space-x-1">
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/kari-nordmann.svg" alt="Kari Nordmann" />
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/ola-hansen.svg" alt="Ola Hansen" />
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/ingrid-berg.svg" alt="Ingrid Berg" />
                                     <Avatar
                                         className="ring-[1.5px] ring-bg-primary"
                                         size="xs"
-                                        src="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80"
-                                        alt="Olivia Rhye"
+                                        src="/images/avatars/magnus-johansen.svg"
+                                        alt="Magnus Johansen"
                                     />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/phoenix-baker?fm=webp&q=80"
-                                        alt="Phoenix Baker"
-                                    />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/lana-steiner?fm=webp&q=80"
-                                        alt="Lana Steiner"
-                                    />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/demi-wilkinson?fm=webp&q=80"
-                                        alt="Demi Wilkinson"
-                                    />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/candice-wu?fm=webp&q=80"
-                                        alt="Candice Wu"
-                                    />
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/sofie-larsen.svg" alt="Sofie Larsen" />
                                     <Avatar
                                         size="xs"
                                         className="ring-[1.5px] ring-bg-primary"
@@ -494,7 +474,7 @@ export const Table02AlternatingFills = () => {
                         <Table.Row id={item.name} className="odd:bg-secondary">
                             <Table.Cell>
                                 <div className="flex items-center gap-3">
-                                    <Avatar src={item.logoUrl} alt={item.name} size="md" />
+                                    <Avatar initials={item.initials} alt={item.name} size="md" />
                                     <div className="whitespace-nowrap">
                                         <p className="text-sm font-medium text-primary">{item.name}</p>
                                         <p className="text-sm text-tertiary">{item.website}</p>
@@ -512,36 +492,16 @@ export const Table02AlternatingFills = () => {
                             </Table.Cell>
                             <Table.Cell className="pr-0 md:hidden xl:table-cell">
                                 <div className="flex -space-x-1">
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/kari-nordmann.svg" alt="Kari Nordmann" />
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/ola-hansen.svg" alt="Ola Hansen" />
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/ingrid-berg.svg" alt="Ingrid Berg" />
                                     <Avatar
                                         className="ring-[1.5px] ring-bg-primary"
                                         size="xs"
-                                        src="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80&w=100"
-                                        alt="Olivia Rhye"
+                                        src="/images/avatars/magnus-johansen.svg"
+                                        alt="Magnus Johansen"
                                     />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/phoenix-baker?fm=webp&q=80&w=100"
-                                        alt="Phoenix Baker"
-                                    />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/lana-steiner?fm=webp&q=80&w=100"
-                                        alt="Lana Steiner"
-                                    />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/demi-wilkinson?fm=webp&q=80&w=100"
-                                        alt="Demi Wilkinson"
-                                    />
-                                    <Avatar
-                                        className="ring-[1.5px] ring-bg-primary"
-                                        size="xs"
-                                        src="https://www.untitledui.com/images/avatars/candice-wu?fm=webp&q=80&w=100"
-                                        alt="Candice Wu"
-                                    />
+                                    <Avatar className="ring-[1.5px] ring-bg-primary" size="xs" src="/images/avatars/sofie-larsen.svg" alt="Sofie Larsen" />
                                     <Avatar
                                         size="xs"
                                         className="ring-[1.5px] ring-bg-primary"

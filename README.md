@@ -55,7 +55,6 @@ npm run build       # the package in dist/ (also runs on install)
 - [`skills/fa-design-system`](skills/fa-design-system/SKILL.md): rules for building UI with the library
 - [`TOKENS.md`](TOKENS.md): how design tokens map to Figma and how to change them
 - [`docs/figma-parity.md`](docs/figma-parity.md): where Figma and code differ
-- [`CONTRIBUTING.md`](CONTRIBUTING.md): how to contribute
 
 ## License
 

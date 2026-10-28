@@ -93,13 +93,7 @@ export const SidebarNavigationSlim = ({ activeUrl, items, footerItems = [], hide
                                 cx("group relative inline-flex rounded-full", (isPressed || isFocused) && "outline-2 outline-offset-2 outline-focus-ring")
                             }
                         >
-                            <Avatar
-                                border
-                                status="online"
-                                src="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80"
-                                size="md"
-                                alt="Olivia Rhye"
-                            />
+                            <Avatar border status="online" src="/images/avatars/kari-nordmann.svg" size="md" alt="Kari Nordmann" />
                         </AriaButton>
                         <AriaPopover
                             placement="right bottom"
@@ -150,8 +144,8 @@ export const SidebarNavigationSlim = ({ activeUrl, items, footerItems = [], hide
                             </ul>
                             <div className="sticky bottom-0 mt-auto flex justify-between bg-primary pb-5">
                                 <div>
-                                    <p className="text-sm font-semibold text-primary">Olivia Rhye</p>
-                                    <p className="text-sm text-tertiary">olivia@untitledui.com</p>
+                                    <p className="text-sm font-semibold text-primary">Kari Nordmann</p>
+                                    <p className="text-sm text-tertiary">kari.nordmann@finansavisen.no</p>
                                 </div>
                                 <div className="absolute -top-1 right-0">
                                     <ButtonUtility size="xs" color="tertiary" tooltip="Log out" icon={DotsVertical} />

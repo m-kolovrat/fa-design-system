@@ -45,11 +45,11 @@ export const DropdownButtonAdvanced = () => {
                     <Dropdown.Separator />
 
                     <Dropdown.Section>
-                        <Dropdown.Item id="olivia" icon={() => <StatusDot status="online" />}>
-                            Olivia Rhye
+                        <Dropdown.Item id="kari" icon={() => <StatusDot status="online" />}>
+                            Kari Nordmann
                         </Dropdown.Item>
-                        <Dropdown.Item id="sienna" icon={() => <StatusDot status="offline" />}>
-                            Sienna Hewitt
+                        <Dropdown.Item id="thea" icon={() => <StatusDot status="offline" />}>
+                            Thea Haugen
                         </Dropdown.Item>
                     </Dropdown.Section>
 

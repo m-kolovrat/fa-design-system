@@ -27,8 +27,8 @@ export const Default = () => {
                 }}
                 className="flex flex-col gap-4"
             >
-                <Input isRequired name="name" label="Name" placeholder="Olivia Rhye" />
-                <Input isRequired name="email" type="email" label="Email" placeholder="olivia@untitledui.com" />
+                <Input isRequired name="name" label="Name" placeholder="Kari Nordmann" />
+                <Input isRequired name="email" type="email" label="Email" placeholder="kari.nordmann@finansavisen.no" />
                 <Button type="submit">Submit</Button>
             </Form>
 

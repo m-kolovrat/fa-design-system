@@ -9,7 +9,7 @@ import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { cx } from "@/utils/cx";
 
 export const DropdownAccountCardSM = () => {
-    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["olivia"]));
+    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["kari"]));
     const [selectedTheme, setSelectedTheme] = useState<Selection>(new Set(["light-mode"]));
 
     return (
@@ -22,9 +22,9 @@ export const DropdownAccountCardSM = () => {
                     )
                 }
             >
-                <Avatar border size="sm" src="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80" status="online" />
+                <Avatar border size="sm" src="/images/avatars/kari-nordmann.svg" status="online" />
 
-                <p className="text-sm font-semibold text-primary">Olivia Rhye</p>
+                <p className="text-sm font-semibold text-primary">Kari Nordmann</p>
 
                 <div className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-sm">
                     <ChevronDown className="size-4 shrink-0 text-fg-quaternary" />
@@ -34,7 +34,7 @@ export const DropdownAccountCardSM = () => {
             <Dropdown.Popover className="w-60">
                 <div className="flex flex-col border-b border-secondary px-4 py-3">
                     <p className="text-sm font-semibold text-primary">PRO account</p>
-                    <p className="text-sm text-tertiary">olivia@untitledui.com</p>
+                    <p className="text-sm text-tertiary">kari.nordmann@finansavisen.no</p>
                 </div>
                 <Dropdown.Menu>
                     <Dropdown.Item icon={User} addon="⌘K->P">
@@ -68,11 +68,11 @@ export const DropdownAccountCardSM = () => {
                             Switch Account
                         </Dropdown.SectionHeader>
 
-                        <Dropdown.Item id="olivia" avatarUrl="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80" selectionIndicator="radio">
-                            Olivia Rhye
+                        <Dropdown.Item id="kari" avatarUrl="/images/avatars/kari-nordmann.svg" selectionIndicator="radio">
+                            Kari Nordmann
                         </Dropdown.Item>
-                        <Dropdown.Item id="sienna" avatarUrl="https://www.untitledui.com/images/avatars/sienna-hewitt?fm=webp&q=80" selectionIndicator="radio">
-                            Sienna Hewitt
+                        <Dropdown.Item id="thea" avatarUrl="/images/avatars/thea-haugen.svg" selectionIndicator="radio">
+                            Thea Haugen
                         </Dropdown.Item>
                     </Dropdown.Section>
 
@@ -92,8 +92,8 @@ export const DropdownAccountCardSM = () => {
                     </SubmenuTrigger>
                 </Dropdown.Menu>
                 <div className="flex justify-between border-t border-secondary px-4 py-3">
-                    <span className="truncate text-sm text-quaternary">&copy; Untitled UI</span>
-                    <span className="text-sm text-quaternary">v12.6.8</span>
+                    <span className="truncate text-sm text-quaternary">&copy; Finansavisen</span>
+                    <span className="text-sm text-quaternary">v1.0.0</span>
                 </div>
             </Dropdown.Popover>
         </Dropdown.Root>

@@ -1,7 +1,5 @@
 import { withThemeByClassName } from "@storybook/addon-themes";
 import "../styles/globals.css";
-import "./colors.css";
-import themes from "./themes";
 import Wrapper from "./wrapper";
 
 const customViewports = {
@@ -90,11 +88,6 @@ export const parameters = {
         options: {
             ...customViewports,
         },
-    },
-
-    themes: {
-        default: "untitled-primary",
-        list: themes,
     },
 };
 

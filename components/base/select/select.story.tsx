@@ -25,10 +25,10 @@ const WiderDecorator = (Story: FC) => (
 );
 
 const PLAYGROUND_ITEMS = [
-    { id: "phoenix", label: "Phoenix Baker", supportingText: "@phoenix" },
-    { id: "olivia", label: "Olivia Rhye", supportingText: "@olivia" },
-    { id: "lana", label: "Lana Steiner", supportingText: "@lana" },
-    { id: "demi", label: "Demi Wilkinson", supportingText: "@demi" },
+    { id: "ola-hansen", label: "Ola Hansen", supportingText: "@ola" },
+    { id: "kari-nordmann", label: "Kari Nordmann", supportingText: "@kari" },
+    { id: "ingrid-berg", label: "Ingrid Berg", supportingText: "@ingrid" },
+    { id: "magnus-johansen", label: "Magnus Johansen", supportingText: "@magnus" },
 ];
 
 /** Single interactive select — pick the leading icon (any Fa icon, or "None") and other props in the Controls panel. */

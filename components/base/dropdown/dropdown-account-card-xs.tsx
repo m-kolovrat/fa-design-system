@@ -9,7 +9,7 @@ import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { cx } from "@/utils/cx";
 
 export const DropdownAccountCardXS = () => {
-    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["olivia"]));
+    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["kari"]));
     const [selectedTheme, setSelectedTheme] = useState<Selection>(new Set(["light-mode"]));
 
     return (
@@ -22,9 +22,9 @@ export const DropdownAccountCardXS = () => {
                     )
                 }
             >
-                <Avatar size="xs" src="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80" className="size-5" />
+                <Avatar size="xs" src="/images/avatars/kari-nordmann.svg" className="size-5" />
 
-                <p className="text-sm font-semibold text-primary">Olivia Rhye</p>
+                <p className="text-sm font-semibold text-primary">Kari Nordmann</p>
 
                 <div className="absolute top-1 right-1 flex size-7 items-center justify-center rounded-sm">
                     <ChevronDown className="size-4 shrink-0 text-fg-quaternary" />
@@ -49,11 +49,11 @@ export const DropdownAccountCardXS = () => {
                             Switch Account
                         </Dropdown.SectionHeader>
 
-                        <Dropdown.Item id="olivia" avatarUrl="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80" selectionIndicator="radio">
-                            Olivia Rhye
+                        <Dropdown.Item id="kari" avatarUrl="/images/avatars/kari-nordmann.svg" selectionIndicator="radio">
+                            Kari Nordmann
                         </Dropdown.Item>
-                        <Dropdown.Item id="sienna" avatarUrl="https://www.untitledui.com/images/avatars/sienna-hewitt?fm=webp&q=80" selectionIndicator="radio">
-                            Sienna Hewitt
+                        <Dropdown.Item id="thea" avatarUrl="/images/avatars/thea-haugen.svg" selectionIndicator="radio">
+                            Thea Haugen
                         </Dropdown.Item>
                     </Dropdown.Section>
 

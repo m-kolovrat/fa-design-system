@@ -53,8 +53,8 @@ export const Default = () => (
             <>
                 <ModalHeader title="Invite team members" badge="10/20 seats" description="Invite colleagues to collaborate on this project." />
                 <ModalBody>
-                    <Input label="Email" placeholder="olivia@untitledui.com" isRequired />
-                    <Input label="Email" placeholder="phoenix@untitledui.com" isRequired />
+                    <Input label="Email" placeholder="kari.nordmann@finansavisen.no" isRequired />
+                    <Input label="Email" placeholder="ola.hansen@finansavisen.no" isRequired />
                 </ModalBody>
                 <Footer close={close} confirm="Send invites" />
             </>
