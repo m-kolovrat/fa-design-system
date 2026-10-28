@@ -14,7 +14,7 @@ import { RangeCalendar, RangePresetButton } from "./range-calendar";
 
 const now = today(getLocalTimeZone());
 
-const highlightedDates = [today(getLocalTimeZone())];
+const defaultHighlightedDates = [today(getLocalTimeZone())];
 
 interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue> {
     size?: ButtonProps["size"];
@@ -22,9 +22,20 @@ interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue> {
     onApply?: () => void;
     /** The function to call when the cancel button is clicked. */
     onCancel?: () => void;
+    /** The dates to mark with a dot in the calendar. Defaults to today. */
+    highlightedDates?: DateValue[];
 }
 
-export const DateRangePicker = ({ value: valueProp, defaultValue, onChange, onApply, onCancel, size = "sm", ...props }: DateRangePickerProps) => {
+export const DateRangePicker = ({
+    value: valueProp,
+    defaultValue,
+    onChange,
+    onApply,
+    onCancel,
+    size = "sm",
+    highlightedDates = defaultHighlightedDates,
+    ...props
+}: DateRangePickerProps) => {
     const { locale } = useLocale();
     const formatter = useDateFormatter({
         month: "short",

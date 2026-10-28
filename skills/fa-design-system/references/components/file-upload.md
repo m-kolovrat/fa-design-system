@@ -38,23 +38,27 @@ import { FileTrigger } from "fa-design-system/components/base/file-upload-trigge
 
 `FileUpload.DropZone`:
 
-| Prop                    | Values                      | Default        |
-| :---------------------- | :-------------------------- | :------------- |
-| `accept`                | string (`".pdf,image/*"`)   |                |
-| `allowsMultiple`        | boolean                     | `true`         |
-| `maxSize`               | number, bytes               |                |
-| `hint`                  | string                      | English sample |
-| `isDisabled`            | boolean                     |                |
-| `onDropFiles`           | `(files: FileList) => void` |                |
-| `onDropUnacceptedFiles` | `(files: FileList) => void` |                |
-| `onSizeLimitExceed`     | `(files: FileList) => void` |                |
+| Prop                    | Values                                                                                       | Default                                 |
+| :---------------------- | :------------------------------------------------------------------------------------------- | :-------------------------------------- |
+| `accept`                | string (`".pdf,image/*"`)                                                                    | any type                                |
+| `allowsMultiple`        | boolean; `false` keeps only the first dropped file                                           | `true`                                  |
+| `maxSize`               | number, bytes                                                                                |                                         |
+| `hint`                  | string; turns red when a rejected file reaches `onDropUnacceptedFiles` / `onSizeLimitExceed` | "SVG, PNG, JPG or GIF (max. 800x400px)" |
+| `isDisabled`            | boolean                                                                                      |                                         |
+| `onDropFiles`           | `(files: FileList) => void`                                                                  |                                         |
+| `onDropUnacceptedFiles` | `(files: FileList) => void`                                                                  |                                         |
+| `onSizeLimitExceed`     | `(files: FileList) => void`                                                                  |                                         |
+| `className`             | string                                                                                       |                                         |
 
-List items (`ListItemProgressBar` / `ListItemProgressFill`): `name`, `size` (bytes), `progress`
-(0–100), `failed`, `type` (file type for the icon), `fileIconVariant`, `onDelete`, `onRetry`.
-`getReadableFileSize(bytes)` formats a size.
+List items (`ListItemProgressBar` / `ListItemProgressFill`): `name`, `size` (bytes) and `progress`
+(0–100, `100` shows as complete) are required; `failed`, `type` (file type for the icon, default
+`empty`), `fileIconVariant` (default `default` on `ListItemProgressBar`, `solid` on
+`ListItemProgressFill`), `onDelete`, `onRetry`, `className`. `getReadableFileSize(bytes)` formats a
+size, rounded down ("2 MB").
 
 `FileTrigger`: `acceptedFileTypes` (string[]), `allowsMultiple`, `acceptDirectory`,
-`defaultCamera` (`user` · `environment`), `onSelect(files: FileList | null)`.
+`defaultCamera` (`user` · `environment`), `onSelect(files: FileList | null)`. The child's own
+`onClick` still runs, before the file dialog opens.
 
 ## Figma parity
 
@@ -64,7 +68,8 @@ it to Figma, or accept it as code-only.
 ## Accessibility
 
 - The drop zone has a real file input behind its link button, so it works without drag and drop.
-- Known gap: "Click to upload", "or drag and drop", "Complete", "Failed", "Try again" and the
+- Known gap: "Click to upload" ("… and attach files" on mobile), "or drag and drop",
+  "Uploading...", "Complete", "Failed", "Upload failed, please try again", "Try again" and the
   "Delete" tooltip are hard-coded English.
 - Announce finished or failed uploads (a `notify()` toast); the progress bar alone is silent.
 

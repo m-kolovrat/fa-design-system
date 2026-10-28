@@ -59,7 +59,15 @@ const styles = {
     lg: { group: "gap-3 h-24.5", slot: "size-24 px-2 py-3 text-display-xl font-medium", caret: "text-display-xl font-medium" },
 };
 
-type GroupProps = ComponentPropsWithRef<typeof OTPInput> & {
+/** `Omit` that keeps input-otp's `render` / `children` union intact. */
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+
+type GroupProps = DistributiveOmit<ComponentPropsWithRef<typeof OTPInput>, "maxLength"> & {
+    /**
+     * Number of digits.
+     * @default 4
+     */
+    maxLength?: number;
     width?: number;
     inputClassName?: string;
 };
@@ -134,7 +142,7 @@ Label.displayName = "Label";
 const Description = (props: ComponentPropsWithRef<typeof HintText>) => {
     const { id, size } = usePinInputContext();
 
-    return <HintText {...props} id={"pin-input-description-" + id} role="description" className={cx(size === "xxxs" && "text-xs")} />;
+    return <HintText {...props} id={"pin-input-description-" + id} role="description" className={cx(size === "xxxs" && "text-xs", props.className)} />;
 };
 Description.displayName = "Description";
 

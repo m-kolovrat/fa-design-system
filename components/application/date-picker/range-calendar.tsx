@@ -106,7 +106,14 @@ interface RangeCalendarProps extends AriaRangeCalendarProps<DateValue> {
     showPresetsOnDesktop?: boolean;
 }
 
-export const RangeCalendar = ({ presets, visibleDuration, showOutOfRangeDates = false, showPresetsOnDesktop = false, ...props }: RangeCalendarProps) => {
+export const RangeCalendar = ({
+    highlightedDates,
+    presets,
+    visibleDuration,
+    showOutOfRangeDates = false,
+    showPresetsOnDesktop = false,
+    ...props
+}: RangeCalendarProps) => {
     const isDesktop = useBreakpoint("md");
     const context = useSlottedContext(RangeCalendarContext);
 
@@ -161,7 +168,13 @@ export const RangeCalendar = ({ presets, visibleDuration, showOutOfRangeDates = 
                             )}
                         </AriaCalendarGridHeader>
                         <AriaCalendarGridBody className="[&_td]:p-0 [&_tr]:border-b-4 [&_tr]:border-transparent [&_tr:last-of-type]:border-none">
-                            {(date) => <CalendarCell date={date} showOutOfRangeDates={showOutOfRangeDates} />}
+                            {(date) => (
+                                <CalendarCell
+                                    date={date}
+                                    showOutOfRangeDates={showOutOfRangeDates}
+                                    isHighlighted={highlightedDates?.some((highlightedDate) => date.compare(highlightedDate) === 0)}
+                                />
+                            )}
                         </AriaCalendarGridBody>
                     </AriaCalendarGrid>
                 </div>
@@ -185,7 +198,13 @@ export const RangeCalendar = ({ presets, visibleDuration, showOutOfRangeDates = 
                                 )}
                             </AriaCalendarGridHeader>
                             <AriaCalendarGridBody className="[&_td]:p-0 [&_tr]:border-b-4 [&_tr]:border-transparent [&_tr:last-of-type]:border-none">
-                                {(date) => <CalendarCell date={date} />}
+                                {(date) => (
+                                    <CalendarCell
+                                        date={date}
+                                        showOutOfRangeDates={showOutOfRangeDates}
+                                        isHighlighted={highlightedDates?.some((highlightedDate) => date.compare(highlightedDate) === 0)}
+                                    />
+                                )}
                             </AriaCalendarGridBody>
                         </AriaCalendarGrid>
                     </div>

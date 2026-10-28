@@ -107,7 +107,7 @@ interface BadgeGroupProps {
     children?: string | ReactNode;
     addonText: string;
     size?: Size;
-    color: Color;
+    color?: Color;
     theme?: Theme;
     /**
      * Alignment of the badge addon element.

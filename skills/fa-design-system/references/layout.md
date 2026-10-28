@@ -34,6 +34,8 @@ Rules:
   background, not straight on the page. Page titles, breadcrumbs and filter rows above the cards
   are the exception.
 - **layout-one-card-level** SHOULD Group inside a card with an inset, not with a second bordered card.
+  Because that's how the live pages nest (the earning-call tiles on Rapporter), and two white
+  bordered boxes blur together.
 - **layout-no-card-shadow** SHOULD Separate cards with the gap and the border, not with a shadow.
   Shadows belong to overlays.
 - **layout-card-dividers** SHOULD Separate rows inside a card with `border-b border-secondary`; the

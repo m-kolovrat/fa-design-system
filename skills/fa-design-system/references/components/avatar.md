@@ -44,29 +44,31 @@ import { getInitials } from "fa-design-system/components/base/avatar/utils";
 - **avatar-focusable** SHOULD Set `focusable` when the avatar is the only content of a link or button
   (wrapper with the `group` class). Because the focus ring is drawn on the avatar through
   `group-focus-visible`.
-- **avatar-no-restyle** NEVER Change size or fill with `className`; use `size`. `className` is for
-  layout and the `-space-x-*` overlap.
 
 ## Props
 
-| Prop              | Values                                                                   | Default |
-| :---------------- | :----------------------------------------------------------------------- | :------ |
-| `size`            | `xs` (24px) · `sm` (32) · `md` (40) · `lg` (48) · `xl` (56) · `2xl` (64) | `md`    |
-| `src` / `alt`     | string                                                                   |         |
-| `initials`        | string                                                                   |         |
-| `placeholderIcon` | icon component (instead of `User`)                                       |         |
-| `placeholder`     | ReactNode                                                                |         |
-| `rounded`         | boolean (`false` = rounded square)                                       | `true`  |
-| `border`          | boolean (outer ring, for overlapping rows)                               |         |
-| `status`          | `online` · `offline`                                                     |         |
-| `verified`        | boolean (blue tick)                                                      |         |
-| `count`           | number (red bubble)                                                      |         |
-| `badge`           | ReactNode, e.g. `<AvatarCompanyIcon size="md" src=… />`                  |         |
-| `focusable`       | boolean                                                                  | `false` |
+| Prop               | Values                                                                          | Default |
+| :----------------- | :------------------------------------------------------------------------------ | :------ |
+| `size`             | `xs` (24px) · `sm` (32) · `md` (40) · `lg` (48) · `xl` (56) · `2xl` (64)        | `md`    |
+| `src` / `alt`      | string                                                                          |         |
+| `initials`         | string                                                                          |         |
+| `placeholderIcon`  | icon component (instead of `User`)                                              |         |
+| `placeholder`      | ReactNode                                                                       |         |
+| `rounded`          | boolean (`false` = rounded square)                                              | `true`  |
+| `border`           | boolean (outer ring, for overlapping rows)                                      |         |
+| `status`           | `online` · `offline`                                                            |         |
+| `verified`         | boolean (brand-colored tick)                                                    | `false` |
+| `count`            | number (red bubble)                                                             |         |
+| `badge`            | ReactNode, e.g. `<AvatarCompanyIcon size="md" src=… />`                         |         |
+| `focusable`        | boolean                                                                         | `false` |
+| `className`        | classes on the outer element                                                    |         |
+| `contentClassName` | classes on the inner element (the image, initials or icon shape)                |         |
+| `contrastBorder`   | boolean; the thin inner contrast outline on the image shape; `false` removes it | `true`  |
 
 `AvatarLabelGroup`: all of the above plus `title`, `subtitle` (both required), `avatarClassName`;
-it always draws `border`. `AvatarProfilePhoto`: `size` `sm` (72px) · `md` (96) · `lg` (160), plus
-`src`, `alt`, `initials`, `placeholderIcon`, `placeholder`, `status`, `verified`, `badge`.
+it always draws `border`. `AvatarProfilePhoto`: `size` `sm` (72px) · `md` (96) · `lg` (160)
+(default `md`), plus `src`, `alt`, `initials`, `placeholderIcon`, `placeholder`, `status`, `verified`,
+`badge`, `className`.
 `AvatarAddButton`: `size` `xs` · `sm` · `md`, `title` (tooltip and label; default is English "Add
 user", so always pass one), React Aria `Button` props (`onPress`).
 

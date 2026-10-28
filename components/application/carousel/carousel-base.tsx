@@ -182,9 +182,11 @@ interface TriggerProps {
     style?: CSSProperties;
     /** The class name of the trigger. */
     className?: string | ((args: { isDisabled: boolean }) => string);
+    /** The accessible label of the trigger. Defaults to "Previous slide" / "Next slide"; pass a translated label here. */
+    "aria-label"?: string;
 }
 
-const Trigger = ({ className, children, asChild, direction, style, ...props }: TriggerProps) => {
+const Trigger = ({ className, children, asChild, direction, style, "aria-label": ariaLabel, ...props }: TriggerProps) => {
     const { scrollPrev, canScrollNext, scrollNext, canScrollPrev } = useCarousel();
 
     const isDisabled = direction === "prev" ? !canScrollPrev : !canScrollNext;
@@ -197,7 +199,7 @@ const Trigger = ({ className, children, asChild, direction, style, ...props }: T
 
     const computedClassName = typeof className === "function" ? className({ isDisabled }) : className;
 
-    const defaultAriaLabel = direction === "prev" ? "Previous slide" : "Next slide";
+    const defaultAriaLabel = ariaLabel ?? (direction === "prev" ? "Previous slide" : "Next slide");
 
     // If the children is a render prop, we need to pass the necessary props to the render prop.
     if (typeof children === "function") {
@@ -209,14 +211,15 @@ const Trigger = ({ className, children, asChild, direction, style, ...props }: T
         return cloneElement(children, {
             onClick: handleClick,
             disabled: isDisabled,
-            "aria-label": defaultAriaLabel,
+            // Keep the child's own label (e.g. a Norwegian one); fall back to the default.
+            "aria-label": (children.props as HTMLAttributes<HTMLElement>)["aria-label"] ?? defaultAriaLabel,
             style: { ...(children.props as HTMLAttributes<HTMLElement>).style, ...style },
             className: [computedClassName, (children.props as HTMLAttributes<HTMLElement>).className].filter(Boolean).join(" ") || undefined,
         } as HTMLAttributes<HTMLElement>);
     }
 
     return (
-        <button aria-label={defaultAriaLabel} disabled={isDisabled} className={computedClassName} onClick={handleClick} {...props}>
+        <button type="button" aria-label={defaultAriaLabel} disabled={isDisabled} className={computedClassName} onClick={handleClick} {...props}>
             {children}
         </button>
     );
@@ -244,9 +247,11 @@ interface CarouselIndicatorProps {
     style?: CSSProperties;
     /** The class name of the indicator. */
     className?: string | ((args: { isSelected: boolean }) => string);
+    /** The accessible label of the indicator. Defaults to "Go to slide N"; pass a translated label here. */
+    "aria-label"?: string;
 }
 
-const CarouselIndicator = ({ index, isSelected = false, children, asChild, className, style }: CarouselIndicatorProps) => {
+const CarouselIndicator = ({ index, isSelected = false, children, asChild, className, style, "aria-label": ariaLabel }: CarouselIndicatorProps) => {
     const { api, selectedIndex } = useCarousel();
 
     isSelected = isSelected || selectedIndex === index;
@@ -256,7 +261,7 @@ const CarouselIndicator = ({ index, isSelected = false, children, asChild, class
     };
     const computedClassName = typeof className === "function" ? className({ isSelected }) : className;
 
-    const defaultAriaLabel = "Go to slide" + (index + 1);
+    const defaultAriaLabel = ariaLabel ?? `Go to slide ${index + 1}`;
 
     // If the children is a render prop, we need to pass the necessary props to the render prop.
     if (typeof children === "function") {
@@ -267,7 +272,7 @@ const CarouselIndicator = ({ index, isSelected = false, children, asChild, class
     if (asChild && isValidElement(children)) {
         return cloneElement(children, {
             onClick: handleClick,
-            "aria-label": defaultAriaLabel,
+            "aria-label": (children.props as HTMLAttributes<HTMLElement>)["aria-label"] ?? defaultAriaLabel,
             "aria-current": isSelected ? "true" : undefined,
             style: { ...(children.props as HTMLAttributes<HTMLElement>).style, ...style },
             className: [computedClassName, (children.props as HTMLAttributes<HTMLElement>).className].filter(Boolean).join(" ") || undefined,
@@ -275,7 +280,7 @@ const CarouselIndicator = ({ index, isSelected = false, children, asChild, class
     }
 
     return (
-        <button aria-label={defaultAriaLabel} aria-current={isSelected ? "true" : undefined} className={computedClassName} onClick={handleClick}>
+        <button type="button" aria-label={defaultAriaLabel} aria-current={isSelected ? "true" : undefined} className={computedClassName} onClick={handleClick}>
             {children}
         </button>
     );

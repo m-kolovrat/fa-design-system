@@ -2,7 +2,7 @@
 
 Tracks where the code in this repo and the Figma file [Fa Design System](https://www.figma.com/design/ycDcr4jjOWyIneuxyL1xAd/Fa-Design-System) (file key `ycDcr4jjOWyIneuxyL1xAd`) don't line up: different names, things that exist on only one side, and partial builds.
 
-**Last verified:** 2026-10-26, against `main`.
+**Last verified:** 2026-10-28, against `main` (variant check of every Figma component set; see `skills/fa-design-system/references/figma-map.md`).
 
 **How to use it**
 
@@ -69,6 +69,7 @@ Same thing, different name. No action needed; use this to find the counterpart.
 | Misc icons     | Check icon, Check item text | Pricing-style check marks and check-list rows                                                         | Build in code                        |
 | Misc icons     | Folder icon                 | Brand / gray / noise, open / closed                                                                   | Build in code                        |
 | Misc icons     | Emoji                       | 18 emoji, used by message reactions                                                                   | Only needed with Messaging           |
+| Date pickers   | Date picker modal           | Single and dual dates in a modal. Code's `DatePicker` is a popover only                               | Build in code, or mark as Figma-only |
 
 ### Partially built
 
@@ -92,7 +93,7 @@ Same thing, different name. No action needed; use this to find the counterpart.
 | Illustrations (box, cloud, credit card, documents)                      | Nothing in code uses them; the new Figma states use a featured icon instead                                                                                   | Add to Figma, or remove from code             |
 | Background patterns (circle, grid, grid check, square)                  | Figma uses a pattern from another library, with no local main component                                                                                       | Add to Figma                                  |
 | QR code, iPhone mockup, section divider, rating badge, play button icon | Small marketing helpers                                                                                                                                       | Accept as code-only, or remove                |
-| Payment icons                                                           | Code has 57 brands, Figma 39. All Figma brands exist in code; code adds 18 (Afterpay, Venmo, Zelle, Revolut…)                                                 | Add to Figma if needed                        |
+| Payment icons                                                           | Code has 56 brands, Figma 39. All Figma brands exist in code; code adds 17 (Afterpay, Venmo, Zelle, Revolut…)                                                 | Add to Figma if needed                        |
 | Form, hook form                                                         | Logic only, nothing visual                                                                                                                                    | None needed                                   |
 
 ### Icons with no Fa equivalent
@@ -114,12 +115,22 @@ All icons come from `fa-icons` (Figma "Icons V2"). These Untitled UI icons had n
 
 ## 4. Same component, different variants
 
-| Component               | Figma                                                                                               | Code                                      | Suggested action                                    |
-| ----------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
-| Badge colors            | 12: Gray, Brand, Error, Warning, Success, Blue light, Blue, Indigo, Purple, Pink, Orange, Blue gray | 9: no Blue, Indigo, Blue gray             | Add the 3 colors to code, or remove them from Figma |
-| Textarea                | One size                                                                                            | sm, md                                    | Add a size to Figma, or drop one in code            |
-| Avatar online indicator | xs – 2xl                                                                                            | xs – 4xl                                  | Add 3xl / 4xl to Figma, or drop them in code        |
-| Pagination Shape        | "Card button group" types are still labelled Square; all other types are Circle only                | No shape option (round page numbers only) | Cosmetic: rename or drop the Square label in Figma  |
+| Component                     | Figma                                                                                               | Code                                                              | Suggested action                                      |
+| ----------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------- |
+| Badge colors                  | 12: Gray, Brand, Error, Warning, Success, Blue light, Blue, Indigo, Purple, Pink, Orange, Blue gray | 9: no Blue, Indigo, Blue gray                                     | Add the 3 colors to code, or remove them from Figma   |
+| Textarea                      | One size                                                                                            | sm, md                                                            | Add a size to Figma, or drop one in code              |
+| Avatar online indicator       | xs – 2xl                                                                                            | xs – 4xl                                                          | Add 3xl / 4xl to Figma, or drop them in code          |
+| Pagination Shape              | "Card button group" types are still labelled Square; all other types are Circle only                | No shape option (round page numbers only)                         | Cosmetic: rename or drop the Square label in Figma    |
+| Tag flag                      | `Icon=Country` with a flag swap                                                                     | No flag option on `Tag` (`tags.tsx`)                              | Add a flag to `Tag`, or drop the option in Figma      |
+| Select shortcut               | `Shortcut` on Select                                                                                | Only `Select.ComboBox` has `shortcut`                             | Add to `Select`, or limit the Figma option to search  |
+| Dropdown item supporting text | `Supporting text` on list items                                                                     | `Dropdown.Item` has no supporting text                            | Add the prop, or drop it in Figma                     |
+| Pagination page size          | `Page size` can be off                                                                              | Card minimal and Card advanced always render the page-size select | Make it optional in code                              |
+| Pagination dots               | Dot / Line, md / lg, framed                                                                         | Also `isBrand`, with no Figma option                              | Add a brand option to Figma, or drop `isBrand`        |
+| Table dividers                | `Dividers=Alternating fills`                                                                        | No prop; demos use `className="odd:bg-secondary"` on rows         | Add a prop so it isn't a call-site restyle            |
+| Table lead action             | Checkbox, Radio, Toggle                                                                             | Checkbox selection only                                           | Add single selection, or drop Radio / Toggle in Figma |
+| Card header                   | Avatar, dropdown icon, optional divider                                                             | `TableCard.Header` has none of them                               | Build a card header, or trim the Figma options        |
+| Site header Buy               | `Buy` can be off                                                                                    | The "Kjøp" button always renders (`site-header.tsx`)              | Make it optional in code                              |
+| File upload item icon         | `Icon type=File type / Simple`                                                                      | No "Simple" option                                                | Add it, or drop it in Figma                           |
 
 ---
 

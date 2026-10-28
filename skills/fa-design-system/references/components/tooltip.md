@@ -16,8 +16,10 @@ import { Tooltip, TooltipTrigger } from "fa-design-system/components/base/toolti
 ## Use something else when
 
 - An icon-only button: `ButtonUtility` with its `tooltip` prop (already wired).
-- Help next to a form field's label: the field's `tooltip` / `tooltipDescription` props (`Input`,
-  `Label`, `Select` …), which render the `Help` icon trigger for you.
+- Help next to a form field's label: the field's `tooltip` prop (`Input`, `Textarea`, `Select` …,
+  a string title only), which renders the `Help` icon trigger for you. A second line
+  (`tooltipDescription`) exists only on `Label`; fields don't pass it through. `Label`'s help
+  icon is named by its `tooltip` text (override with `tooltipLabel`) and shows the focus ring.
 - Help next to a sortable table header: `Table.Head` `tooltip`.
 - More than two short lines, links or buttons inside: a popover-style `Dropdown` or an inline hint.
 - Anything a touch user must read: put it on the page; tooltips don't open on tap.

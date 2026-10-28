@@ -9,9 +9,10 @@ Components for accessibility and behavior.
 - **Changing the library** (a component's code, tokens, icons, Storybook setup): follow this file.
 - **Building UI with the library** (demos, stories, patterns, pages, and any app that uses these
   components): load the **`fa-design-system` skill** in `skills/fa-design-system/`. It holds the
-  usage rules, the token reference, a page per component and the anti-patterns. When you change a
+  usage rules, the token reference and a page per component. When you change a
   component's props, sizes or colors, update its page in `skills/fa-design-system/references/components/`
-  in the same change.
+  in the same change, and its row in `references/figma-map.md` when the change affects Figma
+  variants.
 
 Rules for using components, tokens and icons live in the skill only; this file doesn't repeat them.
 
@@ -88,7 +89,7 @@ on their own.
 ## Styling the library
 
 The usage rules (semantic tokens only, no palette colors or hex, `fa-icons` only) are in the
-skill's global rules and `references/tokens.md`. What's specific to building components:
+skill's rules and `references/tokens.md`. What's specific to building components:
 
 ### Tokens
 
@@ -154,5 +155,6 @@ Known gaps between Figma and code are tracked in [`docs/figma-parity.md`](docs/f
 4. Add a `.story.tsx` (and `.demo.tsx` if useful); restart Storybook so Tailwind sees the new file.
 5. Check `docs/figma-parity.md`, and update it if the component closes or opens a gap.
 6. Add its page to `skills/fa-design-system/references/components/` (copy the structure of
-   `button.md`) and list it in the component index of `skills/fa-design-system/SKILL.md`.
+   `button.md`), list it in the component index of `skills/fa-design-system/SKILL.md`, and add its
+   Figma variants to `skills/fa-design-system/references/figma-map.md`.
 7. Run `npm test` and check the stories in Storybook (light, dark, mobile width) before committing.

@@ -13,7 +13,7 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 ## Use when
 
 - **Flag**: next to a currency, market or index (`NOK`, `USD`, Nasdaq), in a currency select or a
-  `BadgeWithFlag`. 59 flags, named `<country>-<currency>` as in Figma, plus `globe`.
+  `BadgeWithFlag`. 58 flags, named `<country>-<currency>` as in Figma, plus `globe`.
 - **Logos**: the publication mark in a header, footer, newsletter or partner block: `FaLargeLogo` /
   `FaSmallLogo`, `KapitalLargeLogo` / `KapitalSmallLogo`, `MotorLogo`, `HegnarLogo` and the Hegnar
   sub-brands, `InteriorMagasinetLogo`, the Kapital lists (`KapitalList400Logo`, …),
@@ -39,15 +39,17 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 - **flags-size** SHOULD Size flags with `size-4` (in badges, 16px) or `size-5` (20px, the Figma
   frame); `size-6` in lists.
 - **flags-label** MUST Keep the country or currency as visible text next to the flag. If the flag
-  stands alone, give it `aria-label="Norge"`; `fa-icons` (v0.2.0+) then exposes it as an image.
-  Because flags are hidden from screen readers by default.
+  stands alone, give it `aria-label="Norge"`; `fa-icons` (v0.2.0+) then adds `role="img"`. Next to
+  text, add `aria-hidden` to a named export (`NorwayNokFlag`). Because only `<Flag name>` is
+  hidden from screen readers by default; named flags are neither hidden nor named.
 - **logos-current-color** MUST Color single-color logos with a `text-*` class (`text-fg-primary`,
   `text-white` on a brand surface); they use `currentColor`. Never recolor the fixed-color logos
   (Pinpoint, Vipps, the four `KapitalList*`, the orange accent of `HegnarBokLogo`).
 - **logos-size** MUST Size logos by height with auto width (`className="h-6 w-auto"`). Because
   they keep their Figma aspect ratio.
 - **logos-name** MUST Give a logo used as the home link an accessible name (`aria-label="Finansavisen
-– til forsiden"` on the link). Because the SVG itself is hidden.
+– til forsiden"` on the link) and `aria-hidden` on the logo. Because the logo SVG has no name and
+  isn't hidden by default; an `aria-label` on the logo itself gives it `role="img"`.
 - **assets-from-figma** NEVER Paste an SVG, add a flag or logo component in this repo, or load one
   from a URL. Because new assets are drawn in Figma, exported to `fa-icons` and released there
   (see `docs/icons.md` in the library repo).
@@ -56,13 +58,14 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 
 ## Props
 
-| Component            | Props                                                   |
-| :------------------- | :------------------------------------------------------ |
-| `Flag`               | `name: FlagName` (required), SVG props (`className`)    |
-| `<Name>Flag`, icons  | `size` (default 20), SVG props                          |
-| `<Name>Logo`         | SVG props; Figma width and height by default            |
-| Payment `<Name>Icon` | SVG props (34×24 by default)                            |
-| Social icons         | `size` (default 24), SVG props; most are `currentColor` |
+| Component            | Props                                                    |
+| :------------------- | :------------------------------------------------------- |
+| `Flag`               | `name: FlagName` (required), SVG props (`className`)     |
+| `<Name>Flag`         | SVG props only (20×20 by default; size with `className`) |
+| `fa-icons` icons     | `size` (default 20), SVG props                           |
+| `<Name>Logo`         | SVG props; Figma width and height by default             |
+| Payment `<Name>Icon` | SVG props (34×24 by default)                             |
+| Social icons         | `size` (default 24), SVG props; most are `currentColor`  |
 
 ## Example
 
@@ -74,7 +77,7 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 </div>
 
 <a href="/" aria-label="Kapital – til forsiden" className="rounded-xs outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2">
-    <KapitalLargeLogo className="h-7 w-auto text-fg-primary" />
+    <KapitalLargeLogo aria-hidden className="h-7 w-auto text-fg-primary" />
 </a>
 
 <div className="flex items-center gap-3">
@@ -85,7 +88,7 @@ import { FaLargeLogo, Flag, type FlagName, KapitalLargeLogo, MotorLogo, NorwayNo
 
 ## Figma parity
 
-Payment icons: code has 57 brands, Figma 39 (code adds Afterpay, Venmo, Zelle, Revolut, …). Social
+Payment icons: code has 56 brands, Figma 39 (code adds Afterpay, Venmo, Zelle, Revolut, …). Social
 icons: Figma has 34 platforms in brand and gray styles, code 22 (no Framer, Notion, PayPal, Slack,
 Spotify, Stripe, Twitch, Webflow, WhatsApp, Wise). Don't draw the missing ones; report the gap.
 

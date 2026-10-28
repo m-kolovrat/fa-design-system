@@ -47,9 +47,10 @@ export const TableRowActionsDropdown = () => (
     </Dropdown.Root>
 );
 
-const TableContext = createContext<{ size: "sm" | "md" }>({ size: "md" });
+/** `size` is undefined when no `TableCard.Root` or `Table` above has set one; consumers fall back to "md". */
+const TableContext = createContext<{ size?: "sm" | "md" }>({});
 
-const TableCardRoot = ({ children, className, size = "md", ...props }: HTMLAttributes<HTMLDivElement> & { size?: "sm" | "md" }) => {
+const TableCardRoot = ({ children, className, size, ...props }: HTMLAttributes<HTMLDivElement> & { size?: "sm" | "md" }) => {
     return (
         <TableContext.Provider value={{ size }}>
             <div {...props} className={cx("overflow-hidden rounded-xl bg-primary shadow-xs ring-1 ring-secondary", className)}>
@@ -73,7 +74,7 @@ interface TableCardHeaderProps {
 }
 
 const TableCardHeader = ({ title, badge, description, contentTrailing, className }: TableCardHeaderProps) => {
-    const { size } = useContext(TableContext);
+    const { size = "md" } = useContext(TableContext);
 
     return (
         <div
@@ -107,11 +108,11 @@ interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithRef<"tab
     size?: "sm" | "md";
 }
 
-const TableRoot = ({ className, size = "md", ...props }: TableRootProps) => {
+const TableRoot = ({ className, size, ...props }: TableRootProps) => {
     const context = useContext(TableContext);
 
     return (
-        <TableContext.Provider value={{ size: context?.size ?? size }}>
+        <TableContext.Provider value={{ size: context.size ?? size ?? "md" }}>
             <div className="overflow-x-auto">
                 <AriaTable className={(state) => cx("w-full overflow-x-hidden", typeof className === "function" ? className(state) : className)} {...props} />
             </div>
@@ -130,7 +131,7 @@ const TableHeader = <T extends object>({ columns, children, bordered = true, cla
     const context = useContext(TableContext);
     const { selectionBehavior, selectionMode } = useTableOptions();
 
-    const size = sizeProp ?? context.size;
+    const size = sizeProp ?? context.size ?? "md";
 
     return (
         <AriaTableHeader
@@ -193,7 +194,11 @@ const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadP
 
                     {tooltip && (
                         <Tooltip title={tooltip} placement="top">
-                            <TooltipTrigger className="cursor-pointer text-fg-quaternary transition hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover">
+                            <TooltipTrigger
+                                aria-label={tooltip}
+                                // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
+                                className="cursor-pointer text-fg-quaternary outline-focus-ring hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid"
+                            >
                                 <Help className="size-4" />
                             </TooltipTrigger>
                         </Tooltip>
@@ -222,7 +227,7 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
     const context = useContext(TableContext);
     const { selectionBehavior } = useTableOptions();
 
-    const size = sizeProp ?? context.size;
+    const size = sizeProp ?? context.size ?? "md";
 
     return (
         <AriaRow
@@ -263,7 +268,7 @@ const TableCell = ({ className, children, size: sizeProp, ...props }: TableCellP
     const context = useContext(TableContext);
     const { selectionBehavior } = useTableOptions();
 
-    const size = sizeProp ?? context.size;
+    const size = sizeProp ?? context.size ?? "md";
 
     return (
         <AriaCell

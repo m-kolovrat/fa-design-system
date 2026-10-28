@@ -60,8 +60,8 @@ Per variant: `BadgeWithIcon` `iconLeading` / `iconTrailing` (one of them); `Badg
 `onButtonClick`, `icon` (default `Close`); `BadgeIcon` `icon` (required). `className` exists on
 `Badge`, `BadgeWithDot` and `BadgeWithIcon` only.
 
-`BadgeGroup`: `addonText` (required), `children` (the message), `color` `brand` · `gray` · `error` ·
-`warning` · `success`, `theme` `light` · `modern` (default `light`), `size` `md` · `lg`, `align`
+`BadgeGroup`: `addonText` (required), `children` (the message), `color` `brand` · `gray` ·
+`error` · `warning` · `success` (default `brand`), `theme` `light` · `modern` (default `light`), `size` `md` · `lg`, `align`
 `leading` · `trailing` (where the addon sits), `iconTrailing` (default `ArrowRight`).
 
 ## Accessibility

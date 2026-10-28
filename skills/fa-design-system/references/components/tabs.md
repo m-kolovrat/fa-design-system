@@ -39,8 +39,6 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
   and the storybook demos use exactly this pattern.
 - **tabs-badge** SHOULD Use `badge` only for counts ("Nyheter 3"). Because badges are hidden below
   `md` and turn brand only on `underline`, `line` and `button-brand`.
-- **tabs-icons** MUST Pass `icon` as a component reference (`icon={GraphLine}`) or JSX with
-  `data-icon`. Because the tab sizes and colors icons through `data-icon`.
 - **tabs-no-restyle** NEVER Restyle selected or hover states with `className`; pick another `type`.
   Because the selected look matches Figma (and pagination's active page).
 

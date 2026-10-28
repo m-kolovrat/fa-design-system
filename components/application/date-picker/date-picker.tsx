@@ -10,7 +10,7 @@ import { Button, type ButtonProps } from "@/components/base/buttons/button";
 import { cx } from "@/utils/cx";
 import { Calendar } from "./calendar";
 
-const highlightedDates = [today(getLocalTimeZone())];
+const defaultHighlightedDates = [today(getLocalTimeZone())];
 
 interface DatePickerProps extends AriaDatePickerProps<DateValue> {
     /** The function to call when the apply button is clicked. */
@@ -18,9 +18,20 @@ interface DatePickerProps extends AriaDatePickerProps<DateValue> {
     /** The function to call when the cancel button is clicked. */
     onCancel?: () => void;
     size?: ButtonProps["size"];
+    /** The dates to mark with a dot in the calendar. Defaults to today. */
+    highlightedDates?: DateValue[];
 }
 
-export const DatePicker = ({ value: valueProp, defaultValue, onChange, onApply, onCancel, size = "sm", ...props }: DatePickerProps) => {
+export const DatePicker = ({
+    value: valueProp,
+    defaultValue,
+    onChange,
+    onApply,
+    onCancel,
+    size = "sm",
+    highlightedDates = defaultHighlightedDates,
+    ...props
+}: DatePickerProps) => {
     const formatter = useDateFormatter({
         month: "short",
         day: "numeric",

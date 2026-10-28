@@ -29,9 +29,11 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
   (`today(getLocalTimeZone())`, `parseDate("2026-10-23")`); a range is `{ start, end }`. Because
   React Aria date components don't accept `Date` or strings.
 - **date-picker-name** MUST Pass a Norwegian `aria-label` ("Velg dato", "Velg periode"). Because
-  the default is English ("Date picker").
+  the default is English ("Date picker", "Date range picker").
 - **date-picker-value-shown** SHOULD Always pass `value` or `defaultValue`. Because the empty
-  trigger text is hard-coded English ("Select date").
+  trigger text is hard-coded English: "Select date" on `DatePicker`, "Select dates" (placeholder
+  color) on `DateRangePicker`. A range with only one end set shows "Select date" for the missing
+  end.
 - **date-picker-apply** MUST Treat `onChange` as a draft when the Avbryt / Bruk footer matters:
   it fires on every click in the calendar, and Cancel doesn't undo it. Keep the committed value
   separately and commit it in `onApply`, restore it in `onCancel`.
@@ -53,15 +55,35 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 | `minValue` / `maxValue`  | `DateValue`                                     |         |
 | `isDateUnavailable`      | `(date) => boolean`                             |         |
 | `isDisabled`             | boolean                                         |         |
+| `highlightedDates`       | `DateValue[]`: a dot under each date            | today   |
 
-Plus React Aria `DatePicker` / `DateRangePicker` props. `DateRangePicker` shows presets (today,
-yesterday, this/last week, month, year, all time) beside the calendar. `Calendar` takes `highlightedDates` (`DateValue[]`); `RangeCalendar` takes `presets`,
-`showPresetsOnDesktop`, `visibleDuration`.
+Plus React Aria `DatePicker` / `DateRangePicker` props. Both pickers pass `highlightedDates` on to
+their calendar; today always gets a dot as well. The picker's calendar takes no other options (no
+`showOutOfRangeDates`).
+`DateRangePicker` shows presets (today, yesterday, this/last week, month, year, all time from
+1 Jan 2000) in a side column from `lg` up; below `md` it shows Last week / Last month / Last year
+above the calendar instead, and between `md` and `lg` no presets.
+
+Standalone calendars:
+
+| Prop                   | Component       | Values                                                                 | Default                 |
+| :--------------------- | :-------------- | :--------------------------------------------------------------------- | :---------------------- |
+| `highlightedDates`     | both            | `DateValue[]`: a dot under each date (today always gets one)           |                         |
+| `children`             | `Calendar`      | replaces the date input + "Today" row between header and grid          | input + "Today"         |
+| `presets`              | `RangeCalendar` | `Record<string, { label, value: { start, end } }>`                     |                         |
+| `showPresetsOnDesktop` | `RangeCalendar` | boolean; presets always show below `md`                                | `false`                 |
+| `showOutOfRangeDates`  | `RangeCalendar` | boolean; show the greyed days of the previous/next month (both months) | `false` (hidden)        |
+| `visibleDuration`      | `RangeCalendar` | `{ months }`; only `months` is read                                    | 2 from `md` up, 1 below |
+
+`Calendar` shows days outside the month greyed out; `RangeCalendar` hides them unless
+`showOutOfRangeDates`.
 
 ## Accessibility
 
 - The calendar grid is fully keyboard-operable (arrows, Page Up/Down for months, Enter to pick).
-- Known gap: the footer buttons ("Cancel", "Apply") and the range presets are hard-coded English.
+- Known gap: all built-in texts are hard-coded English: the footer buttons ("Cancel", "Apply"),
+  the range presets ("Today", "Last week" …), `Calendar`'s "Today" button and its date input's
+  `aria-label` ("Date"), and the empty trigger text ("Select date", "Select dates").
 
 ## Example
 

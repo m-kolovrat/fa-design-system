@@ -36,8 +36,9 @@ import type { SortDescriptor } from "react-aria-components";
 - **table-selection-by-prop** MUST Turn on selection with `selectionMode="multiple"` (or
   `"single"`) on `Table`; the checkbox column and the select-all box appear on their own. Never add
   `Checkbox` cells yourself. Use `selectedKeys` / `onSelectionChange` to read it.
-- **table-size-once** SHOULD Set `size` (`sm` · `md`) once on `TableCard.Root` (or `Table` without a
-  card); header, rows and cells read it from context.
+- **table-size-once** SHOULD Set `size` (`sm` · `md`) once: on `TableCard.Root` inside a card, or on
+  `Table` without one. Header, rows and cells read it from context and default to `md`. Inside a
+  card that sets `size`, the card's size wins over `Table`'s.
 - **table-actions-label** MUST Give icon actions in a row a label: `ButtonUtility` with `tooltip`,
   or `Dropdown.DotsButton`. Don't use the exported `TableRowActionsDropdown`; it's a demo with
   English labels and no handlers.
@@ -49,16 +50,16 @@ import type { SortDescriptor } from "react-aria-components";
 
 ## Props
 
-| Component          | Props                                                                                                                                                 |
-| :----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TableCard.Root`   | `size` `sm` · `md` (default `md`), `div` attributes                                                                                                   |
-| `TableCard.Header` | `title` (required), `badge` (string → gray modern `Badge`, or a node), `description`, `contentTrailing`                                               |
-| `Table`            | React Aria `Table` props: `aria-label`, `selectionMode`, `selectedKeys`, `onSelectionChange`, `sortDescriptor`, `onSortChange`, `onRowAction`; `size` |
-| `Table.Header`     | `bordered` (default `true`), `size`, `columns`                                                                                                        |
-| `Table.Head`       | `id`, `label`, `tooltip` (help icon), `isRowHeader`, `allowsSorting`, `className`                                                                     |
-| `Table.Body`       | `items` + render function, or static rows                                                                                                             |
-| `Table.Row`        | `id`, `highlightSelectedRow` (default `true`), `size`, `className`                                                                                    |
-| `Table.Cell`       | `size`, `className`; content is free (text, `Avatar`, `Badge`, `ButtonUtility`)                                                                       |
+| Component          | Props                                                                                                                                                                           |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `TableCard.Root`   | `size` `sm` · `md` (default `md`), `div` attributes                                                                                                                             |
+| `TableCard.Header` | `title` (required), `badge` (string → gray modern `Badge`, or a node), `description`, `contentTrailing`                                                                         |
+| `Table`            | React Aria `Table` props: `aria-label`, `selectionMode`, `selectedKeys`, `onSelectionChange`, `sortDescriptor`, `onSortChange`, `onRowAction`; `size` (see **table-size-once**) |
+| `Table.Header`     | `bordered` (default `true`), `size`, `columns`                                                                                                                                  |
+| `Table.Head`       | `id`, `label`, `tooltip` (help icon), `isRowHeader`, `allowsSorting`, `className`                                                                                               |
+| `Table.Body`       | `items` + render function, or static rows                                                                                                                                       |
+| `Table.Row`        | `id`, `highlightSelectedRow` (default `true`), `size`, `className`                                                                                                              |
+| `Table.Cell`       | `size`, `className`; content is free (text, `Avatar`, `Badge`, `ButtonUtility`)                                                                                                 |
 
 Row height: 72px at `md`, 56px at `sm`. Cell text is `text-sm text-tertiary`; make the main value
 `font-medium text-primary`. Put pagination (`PaginationPageMinimalCenter`, `PaginationCardMinimal`)
