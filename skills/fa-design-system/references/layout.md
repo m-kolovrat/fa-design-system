@@ -6,8 +6,8 @@ Measured on the live Finansavisen pages (October 2026); the evidence is in
 
 > **Status: flexible.** These rules describe what the pages do today and are still being settled.
 > Follow them by default, but when a design or an existing page does something else, follow the
-> design and say so in your reply (see "Redesigning an existing page" in `SKILL.md`). Page widths
-> are deliberately not fixed yet.
+> design and say so in your reply (see "Redesigning an existing page" in `SKILL.md`). Decided so
+> far: cards have a border, three page widths, and a 16 px gutter on mobile.
 
 ## 1. Surfaces
 
@@ -28,6 +28,14 @@ mode; `bg-secondary_alt` is gray in light mode and switches to `bg-primary` in d
 stays lighter than the page in both modes. The plain `bg-primary` card on a `bg-secondary` page
 comes out darker than the page in dark mode.
 
+What they resolve to:
+
+| Level | Token              | Light     | Dark      |
+| :---- | :----------------- | :-------- | :-------- |
+| Page  | `bg-secondary_alt` | `#FAFAFA` | `#0C0E12` |
+| Card  | `bg-primary_alt`   | `#FFFFFF` | `#13161B` |
+| Inset | `bg-tertiary`      | `#F5F5F5` | `#22262F` |
+
 Rules:
 
 - **layout-content-in-cards** SHOULD Put content (text, tables, lists, charts) in a card on the page
@@ -46,14 +54,36 @@ Rules:
 - **layout-states** Row hover `bg-primary_hover`; a selected row or chip `bg-active` or
   `bg-brand-primary_alt`.
 
-Open (decide with the design owner): the live site has no border on cards; the inset in light mode
-(`bg-tertiary`, `#F5F5F5`) is slightly darker than the live one; on mobile the live front page runs
-cards edge to edge while Børs keeps rounded cards with a gutter. Until decided, keep the border, the
-radius and a `px-4` gutter.
+- **layout-card-border** MUST Give every card a `border-secondary` border, although the live site
+  has none. Decided by the design owner.
+- **layout-mobile-gutter** SHOULD Keep a 16 px gutter on mobile (`px-4`), 32 px from `md`
+  (`md:px-8`). Cards keep their radius and border at every width; they don't run edge to edge.
+  Decided by the design owner.
+
+Open (decide with the design owner): the live inset is `#F8F9F9`; `bg-tertiary` is `#F5F5F5`.
 
 ## 2. Arranging cards
 
 **Gap:** 24 px between cards and between rows, everywhere: `gap-6`.
+
+### Page width
+
+The main content has one of three widths on desktop, centered. Below the width it's full width with
+the gutter (`px-4 md:px-8`).
+
+| Width   | Class             | Proposed for                                                         |
+| :------ | :---------------- | :------------------------------------------------------------------- |
+| 1376 px | `max-w-[1376px]`  | Front page and card-grid pages (Børs, Rapporter, instrument, Aksjer) |
+| 1280 px | `max-w-container` | Logged-in app pages (MittFA, Watchlist, investor profile)            |
+| 980 px  | `max-w-[980px]`   | One-column pages: feeds, Forum, Siste nytt, articles                 |
+
+Ads may sit in the side rails beside a 980 px page; leave that space empty rather than widening the
+content. The page-to-width mapping is proposed; follow the design when it says otherwise. 1376 and
+980 have no token yet, hence the arbitrary values.
+
+```tsx
+<main className="mx-auto w-full max-w-[1376px] px-4 py-6 md:px-8">{/* cards */}</main>
+```
 
 ### Card grid (market and profile pages)
 

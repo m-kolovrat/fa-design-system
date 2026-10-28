@@ -19,7 +19,7 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 
 - Icon-only action in a toolbar or row (edit, more, copy): `ButtonUtility` with a `tooltip`.
 - Closing a modal, alert or panel: `CloseButton`.
-- Choosing one of a few views or filters (1D / 1U / 1Å): `ButtonGroup`.
+- Choosing one of a few views or filters (Liste / Kort): `ButtonGroup`; chart periods: [period selector](period-selector.md).
 - A command list behind a button: `Dropdown`.
 - A setting that applies at once: `Toggle`.
 - A link inside running text: a plain `<a>` in `prose`.

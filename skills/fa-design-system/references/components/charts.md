@@ -80,6 +80,11 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
   inside an element with a fixed height (`h-60`). Use `useBreakpoint("lg")` to drop axis labels and
   move the legend on mobile, and `selectEvenlySpacedItems` to thin out x ticks.
 - **charts-no-animation** SHOULD Keep `isAnimationActive={false}` as in the demos.
+- **charts-period-below** MUST Put the period selector directly under the chart it controls, full
+  width of the chart, never above it, beside it or in the card header. When a chart has periods,
+  every chart on every page does it the same way (see [period-selector](period-selector.md)).
+  Because one fixed place lets readers find the periods without looking, and keeps the header free
+  for the title and actions.
 - **charts-text-alternative** MUST Give each chart a heading and a one-line text summary ("EQNR er
   opp 12,4 % siste 12 måneder"), or a table toggle. Because the SVG isn't readable by screen readers.
 
@@ -122,5 +127,5 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
 
 ## See also
 
-Storybook: Application / Charts. Related: [progress](progress.md), [button-group](button-group.md)
-(period switcher 1D / 1U / 1Å above a chart), [table](table.md).
+Storybook: Application / Charts. Related: [progress](progress.md), [table](table.md); [period
+selector](period-selector.md) (always under the chart).

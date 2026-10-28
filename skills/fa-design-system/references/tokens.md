@@ -189,9 +189,9 @@ shadows.
 - Spacing: Tailwind's numeric scale on a 4px base (`p-2` = 8px), the same values as Figma's
   `spacing-*`. An arbitrary value such as `p-[13px]` only to match a Figma measurement that has no
   step.
-- Page gutter: `px-4 md:px-8`. Page width isn't settled yet (`max-w-container` is 1280 px, the live
-  site uses up to 1380 px); take it from the design. Gap between cards: `gap-6` (24 px), see
-  `layout.md`.
+- Page gutter: `px-4 md:px-8` (16 px on mobile, 32 px from `md`); cards keep their radius on
+  mobile. Page widths: 1376, 1280 (`max-w-container`) and 980 px, see "Page width" in
+  `layout.md`. Gap between cards: `gap-6` (24 px).
 - Breakpoints: Tailwind's (`sm` 640, `md` 768, `lg` 1024, `xl` 1280, `2xl` 1536) plus `xxs` 320 and
   `xs` 600. The site header and footer switch layout at `md` (tablet) and `lg` (desktop).
 

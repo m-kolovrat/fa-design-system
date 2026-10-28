@@ -148,6 +148,11 @@ Token questions:
 - The gray ramp and the positive/negative greens and reds (section 4).
 - Page width: live content is 1364–1380 px; `max-w-container` is 1280 px.
 
+**Decided 2026-10-28:** cards keep a `border-secondary` border; main content is 1376, 1280 or 980 px
+wide (ads may sit beside 980); mobile keeps a 16 px gutter (not edge to edge); the serif token is parked. The
+gap components above are drafted in Figma on the "Test" page (node 17349:456) for review; none is
+in code yet.
+
 ## 7. Logged-in pages
 
 **MittFA** (personal feed): page header with an icon tile (star), "MittFa | Mihovil" and "Sist

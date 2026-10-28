@@ -228,7 +228,8 @@ specific one; follow it.
 - **Select vs ComboBox vs MultiSelect vs TagSelect vs NativeSelect:** one choice from a short list,
   one choice with search, several choices, several shown as tags, the browser's own select.
 - **Tabs vs ButtonGroup:** `Tabs` switch between panels of content. `ButtonGroup` switches a view
-  or filter of the same content (1D / 1U / 1Å on a chart).
+  or filter of the same content (Liste / Kort). Chart periods use `PeriodSelector`, not
+  either of them.
 - **Toggle vs Checkbox:** `Toggle` applies at once. `Checkbox` is part of a form that is submitted.
 - **EmptyState vs ErrorState:** nothing to show yet, versus something failed to load.
 
@@ -242,7 +243,7 @@ own; use the stand-in and say so.
 - Progress steps, command bar, activity feed, messaging, calendar views, code snippet, text
   editor, video player: no stand-in. Ask before building.
 - Finansavisen patterns with no component yet: widget card, filter chip, change value (`+1,65 %`),
-  period selector, live indicator, news feed item, article teaser and header, key-figure row, logo
+  live indicator, news feed item, article teaser and header, key-figure row, logo
   stack, follow chips, AI prompt chips, paywall box.
   [references/page-patterns.md](references/page-patterns.md) gives the stand-in for each. Compose
   it from library parts as shown there, and say in your reply that it has no Figma component yet.
@@ -256,8 +257,10 @@ Each entry links to its reference page. Open it before using the component.
 - [Button](references/components/button.md): an action or an action-style link; also
   `ButtonUtility` (icon-only), `CloseButton`, `SocialButton`, app store buttons.
   `fa-design-system/components/base/buttons/button`
+- [Period selector](references/components/period-selector.md): chart periods (1D … 10Y) under a
+  chart. `fa-design-system/components/application/period-selector/period-selector`
 - [Button group](references/components/button-group.md): a row of segmented options, such as
-  chart periods. `fa-design-system/components/base/button-group/button-group`
+  Liste / Kort or a currency. `fa-design-system/components/base/button-group/button-group`
 - [Dropdown](references/components/dropdown.md): a menu of commands behind a button.
   `fa-design-system/components/base/dropdown/dropdown`
 

@@ -17,7 +17,7 @@ import { Tag, TagGroup, TagList } from "fa-design-system/components/base/tags/ta
 
 - A status or category that isn't interactive (Ny, Pluss, Oppdatert): `Badge`.
 - The person types new tags: `InputTags` / `InputTagsOuter`. Picks tags from a list: `TagSelect`.
-- Exactly one view at a time (1D / 1U): `ButtonGroup`.
+- Exactly one view at a time (Liste / Kort): `ButtonGroup`; chart periods: [period selector](period-selector.md).
 
 ## Rules
 

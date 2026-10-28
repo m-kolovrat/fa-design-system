@@ -44,6 +44,9 @@ import type { SortDescriptor } from "react-aria-components";
   English labels and no handlers.
 - **table-numbers** SHOULD Format numbers Norwegian style (`1 234,50`, `+2,4 %`) and add
   `tabular-nums` to numeric cells so digits line up.
+- **table-no-sideways-scroll** SHOULD Fit every column from `md` up (use `size="sm"`, shorter
+  headers, fewer decimals); below `md`, switch to the two-column rows with a sheet (see
+  `page-patterns.md`). Because a sideways scroll hides columns without telling the reader.
 - **table-no-restyle** NEVER Restyle rows or cells with colors. Allowed: `odd:bg-secondary` on rows
   (the Figma "alternating fills" variant, with `className="bg-primary"` on `Table.Header`), widths,
   `whitespace-nowrap`, and responsive `hidden` classes.
@@ -71,8 +74,8 @@ import type { SortDescriptor } from "react-aria-components";
 ## Accessibility
 
 - Arrow keys move between cells; Space selects a row; Enter on a sortable head sorts.
-- The table scrolls horizontally inside its wrapper on narrow screens; hide secondary columns with
-  `hidden md:table-cell` on both the head and the cells.
+- From `md` up, every column shows and the table never scrolls sideways. Below `md`, replace it
+  with the two-column list and sheet in "Data table on mobile" (`page-patterns.md`).
 
 ## Example
 

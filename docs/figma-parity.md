@@ -138,6 +138,7 @@ All icons come from `fa-icons` (Figma "Icons V2"). These Untitled UI icons had n
 
 Not code gaps, but worth fixing in Figma:
 
+- **Period selector and \_Period item** live on the "Test" page as drafts (2026-10-28). Move them to the Components section once reviewed; code (`PeriodSelector`) already matches them.
 - **New input sets** (Input date, Input file, Input number, Input tags outer) only have Size / State / Orientation variants. They don't have the Label, Hint text and icon booleans that Input field has.
 - **Small verification code sizes** (xxxs / xxs / xs): the dash between digit groups in the 6-digit variants is scaled down to fit. Code keeps the large dash at every size (no small code example shows one).
 - **Disabled states** in the new input sets use Figma's disabled tokens. Code inputs use `opacity-50` by convention (see `CLAUDE.md` → Disabled states), except `PinInput`, whose digit boxes use Figma's `bg-disabled_subtle` / `fg-disabled_subtle` / `border-disabled`.

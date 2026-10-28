@@ -21,7 +21,7 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 
 - A labelled date field in a form (fødselsdato, oppgjørsdato): `InputDate`. `DatePicker` is a
   button with no `label` or `hint`.
-- Fixed periods on a chart (1D / 1U / 1Å): `ButtonGroup`.
+- Fixed periods on a chart (1D / 1M / 1Y): [period selector](period-selector.md).
 
 ## Rules
 

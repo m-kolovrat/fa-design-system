@@ -74,6 +74,19 @@ Read every table the same way:
 | \_Button group base `Icon=Dot` / `Trailing` | `iconLeading={<Dot … />}` / `iconTrailing={Icon}`                                               |
 | \_Button group base `State=Disabled`        | `isDisabled` on the item                                                                        |
 
+## Period selector
+
+Figma draft on the "Test" page.
+
+| Figma                            | Code                                                                                        |
+| -------------------------------- | ------------------------------------------------------------------------------------------- |
+| Period selector                  | `PeriodSelector`, `fa-design-system/components/application/period-selector/period-selector` |
+| `Layout=Fit` / `Scroll`          | `layout="fit"` / `"scroll"`                                                                 |
+| `Change=True`                    | `change` on each entry of `periods`                                                         |
+| `1D` … `10Y` booleans            | which ids are in `periods`                                                                  |
+| \_Period item `State=Current`    | `selectedPeriod` / `defaultSelectedPeriod`                                                  |
+| \_Period item `Label` / `Change` | the entry's `id` / `change` (percent, formatted by the component)                           |
+
 ## Badges
 
 | Figma                                                | Code                                                                                 |
