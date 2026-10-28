@@ -64,6 +64,9 @@
   "scripts": {
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build -o ./storybook-static",
+    "sandbox": "storybook dev -c .storybook-sandbox -p 6008 --no-open",
+    "sandbox:build": "storybook build -c .storybook-sandbox -o ./sandbox-static",
+    "sandbox:check": "tsc --noEmit -p sandbox/tsconfig.json && prettier --check sandbox --ignore-path .gitignore",
     "lint": "eslint components --fix",
     "lint:check": "eslint components",
     "prettier": "prettier . --write",

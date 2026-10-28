@@ -30,12 +30,19 @@ npm run prettier                 # prettier --write on the repo
 npm run tokens:check             # styles/theme.css vs tokens/figma-tokens.json (see TOKENS.md)
 npm run build-storybook          # static Storybook in ./storybook-static
 npm run build                    # the installable package in ./dist (also runs on install via `prepare`)
+npm run sandbox                  # sandbox Storybook at http://localhost:6008 (pages and experiment runs)
+npm run sandbox:check            # type-check + prettier for sandbox/ only (not part of npm test)
 ```
 
 **Restart Storybook after adding a new component file.** Tailwind doesn't pick up classes from
 files created while Storybook is running, so a new component renders unstyled until restarted.
 
 Releasing, what ships and why import paths are public API: [`docs/releasing.md`](docs/releasing.md).
+
+**The sandbox** (`sandbox/`) is for building pages with the library and running experiments. Nothing
+in the library imports it, it isn't shipped, and `npm test` skips it. Sandbox pages import by package
+path (`fa-design-system/components/...`), so they follow the skill, not this file. How to build a page
+there: [`sandbox/README.md`](sandbox/README.md). Never copy sandbox code into `components/`.
 
 ## Project Structure
 
@@ -56,6 +63,7 @@ utils/                 # cx.ts (cx, sortCx), is-react-component.ts, countries, t
 public/images/         # Storybook-only assets (placeholder avatars); not shipped
 docs/                  # figma-parity, overrides, icons, releasing, storybook-docs
 skills/                # the fa-design-system skill (ships with the package)
+sandbox/               # pages built from prompts and experiment runs; own Storybook, not shipped
 ```
 
 Each component lives in its own kebab-case folder:

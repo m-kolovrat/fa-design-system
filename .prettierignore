@@ -2,3 +2,6 @@ package.json
 
 # Generated lockfiles — not ours to format
 package-lock.json
+
+# The sandbox has its own check (npm run sandbox:check)
+sandbox/
