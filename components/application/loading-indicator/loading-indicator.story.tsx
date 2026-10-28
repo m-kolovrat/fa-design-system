@@ -1,16 +1,34 @@
-import type { FC } from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import loadingIndicatorDoc from "@/skills/fa-design-system/references/components/loading-indicator.md?raw";
+import { cx } from "@/utils/cx";
+import { LoadingIndicator } from "./loading-indicator";
 import * as Demos from "./loading-indicator.demo";
 
-export default {
+const meta = {
     title: "Application/Loading indicators",
+    component: LoadingIndicator,
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props table
+        // comes from the types and JSDoc in loading-indicator.tsx.
+        skillDoc: loadingIndicatorDoc,
+    },
     decorators: [
-        (Story: FC) => (
-            <div className="flex min-h-screen items-center justify-center bg-primary p-8">
+        (Story, { viewMode }) => (
+            <div className={cx("flex items-center justify-center bg-primary p-8", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         ),
     ],
-};
+    args: { type: "line-simple", size: "md", label: "Loading..." },
+} satisfies Meta<typeof LoadingIndicator>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+/** Single interactive loading indicator — edit props live in the Controls panel. */
+export const Playground: Story = {};
 
 export const LoadingIndicatorLineSimple = () => <Demos.LoadingIndicatorLineSimple />;
 LoadingIndicatorLineSimple.storyName = "Loading indicator line simple";

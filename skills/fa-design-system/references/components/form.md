@@ -52,8 +52,12 @@ props except `ref`.
 `({ field, fieldState, formState }) => ReactNode` or plain nodes. `field` also carries
 `validationBehavior: "aria"`; pass it on (or set `validationBehavior="aria"` on `HookForm`) so
 the browser's native check doesn't block submit before react-hook-form validates.
-`useFormFieldContext()` (same import) gives a field's `id`, `name`, `control` and state
-(`invalid`, `error`, `isDirty`, `isTouched`) inside a `FormField`; outside one it throws.
+
+## Notes
+
+- `useFormFieldContext()` (same import) gives a field's `id`, `name`, `control` and state
+  (`invalid`, `error`, `isDirty`, `isTouched`) inside a `FormField`, for a custom field component;
+  outside one it throws.
 
 ## Accessibility
 

@@ -50,8 +50,11 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 | `PinInput.Description` | `HintText` props (`isInvalid`, `className` merges with the size class)                                                           |         |
 | `PinInput.Separator`   | none                                                                                                                             |         |
 
-Sizes are the digit box height. Disabled boxes use Figma's disabled tokens (`bg-disabled_subtle`,
-`fg-disabled_subtle`, `ring-disabled`), not `opacity-50`.
+## Notes
+
+- Sizes are the digit box height.
+- Disabled boxes use Figma's disabled tokens (`bg-disabled_subtle`, `fg-disabled_subtle`,
+  `ring-disabled`), not `opacity-50`.
 
 ## Accessibility
 
@@ -83,5 +86,5 @@ const [code, setCode] = useState("");
 
 ## See also
 
-Storybook: Base components / Inputs (Verification code input, Input OTP). Related:
+Storybook: Base components / Inputs / Pin input. Related:
 [input](input.md), [form](form.md).

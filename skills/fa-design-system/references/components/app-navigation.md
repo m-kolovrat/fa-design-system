@@ -69,8 +69,9 @@ Sidebars: `activeUrl`, `items` (required). `SidebarNavigationSimple` adds `foote
 `avatarRounded` (passed to the account card's avatar; `false` gives the square avatar, default round).
 `SidebarNavigationDualTier` adds `footerItems`, `featureCard`, `hideBorder`, `accountItems`,
 `selectedAccountId`. `SidebarNavigationSlim` adds `footerItems`, `hideBorder`, `hideRightBorder`.
-`SidebarNavigationSectionsSubheadings` takes `items: { label: string; items: NavItemType[] }[]`
-(`activeUrl` default `"/"`).
+`SidebarNavigationSectionDividers` takes only `activeUrl` and `items`
+(`(NavItemType | NavItemDividerType)[]`). `SidebarNavigationSectionsSubheadings` takes
+`items: { label: string; items: NavItemType[] }[]` (`activeUrl` default `"/"`).
 
 `HeaderNavigationBase`: `items` (required; `{ label, href, current?, icon?, badge?, items? }`),
 `activeUrl`, `subItems` (overrides the active item's sub-items), `actions` (node), `centered`

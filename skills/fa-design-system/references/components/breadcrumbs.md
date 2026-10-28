@@ -43,7 +43,11 @@ import { Breadcrumbs } from "fa-design-system/components/application/breadcrumbs
 | `className`       | classes on the wrapping `nav` (layout)                   |           |
 
 `Breadcrumbs.Item`: `href`, `icon` (component or element), `children`, `aria-label`, plus React
-Aria `Link` props. Mobile and desktop differ only in spacing, handled with `md:`.
+Aria `Link` props.
+
+## Notes
+
+- Mobile and desktop differ only in spacing, handled with `md:`.
 
 ## Accessibility
 

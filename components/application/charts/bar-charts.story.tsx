@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import * as Charts from "./bar-charts.demo";
 
+// The "Charts" Docs page (charts.md) is hosted by line-charts.story.tsx, which shares this title.
 export default {
     title: "Application/Charts",
     decorators: [

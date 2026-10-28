@@ -2,7 +2,13 @@
 
 import type { ComponentPropsWithRef, FC, ReactNode } from "react";
 import { createContext, isValidElement, useContext } from "react";
-import type { TabListProps as AriaTabListProps, TabProps as AriaTabProps, TabRenderProps as AriaTabRenderProps } from "react-aria-components";
+import type {
+    TabListProps as AriaTabListProps,
+    TabPanelProps as AriaTabPanelProps,
+    TabProps as AriaTabProps,
+    TabRenderProps as AriaTabRenderProps,
+    TabsProps as AriaTabsProps,
+} from "react-aria-components";
 import { Tab as AriaTab, TabList as AriaTabList, TabPanel as AriaTabPanel, Tabs as AriaTabs, TabsContext, useSlottedContext } from "react-aria-components";
 import { Badge } from "@/components/base/badges/badges";
 import { cx } from "@/utils/cx";
@@ -81,16 +87,19 @@ const getHorizontalStyles = ({ size, fullWidth }: { size?: "sm" | "md"; fullWidt
     line: "gap-2",
 });
 
-interface TabListComponentProps<T extends object, K extends Orientation> extends Omit<AriaTabListProps<T>, "items"> {
-    /** The size of the tab list. */
+export interface TabListComponentProps<T extends object, K extends Orientation> extends Omit<AriaTabListProps<T>, "items"> {
+    /** The size of the tabs. */
     size?: keyof typeof sizes;
-    /** The type of the tab list. */
+    /**
+     * The look of the tabs. Horizontal: `button-brand`, `button-gray`, `button-border`, `button-minimal`, `underline`.
+     * Vertical: the same buttons, and `line` instead of `underline`.
+     */
     type?: TabTypeColors<K>;
-    /** The orientation of the tab list. */
+    /** The orientation of the tab list. Follows the `Tabs` orientation when left out. */
     orientation?: K;
-    /** The items of the tab list. When provided, tabs are rendered automatically via the render function in children. */
+    /** The tabs as data; render each with `{(tab) => <Tabs.Item {...tab} />}` as children. */
     items?: T[];
-    /** Whether the tab list is full width. */
+    /** Whether the tabs share the full width of the list. */
     fullWidth?: boolean;
 }
 
@@ -99,6 +108,7 @@ const TabListContext = createContext<Omit<TabListComponentProps<TabComponentProp
     type: "button-brand",
 });
 
+/** `Tabs.List`: the row (or column) of tabs; sets their type and size. */
 export const TabList = <T extends Orientation>({
     size = "sm",
     type = "button-brand",
@@ -142,7 +152,13 @@ export const TabList = <T extends Orientation>({
     );
 };
 
-export const TabPanel = (props: ComponentPropsWithRef<typeof AriaTabPanel>) => {
+export interface TabPanelProps extends ComponentPropsWithRef<typeof AriaTabPanel> {
+    /** The `id` of the `Tabs.Item` this panel belongs to. */
+    id?: AriaTabPanelProps["id"];
+}
+
+/** `Tabs.Panel`: the content shown while its tab is selected. */
+export const TabPanel = (props: TabPanelProps) => {
     return (
         <AriaTabPanel
             {...props}
@@ -156,17 +172,24 @@ export const TabPanel = (props: ComponentPropsWithRef<typeof AriaTabPanel>) => {
     );
 };
 
-interface TabComponentProps extends AriaTabProps {
-    /** The label of the tab. */
+export interface TabComponentProps extends AriaTabProps {
+    /** The tab's id; the `Tabs.Panel` with the same `id` is its content. */
+    id?: AriaTabProps["id"];
+    /** Whether the tab is disabled. */
+    isDisabled?: AriaTabProps["isDisabled"];
+    /** Makes the tab a link (route-based tabs). */
+    href?: AriaTabProps["href"];
+    /** The label of the tab (or pass `children`). */
     label?: ReactNode;
     /** The children of the tab. */
     children?: ReactNode | ((props: AriaTabRenderProps) => ReactNode);
     /** Icon component or element to show before the text */
     icon?: FC<{ className?: string }> | ReactNode;
-    /** The badge displayed next to the label. */
+    /** A count or short text next to the label (from `md` up). */
     badge?: number | string;
 }
 
+/** `Tabs.Item`: one tab. */
 export const Tab = ({ label, children, badge, icon: Icon, className, ...otherProps }: TabComponentProps) => {
     const { size = "sm", type = "button-brand", fullWidth } = useContext(TabListContext);
 
@@ -214,7 +237,26 @@ export const Tab = ({ label, children, badge, icon: Icon, className, ...otherPro
     );
 };
 
-export const Tabs = ({ className, ...props }: ComponentPropsWithRef<typeof AriaTabs>) => {
+export interface TabsProps extends ComponentPropsWithRef<typeof AriaTabs> {
+    /** The orientation of the tabs. */
+    orientation?: AriaTabsProps["orientation"];
+    /** The selected tab's id (controlled). */
+    selectedKey?: AriaTabsProps["selectedKey"];
+    /** The tab selected at first (uncontrolled). Defaults to the first tab. */
+    defaultSelectedKey?: AriaTabsProps["defaultSelectedKey"];
+    /** Called with the newly selected tab's id. */
+    onSelectionChange?: AriaTabsProps["onSelectionChange"];
+    /**
+     * `manual`: arrow keys move focus and Enter or Space selects. `automatic`: arrow keys select.
+     * @default manual
+     */
+    keyboardActivation?: AriaTabsProps["keyboardActivation"];
+    /** The ids of tabs that can't be selected. */
+    disabledKeys?: AriaTabsProps["disabledKeys"];
+}
+
+/** Switches between views of the same content: `Tabs.List` with `Tabs.Item`s, and a `Tabs.Panel` per tab. */
+export const Tabs = ({ className, ...props }: TabsProps) => {
     return (
         <AriaTabs
             keyboardActivation="manual"

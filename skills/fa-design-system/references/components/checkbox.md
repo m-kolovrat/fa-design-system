@@ -33,6 +33,8 @@ import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
 - **checkbox-required-terms** SHOULD For a required consent, set `isRequired`, and when it's not
   checked on submit set `isInvalid` and explain why in text near it. Because the checkbox has no
   red error style of its own.
+- **checkbox-base-visual** NEVER Use `CheckboxBase` as a form control. It is the visual box only,
+  for use inside other components (menus, cards) that handle selection themselves.
 - **checkbox-size** SHOULD Use `sm` in forms next to `sm`/`md` inputs; `md` for stand-alone
   consent blocks.
 
@@ -50,8 +52,8 @@ import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
 | `isRequired`, `isInvalid`, `isReadOnly` | boolean                           |         |
 | `name`, `value`                         | string, for form data             |         |
 
-Plus React Aria `Checkbox` props. `CheckboxBase` is the visual box only, for use inside other
-components (menus, cards); never as a form control.
+Plus React Aria `Checkbox` props. `CheckboxBase` (the box alone): `size`, `isSelected`,
+`isIndeterminate`, `isDisabled`, `isFocusVisible`, `className`.
 
 ## Accessibility
 

@@ -13,14 +13,36 @@ import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { cx } from "@/utils/cx";
 import { isReactComponent } from "@/utils/is-react-component";
 
-interface ComboBoxProps extends Omit<AriaComboBoxProps<SelectItemType>, "children" | "items">, RefAttributes<HTMLDivElement>, CommonProps {
+type ComboBoxAriaProps = AriaComboBoxProps<SelectItemType>;
+
+export interface ComboBoxProps extends Omit<AriaComboBoxProps<SelectItemType>, "children" | "items">, RefAttributes<HTMLDivElement>, CommonProps {
+    /**
+     * Shows a "⌘K" hint in the field. Set `false` unless the shortcut is really bound
+     * @default true
+     */
     shortcut?: boolean;
+    /** The options (`SelectItemType[]`) */
     items?: SelectItemType[];
+    /** Classes on the popover (its width) */
     popoverClassName?: string;
+    /** Classes on the shortcut hint */
     shortcutClassName?: string;
     /** Leading icon component displayed before the input. */
     icon?: FC | ReactNode;
+    /** A render function for each item: `(item) => <Select.Item … />` */
     children: AriaListBoxProps<SelectItemType>["children"];
+    /** The selected item id (controlled) */
+    value?: ComboBoxAriaProps["value"];
+    /** Called with the selected item id */
+    onChange?: ComboBoxAriaProps["onChange"];
+    /** Called with the typed text */
+    onInputChange?: ComboBoxAriaProps["onInputChange"];
+    /** Whether a value is required: adds `*` to the label */
+    isRequired?: ComboBoxAriaProps["isRequired"];
+    /** Whether the field is disabled */
+    isDisabled?: ComboBoxAriaProps["isDisabled"];
+    /** Whether the field is invalid: the `hint` turns red */
+    isInvalid?: ComboBoxAriaProps["isInvalid"];
 }
 
 interface ComboBoxValueProps extends AriaGroupProps {
@@ -105,6 +127,7 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
     );
 };
 
+/** A select you can type in to filter the options (`Select.ComboBox`). */
 export const ComboBox = ({
     placeholder = "Search",
     shortcut = true,

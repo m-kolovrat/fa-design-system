@@ -60,6 +60,10 @@ size, rounded down ("2 MB").
 `defaultCamera` (`user` · `environment`), `onSelect(files: FileList | null)`. The child's own
 `onClick` still runs, before the file dialog opens.
 
+## Notes
+
+- `getReadableFileSize(bytes)` (from `file-upload-base`) formats a size for the list items.
+
 ## Figma parity
 
 `FileTrigger` (file upload trigger) is code-only (`docs/figma-parity.md` §3). Suggested action: add

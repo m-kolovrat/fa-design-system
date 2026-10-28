@@ -146,8 +146,9 @@ export interface CommonProps {
     noTextPadding?: boolean;
     /** When true, keeps the text visible during loading state */
     showTextWhileLoading?: boolean;
-
+    /** The label. Leave it out (with an icon and an `aria-label`) for an icon-only button */
     children?: ReactNode;
+    /** Layout classes only (`w-full`, `self-start`, margins); never fill, border, radius or padding */
     className?: string;
 }
 
@@ -159,12 +160,17 @@ export interface ButtonProps extends CommonProps, Omit<AriaButtonProps, "childre
  * Props for the link variant (anchor tag)
  */
 interface LinkProps extends CommonProps, Omit<AriaLinkProps, "children" | "className"> {
+    /** Renders a link (React Aria `Link`) styled as a button. Leave it out for a button. */
     href: NonNullable<AriaLinkProps["href"]>;
 }
 
 /** Union type of button and link props */
 export type Props = ButtonProps | LinkProps;
 
+// Storybook's props table (react-docgen-typescript) reads the first signature, `LinkProps`, so it
+// lists `href` as required. `ComponentProps<typeof Button>` reads the last one, `ButtonProps`;
+// keep this order so that stays the button's props.
+/** Starts an action, or links somewhere styled as an action when given `href`. */
 export const Button: {
     (props: LinkProps): ReactElement<LinkProps>;
     (props: ButtonProps): ReactElement<ButtonProps>;

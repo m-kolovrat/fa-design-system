@@ -50,7 +50,16 @@ export const TableRowActionsDropdown = () => (
 /** `size` is undefined when no `TableCard.Root` or `Table` above has set one; consumers fall back to "md". */
 const TableContext = createContext<{ size?: "sm" | "md" }>({});
 
-const TableCardRoot = ({ children, className, size, ...props }: HTMLAttributes<HTMLDivElement> & { size?: "sm" | "md" }) => {
+export interface TableCardRootProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Row height and padding for the table inside: `md` 72px rows, `sm` 56px.
+     * @default md
+     */
+    size?: "sm" | "md";
+}
+
+/** `TableCard.Root`: the card around a table, its header and its pagination. */
+const TableCardRoot = ({ children, className, size, ...props }: TableCardRootProps) => {
     return (
         <TableContext.Provider value={{ size }}>
             <div {...props} className={cx("overflow-hidden rounded-xl bg-primary shadow-xs ring-1 ring-secondary", className)}>
@@ -60,19 +69,20 @@ const TableCardRoot = ({ children, className, size, ...props }: HTMLAttributes<H
     );
 };
 
-interface TableCardHeaderProps {
+export interface TableCardHeaderProps {
     /** The title of the table card header. */
     title: string;
-    /** The badge displayed next to the title. */
+    /** Shown next to the title. A string renders a small gray modern `Badge`; pass an element for anything else. */
     badge?: ReactNode;
     /** The description of the table card header. */
     description?: string;
-    /** The content displayed after the title and badge. */
+    /** Content on the right of the header (buttons, a search field, a dropdown). */
     contentTrailing?: ReactNode;
     /** The class name of the table card header. */
     className?: string;
 }
 
+/** `TableCard.Header`: title, badge, description and trailing content above the table. */
 const TableCardHeader = ({ title, badge, description, contentTrailing, className }: TableCardHeaderProps) => {
     const { size = "md" } = useContext(TableContext);
 
@@ -104,10 +114,26 @@ const TableCardHeader = ({ title, badge, description, contentTrailing, className
     );
 };
 
-interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithRef<"table">, "className" | "slot" | "style"> {
+export interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithRef<"table">, "className" | "slot" | "style"> {
+    /** Row height and padding when the table is not inside a `TableCard.Root` (which sets it there). */
     size?: "sm" | "md";
+    /** Names the table for screen readers (required unless `aria-labelledby` is set). */
+    "aria-label"?: AriaTableProps["aria-label"];
+    /** `single` or `multiple` adds a checkbox column for row selection. */
+    selectionMode?: AriaTableProps["selectionMode"];
+    /** The selected row ids (controlled). */
+    selectedKeys?: AriaTableProps["selectedKeys"];
+    /** Called with the new selection. */
+    onSelectionChange?: AriaTableProps["onSelectionChange"];
+    /** The sorted column and direction (controlled); pair with `allowsSorting` on `Table.Head`. */
+    sortDescriptor?: AriaTableProps["sortDescriptor"];
+    /** Called when a sortable column header is pressed. */
+    onSortChange?: AriaTableProps["onSortChange"];
+    /** Called when a row is pressed (open a detail view). */
+    onRowAction?: AriaTableProps["onRowAction"];
 }
 
+/** A data table: `Table.Header` with `Table.Head`s, and `Table.Body` with `Table.Row`s of `Table.Cell`s. */
 const TableRoot = ({ className, size, ...props }: TableRootProps) => {
     const context = useContext(TableContext);
 
@@ -121,12 +147,20 @@ const TableRoot = ({ className, size, ...props }: TableRootProps) => {
 };
 TableRoot.displayName = "Table";
 
-interface TableHeaderProps<T extends object>
+export interface TableHeaderProps<T extends object>
     extends AriaTableHeaderProps<T>, Omit<ComponentPropsWithRef<"thead">, "children" | "className" | "slot" | "style"> {
+    /**
+     * A border-secondary line under the header row.
+     * @default true
+     */
     bordered?: boolean;
+    /** Overrides the size from the table or card. */
     size?: "sm" | "md";
+    /** The columns as data; render each with a `Table.Head` as children. */
+    columns?: AriaTableHeaderProps<T>["columns"];
 }
 
+/** `Table.Header`: the header row. */
 const TableHeader = <T extends object>({ columns, children, bordered = true, className, size: sizeProp, ...props }: TableHeaderProps<T>) => {
     const context = useContext(TableContext);
     const { selectionBehavior, selectionMode } = useTableOptions();
@@ -165,11 +199,20 @@ const TableHeader = <T extends object>({ columns, children, bordered = true, cla
 
 TableHeader.displayName = "TableHeader";
 
-interface TableHeadProps extends AriaColumnProps, Omit<ThHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
+export interface TableHeadProps extends AriaColumnProps, Omit<ThHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
+    /** The column's id; cells and the sort descriptor refer to it. */
+    id?: AriaColumnProps["id"];
+    /** The column heading. */
     label?: string;
+    /** Help text in a tooltip on a help icon next to the label. */
     tooltip?: string;
+    /** Marks the column whose cell names the row for screen readers (usually the first). */
+    isRowHeader?: AriaColumnProps["isRowHeader"];
+    /** Makes the column sortable (sort icon, `onSortChange` on the table). */
+    allowsSorting?: AriaColumnProps["allowsSorting"];
 }
 
+/** `Table.Head`: one column heading. */
 const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadProps) => {
     const { selectionBehavior } = useTableOptions();
 
@@ -217,12 +260,20 @@ const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadP
 };
 TableHead.displayName = "TableHead";
 
-interface TableRowProps<T extends object>
+export interface TableRowProps<T extends object>
     extends AriaRowProps<T>, Omit<ComponentPropsWithRef<"tr">, "children" | "className" | "onClick" | "slot" | "style" | "id"> {
+    /** The row's id, used for selection and `onRowAction`. */
+    id?: AriaRowProps<T>["id"];
+    /**
+     * Gives selected rows the `bg-secondary` fill.
+     * @default true
+     */
     highlightSelectedRow?: boolean;
+    /** Overrides the size from the table or card. */
     size?: "sm" | "md";
 }
 
+/** `Table.Row`: one row of cells. */
 const TableRow = <T extends object>({ columns, children, className, highlightSelectedRow = true, size: sizeProp, ...props }: TableRowProps<T>) => {
     const context = useContext(TableContext);
     const { selectionBehavior } = useTableOptions();
@@ -259,11 +310,13 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
 
 TableRow.displayName = "TableRow";
 
-interface TableCellProps extends AriaCellProps, Omit<TdHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
+export interface TableCellProps extends AriaCellProps, Omit<TdHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
     ref?: Ref<HTMLTableCellElement>;
+    /** Overrides the size from the table or card. */
     size?: "sm" | "md";
 }
 
+/** `Table.Cell`: free content (text, `Avatar`, `Badge`, `ButtonUtility`), `text-sm text-tertiary` by default. */
 const TableCell = ({ className, children, size: sizeProp, ...props }: TableCellProps) => {
     const context = useContext(TableContext);
     const { selectionBehavior } = useTableOptions();

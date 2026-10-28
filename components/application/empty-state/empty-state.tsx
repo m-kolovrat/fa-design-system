@@ -10,7 +10,9 @@ export interface EmptyStateProps extends Omit<ComponentPropsWithRef<"div">, "tit
     icon?: FC<{ className?: string }>;
     /** Figma "Featured icon". @default true */
     showIcon?: boolean;
+    /** What is empty or what went wrong, in one line. */
     title: ReactNode;
+    /** Why, and what the reader can do next. */
     description?: ReactNode;
     /** Figma "Secondary button": usually `<Button size="md" color="secondary">`. Leave out to hide it. */
     secondaryAction?: ReactNode;

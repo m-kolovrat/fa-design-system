@@ -24,7 +24,7 @@ export interface InputTagsProps {
     tooltip?: string;
     /**
      * Input size variant.
-     * @default "sm"
+     * @default md
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text for the input field. */
@@ -63,6 +63,7 @@ export interface InputTagsProps {
     hideRequiredIndicator?: boolean;
 }
 
+/** Free-text tags inside the field: Enter adds one, Backspace on an empty field moves to the last tag. */
 export const InputTags = ({
     size = "md",
     label,

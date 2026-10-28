@@ -52,7 +52,7 @@ import { CircleProgressBar } from "fa-design-system/components/base/progress-ind
 | `progressClassName` | classes on the fill (see **progress-no-recolor**)                         |                 |
 
 `valueFormatter` gets the unrounded percentage. `ProgressBarBase` is the bare bar (same props
-without `labelPosition`; `valueFormatter` is ignored). The track is 8px high, full width.
+without `labelPosition`, no text; `valueFormatter` is ignored).
 
 `ProgressBarCircle` / `ProgressBarHalfCircle`: `value` (required), `min` / `max` (`0` / `100`),
 `valueFormatter` (gets the percentage already rounded), `label`
@@ -60,9 +60,13 @@ without `labelPosition`; `valueFormatter` is ignored). The track is 8px high, fu
 (200) · `md` (240) · `lg` (280). The half circle is the same width and half the height. No
 `className`: size the ring with `size` only.
 
-`CircleProgressBar` (`simple-circle`): a fixed 64px ring with the percent in the middle; props
-`value` (required) and `min` / `max` (`0` / `100`). The percent is rounded, like the other circles.
-No `label` or `valueFormatter`.
+`CircleProgressBar` (`simple-circle`): `value` (required) and `min` / `max` (`0` / `100`). The
+percent is rounded, like the other circles. No `label` or `valueFormatter`.
+
+## Notes
+
+- The bar's track is 8px high and full width; set the width with `className`.
+- `CircleProgressBar` is a fixed 64px ring with the percent in the middle.
 
 ## Accessibility
 

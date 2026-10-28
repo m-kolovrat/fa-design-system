@@ -55,8 +55,11 @@ Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `Car
 | `PrevTrigger` / `NextTrigger`  | `children` (node, or `({ isDisabled, onClick }) => node`), `asChild`, `aria-label`, `className` (string or `({ isDisabled }) => string`; ignored with the render prop) |
 | `IndicatorGroup` / `Indicator` | low-level dots; prefer `PaginationDot`                                                                                                                                 |
 
-`useCarousel()` returns `api`, `selectedIndex`, `scrollSnaps`, `canScrollPrev`, `canScrollNext`,
-`scrollPrev`, `scrollNext`. `PaginationDot`: `size` `md` · `lg`, `framed`, `isBrand`.
+## Notes
+
+- `useCarousel()` (inside `Carousel.Root`) returns `api`, `selectedIndex`, `scrollSnaps`,
+  `canScrollPrev`, `canScrollNext`, `scrollPrev`, `scrollNext`.
+- `PaginationDot` for the position: `size` `md` · `lg`, `framed`, `isBrand`.
 
 ## Accessibility
 

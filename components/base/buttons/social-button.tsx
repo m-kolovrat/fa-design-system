@@ -1,6 +1,6 @@
 "use client";
 
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 import type { ButtonProps as AriaButtonProps, LinkProps as AriaLinkProps } from "react-aria-components";
 import { Button as AriaButton, Link as AriaLink } from "react-aria-components";
 import { cx, sortCx } from "@/utils/cx";
@@ -41,23 +41,34 @@ export const styles = sortCx({
 });
 
 interface CommonProps {
+    /** The service to sign in with; picks the logo and, with `theme="brand"`, the fill */
     social: "google" | "facebook" | "apple" | "twitter";
+    /** Disables the button (note: `disabled`, not `isDisabled`) */
     disabled?: boolean;
+    /** `brand`: the service's own fill; `color`: white with the colored logo; `gray`: white with a gray logo */
     theme?: "brand" | "color" | "gray";
+    /** The size variant */
     size?: keyof typeof styles.sizes;
+    /** The label ("Logg inn med Google"). Leave it out for an icon-only button, and pass an `aria-label` */
+    children?: ReactNode;
+    /** Layout classes only (`w-full`, margins) */
+    className?: string;
 }
 
-interface ButtonProps extends CommonProps, DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement> {
-    slot?: AriaButtonProps["slot"];
-}
+// `slot` and `routerOptions` are picked from React Aria so they work as before but stay out of the
+// Docs props table (it leaves out props declared in node_modules).
+interface ButtonProps
+    extends CommonProps, Pick<AriaButtonProps, "slot">, DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement> {}
 
-interface LinkProps extends CommonProps, DetailedHTMLProps<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "color">, HTMLAnchorElement> {
-    /** Options for the configured client side router. */
-    routerOptions?: AriaLinkProps["routerOptions"];
+interface LinkProps
+    extends CommonProps, Pick<AriaLinkProps, "routerOptions">, DetailedHTMLProps<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "color">, HTMLAnchorElement> {
+    /** Renders a link (React Aria `Link`) instead of a button */
+    href?: string;
 }
 
 export type SocialButtonProps = ButtonProps | LinkProps;
 
+/** "Sign in with …" button for Google, Facebook, Apple or X, with the service's logo. */
 export const SocialButton = ({ size = "lg", theme = "brand", social, className, children, disabled, ...otherProps }: SocialButtonProps) => {
     const href = "href" in otherProps ? otherProps.href : undefined;
     const Component = href ? AriaLink : AriaButton;

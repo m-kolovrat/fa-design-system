@@ -16,16 +16,32 @@ const now = today(getLocalTimeZone());
 
 const defaultHighlightedDates = [today(getLocalTimeZone())];
 
-interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue> {
+export interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue> {
+    /** The size of the trigger button (Button sizes). */
     size?: ButtonProps["size"];
-    /** The function to call when the apply button is clicked. */
+    /** The function to call when the apply button is clicked. The popover closes after it. */
     onApply?: () => void;
-    /** The function to call when the cancel button is clicked. */
+    /** The function to call when the cancel button is clicked. The popover closes after it. */
     onCancel?: () => void;
+    /** The selected range, `{ start, end }` (controlled). */
+    value?: AriaDateRangePickerProps<DateValue>["value"];
+    /** The range selected at first (uncontrolled). */
+    defaultValue?: AriaDateRangePickerProps<DateValue>["defaultValue"];
+    /** Called on each selection in the calendar or a preset, before Apply. */
+    onChange?: AriaDateRangePickerProps<DateValue>["onChange"];
+    /** The earliest date that can be picked. */
+    minValue?: AriaDateRangePickerProps<DateValue>["minValue"];
+    /** The latest date that can be picked. */
+    maxValue?: AriaDateRangePickerProps<DateValue>["maxValue"];
+    /** Returns `true` for dates that can't be picked. */
+    isDateUnavailable?: AriaDateRangePickerProps<DateValue>["isDateUnavailable"];
+    /** Disables the trigger button. */
+    isDisabled?: AriaDateRangePickerProps<DateValue>["isDisabled"];
     /** The dates to mark with a dot in the calendar. Defaults to today. */
     highlightedDates?: DateValue[];
 }
 
+/** A button that opens a two-month range calendar with presets (today, this week, last month, …) and Cancel / Apply. */
 export const DateRangePicker = ({
     value: valueProp,
     defaultValue,

@@ -1,0 +1,46 @@
+import { ArgTypes, Canvas, Markdown, Meta, Title } from "@storybook/addon-docs/blocks";
+import variantsDoc from "../../../skills/fa-design-system/references/components/input-variants.md?raw";
+import { skillDoc } from "../../internal/skill-doc";
+import { InputDate } from "./input-date";
+import { InputFile } from "./input-file";
+import { InputNumber } from "./input-number";
+import { PaymentInput } from "./input-payment";
+import { InputTags } from "./input-tags";
+import * as InputStories from "./inputs.story";
+
+<Meta title="Base components/Inputs/Variants" />
+
+<Title>Input variants</Title>
+
+<Markdown>{skillDoc(variantsDoc, { sections: ["Choose"], intro: true })}</Markdown>
+
+## InputDate
+
+<Canvas of={InputStories.DateInputs} />
+<ArgTypes of={InputDate} />
+
+## InputNumber
+
+<Canvas of={InputStories.NumberInputsVertical} />
+<Canvas of={InputStories.NumberInputsHorizontal} />
+<ArgTypes of={InputNumber} />
+
+## InputFile
+
+<Canvas of={InputStories.FileUploadInput} />
+<ArgTypes of={InputFile} />
+
+## InputTags and InputTagsOuter
+
+<Canvas of={InputStories.Tags} />
+<Canvas of={InputStories.TagsOuter} />
+<ArgTypes of={InputTags} />
+
+`InputTagsOuter` takes the same props.
+
+## PaymentInput
+
+<Canvas of={InputStories.PaymentInputs} />
+<ArgTypes of={PaymentInput} />
+
+<Markdown>{skillDoc(variantsDoc, { intro: false, omit: ["Choose", "Props"] })}</Markdown>

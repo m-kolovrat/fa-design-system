@@ -56,8 +56,11 @@ import { Tooltip, TooltipTrigger } from "fa-design-system/components/base/toolti
 | `trigger`                                             | `"focus"` to open on focus only                                                                             |         |
 | `isDisabled`, `isOpen`, `defaultOpen`, `onOpenChange` | React Aria trigger state                                                                                    |         |
 
-`TooltipTrigger` takes React Aria `Button` props (`onPress`, `aria-label`, `className`). It renders
-an unstyled button (`h-max w-max`).
+`TooltipTrigger`: React Aria `Button` props (`onPress`, `aria-label`, `className`).
+
+## Notes
+
+- `TooltipTrigger` renders an unstyled button (`h-max w-max`) around the content it explains.
 
 ## Accessibility
 

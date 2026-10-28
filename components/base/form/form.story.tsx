@@ -2,13 +2,20 @@ import { useState } from "react";
 import type { FC } from "react";
 import { Button } from "@/components/base/buttons/button";
 import { Form } from "@/components/base/form/form";
+import { FormField, HookForm } from "@/components/base/form/hook-form";
 import { Input } from "@/components/base/input/input";
+import formDoc from "@/skills/fa-design-system/references/components/form.md?raw";
 
 export default {
     title: "Base components/Form",
+    component: Form,
+    subcomponents: { HookForm, FormField },
+    tags: ["autodocs"],
+    // The Docs page text is form.md; the props tables come from form.tsx and hook-form.tsx.
+    parameters: { skillDoc: formDoc },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full items-start bg-primary p-4">
+            <div className="flex min-h-screen w-full items-start bg-primary p-4 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),

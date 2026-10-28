@@ -45,7 +45,18 @@ export const selectEvenlySpacedItems = <T extends readonly unknown[]>(dataArray:
  * @param className - The class name of the legend.
  * @returns The legend content.
  */
-export const ChartLegendContent = ({ reversed, payload, align, layout, className }: LegendContentProps & { reversed?: boolean; className?: string }) => {
+export const ChartLegendContent = ({
+    reversed,
+    payload,
+    align,
+    layout,
+    className,
+}: LegendContentProps & {
+    /** Lists the series in reverse order (e.g. to match a stacked bar from the top). */
+    reversed?: boolean;
+    /** Layout classes only. */
+    className?: string;
+}) => {
     payload = reversed ? payload?.toReversed() : payload;
 
     return (
@@ -73,15 +84,22 @@ export const ChartLegendContent = ({ reversed, payload, align, layout, className
     );
 };
 
-interface ChartTooltipContentProps extends TooltipProps<ValueType, NameType> {
+export interface ChartTooltipContentProps extends TooltipProps<ValueType, NameType> {
+    /** For a `RadialBarChart` (gauge): the title is the value, the subtitle the item's `name`. */
     isRadialChart?: boolean;
+    /** For a `PieChart`: the title is the value, the subtitle the slice's `name`. */
     isPieChart?: boolean;
+    /** The hovered point's label (set by Recharts' `Tooltip`). */
     label?: string;
     // We have to use `any` here because the `payload` prop is not typed correctly in the `recharts` library.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payload?: any;
 }
 
+/**
+ * The Figma "Chart marker": pass as `<Tooltip content={<ChartTooltipContent />} />`. Recharts' `formatter`
+ * and `labelFormatter` on the `Tooltip` format its lines.
+ */
 export const ChartTooltipContent = ({ active, payload, label, isRadialChart, isPieChart, formatter, labelFormatter }: ChartTooltipContentProps) => {
     const canRender = active && payload && payload.length;
 

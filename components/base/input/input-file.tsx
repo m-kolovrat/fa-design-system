@@ -7,7 +7,7 @@ import { InputBase } from "@/components/base/input/input";
 import { InputGroup } from "@/components/base/input/input-group";
 import { cx } from "@/utils/cx";
 
-interface InputFileProps {
+export interface InputFileProps {
     /**
      * The size of the input.
      * @default "sm"
@@ -44,6 +44,7 @@ interface InputFileProps {
     buttonText?: string;
 }
 
+/** One compact field with a file button. Defaults to English texts and size `sm`: pass `buttonText`, `placeholder` and `size`. */
 export const InputFile = ({
     size = "sm",
     label,

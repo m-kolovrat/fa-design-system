@@ -6,11 +6,16 @@ import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 import { cx } from "@/utils/cx";
 
-interface NativeSelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> {
+export interface NativeSelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> {
+    /** Label text above the select */
     label?: string;
+    /** Helper text below the select */
     hint?: string;
+    /** Classes on the `<select>` itself */
     selectClassName?: string;
+    /** The size of the component */
     size?: "sm" | "md" | "lg";
+    /** The options (required) */
     options: { label: string; value: string; disabled?: boolean }[];
 }
 
@@ -29,6 +34,7 @@ const styles = {
     },
 };
 
+/** The browser's own `<select>`, styled like the other fields; also the addon inside an `InputGroup`. */
 export const NativeSelect = ({ label, hint, options, className, selectClassName, size = "md", ...props }: NativeSelectProps) => {
     const id = useId();
     const selectId = `select-native-${id}`;

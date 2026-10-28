@@ -35,6 +35,9 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
   those props.
 - **button-group-same-size** NEVER Mix sizes or restyle single items; set `size` once on
   `ButtonGroup`. Because items read their size from the group.
+- **button-group-disabled-by-prop** MUST Disable with `isDisabled` (on the group or an item), never
+  classes. Because disabled items use Figma's disabled tokens (`bg-disabled_subtle`,
+  `text-disabled`), not `opacity-50`.
 - **button-group-short-labels** SHOULD Keep labels to one or two words in sentence case ("1U",
   "I år", "Tabell").
 
@@ -53,8 +56,7 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
 | `isDisabled`             | boolean: disables every item            |          |
 
 `ButtonGroupItem`: `id`, `iconLeading`, `iconTrailing`, `isDisabled`, `children`, plus React Aria
-`ToggleButton` props. Disabled items use Figma's disabled tokens (`bg-disabled_subtle`,
-`text-disabled`), not `opacity-50`.
+`ToggleButton` props (`onPress`, not `onClick`).
 
 ## Accessibility
 

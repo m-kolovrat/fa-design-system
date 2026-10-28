@@ -42,6 +42,8 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
   × button has no other accessible name.
 - **badge-icon-only-label** SHOULD Avoid `BadgeIcon` for meaning on its own; it renders no text and
   takes no `aria-label`. Put a visible or `sr-only` label next to it.
+- **badge-flag** MUST Pass `flag` to `BadgeWithFlag`. Because it otherwise shows the Australian
+  flag (`"australia-aud"`).
 - **badge-short** SHOULD Keep the text to one to three words; badges never wrap (`whitespace-nowrap`).
 - **badge-group-static** SHOULD Wrap `BadgeGroup` in a link (`<a>` or a router `Link`) when it should
   navigate. Because it renders a `div` with a pointer cursor and hover fill but no link or button.
@@ -55,20 +57,22 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
 | `color` | `gray` · `brand` · `error` · `warning` · `success` · `blue-light` · `purple` · `pink` · `orange-dark` | `gray`       |
 
 Per variant: `BadgeWithIcon` `iconLeading` / `iconTrailing` (one of them); `BadgeWithFlag` `flag`
-(a `FlagName` such as `"norway-nok"`, default `"australia-aud"`, so always pass it);
-`BadgeWithImage` `imgSrc` (its `alt` is fixed to "Badge image"); `BadgeWithButton` `buttonLabel`,
-`onButtonClick`, `icon` (default `Close`); `BadgeIcon` `icon` (required). `className` exists on
-`Badge`, `BadgeWithDot` and `BadgeWithIcon` only.
+(a `FlagName` such as `"norway-nok"`, default `"australia-aud"`); `BadgeWithImage` `imgSrc`;
+`BadgeWithButton` `buttonLabel`, `onButtonClick`, `icon` (default `Close`); `BadgeIcon` `icon`
+(required). `className` exists on `Badge`, `BadgeWithDot` and `BadgeWithIcon` only.
 
 `BadgeGroup`: `addonText` (required), `children` (the message), `color` `brand` · `gray` ·
-`error` · `warning` · `success` (default `brand`), `theme` `light` · `modern` (default `light`), `size` `md` · `lg`, `align`
-`leading` · `trailing` (where the addon sits), `iconTrailing` (default `ArrowRight`).
+`error` · `warning` · `success` (default `brand`), `theme` `light` · `modern` (default `light`),
+`size` `md` · `lg` (default `md`), `align` `leading` · `trailing` (where the addon sits, default
+`leading`), `iconTrailing` (default `ArrowRight`).
 
 ## Accessibility
 
 - Badges are plain `<span>`s with no role. A status that changes live needs an `aria-live` region
   around it.
 - The dot in `BadgeWithDot` is decorative; the text carries the status.
+- `BadgeWithImage` gives its image the fixed `alt` "Badge image"; the badge text must say who or
+  what it is.
 
 ## Example
 

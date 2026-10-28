@@ -1,18 +1,26 @@
 import type { FC } from "react";
+import type { Meta } from "@storybook/nextjs-vite";
 import { Flag, type FlagName, flags } from "fa-icons";
+import flagsLogosDoc from "@/skills/fa-design-system/references/components/flags-logos.md?raw";
 
 const names = Object.keys(flags) as FlagName[];
 
-export default {
+const meta = {
     title: "Foundations/Flags",
+    component: Flag,
+    tags: ["autodocs"],
+    // One skill page covers flags, logos, payment and social icons; it lives here, Logos shows a part.
+    parameters: { skillDoc: flagsLogosDoc },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8">
+            <div className="flex min-h-screen w-full overflow-auto bg-primary p-8 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),
     ],
-};
+} satisfies Meta<typeof Flag>;
+
+export default meta;
 
 export const Flags = () => (
     <div className="flex flex-wrap gap-6">

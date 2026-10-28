@@ -1,17 +1,103 @@
 "use client";
 
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { withOverlayAware } from "@/components/internal/decorators";
+import tableDoc from "@/skills/fa-design-system/references/components/table.md?raw";
+import { cx } from "@/utils/cx";
+import {
+    Table,
+    TableCard,
+    type TableCardHeaderProps,
+    type TableCardRootProps,
+    type TableCellProps,
+    type TableHeadProps,
+    type TableHeaderProps,
+    type TableRowProps,
+} from "./table";
 import * as Tables from "./table.demo";
+import teamMembers from "./team-members.json";
 
-export default {
+/*
+ * The parts reached through `Table.*` and `TableCard.*`, for their props tables on the Docs page
+ * (docgen only reads exported components). Not stories. `Table.Body` is React Aria's `TableBody`.
+ */
+/** `TableCard.Root`: the card around a table, its header and its pagination. */
+export const TableCardRootDoc = (props: TableCardRootProps) => <TableCard.Root {...props} />;
+/** `TableCard.Header`: title, badge, description and trailing content above the table. */
+export const TableCardHeaderDoc = (props: TableCardHeaderProps) => <TableCard.Header {...props} />;
+/** `Table.Header`: the header row. */
+export const TableHeaderDoc = (props: TableHeaderProps<object>) => <Table.Header {...props} />;
+/** `Table.Head`: one column heading. */
+export const TableHeadDoc = (props: TableHeadProps) => <Table.Head {...props} />;
+/** `Table.Row`: one row of cells. */
+export const TableRowDoc = (props: TableRowProps<object>) => <Table.Row {...props} />;
+/** `Table.Cell`: free content (text, `Avatar`, `Badge`, `ButtonUtility`). */
+export const TableCellDoc = (props: TableCellProps) => <Table.Cell {...props} />;
+
+const meta = {
     title: "Application/Tables",
+    component: Table,
+    subcomponents: {
+        "TableCard.Root": TableCardRootDoc,
+        "TableCard.Header": TableCardHeaderDoc,
+        "Table.Header": TableHeaderDoc,
+        "Table.Head": TableHeadDoc,
+        "Table.Row": TableRowDoc,
+        "Table.Cell": TableCellDoc,
+    },
+    excludeStories: /Doc$/,
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props tables
+        // come from the types and JSDoc in table.tsx.
+        skillDoc: tableDoc,
+    },
     decorators: [
-        withOverlayAware((Story) => (
-            <div className="min-h-screen bg-primary p-5">
+        withOverlayAware((Story, { viewMode }) => (
+            <div className={cx("bg-primary p-5", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         )),
     ],
+    args: { "aria-label": "Team members", size: "md", selectionMode: "none" },
+    argTypes: {
+        // Controls only: types, defaults and descriptions come from docgen.
+        selectionMode: { control: "inline-radio", options: ["none", "single", "multiple"] },
+        selectedKeys: { control: false },
+        onSelectionChange: { control: false },
+        sortDescriptor: { control: false },
+        onSortChange: { control: false },
+        onRowAction: { control: false },
+    },
+} satisfies Meta<typeof Table>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+/** A small table in a `TableCard` — the controls set the `Table` props (`size` is passed to the card). */
+export const Playground: Story = {
+    render: ({ size, ...args }) => (
+        <TableCard.Root size={size}>
+            <TableCard.Header title="Team members" badge="5 users" description="Everyone with access to this workspace." />
+            <Table {...args}>
+                <Table.Header>
+                    <Table.Head id="name" label="Name" isRowHeader />
+                    <Table.Head id="role" label="Role" tooltip="What they can change" />
+                    <Table.Head id="email" label="Email address" />
+                </Table.Header>
+                <Table.Body items={teamMembers.items.slice(0, 5)}>
+                    {(item) => (
+                        <Table.Row id={item.username}>
+                            <Table.Cell className="font-medium whitespace-nowrap text-primary">{item.name}</Table.Cell>
+                            <Table.Cell className="whitespace-nowrap">{item.role}</Table.Cell>
+                            <Table.Cell className="whitespace-nowrap">{item.email}</Table.Cell>
+                        </Table.Row>
+                    )}
+                </Table.Body>
+            </Table>
+        </TableCard.Root>
+    ),
 };
 
 export const Table01DividerLine = () => <Tables.Table01DividerLine />;

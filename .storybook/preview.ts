@@ -1,5 +1,7 @@
 import { withThemeByClassName } from "@storybook/addon-themes";
 import "../styles/globals.css";
+import { ThemedDocsContainer } from "./docs-container";
+import { SkillDocsPage } from "./docs-page";
 import Wrapper from "./wrapper";
 
 const customViewports = {
@@ -78,6 +80,7 @@ export const parameters = {
             ],
         },
     },
+    docs: { container: ThemedDocsContainer, page: SkillDocsPage },
     controls: {
         matchers: {
             color: /(background|color)$/i,

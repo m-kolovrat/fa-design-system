@@ -1,11 +1,20 @@
 import type { FC } from "react";
+import { BadgeGroup as BadgeGroupComponent } from "@/components/base/badges/badge-groups";
 import * as BadgeGroup from "@/components/base/badges/badge-groups.demo";
 
 export default {
     title: "Base components/Badge groups",
+    component: BadgeGroupComponent,
+    tags: ["autodocs"],
+    parameters: {
+        // badge.md covers BadgeGroup; its full page is on Base components / Badges.
+        docs: {
+            description: { component: "A message with a small badge inside, for announcements. Usage rules: see **Base components / Badges** (`badge.md`)." },
+        },
+    },
     decorators: [
         (Story: FC) => (
-            <div className="flex h-screen w-full bg-primary p-4">
+            <div className="flex h-screen w-full bg-primary p-4 [.docs-story_&]:h-auto">
                 <Story />
             </div>
         ),

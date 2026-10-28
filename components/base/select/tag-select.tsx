@@ -44,21 +44,36 @@ const TagSelectContext = createContext<{
     onInputChange: () => {},
 });
 
-interface TagSelectProps extends Omit<AriaComboBoxProps<SelectItemType>, "children" | "items">, RefAttributes<HTMLDivElement> {
+export interface TagSelectProps extends Omit<AriaComboBoxProps<SelectItemType>, "children" | "items">, RefAttributes<HTMLDivElement> {
+    /** Helper text displayed below the input */
     hint?: string;
+    /** Field label displayed above the input */
     label?: string;
+    /** Tooltip text for the help icon next to the label */
     tooltip?: string;
+    /** The size of the component */
     size?: "sm" | "md" | "lg";
+    /** Placeholder text in the search field */
     placeholder?: string;
+    /** Shows a "⌘K" hint in the field */
     shortcut?: boolean;
+    /** The options (`SelectItemType[]`) */
     items?: SelectItemType[];
+    /** Classes on the popover */
     popoverClassName?: string;
+    /** Classes on the shortcut hint */
     shortcutClassName?: string;
+    /** The chosen items as a `useListData()` list (required); shown as tags */
     selectedItems: ListData<SelectItemType>;
+    /** Leading icon component */
     icon?: IconComponentType | null;
+    /** A render function for each item: `(item) => <TagSelect.Item … />` */
     children: AriaListBoxProps<SelectItemType>["children"];
+    /** Called with the id of a tag that was removed */
     onItemCleared?: (key: Key) => void;
+    /** Called with the id of an item that was chosen */
     onItemInserted?: (key: Key) => void;
+    /** The text shown in a tag; defaults to the item's `label` */
     valueFormatter?: (item: SelectItemType) => string;
 }
 
@@ -393,6 +408,7 @@ export const TagSelectTagsValue = ({
     );
 };
 
+/** A combo box whose chosen items show as removable tags inside the field. Items are `TagSelect.Item`. */
 const TagSelect = TagSelectBase as typeof TagSelectBase & {
     Item: typeof SelectItem;
 };

@@ -33,6 +33,7 @@ export interface NotificationProps {
      * @default "brand"
      */
     type?: NotificationType;
+    /** The message in one line (the bold text). */
     title: ReactNode;
     /** Figma "Supporting text". */
     description?: ReactNode;
@@ -44,15 +45,17 @@ export interface NotificationProps {
     avatarSrc?: string;
     /** Shown next to the title for `avatar`, e.g. "2 mins ago". */
     meta?: ReactNode;
-    /** Image for `image`. */
+    /** Image for `image` (decorative, `alt=""`). */
     imageSrc?: string;
     /** 0–100, for `progress`. */
     progress?: number;
     /** Shows the close button (Figma "X close button") and is called when it's pressed. */
     onClose?: () => void;
+    /** Layout classes only. */
     className?: string;
 }
 
+/** A short message about something that just happened: inline, or as a toast through `notify()`. */
 export const Notification = ({
     type = "brand",
     title,

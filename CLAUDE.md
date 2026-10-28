@@ -54,7 +54,7 @@ tokens/                # figma-tokens.json: the committed Figma variable extract
 scripts/               # check-token-parity, build-package, setup
 utils/                 # cx.ts (cx, sortCx), is-react-component.ts, countries, timezones
 public/images/         # Storybook-only assets (placeholder avatars); not shipped
-docs/                  # figma-parity, overrides, icons, releasing
+docs/                  # figma-parity, overrides, icons, releasing, storybook-docs
 skills/                # the fa-design-system skill (ships with the package)
 ```
 
@@ -156,5 +156,7 @@ Known gaps between Figma and code are tracked in [`docs/figma-parity.md`](docs/f
 5. Check `docs/figma-parity.md`, and update it if the component closes or opens a gap.
 6. Add its page to `skills/fa-design-system/references/components/` (copy the structure of
    `button.md`), list it in the component index of `skills/fa-design-system/SKILL.md`, and add its
-   Figma variants to `skills/fa-design-system/references/figma-map.md`.
+   Figma variants to `skills/fa-design-system/references/figma-map.md`. Attach that page to the story
+   file with `parameters.skillDoc`, so Storybook's Docs page shows it, and document props with JSDoc
+   rather than `argTypes` ([`docs/storybook-docs.md`](docs/storybook-docs.md)).
 7. Run `npm test` and check the stories in Storybook (light, dark, mobile width) before committing.

@@ -61,11 +61,20 @@ export const Dialog = (props: DialogProps) => (
 );
 Dialog.displayName = "Dialog";
 
-interface SlideoutMenuProps extends Omit<AriaModalOverlayProps, "children">, RefAttributes<HTMLDivElement> {
+export interface SlideoutMenuProps extends Omit<AriaModalOverlayProps, "children">, RefAttributes<HTMLDivElement> {
+    /** `SlideoutMenu.Header`, `.Content` and `.Footer`, or `({ close }) => …` to close from a button. */
     children: ReactNode | ((children: AriaModalRenderProps & { close: () => void }) => ReactNode);
+    /** Classes on the inner dialog. */
     dialogClassName?: string;
+    /** Whether a click on the overlay closes the panel (off by default). Escape closes it either way. */
+    isDismissable?: boolean;
+    /** Controlled open state. Leave it out inside `SlideoutMenu.Trigger`, which opens and closes it. */
+    isOpen?: boolean;
+    /** Called when the panel opens or closes (controlled use, with `isOpen`). */
+    onOpenChange?: (isOpen: boolean) => void;
 }
 
+/** A panel that slides in from the right over the page. */
 const Menu = ({ children, dialogClassName, ...props }: SlideoutMenuProps) => {
     return (
         <ModalOverlay {...props}>
@@ -83,15 +92,18 @@ const Menu = ({ children, dialogClassName, ...props }: SlideoutMenuProps) => {
 };
 Menu.displayName = "SlideoutMenu";
 
+/** `SlideoutMenu.Content`: the scrolling middle. `role` defaults to `"main"`. */
 const Content = ({ role = "main", ...props }: ComponentPropsWithRef<"div">) => {
     return <div role={role} {...props} className={cx("flex size-full flex-col gap-6 overflow-y-auto overscroll-auto px-4 md:px-6", props.className)} />;
 };
 Content.displayName = "SlideoutContent";
 
-interface SlideoutHeaderProps extends ComponentPropsWithRef<"header"> {
+export interface SlideoutHeaderProps extends ComponentPropsWithRef<"header"> {
+    /** Called by the close button; pass the `close` from the menu's render function. */
     onClose?: () => void;
 }
 
+/** `SlideoutMenu.Header`: the title area, with a close button in the corner. */
 const Header = ({ className, children, onClose, ...props }: SlideoutHeaderProps) => {
     return (
         <header {...props} className={cx("relative z-1 w-full px-4 pt-6 md:px-6", className)}>
@@ -102,6 +114,7 @@ const Header = ({ className, children, onClose, ...props }: SlideoutHeaderProps)
 };
 Header.displayName = "SlideoutHeader";
 
+/** `SlideoutMenu.Footer`: the actions, with a top divider. */
 const Footer = (props: ComponentPropsWithRef<"footer">) => {
     return <footer {...props} className={cx("w-full p-4 shadow-[inset_0px_1px_0px_0px] shadow-border-secondary md:px-6", props.className)} />;
 };

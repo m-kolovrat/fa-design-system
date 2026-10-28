@@ -27,11 +27,12 @@ export const getReadableFileSize = (bytes: number) => {
     return Math.floor(bytes / Math.pow(1024, i)) + " " + suffixes[i];
 };
 
-interface FileUploadDropZoneProps {
+export interface FileUploadDropZoneProps {
     /** The class name of the drop zone. */
     className?: string;
     /**
-     * A hint text explaining what files can be dropped.
+     * A hint text explaining what files can be dropped. Falls back to an English sample
+     * ("SVG, PNG, JPG or GIF (max. 800x400px)"), so always pass one.
      */
     hint?: string;
     /**
@@ -68,6 +69,7 @@ interface FileUploadDropZoneProps {
     onSizeLimitExceed?: (files: FileList) => void;
 }
 
+/** `FileUpload.DropZone`: drop files here, or press to pick them. */
 export const FileUploadDropZone = ({
     className,
     hint,
@@ -237,13 +239,13 @@ export const FileUploadDropZone = ({
 export interface FileListItemProps {
     /** The name of the file. */
     name: string;
-    /** The size of the file. */
+    /** The size of the file, in bytes. */
     size: number;
-    /** The upload progress of the file. */
+    /** The upload progress of the file, 0–100. */
     progress: number;
     /** Whether the file failed to upload. */
     failed?: boolean;
-    /** The type of the file. */
+    /** The type of the file, for its icon. */
     type?: ComponentProps<typeof FileIcon>["type"];
     /** The class name of the file list item. */
     className?: string;
@@ -255,6 +257,7 @@ export interface FileListItemProps {
     onRetry?: () => void;
 }
 
+/** `FileUpload.ListItemProgressBar`: an uploading file with a progress bar under its name. */
 export const FileListItemProgressBar = ({ name, size, progress, failed, type, fileIconVariant, onDelete, onRetry, className }: FileListItemProps) => {
     const isComplete = progress === 100;
 
@@ -312,6 +315,7 @@ export const FileListItemProgressBar = ({ name, size, progress, failed, type, fi
     );
 };
 
+/** `FileUpload.ListItemProgressFill`: an uploading file whose row fills as it progresses. */
 export const FileListItemProgressFill = ({ name, size, progress, failed, type, fileIconVariant, onDelete, onRetry, className }: FileListItemProps) => {
     const isComplete = progress === 100;
 

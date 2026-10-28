@@ -2,7 +2,7 @@
 
 Starts an action ("Lagre", "Abonner"), or links somewhere styled as an action ("Se alle").
 Figma: Buttons/Button, Buttons/Button destructive (a `color` here), Buttons/Button utility,
-Buttons/Button close X.
+Buttons/Button close X, Social button, Mobile app store badge.
 
 ```ts
 import { Button } from "fa-design-system/components/base/buttons/button";
@@ -35,6 +35,11 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 - **button-states-by-prop** MUST Use `isDisabled` and `isLoading`, never classes. `isLoading` makes
   the button non-interactive; add `showTextWhileLoading` when the label should stay. Because the
   disabled look uses Figma's `bg-disabled_subtle` / `fg-disabled` tokens, not `opacity-50`.
+- **button-on-press** MUST Use `onPress`, not `onClick`. `Button` takes React Aria `Button` props
+  (`onPress`, `type`, `form`, …), or `Link` props when `href` is set. Because `onPress` handles
+  touch, keyboard and pointer alike.
+- **button-close-label** MUST Pass `label="Lukk"` to `CloseButton`. Because its accessible name
+  otherwise defaults to English "Close".
 - **button-verb-label** SHOULD Say what pressing it does ("Last ned rapport", "Start abonnement"),
   capitalizing only the first word as Norwegian does. Avoid vague labels like "OK" or "Klikk her".
 
@@ -52,19 +57,74 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 | `href`                 | string: renders a link (React Aria `Link`)                                                                                                                        |           |
 | `noTextPadding`        | boolean (drops the label's `px-0.5`; always on for link colors, `false` has no effect there)                                                                      |           |
 
-Plus React Aria `Button` props (`onPress`, `type`, `form`, …) or `Link` props when `href` is set.
-Use `onPress`, not `onClick`.
+`ButtonUtility`:
 
-| Part            | Props                                                                                                    | Default                |
-| :-------------- | :------------------------------------------------------------------------------------------------------- | :--------------------- |
-| `ButtonUtility` | `size`: `xs` (16px icon) · `sm` (20px icon)                                                              | `sm`                   |
-|                 | `color`: `secondary` · `tertiary`                                                                        | `secondary`            |
-|                 | `icon`, `tooltip` (also the `aria-label`), `tooltipPlacement`, `isDisabled`, `href` (renders a link)     | `tooltipPlacement` top |
-| `CloseButton`   | `size`: `sm` (36px) · `md` (40px) · `lg` (44px)                                                          | `sm`                   |
-|                 | `theme`: `light` · `dark` (on dark or image backgrounds)                                                 | `light`                |
-|                 | `label`: the `aria-label` (English "Close" when not set)                                                 |                        |
-|                 | `slot`: React Aria slot; `"close"` closes a parent `Dialog` / `Modal` without a handler, `null` opts out | `"close"`              |
-|                 | plus React Aria `Button` props (`onPress`)                                                               |                        |
+| Prop               | Values                                          | Default     |
+| :----------------- | :---------------------------------------------- | :---------- |
+| `size`             | `xs` (16px icon) · `sm` (20px icon)             | `sm`        |
+| `color`            | `secondary` (bordered) · `tertiary` (no border) | `secondary` |
+| `icon`             | icon component or element                       |             |
+| `tooltip`          | string: the tooltip, and the accessible name    |             |
+| `tooltipPlacement` | React Aria `Placement`                          | `top`       |
+| `isDisabled`       | boolean (`opacity-50`)                          |             |
+| `href`             | string: renders a link                          |             |
+
+`CloseButton` (plus React Aria `Button` props such as `onPress`):
+
+| Prop    | Values                                                                                             | Default   |
+| :------ | :------------------------------------------------------------------------------------------------- | :-------- |
+| `size`  | `sm` (36px) · `md` (40px) · `lg` (44px)                                                            | `sm`      |
+| `theme` | `light` · `dark` (on dark or image backgrounds)                                                    | `light`   |
+| `label` | string: the accessible name                                                                        | `"Close"` |
+| `slot`  | string or `null` (`"close"` closes a parent `Dialog` / `Modal` without a handler; `null` opts out) | `"close"` |
+
+`SocialButton`:
+
+| Prop       | Values                                                          | Default |
+| :--------- | :-------------------------------------------------------------- | :------ |
+| `social`   | `google` · `facebook` · `apple` · `twitter` (required)          |         |
+| `theme`    | `brand` (service fill) · `color` (white, colored logo) · `gray` | `brand` |
+| `size`     | `md` · `lg`                                                     | `lg`    |
+| `children` | the label; leave out for icon-only                              |         |
+| `disabled` | boolean (not `isDisabled`)                                      |         |
+| `href`     | string: renders a link                                          |         |
+
+App store badges (`GooglePlayButton`, `AppStoreButton`, `GalaxyStoreButton`, `AppGalleryButton`;
+`GooglePlayWhiteButton` in the black set only):
+
+| Prop         | Values                      | Default |
+| :----------- | :-------------------------- | :------ |
+| `size`       | `md` (40px) · `lg` (44px)   | `md`    |
+| `href`       | string                      | `"#"`   |
+| `aria-label` | string (default is English) |         |
+
+## Social buttons
+
+The "Logg inn med …" button of a login form (Google, Facebook, Apple, X).
+
+```ts
+import { SocialButton } from "fa-design-system/components/base/buttons/social-button";
+```
+
+- Stack them `w-full` in a column, or use icon-only ones in a row with an `aria-label` each.
+- Disable it with `disabled`.
+
+## App store buttons
+
+Badges that link to the app's page in App Store, Google Play, Galaxy Store or AppGallery.
+
+```ts
+import { AppStoreButton, GooglePlayButton } from "fa-design-system/components/base/buttons/app-store-buttons";
+```
+
+Outline badges (no fill, drawn in the text color, `text-fg-primary`) come from their own file:
+
+```ts
+import { AppStoreButton as AppStoreButtonOutline } from "fa-design-system/components/base/buttons/app-store-buttons-outline";
+```
+
+- Always pass `href`, and an `aria-label` in Norwegian ("Last ned i App Store").
+- Their artwork is the stores' English badge.
 
 ## Accessibility
 

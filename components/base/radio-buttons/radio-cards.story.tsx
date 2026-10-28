@@ -7,9 +7,21 @@ import { MastercardIcon, VisaIcon } from "@/components/foundations/payment-icons
 
 export default {
     title: "Base components/Radio groups",
+    component: RadioCard,
+    subcomponents: { RadioCardGroup },
+    tags: ["autodocs"],
+    parameters: {
+        // radio.md covers radio cards too; its full page is on Base components / Radio buttons.
+        docs: {
+            description: {
+                component:
+                    "Bordered cards with an icon, avatar, payment icon or price, chosen one at a time (`RadioCardGroup` + `RadioCard`). Usage rules: see **Base components / Radio buttons** (`radio.md`).",
+            },
+        },
+    },
     decorators: [
         (Story: FC) => (
-            <div className="flex min-h-screen w-full bg-primary p-4">
+            <div className="flex min-h-screen w-full bg-primary p-4 [.docs-story_&]:min-h-0">
                 <Story />
             </div>
         ),

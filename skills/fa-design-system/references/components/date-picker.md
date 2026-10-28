@@ -60,9 +60,14 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 Plus React Aria `DatePicker` / `DateRangePicker` props. Both pickers pass `highlightedDates` on to
 their calendar; today always gets a dot as well. The picker's calendar takes no other options (no
 `showOutOfRangeDates`).
-`DateRangePicker` shows presets (today, yesterday, this/last week, month, year, all time from
-1 Jan 2000) in a side column from `lg` up; below `md` it shows Last week / Last month / Last year
-above the calendar instead, and between `md` and `lg` no presets.
+
+## Notes
+
+- `DateRangePicker` shows presets (today, yesterday, this/last week, month, year, all time from
+  1 Jan 2000) in a side column from `lg` up; below `md` it shows Last week / Last month / Last year
+  above the calendar instead, and between `md` and `lg` no presets.
+- `Calendar` shows days outside the month greyed out; `RangeCalendar` hides them unless
+  `showOutOfRangeDates`.
 
 Standalone calendars:
 
@@ -74,9 +79,6 @@ Standalone calendars:
 | `showPresetsOnDesktop` | `RangeCalendar` | boolean; presets always show below `md`                                | `false`                 |
 | `showOutOfRangeDates`  | `RangeCalendar` | boolean; show the greyed days of the previous/next month (both months) | `false` (hidden)        |
 | `visibleDuration`      | `RangeCalendar` | `{ months }`; only `months` is read                                    | 2 from `md` up, 1 below |
-
-`Calendar` shows days outside the month greyed out; `RangeCalendar` hides them unless
-`showOutOfRangeDates`.
 
 ## Accessibility
 

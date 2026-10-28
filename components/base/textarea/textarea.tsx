@@ -13,11 +13,14 @@ const getResizeHandleBg = (color: string) => {
     return `url(data:image/svg+xml;base64,${btoa(`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 2L2 10" stroke="${color}" stroke-linecap="round"/><path d="M11 7L7 11" stroke="${color}" stroke-linecap="round"/></svg>`)})`;
 };
 
-interface TextAreaBaseProps extends AriaTextAreaProps {
+export interface TextAreaBaseProps extends AriaTextAreaProps {
+    /** Ref to the `<textarea>` */
     ref?: Ref<HTMLTextAreaElement>;
+    /** Textarea size */
     size?: "sm" | "md";
 }
 
+/** The `<textarea>` alone, for composing a custom React Aria field. */
 export const TextAreaBase = ({ className, size = "md", ...props }: TextAreaBaseProps) => {
     return (
         <AriaTextArea
@@ -52,7 +55,7 @@ export const TextAreaBase = ({ className, size = "md", ...props }: TextAreaBaseP
 
 TextAreaBase.displayName = "TextAreaBase";
 
-interface TextFieldProps extends AriaTextFieldProps {
+export interface TextAreaProps extends AriaTextFieldProps {
     /** Label text for the textarea */
     label?: string;
     /** Helper text displayed below the textarea */
@@ -61,7 +64,7 @@ interface TextFieldProps extends AriaTextFieldProps {
     tooltip?: string;
     /** Textarea size. */
     size?: TextAreaBaseProps["size"];
-    /** Class name for the textarea wrapper */
+    /** Classes on the `<textarea>` itself (e.g. `min-h-40`) */
     textAreaClassName?: TextAreaBaseProps["className"];
     /** Ref for the textarea wrapper */
     ref?: Ref<HTMLDivElement>;
@@ -75,8 +78,29 @@ interface TextFieldProps extends AriaTextFieldProps {
     rows?: number;
     /** Visible width of textarea in columns. */
     cols?: number;
+    /** Whether a value is required: adds `*` to the label */
+    isRequired?: AriaTextFieldProps["isRequired"];
+    /** Whether the textarea is invalid: the `hint` turns red */
+    isInvalid?: AriaTextFieldProps["isInvalid"];
+    /** Whether the textarea is disabled */
+    isDisabled?: AriaTextFieldProps["isDisabled"];
+    /** Whether the text can be selected but not changed */
+    isReadOnly?: AriaTextFieldProps["isReadOnly"];
+    /** The value (controlled) */
+    value?: AriaTextFieldProps["value"];
+    /** The initial value (uncontrolled) */
+    defaultValue?: AriaTextFieldProps["defaultValue"];
+    /** Called with the new value as a string */
+    onChange?: AriaTextFieldProps["onChange"];
+    /** The form field name */
+    name?: AriaTextFieldProps["name"];
+    /** The longest allowed text */
+    maxLength?: AriaTextFieldProps["maxLength"];
+    /** Classes on the outer wrapper */
+    className?: AriaTextFieldProps["className"];
 }
 
+/** A multi-line text field with label, hint and tooltip. */
 export const TextArea = ({
     label,
     hint,
@@ -90,7 +114,7 @@ export const TextArea = ({
     cols,
     size = "md",
     ...props
-}: TextFieldProps) => {
+}: TextAreaProps) => {
     return (
         <AriaTextField
             {...props}

@@ -1,17 +1,44 @@
-import type { FC } from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Alert, type AlertColor } from "@/components/application/alerts/alert";
 import { Button } from "@/components/base/buttons/button";
+import alertDoc from "@/skills/fa-design-system/references/components/alert.md?raw";
+import { cx } from "@/utils/cx";
 
-export default {
+const meta = {
     title: "Application/Alerts",
+    component: Alert,
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props table
+        // comes from the types and JSDoc in alert.tsx.
+        skillDoc: alertDoc,
+    },
     decorators: [
-        (Story: FC) => (
-            <div className="min-h-screen w-full bg-primary p-4">
+        (Story, { viewMode }) => (
+            <div className={cx("w-full bg-primary p-4", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         ),
     ],
-};
+    args: {
+        color: "gray",
+        variant: "floating",
+        title: "We’ve just released a new feature",
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam.",
+    },
+    argTypes: {
+        // Controls only: types, defaults and descriptions come from docgen.
+        title: { control: "text" },
+        description: { control: "text" },
+        actions: { control: false },
+        icon: { control: false },
+        onClose: { control: false },
+    },
+} satisfies Meta<typeof Alert>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
 
 const colors: AlertColor[] = ["gray", "brand", "error", "warning", "success"];
 
@@ -24,6 +51,37 @@ const titles: Record<AlertColor, string> = {
 };
 
 const noop = () => {};
+
+/** Single interactive alert — edit props live in the Controls panel. */
+export const Playground: Story = {
+    render: (args) => (
+        <div className="max-w-container">
+            <Alert
+                {...args}
+                onClose={noop}
+                actions={
+                    args.variant === "full-width" ? (
+                        <>
+                            <Button size="md" color="secondary">
+                                Dismiss
+                            </Button>
+                            <Button size="md">View changes</Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button size="sm" color="link-gray">
+                                Dismiss
+                            </Button>
+                            <Button size="sm" color="link-color">
+                                View changes
+                            </Button>
+                        </>
+                    )
+                }
+            />
+        </div>
+    ),
+};
 
 export const Floating = () => (
     <div className="flex max-w-container flex-col gap-4">

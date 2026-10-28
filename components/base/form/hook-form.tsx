@@ -5,13 +5,18 @@ import type { Control, FieldPath, FieldValues, UseControllerReturn, UseFormRetur
 import { FormProvider, useController, useFormContext } from "react-hook-form";
 
 interface FormProps<TFieldValues extends FieldValues = FieldValues> extends ComponentPropsWithoutRef<typeof AriaForm> {
+    /** The `useForm()` return value */
     form: UseFormReturn<TFieldValues>;
+    /** The fields, usually `FormField`s */
     children: ReactNode;
 }
 
 interface FormFieldProps<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>> {
+    /** The field's name in the form values */
     name: TName;
+    /** `form.control` from `useForm()` */
     control: Control<TFieldValues>;
+    /** A render function `({ field, fieldState }) => …` that wires a library field, or plain nodes */
     children: ReactNode | ((control: UseControllerReturn<TFieldValues, TName>) => ReactNode);
 }
 
@@ -36,6 +41,7 @@ export const useFormFieldContext = () => {
     return { ...context, ...fieldState };
 };
 
+/** `Form` connected to `react-hook-form`: pass the `useForm()` return as `form`. */
 export const HookForm = <TFieldValues extends FieldValues = FieldValues>({ form, ...props }: FormProps<TFieldValues>) => {
     return (
         <FormProvider {...form}>
@@ -46,6 +52,7 @@ export const HookForm = <TFieldValues extends FieldValues = FieldValues>({ form,
 
 HookForm.displayName = "HookForm";
 
+/** Connects one library field to `react-hook-form` through a render function. */
 export const FormField = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({
     children,
     ...props

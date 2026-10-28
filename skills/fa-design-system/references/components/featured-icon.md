@@ -47,9 +47,12 @@ import { FeaturedIcon } from "fa-design-system/components/foundations/featured-i
 | `size`  | `sm` (32px) · `md` (40) · `lg` (48) · `xl` (56)                        | `sm`    |
 | `icon`  | icon component (or element)                                            |         |
 
-Shapes: `light`, `gradient` and `outline` are round; `dark`, `modern` and `modern-neue` are rounded
-squares. `outline` draws two faint rings outside its box, so leave room around it. Also
-`className`, `children`, `ref`.
+Also `className`, `children`, `ref`.
+
+## Shapes
+
+`light`, `gradient` and `outline` are round; `dark`, `modern` and `modern-neue` are rounded squares.
+`outline` draws two faint rings outside its box, so leave room around it.
 
 ## Accessibility
 

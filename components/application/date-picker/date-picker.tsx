@@ -12,16 +12,32 @@ import { Calendar } from "./calendar";
 
 const defaultHighlightedDates = [today(getLocalTimeZone())];
 
-interface DatePickerProps extends AriaDatePickerProps<DateValue> {
-    /** The function to call when the apply button is clicked. */
+export interface DatePickerProps extends AriaDatePickerProps<DateValue> {
+    /** The function to call when the apply button is clicked. The popover closes after it. */
     onApply?: () => void;
-    /** The function to call when the cancel button is clicked. */
+    /** The function to call when the cancel button is clicked. The popover closes after it. */
     onCancel?: () => void;
+    /** The size of the trigger button (Button sizes). */
     size?: ButtonProps["size"];
+    /** The selected date (controlled). */
+    value?: AriaDatePickerProps<DateValue>["value"];
+    /** The date selected at first (uncontrolled). */
+    defaultValue?: AriaDatePickerProps<DateValue>["defaultValue"];
+    /** Called on each selection in the calendar, before Apply. */
+    onChange?: AriaDatePickerProps<DateValue>["onChange"];
+    /** The earliest date that can be picked. */
+    minValue?: AriaDatePickerProps<DateValue>["minValue"];
+    /** The latest date that can be picked. */
+    maxValue?: AriaDatePickerProps<DateValue>["maxValue"];
+    /** Returns `true` for dates that can't be picked (closed market days, sold-out dates). */
+    isDateUnavailable?: AriaDatePickerProps<DateValue>["isDateUnavailable"];
+    /** Disables the trigger button. */
+    isDisabled?: AriaDatePickerProps<DateValue>["isDisabled"];
     /** The dates to mark with a dot in the calendar. Defaults to today. */
     highlightedDates?: DateValue[];
 }
 
+/** A button that opens a calendar popover with Cancel / Apply, for picking one date. */
 export const DatePicker = ({
     value: valueProp,
     defaultValue,

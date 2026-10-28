@@ -1,15 +1,60 @@
-import type { FC } from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import tabsDoc from "@/skills/fa-design-system/references/components/tabs.md?raw";
+import { cx } from "@/utils/cx";
+import { Tab, TabList, TabPanel, Tabs } from "./tabs";
 import * as Demos from "./tabs.demo";
 
-export default {
+const meta = {
     title: "Application/Tabs",
+    component: Tabs,
+    subcomponents: { "Tabs.List": TabList, "Tabs.Item": Tab, "Tabs.Panel": TabPanel },
+    tags: ["autodocs"],
+    parameters: {
+        // The Docs page text is the skill page (see .storybook/docs-page.tsx); the props tables
+        // come from the types and JSDoc in tabs.tsx.
+        skillDoc: tabsDoc,
+    },
     decorators: [
-        (Story: FC) => (
-            <div className="flex min-h-screen items-center justify-center bg-primary p-8">
+        (Story, { viewMode }) => (
+            <div className={cx("flex items-center justify-center bg-primary p-8", viewMode !== "docs" && "min-h-screen")}>
                 <Story />
             </div>
         ),
     ],
+    args: { orientation: "horizontal", keyboardActivation: "manual", defaultSelectedKey: "details" },
+    argTypes: {
+        // Controls only: types, defaults and descriptions come from docgen.
+        selectedKey: { control: false },
+        onSelectionChange: { control: false },
+        disabledKeys: { control: false },
+    },
+} satisfies Meta<typeof Tabs>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+const playgroundTabs = [
+    { id: "details", label: "My details" },
+    { id: "profile", label: "Profile" },
+    { id: "password", label: "Password" },
+    { id: "notifications", label: "Notifications", badge: 2 },
+];
+
+/** `Tabs` with a `button-brand` list and a panel per tab — the controls set the `Tabs` props. */
+export const Playground: Story = {
+    render: (args) => (
+        <Tabs {...args} className={cx("w-max", args.orientation === "vertical" && "flex-row gap-8")}>
+            <Tabs.List type="button-brand" items={playgroundTabs}>
+                {(tab) => <Tabs.Item {...tab} />}
+            </Tabs.List>
+            {playgroundTabs.map((tab) => (
+                <Tabs.Panel key={tab.id} id={tab.id} className="pt-4 text-sm text-tertiary">
+                    {tab.label} panel
+                </Tabs.Panel>
+            ))}
+        </Tabs>
+    ),
 };
 
 export const ButtonBrandHorizontal = () => <Demos.ButtonBrandHorizontal />;
