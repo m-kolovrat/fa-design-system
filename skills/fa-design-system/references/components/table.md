@@ -44,6 +44,11 @@ import type { SortDescriptor } from "react-aria-components";
   English labels and no handlers.
 - **table-numbers** SHOULD Format numbers Norwegian style (`1 234,50`, `+2,4 %`) and add
   `tabular-nums` to numeric cells so digits line up.
+- **table-instrument-cell** MUST Show an instrument (company, fund, index) as one cell: logo, full
+  name on top, ticker under it ("Instrument cell" in `page-patterns.md`); never a ticker column next
+  to a name column. Because it saves a column and is Figma's table cell `Type=Avatar`.
+- **table-change-value** MUST Show a change as a colored span ("Change value" in
+  `page-patterns.md`), not a `BadgeWithIcon`.
 - **table-no-sideways-scroll** SHOULD Fit every column from `md` up (use `size="sm"`, shorter
   headers, fewer decimals); below `md`, switch to the two-column rows with a sheet (see
   `page-patterns.md`). Because a sideways scroll hides columns without telling the reader.
@@ -94,19 +99,34 @@ const rows = useMemo(
     <TableCard.Header title="Mest omsatt på Oslo Børs" badge="Sanntid" description="Oppdatert 14:32" />
     <Table aria-label="Mest omsatt på Oslo Børs" sortDescriptor={sort} onSortChange={setSort}>
         <Table.Header>
-            <Table.Head id="ticker" label="Aksje" isRowHeader />
+            <Table.Head id="name" label="Aksje" isRowHeader />
             <Table.Head id="last" label="Siste" allowsSorting />
             <Table.Head id="change" label="Endring" allowsSorting tooltip="Endring siden gårsdagens sluttkurs" />
         </Table.Header>
         <Table.Body items={rows}>
             {(s) => (
                 <Table.Row id={s.ticker}>
-                    <Table.Cell className="font-medium text-primary">{s.ticker}</Table.Cell>
+                    <Table.Cell>
+                        <div className="flex min-w-0 items-center gap-3">
+                            <Avatar src={s.logo} alt="" size="md" />
+                            <div className="min-w-0">
+                                <p className="truncate text-sm font-medium text-primary">{s.name}</p>
+                                <p className="text-sm text-tertiary">{s.ticker}</p>
+                            </div>
+                        </div>
+                    </Table.Cell>
                     <Table.Cell className="tabular-nums">{s.lastLabel}</Table.Cell>
                     <Table.Cell>
-                        <BadgeWithIcon size="sm" color={s.change >= 0 ? "success" : "error"} iconLeading={s.change >= 0 ? ArrowUp : ArrowDown}>
+                        <span
+                            className={cx(
+                                "tabular-nums",
+                                s.change > 0 && "text-success-primary",
+                                s.change < 0 && "text-error-primary",
+                                s.change === 0 && "text-tertiary",
+                            )}
+                        >
                             {s.changeLabel}
-                        </BadgeWithIcon>
+                        </span>
                     </Table.Cell>
                 </Table.Row>
             )}
@@ -115,7 +135,7 @@ const rows = useMemo(
 </TableCard.Root>;
 ```
 
-`stocks`: `{ ticker: "EQNR", last: 287.4, lastLabel: "287,40", change: 2.4, changeLabel: "+2,4 %" }`, …
+`stocks`: `{ name: "Equinor", ticker: "EQNR", logo: "/logos/equinor.svg", last: 287.4, lastLabel: "287,40", change: 2.4, changeLabel: "+2,40 %" }`, …
 
 ## See also
 

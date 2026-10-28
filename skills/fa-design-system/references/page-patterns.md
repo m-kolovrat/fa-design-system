@@ -31,7 +31,7 @@ report the difference.
 | :--------------------------------------------- | :---------------------------------------------------------------------------------------- | :----------------------------------- |
 | Front page                                     | Main and sidebar: teaser stream ⅔, widget cards ⅓                                         | One column, sidebar under the stream |
 | Market overview (Børs, Rapporter)              | Card grid, mostly ⅓ and ½ cards                                                           | Two columns from `md`, then one      |
-| Instrument profile                             | Header band (name, price, chart, key figures, link tabs), then the card grid              | Two columns from `md`, then one      |
+| Instrument profile                             | Header band (name, price, chart, key figures, underline tabs), then the card grid         | Two columns from `md`, then one      |
 | Investor profile                               | Header band (avatar, name, key figures), then stacked full-width table cards              | Stacked                              |
 | Feed or discussion (Siste nytt, Forum, MittFA) | Main and sidebar, or one main card                                                        | One column                           |
 | Data table (Aksjer, Bjellesauer)               | One card with filters on top and the `Table`                                              | Two-column rows; tap opens a sheet   |
@@ -39,30 +39,34 @@ report the difference.
 
 ## Patterns
 
-### Widget card — no component yet
+### Card with a header
 
-The building block of Børs, Rapporter and the front page sidebar. White card, 16 px radius,
-header with a tinted icon tile, a title and a round chevron link; body is a table or list.
+The building block of Børs, Rapporter, instrument pages and the front page sidebar, and of any
+other titled block of content: a card with a `CardHeader` ([card-header](components/card-header.md))
+and a body under it. Not every card is a widget; the same card and header hold lists, charts and
+plain page content.
 
 ```tsx
-<section className="rounded-2xl border border-secondary bg-primary_alt p-4 md:p-5">
-    <header className="mb-3 flex items-center gap-3">
-        <FeaturedIcon icon={ArrowUp} color="success" theme="light" size="sm" />
-        <h2 className="text-lg font-semibold text-primary">Vinnere</h2>
-        <ButtonUtility icon={ChevronRight} href="/bors/vinnere" tooltip="Se alle vinnere" className="ml-auto" />
-    </header>
-    {/* Table or list */}
+<section aria-labelledby="card-winners" className="overflow-hidden rounded-2xl border border-secondary bg-primary_alt">
+    <CardHeader
+        titleId="card-winners"
+        title="Vinnere"
+        actions={<Button color="secondary" size="md" iconLeading={ChevronRight} href="/bors/vinnere" aria-label="Se alle vinnere" />}
+    />
+    <div className="px-4 py-5 md:px-6">{/* table, list, chart or text */}</div>
 </section>
 ```
 
-The icon tile carries meaning (green for winners, red for losers, brand for neutral). Inside a
-widget card, group with an inset (`rounded-xl bg-tertiary p-3`), not a second bordered card.
+- Up to three actions on the right, as md icon-only `Button`s (any hierarchy, at most one primary);
+  never a `ButtonUtility` and never a tinted icon tile before the title.
+- Inside the card, group with an inset (`rounded-xl bg-tertiary p-3`), not a second bordered card.
+- Tabs inside the card: `type="button-minimal"` `size="sm"`, in the body.
 
 ### Data table
 
 `Table` (or `TableCard`) with: header labels `text-xs font-medium uppercase tracking-wide
 text-quaternary`, cells `text-sm`, numbers right-aligned with `tabular-nums`, sortable headers
-(`allowsSorting`). Show a ticker as a ticker badge, a company with its round logo (`Avatar size="xs"`).
+(`allowsSorting`). Show each instrument as one cell: see "Instrument cell".
 
 From `md` up, show every column with no sideways scroll. Below `md`, the table becomes a list: see
 "Data table on mobile".
@@ -75,7 +79,7 @@ the trade value and the change in shares on the right; the sheet shows the full 
 
 - **Row, left:** what the row is about. Two columns may share it, one over the other (investor over
   company): the main one in `text-sm font-medium text-primary`, the second in `text-sm text-tertiary`.
-  Logo or avatar before them when the table has one.
+  Logo or avatar before them when the table has one; an instrument is always the instrument cell.
 - **Row, right:** the one or two key figures, one over the other (value over change), right-aligned
   with `tabular-nums`. The signed change is never hidden.
 - **Labels:** one header line above the list names what each side holds, both values with a slash
@@ -118,6 +122,28 @@ const [selected, setSelected] = useState<Stock | null>(null);
 
 The `Modal` stays mounted and opens through `isOpen` (`fa-overlays-mounted`).
 
+### Instrument cell
+
+Wherever a company, fund or other instrument appears in a table, list or card row: its logo, the
+full name on top and the ticker under it, in one column. Never separate columns for the ticker and
+the name. This is Figma's table cell `Type=Avatar`.
+
+```tsx
+<div className="flex min-w-0 items-center gap-3">
+    <Avatar src={logo} alt="" size="md" />
+    <div className="min-w-0">
+        <p className="truncate text-sm font-medium text-primary">Equinor</p>
+        <p className="text-sm text-tertiary">EQNR</p>
+    </div>
+</div>
+```
+
+- The logo is the company's own (`Avatar` with `src`), or `initials` until a logo exists; `alt=""`
+  because the name is right next to it.
+- Mark the cell as the row header in a table (`isRowHeader` on its `Table.Head`, labelled "Aksje" or
+  "Selskap").
+- A compact version for dense tables is coming; until then use this one.
+
 ### Ticker badge
 
 ```tsx
@@ -126,7 +152,8 @@ The `Modal` stays mounted and opens through `isOpen` (`fa-overlays-mounted`).
 </Badge>
 ```
 
-Uppercase ticker, brand pill. Always a link to the stock page when it's interactive.
+Uppercase ticker, brand pill. Always a link to the stock page when it's interactive. Use it inline
+(meta lines, article tags), not as a table column: rows use the instrument cell.
 
 ### Change value — no component yet
 
@@ -179,8 +206,8 @@ text-tertiary`), a bold title (`text-sm font-semibold text-primary`), a two-line
 
 ### Company row
 
-`AvatarLabelGroup` with the company logo, name and a meta line, plus a trailing `ButtonUtility`
-(play, download). Several logos for one day overlap as a logo stack (see Coverage gaps in `SKILL.md`).
+The instrument cell (logo, name over ticker or a meta line), plus a trailing action as an icon-only
+`Button` (play, download). Several logos for one day overlap as a logo stack (see Coverage gaps in `SKILL.md`).
 
 ### Key figures — no component yet
 
@@ -227,7 +254,7 @@ A label ("Investorchat:") followed by pill buttons that send a prompt ("Oppsumme
 ### Key-figure list
 
 Label left, value right, `text-sm`, rows separated by `border-b border-secondary`, a help tooltip
-on labels that need one, sub-rows indented. Stand-in: a definition list (`dl`) in a widget card.
+on labels that need one, sub-rows indented. Stand-in: a definition list (`dl`) in a card with a `CardHeader`.
 
 ### "NY" marker
 
