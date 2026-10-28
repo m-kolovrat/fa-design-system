@@ -11,7 +11,7 @@
  *
  * The shared Docs page (`.storybook/docs-page.tsx`) uses it for every story file that sets
  * `parameters.skillDoc`; a secondary component on a multi-component page can show a part of it
- * through `docs.description.component`. See "Component docs in Storybook" in CONTRIBUTING.md.
+ * through `docs.description.component`. See "Component docs in Storybook" in docs/storybook-docs.md.
  */
 
 const REFERENCES_URL = "https://github.com/m-kolovrat/fa-design-system/blob/main/skills/fa-design-system/references/";

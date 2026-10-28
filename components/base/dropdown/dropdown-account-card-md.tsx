@@ -9,7 +9,7 @@ import { cx } from "@/utils/cx";
 import { AvatarLabelGroup } from "../avatar/avatar-label-group";
 
 export const DropdownAccountCardMD = () => {
-    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["untitledui"]));
+    const [selectedAccount, setSelectedAccount] = useState<Selection>(new Set(["finansavisen"]));
     const [selectedTheme, setSelectedTheme] = useState<Selection>(new Set(["light-mode"]));
 
     return (
@@ -24,10 +24,10 @@ export const DropdownAccountCardMD = () => {
             >
                 <AvatarLabelGroup
                     size="md"
-                    src="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80"
+                    src="/images/avatars/kari-nordmann.svg"
                     status="online"
-                    title="Olivia Rhye"
-                    subtitle="olivia@untitledui.com"
+                    title="Kari Nordmann"
+                    subtitle="kari.nordmann@finansavisen.no"
                 />
 
                 <div className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-sm">
@@ -70,8 +70,8 @@ export const DropdownAccountCardMD = () => {
                     <Dropdown.Section selectionMode="single" selectedKeys={selectedAccount} onSelectionChange={setSelectedAccount}>
                         <Dropdown.SectionHeader className="px-4 pt-1.5 pb-0.5 text-xs font-semibold text-brand-secondary">Company</Dropdown.SectionHeader>
 
-                        <Dropdown.Item id="untitledui">Untitled UI</Dropdown.Item>
-                        <Dropdown.Item id="sisyphus">Sisyphus Ventures</Dropdown.Item>
+                        <Dropdown.Item id="finansavisen">Finansavisen</Dropdown.Item>
+                        <Dropdown.Item id="kapital">Kapital</Dropdown.Item>
                     </Dropdown.Section>
 
                     <Dropdown.Item icon={Plus}>New company</Dropdown.Item>
@@ -90,8 +90,8 @@ export const DropdownAccountCardMD = () => {
                     </SubmenuTrigger>
                 </Dropdown.Menu>
                 <div className="flex justify-between border-t border-secondary px-4 py-3">
-                    <span className="truncate text-sm text-quaternary">&copy; Untitled UI</span>
-                    <span className="text-sm text-quaternary">v12.6.8</span>
+                    <span className="truncate text-sm text-quaternary">&copy; Finansavisen</span>
+                    <span className="text-sm text-quaternary">v1.0.0</span>
                 </div>
             </Dropdown.Popover>
         </Dropdown.Root>

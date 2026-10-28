@@ -21,7 +21,7 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
 
 const colors = ["gray", "brand", "error", "warning", "success", "blue-light", "purple", "pink", "orange-dark"] as const;
 
-const IMG_SRC = "https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80";
+const IMG_SRC = "/images/avatars/kari-nordmann.svg";
 
 /** Small captioned cell so it's obvious which badge is which. */
 const Labeled = ({ label, children }: { label: string; children: ReactNode }) => (

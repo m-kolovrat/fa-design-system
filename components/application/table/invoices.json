@@ -5,9 +5,9 @@
             "date": "2025-01-06",
             "status": "paid",
             "customer": {
-                "name": "Olivia Rhye",
-                "email": "olivia@untitledui.com",
-                "avatarUrl": "https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80&w=100"
+                "name": "Kari Nordmann",
+                "email": "kari.nordmann@finansavisen.no",
+                "avatarUrl": "/images/avatars/kari-nordmann.svg"
             },
             "purchase": "Monthly subscription"
         },
@@ -16,9 +16,9 @@
             "date": "2025-01-06",
             "status": "paid",
             "customer": {
-                "name": "Phoenix Baker",
-                "email": "phoenix@untitledui.com",
-                "avatarUrl": "https://www.untitledui.com/images/avatars/phoenix-baker?fm=webp&q=80&w=100"
+                "name": "Ola Hansen",
+                "email": "ola.hansen@finansavisen.no",
+                "avatarUrl": "/images/avatars/ola-hansen.svg"
             },
             "purchase": "Monthly subscription"
         },
@@ -27,8 +27,8 @@
             "date": "2025-01-06",
             "status": "paid",
             "customer": {
-                "name": "Lana Steiner",
-                "email": "lana@untitledui.com"
+                "name": "Ingrid Berg",
+                "email": "ingrid.berg@finansavisen.no"
             },
             "purchase": "Monthly subscription"
         },
@@ -37,8 +37,8 @@
             "date": "2025-01-05",
             "status": "paid",
             "customer": {
-                "name": "Demi Wilkinson",
-                "email": "demi@untitledui.com"
+                "name": "Magnus Johansen",
+                "email": "magnus.johansen@finansavisen.no"
             },
             "purchase": "Monthly subscription"
         },
@@ -47,9 +47,9 @@
             "date": "2025-01-05",
             "status": "refunded",
             "customer": {
-                "name": "Candice Wu",
-                "email": "candice@untitledui.com",
-                "avatarUrl": "https://www.untitledui.com/images/avatars/candice-wu?fm=webp&q=80&w=100"
+                "name": "Sofie Larsen",
+                "email": "sofie.larsen@finansavisen.no",
+                "avatarUrl": "/images/avatars/sofie-larsen.svg"
             },
             "purchase": "Monthly subscription"
         },
@@ -58,8 +58,8 @@
             "date": "2025-01-05",
             "status": "refunded",
             "customer": {
-                "name": "Natali Craig",
-                "email": "natali@untitledui.com"
+                "name": "Henrik Olsen",
+                "email": "henrik.olsen@finansavisen.no"
             },
             "purchase": "Monthly subscription"
         },
@@ -68,9 +68,9 @@
             "date": "2025-01-04",
             "status": "cancelled",
             "customer": {
-                "name": "Drew Cano",
-                "email": "drew@untitledui.com",
-                "avatarUrl": "https://www.untitledui.com/images/avatars/drew-cano?fm=webp&q=80&w=100"
+                "name": "Ida Pedersen",
+                "email": "ida.pedersen@finansavisen.no",
+                "avatarUrl": "/images/avatars/ida-pedersen.svg"
             },
             "purchase": "Monthly subscription"
         },
@@ -79,9 +79,9 @@
             "date": "2025-01-03",
             "status": "paid",
             "customer": {
-                "name": "Orlando Diggs",
-                "email": "orlando@untitledui.com",
-                "avatarUrl": "https://www.untitledui.com/images/avatars/orlando-diggs?fm=webp&q=80&w=100"
+                "name": "Erik Nilsen",
+                "email": "erik.nilsen@finansavisen.no",
+                "avatarUrl": "/images/avatars/erik-nilsen.svg"
             },
             "purchase": "Monthly subscription"
         },
@@ -90,9 +90,9 @@
             "date": "2025-01-03",
             "status": "paid",
             "customer": {
-                "name": "Andi Lane",
-                "email": "andi@untitledui.com",
-                "avatarUrl": "https://www.untitledui.com/images/avatars/andi-lane?fm=webp&q=80&w=100"
+                "name": "Nora Kristiansen",
+                "email": "nora.kristiansen@finansavisen.no",
+                "avatarUrl": "/images/avatars/nora-kristiansen.svg"
             },
             "purchase": "Monthly subscription"
         },
@@ -101,9 +101,9 @@
             "date": "2025-01-03",
             "status": "paid",
             "customer": {
-                "name": "Kate Morrison",
-                "email": "kate@untitledui.com",
-                "avatarUrl": "https://www.untitledui.com/images/avatars/kate-morrison?fm=webp&q=80&w=100"
+                "name": "Jonas Andersen",
+                "email": "jonas.andersen@finansavisen.no",
+                "avatarUrl": "/images/avatars/jonas-andersen.svg"
             },
             "purchase": "Monthly subscription"
         }

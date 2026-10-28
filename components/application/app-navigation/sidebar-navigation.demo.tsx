@@ -198,7 +198,7 @@ const navItemsWithDividers: (NavItemType | NavItemDividerType)[] = [
     },
     {
         label: "Open in browser",
-        href: "https://www.untitledui.com/",
+        href: "https://www.finansavisen.no/",
         icon: Table,
     },
 ];
@@ -230,7 +230,7 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
         ],
     },
     {
-        label: "Untitled UI",
+        label: "Finansavisen",
         items: [
             {
                 label: "Reporting",
@@ -258,9 +258,9 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
         label: "Your teams",
         items: [
             {
-                label: "Catalog",
+                label: "Markedsdesken",
                 href: "#",
-                icon: () => <Avatar src="https://www.untitledui.com/logos/images/Catalog.jpg" className="mr-2 size-5" />,
+                icon: () => <Avatar initials="MD" size="xs" className="mr-2 size-5" />,
                 badge: (
                     <div className="flex items-center gap-3">
                         <Badge size="sm" type="modern">
@@ -271,9 +271,9 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
                 ),
             },
             {
-                label: "Warpspeed",
+                label: "Kapital",
                 href: "#",
-                icon: () => <Avatar src="https://www.untitledui.com/logos/images/Warpspeed.jpg" className="mr-2 size-5" />,
+                icon: () => <Avatar initials="KA" size="xs" className="mr-2 size-5" />,
                 badge: (
                     <div className="flex items-center gap-3">
                         <Badge size="sm" type="modern">
@@ -284,9 +284,9 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
                 ),
             },
             {
-                label: "Boltshift",
+                label: "Motor",
                 href: "#",
-                icon: () => <Avatar src="https://www.untitledui.com/logos/images/Boltshift.jpg" className="mr-2 size-5" />,
+                icon: () => <Avatar initials="MO" size="xs" className="mr-2 size-5" />,
                 badge: (
                     <div className="flex items-center gap-3">
                         <Badge size="sm" type="modern">
@@ -297,9 +297,9 @@ const navItemsWithSectionsSubheadings: Array<{ label: string; items: NavItemType
                 ),
             },
             {
-                label: "Sisyphus",
+                label: "Investor",
                 href: "#",
-                icon: () => <Avatar src="https://www.untitledui.com/logos/images/Sisyphus.jpg" className="mr-2 size-5" />,
+                icon: () => <Avatar initials="IN" size="xs" className="mr-2 size-5" />,
                 badge: (
                     <div className="flex items-center gap-3">
                         <Badge size="sm" type="modern">
@@ -334,7 +334,7 @@ export const SidebarNavigationSimpleDemo = () => (
             },
             {
                 label: "Open in browser",
-                href: "https://www.untitledui.com/",
+                href: "https://www.finansavisen.no/",
                 icon: Table,
             },
         ]}

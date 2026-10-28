@@ -98,7 +98,7 @@ export interface RadioCardProps extends Omit<AriaRadioProps, "children"> {
     value: AriaRadioProps["value"];
     /** The card's title (required) */
     title: ReactNode;
-    /** Shown inline after the title, e.g. "$10/month" or "@olivia". Not used by `payment` and `card`. */
+    /** Shown inline after the title, e.g. "$10/month" or "@kari". Not used by `payment` and `card`. */
     subtitle?: ReactNode;
     /** Supporting text under the title */
     description?: ReactNode;

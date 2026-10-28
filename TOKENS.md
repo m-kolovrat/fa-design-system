@@ -8,7 +8,7 @@ place named `X`.
 
 ## 1. The principle — names match on purpose
 
-Untitled UI keeps **1:1 naming between Figma variables and code tokens** (for colors). The
+The system keeps **1:1 naming between Figma variables and code tokens** (for colors). The
 _leaf_ name is identical at every layer; only Figma's **group path** becomes the code **prefix**.
 
 | Layer                          | Example                                                                   |
@@ -166,6 +166,6 @@ was already in the codebase, not synced from a design file. If Figma gains a mot
 reconcile it here the same way §5's worked examples do, and consider extending
 `check-token-parity.mjs` to cover it.
 
-See **Foundations → Motion** in Storybook for the full scale, and the "CSS Transitions" section
+See **Foundations → Motion** in Storybook for the full scale, and the "Transitions" section
 of `CLAUDE.md` for the house convention (hover is instant; the scale is for movement and
 overlays only).

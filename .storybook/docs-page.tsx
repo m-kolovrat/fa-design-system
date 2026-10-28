@@ -13,7 +13,7 @@ import { skillDoc } from "../components/internal/skill-doc";
  *
  * Story files without `skillDoc` get Storybook's default autodocs page, except that the primary
  * story isn't repeated under "Stories" (DefaultDocsPage). Stories tagged
- * `!autodocs` (experiments, prototypes) stay off both. See CONTRIBUTING.md.
+ * `!autodocs` (experiments, prototypes) stay off both. See docs/storybook-docs.md.
  */
 type WithDocgen = { __docgenInfo?: { props?: Record<string, unknown> } } | undefined;
 

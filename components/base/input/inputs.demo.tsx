@@ -19,17 +19,26 @@ import { InputNumber } from "./input-number";
 import { Label } from "./label";
 
 export const DefaultDemo = () => {
-    return <Input isRequired label="Email" hint="This is a hint text to help user." placeholder="olivia@untitledui.com" tooltip="This is a tooltip" />;
+    return <Input isRequired label="Email" hint="This is a hint text to help user." placeholder="kari.nordmann@finansavisen.no" tooltip="This is a tooltip" />;
 };
 
 export const DisabledDemo = () => {
     return (
-        <Input isRequired isDisabled label="Email" hint="This is a hint text to help user." placeholder="olivia@untitledui.com" tooltip="This is a tooltip" />
+        <Input
+            isRequired
+            isDisabled
+            label="Email"
+            hint="This is a hint text to help user."
+            placeholder="kari.nordmann@finansavisen.no"
+            tooltip="This is a tooltip"
+        />
     );
 };
 
 export const InvalidDemo = () => {
-    return <Input isRequired isInvalid label="Email" hint="This is an error message." placeholder="olivia@untitledui.com" tooltip="This is a tooltip" />;
+    return (
+        <Input isRequired isInvalid label="Email" hint="This is an error message." placeholder="kari.nordmann@finansavisen.no" tooltip="This is a tooltip" />
+    );
 };
 
 export const SizesDemo = () => {
@@ -41,7 +50,7 @@ export const SizesDemo = () => {
                 size="sm"
                 label="Email"
                 hint="This is a hint text to help user."
-                placeholder="olivia@untitledui.com"
+                placeholder="kari.nordmann@finansavisen.no"
                 tooltip="This is a tooltip"
             />
 
@@ -51,7 +60,7 @@ export const SizesDemo = () => {
                 size="md"
                 label="Email"
                 hint="This is a hint text to help user."
-                placeholder="olivia@untitledui.com"
+                placeholder="kari.nordmann@finansavisen.no"
                 tooltip="This is a tooltip"
             />
 
@@ -61,7 +70,7 @@ export const SizesDemo = () => {
                 size="lg"
                 label="Email"
                 hint="This is a hint text to help user."
-                placeholder="olivia@untitledui.com"
+                placeholder="kari.nordmann@finansavisen.no"
                 tooltip="This is a tooltip"
             />
         </div>
@@ -70,7 +79,14 @@ export const SizesDemo = () => {
 
 export const LeadingIconDemo = () => {
     return (
-        <Input isRequired icon={Mail} label="Email" hint="This is a hint text to help user." placeholder="olivia@untitledui.com" tooltip="This is a tooltip" />
+        <Input
+            isRequired
+            icon={Mail}
+            label="Email"
+            hint="This is a hint text to help user."
+            placeholder="kari.nordmann@finansavisen.no"
+            tooltip="This is a tooltip"
+        />
     );
 };
 
@@ -122,7 +138,7 @@ export const TrailingDropdownDemo = () => {
 export const LeadingTextDemo = () => {
     return (
         <InputGroup isRequired label="Website" hint="This is a hint text to help user." leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}>
-            <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+            <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
         </InputGroup>
     );
 };
@@ -144,12 +160,12 @@ export const TrailingButtonDemo = () => {
             hint="This is a hint text to help user."
             onChange={setValue}
             trailingAddon={
-                <Button color="secondary" iconLeading={copied ? Check : Copy} onClick={() => copy(value || "www.untitledui.com")}>
+                <Button color="secondary" iconLeading={copied ? Check : Copy} onClick={() => copy(value || "www.finansavisen.no")}>
                     Copy
                 </Button>
             }
         >
-            <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+            <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
         </InputGroup>
     );
 };
@@ -227,7 +243,7 @@ export const Default = () => {
                     size="sm"
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -236,7 +252,7 @@ export const Default = () => {
                     size="sm"
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -245,7 +261,7 @@ export const Default = () => {
                     size="sm"
                     label="Email"
                     hint="This is an error message."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
             </div>
@@ -255,7 +271,7 @@ export const Default = () => {
                     size="md"
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -264,7 +280,7 @@ export const Default = () => {
                     isDisabled
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -273,7 +289,7 @@ export const Default = () => {
                     isInvalid
                     label="Email"
                     hint="This is an error message."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
             </div>
@@ -283,7 +299,7 @@ export const Default = () => {
                     size="lg"
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -292,7 +308,7 @@ export const Default = () => {
                     isDisabled
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -301,7 +317,7 @@ export const Default = () => {
                     isInvalid
                     label="Email"
                     hint="This is an error message."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
             </div>
@@ -319,7 +335,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -329,7 +345,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -339,7 +355,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is an error message."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
             </div>
@@ -350,7 +366,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -360,7 +376,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -370,7 +386,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is an error message."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
             </div>
@@ -381,7 +397,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -391,7 +407,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is a hint text to help user."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
                 <Input
@@ -401,7 +417,7 @@ export const LeadingIcon = () => {
                     icon={Mail}
                     label="Email"
                     hint="This is an error message."
-                    placeholder="olivia@untitledui.com"
+                    placeholder="kari.nordmann@finansavisen.no"
                     tooltip="This is a tooltip"
                 />
             </div>
@@ -789,7 +805,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -799,7 +815,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -809,7 +825,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
             </div>
             <div className="flex flex-col gap-4">
@@ -820,7 +836,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -830,7 +846,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -840,7 +856,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
             </div>
             <div className="flex flex-col gap-4">
@@ -851,7 +867,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -861,7 +877,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -871,7 +887,7 @@ export const LeadingText = () => {
                     hint="This is a hint text to help user."
                     leadingAddon={<InputGroup.Prefix>https://</InputGroup.Prefix>}
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
             </div>
         </div>
@@ -992,13 +1008,13 @@ export const TrailingButton = () => {
                             size="sm"
                             color="secondary"
                             iconLeading={copied === "input-1" ? Check : Copy}
-                            onClick={() => copy(inputValue1 || "www.untitledui.com", "input-1")}
+                            onClick={() => copy(inputValue1 || "www.finansavisen.no", "input-1")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
 
                 <InputGroup
@@ -1014,13 +1030,13 @@ export const TrailingButton = () => {
                             size="sm"
                             color="secondary"
                             iconLeading={copied === "input-2" ? Check : Copy}
-                            onClick={() => copy(inputValue2 || "www.untitledui.com", "input-2")}
+                            onClick={() => copy(inputValue2 || "www.finansavisen.no", "input-2")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -1034,13 +1050,13 @@ export const TrailingButton = () => {
                             size="sm"
                             color="secondary"
                             iconLeading={copied === "input-3" ? Check : Copy}
-                            onClick={() => copy(inputValue3 || "www.untitledui.com", "input-3")}
+                            onClick={() => copy(inputValue3 || "www.finansavisen.no", "input-3")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
             </div>
             <div className="flex flex-col gap-4">
@@ -1055,13 +1071,13 @@ export const TrailingButton = () => {
                             color="secondary"
                             size="md"
                             iconLeading={copied === "input-4" ? Check : Copy}
-                            onClick={() => copy(inputValue4 || "www.untitledui.com", "input-4")}
+                            onClick={() => copy(inputValue4 || "www.finansavisen.no", "input-4")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -1076,13 +1092,13 @@ export const TrailingButton = () => {
                             color="secondary"
                             size="md"
                             iconLeading={copied === "input-5" ? Check : Copy}
-                            onClick={() => copy(inputValue5 || "www.untitledui.com", "input-5")}
+                            onClick={() => copy(inputValue5 || "www.finansavisen.no", "input-5")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -1096,13 +1112,13 @@ export const TrailingButton = () => {
                             color="secondary"
                             size="md"
                             iconLeading={copied === "input-6" ? Check : Copy}
-                            onClick={() => copy(inputValue6 || "www.untitledui.com", "input-6")}
+                            onClick={() => copy(inputValue6 || "www.finansavisen.no", "input-6")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
             </div>
             <div className="flex flex-col gap-4">
@@ -1117,13 +1133,13 @@ export const TrailingButton = () => {
                             color="secondary"
                             size="lg"
                             iconLeading={copied === "input-4" ? Check : Copy}
-                            onClick={() => copy(inputValue4 || "www.untitledui.com", "input-4")}
+                            onClick={() => copy(inputValue4 || "www.finansavisen.no", "input-4")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -1138,13 +1154,13 @@ export const TrailingButton = () => {
                             color="secondary"
                             size="lg"
                             iconLeading={copied === "input-5" ? Check : Copy}
-                            onClick={() => copy(inputValue5 || "www.untitledui.com", "input-5")}
+                            onClick={() => copy(inputValue5 || "www.finansavisen.no", "input-5")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
                 <InputGroup
                     isRequired
@@ -1158,13 +1174,13 @@ export const TrailingButton = () => {
                             color="secondary"
                             size="lg"
                             iconLeading={copied === "input-6" ? Check : Copy}
-                            onClick={() => copy(inputValue6 || "www.untitledui.com", "input-6")}
+                            onClick={() => copy(inputValue6 || "www.finansavisen.no", "input-6")}
                         >
                             Copy
                         </Button>
                     }
                 >
-                    <InputBase placeholder="www.untitledui.com" tooltip="This is a tooltip" />
+                    <InputBase placeholder="www.finansavisen.no" tooltip="This is a tooltip" />
                 </InputGroup>
             </div>
         </div>

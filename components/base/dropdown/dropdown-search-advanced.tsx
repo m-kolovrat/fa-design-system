@@ -9,7 +9,7 @@ import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { InputBase } from "../input/input";
 
 export const DropdownSearchAdvanced = () => {
-    const [selectedUsers, setSelectedUsers] = useState<Selection>(new Set(["untitledui", "shutterframe"]));
+    const [selectedUsers, setSelectedUsers] = useState<Selection>(new Set(["finansavisen", "markets"]));
     let { contains } = useFilter({ sensitivity: "base" });
 
     return (
@@ -25,57 +25,41 @@ export const DropdownSearchAdvanced = () => {
                     </SearchField>
                     <Dropdown.Menu selectionMode="multiple" selectedKeys={selectedUsers} onSelectionChange={setSelectedUsers}>
                         <SubmenuTrigger>
-                            <Dropdown.Item id="untitledui" textValue="Olivia Rhye" selectionIndicator="checkbox">
-                                Untitled UI
+                            <Dropdown.Item id="finansavisen" textValue="Finansavisen" selectionIndicator="checkbox">
+                                Finansavisen
                             </Dropdown.Item>
                             <Dropdown.Popover placement="right top" offset={-6} className="w-50">
                                 <Dropdown.Menu selectionMode="multiple">
-                                    <Dropdown.Item
-                                        id="olivia"
-                                        selectionIndicator="checkbox"
-                                        avatarUrl="https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80"
-                                    >
-                                        Olivia Rhye
+                                    <Dropdown.Item id="kari" selectionIndicator="checkbox" avatarUrl="/images/avatars/kari-nordmann.svg">
+                                        Kari Nordmann
                                     </Dropdown.Item>
-                                    <Dropdown.Item
-                                        id="phoenix"
-                                        selectionIndicator="checkbox"
-                                        avatarUrl="https://www.untitledui.com/images/avatars/phoenix-baker?fm=webp&q=80"
-                                    >
-                                        Phoenix Baker
+                                    <Dropdown.Item id="ola" selectionIndicator="checkbox" avatarUrl="/images/avatars/ola-hansen.svg">
+                                        Ola Hansen
                                     </Dropdown.Item>
-                                    <Dropdown.Item
-                                        id="lana"
-                                        selectionIndicator="checkbox"
-                                        avatarUrl="https://www.untitledui.com/images/avatars/lana-steiner?fm=webp&q=80"
-                                    >
-                                        Lana Steiner
+                                    <Dropdown.Item id="ingrid" selectionIndicator="checkbox" avatarUrl="/images/avatars/ingrid-berg.svg">
+                                        Ingrid Berg
                                     </Dropdown.Item>
-                                    <Dropdown.Item
-                                        id="demi"
-                                        selectionIndicator="checkbox"
-                                        avatarUrl="https://www.untitledui.com/images/avatars/demi-wilkinson?fm=webp&q=80"
-                                    >
-                                        Demi Wilkinson
+                                    <Dropdown.Item id="magnus" selectionIndicator="checkbox" avatarUrl="/images/avatars/magnus-johansen.svg">
+                                        Magnus Johansen
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown.Popover>
                         </SubmenuTrigger>
 
-                        <Dropdown.Item id="shutterframe" textValue="Phoenix Baker" selectionIndicator="checkbox">
-                            Shutterframe
+                        <Dropdown.Item id="markets" textValue="Markedsdesken" selectionIndicator="checkbox">
+                            Markedsdesken
                         </Dropdown.Item>
-                        <Dropdown.Item id="warpspeed" textValue="Lana Steiner" selectionIndicator="checkbox">
-                            Warpspeed
+                        <Dropdown.Item id="kapital" textValue="Kapital" selectionIndicator="checkbox">
+                            Kapital
                         </Dropdown.Item>
-                        <Dropdown.Item id="contrastai" textValue="Demi Wilkinson" selectionIndicator="checkbox">
-                            ContrastAI
+                        <Dropdown.Item id="motor" textValue="Motor" selectionIndicator="checkbox">
+                            Motor
                         </Dropdown.Item>
-                        <Dropdown.Item id="launchsimple" textValue="Candice Wu" selectionIndicator="checkbox">
-                            LaunchSimple
+                        <Dropdown.Item id="investor" textValue="Investor" selectionIndicator="checkbox">
+                            Investor
                         </Dropdown.Item>
-                        <Dropdown.Item id="elasticware" textValue="Natali Craig" selectionIndicator="checkbox">
-                            Elasticware
+                        <Dropdown.Item id="web" textValue="Nettdesken" selectionIndicator="checkbox">
+                            Nettdesken
                         </Dropdown.Item>
                     </Dropdown.Menu>
                     <div className="flex flex-col gap-3 border-t border-secondary p-3">

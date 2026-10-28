@@ -151,7 +151,7 @@ export const HeaderNavigationBase = ({
                             >
                                 Settings
                             </NavItemBase>
-                            <NavItemBase type="link" href="https://www.untitledui.com/" icon={Settings}>
+                            <NavItemBase type="link" href="https://www.finansavisen.no/" icon={Settings}>
                                 Open in browser
                             </NavItemBase>
                         </div>

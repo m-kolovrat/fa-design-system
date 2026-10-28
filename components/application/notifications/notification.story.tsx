@@ -26,8 +26,9 @@ const meta = {
         description: "Check out the all new dashboard view. Pages now load faster.",
         progress: 60,
         meta: "2 mins ago",
-        avatarSrc: "https://www.untitledui.com/images/avatars/katherine-moss?fm=webp&q=80",
-        imageSrc: "https://www.untitledui.com/marketing/spirals.webp",
+        avatarSrc: "/images/avatars/sander-bakken.svg",
+        imageSrc:
+            "https://images.unsplash.com/photo-1484506097116-1bcba4fa7568?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     argTypes: {
         // Controls only: types, defaults and descriptions come from docgen.
@@ -116,8 +117,8 @@ export const AllTypes = () => (
         ))}
         <Notification
             type="avatar"
-            avatarSrc="https://www.untitledui.com/images/avatars/katherine-moss?fm=webp&q=80"
-            title="Katherine Moss"
+            avatarSrc="/images/avatars/sander-bakken.svg"
+            title="Sander Bakken"
             meta="2 mins ago"
             description="I’ve finished adding my notes. Happy for us to review whenever you’re ready!"
             onClose={noop}
@@ -133,7 +134,7 @@ export const AllTypes = () => (
         />
         <Notification
             type="image"
-            imageSrc="https://www.untitledui.com/marketing/spirals.webp"
+            imageSrc="https://images.unsplash.com/photo-1484506097116-1bcba4fa7568?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             title="We’ve just released a new feature"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor."
             onClose={noop}

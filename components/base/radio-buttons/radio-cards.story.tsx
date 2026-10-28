@@ -35,9 +35,9 @@ const plans = [
 ];
 
 const people = [
-    { id: "olivia", title: "Olivia Rhye", subtitle: "@olivia", avatar: "https://www.untitledui.com/images/avatars/olivia-rhye?fm=webp&q=80" },
-    { id: "phoenix", title: "Phoenix Baker", subtitle: "@phoenix", avatar: "https://www.untitledui.com/images/avatars/phoenix-baker?fm=webp&q=80" },
-    { id: "lana", title: "Lana Steiner", subtitle: "@lana", avatar: "https://www.untitledui.com/images/avatars/lana-steiner?fm=webp&q=80" },
+    { id: "kari-nordmann", title: "Kari Nordmann", subtitle: "@kari", avatar: "/images/avatars/kari-nordmann.svg" },
+    { id: "ola-hansen", title: "Ola Hansen", subtitle: "@ola", avatar: "/images/avatars/ola-hansen.svg" },
+    { id: "ingrid-berg", title: "Ingrid Berg", subtitle: "@ingrid", avatar: "/images/avatars/ingrid-berg.svg" },
 ];
 
 const BothSizes = ({ children }: { children: (size: "sm" | "md") => ReactNode }) => (
@@ -79,7 +79,7 @@ IconSimple.storyName = "Icon simple";
 export const AvatarStory = () => (
     <BothSizes>
         {(size) => (
-            <RadioCardGroup size={size} aria-label="Team member" defaultValue="olivia">
+            <RadioCardGroup size={size} aria-label="Team member" defaultValue="kari-nordmann">
                 {people.map((person) => (
                     <RadioCard
                         key={person.id}

@@ -9,7 +9,7 @@ import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { InputBase } from "../input/input";
 
 export const DropdownSearchSimple = () => {
-    const [selectedUsers, setSelectedUsers] = useState<Selection>(new Set(["olivia", "phoenix"]));
+    const [selectedUsers, setSelectedUsers] = useState<Selection>(new Set(["kari", "ola"]));
     let { contains } = useFilter({ sensitivity: "base" });
 
     return (
@@ -24,32 +24,32 @@ export const DropdownSearchSimple = () => {
                         <InputBase size="md" placeholder="Search" icon={Search} />
                     </SearchField>
                     <Dropdown.Menu selectionMode="multiple" selectedKeys={selectedUsers} onSelectionChange={setSelectedUsers}>
-                        <Dropdown.Item id="olivia" textValue="Olivia Rhye" selectionIndicator="checkbox">
-                            Olivia Rhye
+                        <Dropdown.Item id="kari" textValue="Kari Nordmann" selectionIndicator="checkbox">
+                            Kari Nordmann
                         </Dropdown.Item>
-                        <Dropdown.Item id="phoenix" textValue="Phoenix Baker" selectionIndicator="checkbox">
-                            Phoenix Baker
+                        <Dropdown.Item id="ola" textValue="Ola Hansen" selectionIndicator="checkbox">
+                            Ola Hansen
                         </Dropdown.Item>
-                        <Dropdown.Item id="lana" textValue="Lana Steiner" selectionIndicator="checkbox">
-                            Lana Steiner
+                        <Dropdown.Item id="ingrid" textValue="Ingrid Berg" selectionIndicator="checkbox">
+                            Ingrid Berg
                         </Dropdown.Item>
-                        <Dropdown.Item id="demi" textValue="Demi Wilkinson" selectionIndicator="checkbox">
-                            Demi Wilkinson
+                        <Dropdown.Item id="magnus" textValue="Magnus Johansen" selectionIndicator="checkbox">
+                            Magnus Johansen
                         </Dropdown.Item>
-                        <Dropdown.Item id="candice" textValue="Candice Wu" selectionIndicator="checkbox">
-                            Candice Wu
+                        <Dropdown.Item id="sofie" textValue="Sofie Larsen" selectionIndicator="checkbox">
+                            Sofie Larsen
                         </Dropdown.Item>
-                        <Dropdown.Item id="natali" textValue="Natali Craig" selectionIndicator="checkbox">
-                            Natali Craig
+                        <Dropdown.Item id="henrik" textValue="Henrik Olsen" selectionIndicator="checkbox">
+                            Henrik Olsen
                         </Dropdown.Item>
-                        <Dropdown.Item id="drew" textValue="Drew Cano" selectionIndicator="checkbox">
-                            Drew Cano
+                        <Dropdown.Item id="ida" textValue="Ida Pedersen" selectionIndicator="checkbox">
+                            Ida Pedersen
                         </Dropdown.Item>
-                        <Dropdown.Item id="orlando" textValue="Orlando Diggs" selectionIndicator="checkbox">
-                            Orlando Diggs
+                        <Dropdown.Item id="erik" textValue="Erik Nilsen" selectionIndicator="checkbox">
+                            Erik Nilsen
                         </Dropdown.Item>
-                        <Dropdown.Item id="andi" textValue="Andi Lane" selectionIndicator="checkbox">
-                            Andi Lane
+                        <Dropdown.Item id="nora" textValue="Nora Kristiansen" selectionIndicator="checkbox">
+                            Nora Kristiansen
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Autocomplete>

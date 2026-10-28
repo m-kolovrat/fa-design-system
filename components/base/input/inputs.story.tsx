@@ -42,7 +42,7 @@ export const Playground: StoryObj<typeof Input> = {
     args: {
         size: "md",
         label: "Email",
-        placeholder: "olivia@untitledui.com",
+        placeholder: "kari.nordmann@finansavisen.no",
         hint: "This is a hint text to help user.",
         icon: iconArg("Mail"),
         isRequired: false,
