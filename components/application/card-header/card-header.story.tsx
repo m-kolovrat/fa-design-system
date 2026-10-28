@@ -24,31 +24,24 @@ export default {
 interface PlaygroundArgs {
     title: string;
     badge: string;
-    description: string;
     divider: boolean;
     actions: number;
 }
 
-/** The header in a card. "actions" sets how many md icon-only buttons show (0–3). */
+/** The header in a card. "actions" sets how many sm icon-only buttons show (0–3). */
 export const Playground: StoryObj<PlaygroundArgs> = {
-    args: { title: "Siste nytt", badge: "", description: "Børsmeldinger og nyheter om selskapene i watchlisten din.", divider: true, actions: 2 },
+    args: { title: "Siste nytt", badge: "", divider: true, actions: 2 },
     argTypes: { actions: { control: { type: "range", min: 0, max: 3, step: 1 } } },
-    render: ({ title, badge, description, divider, actions }) => {
+    render: ({ title, badge, divider, actions }) => {
         const buttons = [
-            <Button key="filter" color="secondary" size="md" iconLeading={Filter} aria-label="Filtrer" />,
-            <Button key="download" color="secondary" size="md" iconLeading={Download} aria-label="Last ned" />,
-            <Button key="all" color="secondary" size="md" iconLeading={ChevronRight} href="#" aria-label="Se alle" />,
+            <Button key="filter" color="secondary" size="sm" iconLeading={Filter} aria-label="Filtrer" />,
+            <Button key="download" color="secondary" size="sm" iconLeading={Download} aria-label="Last ned" />,
+            <Button key="all" color="secondary" size="sm" iconLeading={ChevronRight} href="#" aria-label="Se alle" />,
         ].slice(0, actions);
 
         return (
             <section className={`${card} w-full max-w-2xl`}>
-                <CardHeader
-                    title={title}
-                    badge={badge || undefined}
-                    description={description || undefined}
-                    divider={divider}
-                    actions={buttons.length ? buttons : undefined}
-                />
+                <CardHeader title={title} badge={badge || undefined} divider={divider} actions={buttons.length ? buttons : undefined} />
                 <div className={`${cardBody} text-sm text-tertiary`}>Innhold i kortet.</div>
             </section>
         );

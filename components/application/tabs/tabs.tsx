@@ -82,7 +82,8 @@ const getHorizontalStyles = ({ size, fullWidth }: { size?: "sm" | "md"; fullWidt
     "button-brand": "gap-1",
     "button-gray": "gap-1",
     "button-border": cx("gap-1 rounded-lg bg-secondary_alt p-1 ring-1 ring-secondary ring-inset", size === "md" && "rounded-xl p-1.5"),
-    "button-minimal": "gap-0.5 rounded-md bg-secondary_alt ring-1 ring-inset ring-secondary",
+    // Figma Button minimal: the track hugs its tabs; Full width=True stretches it.
+    "button-minimal": cx("gap-0.5 rounded-md bg-secondary_alt ring-1 ring-secondary ring-inset", fullWidth ? "w-full" : "w-fit"),
     underline: cx("gap-3", fullWidth && "w-full gap-4"),
     line: "gap-2",
 });

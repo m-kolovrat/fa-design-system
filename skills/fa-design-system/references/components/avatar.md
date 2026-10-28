@@ -22,7 +22,7 @@ import { getInitials } from "fa-design-system/components/base/avatar/utils";
 ## Use something else when
 
 - A company or fund in a list: a logo from `fa-icons` if one exists, else `Avatar` with initials
-  (`initials="EQ"`) and `rounded={false}`.
+  (`initials="EQ"`). Round like a person's, as in Figma's table cell; never `rounded={false}`.
 - An icon on a tinted shape for emphasis, not a person: `FeaturedIcon`.
 - A row of several people (avatar group): **not in code yet**. Stand-in: `Avatar`s with `border` in
   a `flex -space-x-2` row, the overflow as `<Avatar initials="+4" />`, and `AvatarAddButton` at the

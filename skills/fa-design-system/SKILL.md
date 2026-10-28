@@ -227,9 +227,10 @@ specific one; follow it.
   (`notify()`) that confirms an action and goes away.
 - **Select vs ComboBox vs MultiSelect vs TagSelect vs NativeSelect:** one choice from a short list,
   one choice with search, several choices, several shown as tags, the browser's own select.
-- **Tabs vs ButtonGroup:** `Tabs` switch between panels of content. `ButtonGroup` switches a view
-  or filter of the same content (Liste / Kort). Chart periods use `PeriodSelector`, not
-  either of them.
+- **Tabs vs ButtonGroup:** inside a card, anything that changes what the card shows (a view, a
+  source filter, Årlig / Kvartalsvis) is `Tabs` with `type="button-minimal"` `size="sm"`.
+  `ButtonGroup` is for segmented choices outside cards (a market, a currency, Liste / Kort for a
+  whole page). Chart periods use `PeriodSelector`, not either of them.
 - **Toggle vs Checkbox:** `Toggle` applies at once. `Checkbox` is part of a form that is submitted.
 - **EmptyState vs ErrorState:** nothing to show yet, versus something failed to load.
 

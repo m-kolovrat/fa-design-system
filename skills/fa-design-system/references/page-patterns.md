@@ -51,16 +51,18 @@ plain page content.
     <CardHeader
         titleId="card-winners"
         title="Vinnere"
-        actions={<Button color="secondary" size="md" iconLeading={ChevronRight} href="/bors/vinnere" aria-label="Se alle vinnere" />}
+        actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="/bors/vinnere" aria-label="Se alle vinnere" />}
     />
     <div className="px-4 py-5 md:px-6">{/* table, list, chart or text */}</div>
 </section>
 ```
 
-- Up to three actions on the right, as md icon-only `Button`s (any hierarchy, at most one primary);
-  never a `ButtonUtility` and never a tinted icon tile before the title.
+- Up to three actions on the right, as sm icon-only `Button`s (any hierarchy, at most one primary);
+  never a `ButtonUtility` and never a tinted icon tile before the title. No subtitle line.
 - Inside the card, group with an inset (`rounded-xl bg-tertiary p-3`), not a second bordered card.
-- Tabs inside the card: `type="button-minimal"` `size="sm"`, in the body.
+- Anything that switches what the card shows (view, source, period of a table or bar chart): tabs
+  in the body, `type="button-minimal"` `size="sm"`; they hug their content. Never a `ButtonGroup`
+  inside a card.
 
 ### Data table
 
@@ -78,7 +80,7 @@ a sheet with the rest. Example: a Bjellesauer trade shows the investor and the c
 the trade value and the change in shares on the right; the sheet shows the full transaction.
 
 - **Row, left:** what the row is about. Two columns may share it, one over the other (investor over
-  company): the main one in `text-sm font-medium text-primary`, the second in `text-sm text-tertiary`.
+  company): the main one in `text-sm text-primary`, the second in `text-sm text-tertiary`.
   Logo or avatar before them when the table has one; an instrument is always the instrument cell.
 - **Row, right:** the one or two key figures, one over the other (value over change), right-aligned
   with `tabular-nums`. The signed change is never hidden.
@@ -102,7 +104,7 @@ const [selected, setSelected] = useState<Stock | null>(null);
                 className="flex w-full items-center justify-between gap-4 py-3 text-left outline-focus-ring focus-visible:outline-2 focus-visible:-outline-offset-2"
             >
                 <span className="flex min-w-0 flex-col">
-                    <span className="truncate text-sm font-medium text-primary">{s.name}</span>
+                    <span className="truncate text-sm text-primary">{s.name}</span>
                     <span className="text-xs text-tertiary">{s.ticker}</span>
                 </span>
                 <span className="flex flex-col items-end text-sm">
@@ -126,13 +128,19 @@ The `Modal` stays mounted and opens through `isOpen` (`fa-overlays-mounted`).
 
 Wherever a company, fund or other instrument appears in a table, list or card row: its logo, the
 full name on top and the ticker under it, in one column. Never separate columns for the ticker and
-the name. This is Figma's table cell `Type=Avatar`.
+the name. This is Figma's table cell `Type=Avatar`. In a table it is `Table.Cell` props:
+
+```tsx
+<Table.Cell leading={<Avatar src={logo} alt="" size="sm" />} leadText="Equinor" supportingText="EQNR" />
+```
+
+In a list or card row, the same thing composed:
 
 ```tsx
 <div className="flex min-w-0 items-center gap-3">
-    <Avatar src={logo} alt="" size="md" />
+    <Avatar src={logo} alt="" size="sm" />
     <div className="min-w-0">
-        <p className="truncate text-sm font-medium text-primary">Equinor</p>
+        <p className="truncate text-sm text-primary">Equinor</p>
         <p className="text-sm text-tertiary">EQNR</p>
     </div>
 </div>
@@ -141,8 +149,9 @@ the name. This is Figma's table cell `Type=Avatar`.
 - The logo is the company's own (`Avatar` with `src`), or `initials` until a logo exists; `alt=""`
   because the name is right next to it.
 - Mark the cell as the row header in a table (`isRowHeader` on its `Table.Head`, labelled "Aksje" or
-  "Selskap").
-- A compact version for dense tables is coming; until then use this one.
+  "Selskap"), and give that head `className="w-full"`: the name is one line and truncates to the
+  column (rule `table-cell-width`).
+- The avatar is `sm` (32px), matching Figma's table cell `Type=Avatar`, `Size=sm`.
 
 ### Ticker badge
 
@@ -183,7 +192,8 @@ const Change = ({ percent, value }: { percent: number; value?: number }) => (
 ### Filter chips — no component yet
 
 A row of pill toggles above a feed or table ("Alle", "FA", "TDN", "Børsmeldinger", "Min
-watchlist"). Stand-in: `ButtonGroup` with `selectionMode="single"`. Dropdown chips ("Kategorier",
+watchlist"). Inside a card they switch the card's content, so they are tabs: `Tabs.List
+type="button-minimal" size="sm"` with one `Tabs.Panel` around the list. Dropdown chips ("Kategorier",
 "Marked 4") are a `Dropdown` with a `Button color="secondary" size="sm"` trigger and a `Badge` for the
 count. Country chips add `<Flag name="norway-nok" />` (check the flag name in `fa-icons`).
 
