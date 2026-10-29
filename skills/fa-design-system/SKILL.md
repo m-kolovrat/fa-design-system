@@ -187,8 +187,8 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
     lock marking a Pluss article, a warning next to a figure); `fa-icons` then exposes it as an
     image. Because a screen reader skips every unnamed icon, so meaning that lives only in an icon,
     or only in a color, is lost.
-    - Correct: `<ButtonUtility icon={Edit} tooltip="Rediger" />`, `<Lock aria-label="Pluss-artikkel" />`
-    - Wrong: `<Button iconLeading={<Edit data-icon aria-label="Rediger" />} />` (the button still has
+    - Correct: `<ButtonUtility icon={Pen} tooltip="Rediger" />`, `<Lock aria-label="Pluss-artikkel" />`
+    - Wrong: `<Button iconLeading={<Pen data-icon aria-label="Rediger" />} />` (the button still has
       no name)
     - Color alone isn't a name: a green or red change value is fine because its sign says the same;
       a status dot with no text needs text next to it.
@@ -225,9 +225,11 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
 18. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
     [references/layout.md](references/layout.md), which owns the layout rules. Flexible for now;
     report where a design differs.
-19. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix.
-    Because it keeps library components and the primitives they wrap apart.
-    - Correct: `import { Button as AriaButton } from "react-aria-components";`
+19. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix,
+    types included. Because it keeps library components and the primitives they wrap apart.
+    - Correct: `import { Button as AriaButton } from "react-aria-components";`,
+      `import type { SortDescriptor as AriaSortDescriptor } from "react-aria-components";`
+    - Wrong: `import type { Key, SortDescriptor } from "react-aria-components";`
 20. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
 
 ## Choosing between similar components
@@ -333,6 +335,12 @@ Each entry links to its reference page. Open it before using the component.
   `fa-design-system/components/application/carousel/carousel-base`
 - [Flags and logos](references/components/flags-logos.md): `Flag`, publication logos from
   `fa-icons`.
+- [Dot and play button](references/components/dot-icon.md): `Dot` for the dot slots of badge,
+  tag, select and button group; `PlayButtonIcon` over a video poster.
+  `fa-design-system/components/foundations/dot-icon`
+- [Shared assets](references/components/shared-assets.md): marketing and onboarding decoration
+  (`BackgroundPattern`, `Illustration`, `QRCode`, `IPhoneMockup`, `SectionDivider`); not for data
+  pages. `fa-design-system/components/shared-assets/*`
 
 ### Feedback
 

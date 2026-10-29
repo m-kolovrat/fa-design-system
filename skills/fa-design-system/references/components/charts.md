@@ -89,6 +89,15 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
 - **charts-text-alternative** MUST Give each chart a heading and a one-line text summary ("EQNR er
   opp 12,4% siste 12 måneder"), or a table toggle. Because the SVG isn't readable by screen readers.
 
+## Props
+
+| Export                    | Props                                                                                                                                                                                                                                                                             |
+| :------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ChartLegendContent`      | `reversed` (list the series in reverse, e.g. to match a stacked bar from the top), `className` (layout classes only); `payload`, `align`, `layout` are filled in by Recharts' `Legend`                                                                                            |
+| `ChartTooltipContent`     | `isRadialChart` (gauge: the title is the value, the subtitle the item's `name`), `isPieChart` (same for a slice); `active`, `payload`, `label`, `formatter`, `labelFormatter` are filled in by Recharts' `Tooltip`: put `formatter` / `labelFormatter` on the `Tooltip`, not here |
+| `ChartActiveDot`          | `cx`, `cy` (set by Recharts); a 12px dot, `fill-bg-primary stroke-utility-brand-600`                                                                                                                                                                                              |
+| `selectEvenlySpacedItems` | `(dataArray, count)` → `count` evenly spaced items of the array, for x ticks                                                                                                                                                                                                      |
+
 ## Example
 
 ```tsx

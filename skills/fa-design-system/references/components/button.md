@@ -51,6 +51,7 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 | `color`                | `primary` · `secondary` · `tertiary` · `link-color` · `link-gray` · `primary-destructive` · `secondary-destructive` · `tertiary-destructive` · `link-destructive` | `primary` |
 | `iconLeading`          | icon component or element                                                                                                                                         |           |
 | `iconTrailing`         | icon component or element                                                                                                                                         |           |
+| `className`            | layout only (width, margins, placement)                                                                                                                           |           |
 | `isDisabled`           | boolean                                                                                                                                                           |           |
 | `isLoading`            | boolean (spinner, non-interactive)                                                                                                                                |           |
 | `showTextWhileLoading` | boolean                                                                                                                                                           |           |
@@ -65,6 +66,7 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 | `color`            | `secondary` (bordered) · `tertiary` (no border) | `secondary` |
 | `icon`             | icon component or element                       |             |
 | `tooltip`          | string: the tooltip, and the accessible name    |             |
+| `className`        | layout only                                     |             |
 | `tooltipPlacement` | React Aria `Placement`                          | `top`       |
 | `isDisabled`       | boolean (`opacity-50`)                          |             |
 | `href`             | string: renders a link                          |             |
@@ -80,14 +82,15 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 
 `SocialButton`:
 
-| Prop       | Values                                                          | Default |
-| :--------- | :-------------------------------------------------------------- | :------ |
-| `social`   | `google` · `facebook` · `apple` · `twitter` (required)          |         |
-| `theme`    | `brand` (service fill) · `color` (white, colored logo) · `gray` | `brand` |
-| `size`     | `md` · `lg`                                                     | `lg`    |
-| `children` | the label; leave out for icon-only                              |         |
-| `disabled` | boolean (not `isDisabled`)                                      |         |
-| `href`     | string: renders a link                                          |         |
+| Prop        | Values                                                          | Default |
+| :---------- | :-------------------------------------------------------------- | :------ |
+| `social`    | `google` · `facebook` · `apple` · `twitter` (required)          |         |
+| `theme`     | `brand` (service fill) · `color` (white, colored logo) · `gray` | `brand` |
+| `className` | layout only                                                     |         |
+| `size`      | `md` · `lg`                                                     | `lg`    |
+| `children`  | the label; leave out for icon-only                              |         |
+| `disabled`  | boolean (not `isDisabled`)                                      |         |
+| `href`      | string: renders a link                                          |         |
 
 App store badges (`GooglePlayButton`, `AppStoreButton`, `GalaxyStoreButton`, `AppGalleryButton`;
 `GooglePlayWhiteButton` in the black set only):

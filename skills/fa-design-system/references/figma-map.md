@@ -477,6 +477,22 @@ base, \_Date picker menu, \_Modal header, \_Modal footer, \_Prompt modal header,
 actions, \_Carousel arrow, \_Header search, \_Header login, \_Nav link: each is mapped in its
 parent's table above.
 
+## Shared assets and small icons
+
+| Figma                                           | Code                                                                                                     |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| \_Dot (inside Badge, Tag, Select, Button group) | `Dot`, `fa-design-system/components/foundations/dot-icon`; color with `className="text-fg-*"`            |
+| — (no Figma component)                          | `PlayButtonIcon`, `fa-design-system/components/foundations/play-button-icon`                             |
+| — (pattern from another library, no local main) | `BackgroundPattern`, `fa-design-system/components/shared-assets/background-patterns`, `pattern` + `size` |
+| — (no Figma component)                          | `Illustration`, `fa-design-system/components/shared-assets/illustrations`, `type` + `size`               |
+| — (no Figma component)                          | `QRCode` / `GradientScan`, `fa-design-system/components/shared-assets/qr-code`                           |
+| — (no Figma component)                          | `IPhoneMockup`, `fa-design-system/components/shared-assets/iphone-mockup`                                |
+| — (no Figma component)                          | `SectionDivider`, `fa-design-system/components/shared-assets/section-divider`                            |
+
+The "—" rows are code-only (`docs/figma-parity.md` §3): nothing in a Figma frame maps to them, so
+use them only when the brief asks for them, and say so. Pages: `components/dot-icon.md`,
+`components/shared-assets.md`.
+
 ## Not in code
 
 The one list is `docs/figma-parity.md` §2 (shipped with the package); the stand-ins are in

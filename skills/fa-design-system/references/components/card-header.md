@@ -50,6 +50,7 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 | `divider`      | boolean: a `border-secondary` line under it | `true`  |
 | `headingLevel` | `2` · `3`                                   | `2`     |
 | `titleId`      | string: the heading's id                    |         |
+| `className`    | layout only                                 |         |
 
 ## Notes
 

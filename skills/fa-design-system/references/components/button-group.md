@@ -34,8 +34,9 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
   otherwise clear it and leave nothing selected.
 - **button-group-ids** MUST Give every `ButtonGroupItem` a unique `id`; selection keys refer to it.
 - **button-group-icons** MUST Pass icons through `iconLeading` / `iconTrailing` (component
-  reference, or JSX for a `Dot`). Because the item sizes, pads and colors icons only through
-  those props.
+  reference, or JSX for a `Dot` from `fa-design-system/components/foundations/dot-icon`, see
+  [dot-icon](dot-icon.md)). Because the item sizes, pads and colors icons only through those
+  props.
 - **button-group-same-size** NEVER Mix sizes or restyle single items; set `size` once on
   `ButtonGroup`. Because items read their size from the group.
 - **button-group-disabled-by-prop** MUST Disable with `isDisabled` (on the group or an item), never

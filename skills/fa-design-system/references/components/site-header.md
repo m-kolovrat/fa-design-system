@@ -109,7 +109,10 @@ from `fa-icons`; partners open in a new tab), `highlights?` (bold links), `eAvis
   social links. Kapital and Motor reuse Finansavisen's until theirs is designed
   (`docs/figma-parity.md` §2).
 - `TickerBar` and `SiteMenuPanel` are exported, but `SiteHeader` renders both; use them through
-  `tickerItems` and `menu`. Nav dropdowns (`NavDropdown`) and nav links are internal.
+  `tickerItems` and `menu`.
+- `TickerBar` has a `duration` prop (seconds per loop, default `26`) that `SiteHeader` doesn't
+  expose, so the speed is fixed from the header. Ask for a prop rather than rendering the bar
+  yourself. Nav dropdowns (`NavDropdown`) and nav links are internal.
 
 ## Accessibility
 

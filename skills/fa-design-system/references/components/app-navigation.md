@@ -9,6 +9,7 @@ a Fa redesign yet.
 [site-header](site-header.md) and [site-footer](site-footer.md).
 
 ```ts
+import type { NavAccountType } from "fa-design-system/components/application/app-navigation/base-components/nav-account-card";
 import type { NavItemDividerType, NavItemType } from "fa-design-system/components/application/app-navigation/config";
 import { HeaderNavigationBase } from "fa-design-system/components/application/app-navigation/header-navigation";
 import { SidebarNavigationDualTier } from "fa-design-system/components/application/app-navigation/sidebar-navigation/sidebar-dual-tier";
@@ -79,6 +80,31 @@ Sidebars: `activeUrl`, `items` (required). `SidebarNavigationSimple` adds `foote
 
 `NavButton` (for `actions`): `href`, `icon`, `label` (tooltip and `aria-label`), `current`,
 `tooltipPlacement` (default `right`; use `bottom` in a header), `onClick`, `children`.
+
+`NavAccountCard`: `items` (`NavAccountType[]`, default two placeholder people), `selectedAccountId`
+(default `"sander"`, a placeholder id; it must match an `id` in `items` or the card renders nothing
+and warns), `popoverPlacement` (`AriaPlacement`, i.e. `Placement` from `react-aria-components`; default `right bottom` from `lg` up,
+`top right` below), `avatarRounded`. The menu it opens ("View profile", "Account settings",
+"Switch account", "Add account", "Sign out") is fixed English demo content with no handlers.
+
+## Types
+
+```ts
+type NavItemType = {
+    label: string;
+    href?: string; // optional: a group whose sub-items carry the links
+    icon?: FC<{ className?: string }>;
+    badge?: ReactNode;
+    items?: { label: string; href: string; icon?: FC<{ className?: string }>; badge?: ReactNode }[]; // one level; no deeper nesting
+    divider?: boolean;
+};
+type NavItemDividerType = { divider: true; label?: string; href?: string; badge?: ReactNode; items?: NavItemType["items"] };
+type NavAccountType = { id: string; name: string; email: string; avatar: string; status: "online" | "offline" };
+```
+
+`NavItemType` and `NavItemDividerType` come from `…/app-navigation/config`; `NavAccountType` from
+`…/app-navigation/base-components/nav-account-card`. `avatar` is an image URL; `status` draws the
+online dot on the card's avatar.
 
 ## Accessibility
 

@@ -5,7 +5,7 @@ One line of text: name, e-post, søk, ticker, beløp. `Input` bundles label, fie
 
 ```ts
 import { HintText } from "fa-design-system/components/base/input/hint-text";
-import { Input, InputBase } from "fa-design-system/components/base/input/input";
+import { Input, InputBase, TextField } from "fa-design-system/components/base/input/input";
 import { InputGroup } from "fa-design-system/components/base/input/input-group";
 import { Label } from "fa-design-system/components/base/input/label";
 ```
@@ -44,19 +44,25 @@ import { Label } from "fa-design-system/components/base/input/label";
 
 ## Props
 
-| Prop                                    | Values                                   | Default |
-| :-------------------------------------- | :--------------------------------------- | :------ |
-| `size`                                  | `sm` (36px) · `md` (40px) · `lg` (44px)  | `md`    |
-| `label`                                 | string                                   |         |
-| `hint`                                  | ReactNode, shown below; red when invalid |         |
-| `placeholder`                           | string                                   |         |
-| `icon`                                  | icon component, leading                  |         |
-| `tooltip`                               | string: help icon with tooltip           |         |
-| `shortcut`                              | string, or `true` for "⌘K"               |         |
-| `type`                                  | input type                               | `text`  |
-| `isRequired`                            | boolean: adds `*` to the label           |         |
-| `hideRequiredIndicator`                 | boolean                                  |         |
-| `isInvalid`, `isDisabled`, `isReadOnly` | boolean                                  |         |
+| Prop                                                                      | Values                                                                        | Default |
+| :------------------------------------------------------------------------ | :---------------------------------------------------------------------------- | :------ |
+| `size`                                                                    | `sm` (36px) · `md` (40px) · `lg` (44px)                                       | `md`    |
+| `label`                                                                   | string                                                                        |         |
+| `hint`                                                                    | ReactNode, shown below; red when invalid                                      |         |
+| `placeholder`                                                             | string                                                                        |         |
+| `icon`                                                                    | icon component, leading                                                       |         |
+| `tooltip`                                                                 | string: help icon with tooltip                                                |         |
+| `shortcut`                                                                | string, or `true` for "⌘K"                                                    |         |
+| `type`                                                                    | input type                                                                    | `text`  |
+| `isRequired`                                                              | boolean: adds `*` to the label                                                |         |
+| `hideRequiredIndicator`                                                   | boolean                                                                       |         |
+| `isInvalid`, `isDisabled`, `isReadOnly`                                   | boolean                                                                       |         |
+| `wrapperClassName`, `inputClassName`, `iconClassName`, `tooltipClassName` | string: classes on the box, the `<input>`, the leading icon, the tooltip icon |         |
+| `ref`, `groupRef`                                                         | refs to the `<input>` and to the box around it                                |         |
+
+The four `*ClassName` hooks are for layout (padding, width) and the registered header-search
+override (`docs/overrides.md`) only; restyling a field through them is forbidden by
+**fa-no-invented-variants**.
 
 Plus React Aria `TextField` props: `value`, `defaultValue`, `onChange`, `name`, `validate`,
 `maxLength`, `autoComplete`, `inputMode`. `className` sets the outer wrapper (width, grid
@@ -64,7 +70,13 @@ placement).
 
 `InputGroup`: `size`, `label`, `hint`, `prefix` (text inside the box), `leadingAddon` /
 `trailingAddon` (`InputGroup.Prefix`, a `NativeSelect` or a `Button`), plus `TextField` props.
-`InputBase`: `placeholder`, `icon`, `tooltip`, `type`. `Label` (`isRequired`, `tooltip`,
+`InputGroup.Prefix`: `children` (the text), `className`, plus `position` (`leading` · `trailing`)
+and `isDisabled`, which are accepted but not needed: the side comes from the `leadingAddon` /
+`trailingAddon` slot it sits in and the disabled look from the group.
+`InputBase`: `placeholder`, `icon`, `tooltip`, `type`, and the same `*ClassName` / `ref` /
+`groupRef` hooks as `Input`. `TextField` (React Aria `TextField` props plus `size` and the
+`*ClassName` hooks) is the field wrapper for composing a custom field from `Label`, `InputBase`
+and `HintText`: it provides the size context the parts read. `Label` (`isRequired`, `tooltip`,
 `tooltipDescription`, `tooltipLabel`: the help icon's accessible name, default the `tooltip` text) and `HintText` (`isInvalid`, `size` `sm` · `md`) are for composing a custom
 React Aria field; they wire up through React Aria slots.
 

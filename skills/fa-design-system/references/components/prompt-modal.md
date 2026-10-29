@@ -47,12 +47,13 @@ import { FeaturedIcon } from "fa-design-system/components/foundations/featured-i
 
 ## Props
 
-| Prop                     | Values                           | Default     |
-| :----------------------- | :------------------------------- | :---------- |
-| `className`              | card width (`max-w-*`)           | `max-w-100` |
-| `isDismissable`          | boolean                          | `true`      |
-| `isOpen`, `onOpenChange` | controlled state                 |             |
-| `children`               | nodes, or `({ close }) => nodes` |             |
+| Prop                        | Values                           | Default     |
+| :-------------------------- | :------------------------------- | :---------- |
+| `className`                 | card width (`max-w-*`)           | `max-w-100` |
+| `isDismissable`             | boolean                          | `true`      |
+| `isKeyboardDismissDisabled` | boolean                          |             |
+| `isOpen`, `onOpenChange`    | controlled state                 |             |
+| `children`                  | nodes, or `({ close }) => nodes` |             |
 
 `PromptModalHeader`: `title` (required), `description`, `icon`, `align` `left` · `center` ·
 `horizontal` (default `left`; Figma Left aligned / Center aligned / Horizontal left aligned),

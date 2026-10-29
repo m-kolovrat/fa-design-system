@@ -7,7 +7,7 @@ Figma: Tables/Table. Figma's Table cell lead text, supporting text and leading v
 
 ```ts
 import { Table, TableCard } from "fa-design-system/components/application/table/table";
-import type { SortDescriptor } from "react-aria-components";
+import type { SortDescriptor as AriaSortDescriptor } from "react-aria-components";
 ```
 
 ## Use when
@@ -80,7 +80,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 | Component          | Props                                                                                                                                                                                                           |
 | :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `TableCard.Root`   | `size` `sm` · `md` (default `md`), `div` attributes                                                                                                                                                             |
-| `TableCard.Header` | `title` (required), `badge` (string → gray modern `Badge`, or a node), `description`, `contentTrailing`                                                                                                         |
+| `TableCard.Header` | `title` (string, required), `badge` (string → gray modern `Badge`, or a node), `description` (string), `contentTrailing` (node), `className`                                                                    |
 | `Table`            | React Aria `Table` props: `aria-label`, `selectionMode`, `selectedKeys`, `onSelectionChange`, `sortDescriptor`, `onSortChange`, `onRowAction`; `size` (see **table-size-once**)                                 |
 | `Table.Header`     | `bordered` (default `true`), `size`, `columns`                                                                                                                                                                  |
 | `Table.Head`       | `id`, `label`, `tooltip` (help icon), `isRowHeader`, `allowsSorting`, `className`                                                                                                                               |
@@ -104,7 +104,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 ## Example
 
 ```tsx
-const [sort, setSort] = useState<SortDescriptor>({ column: "change", direction: "descending" });
+const [sort, setSort] = useState<AriaSortDescriptor>({ column: "change", direction: "descending" });
 const rows = useMemo(
     () =>
         [...stocks].sort((a, b) => {
