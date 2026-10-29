@@ -7,6 +7,7 @@ Menu panel, \_Nav link, \_Header search, \_Header login.
 
 ```ts
 import type { SiteBrand, SiteNavItem } from "fa-design-system/components/application/site-header/site-brands";
+import { siteContent } from "fa-design-system/components/application/site-header/site-content";
 import { SiteHeader } from "fa-design-system/components/application/site-header/site-header";
 import type { SiteMenuContent } from "fa-design-system/components/application/site-header/site-menu-panel";
 import type { TickerItem } from "fa-design-system/components/application/site-header/ticker-bar";
@@ -42,9 +43,15 @@ The Figma Type is responsive CSS, not a prop.
   elsewhere, or restyle them on the header. Because they are registered style overrides
   (`docs/overrides.md`) that live only in `siteBrands[brand].search` / `.loginButton`; a second use
   means proposing a real Input/Button variant instead.
-- **site-header-nav-data** MUST Pass `navigation` as groups (`SiteNavItem[][]`; a divider is drawn
-  between groups) and a shorter flat `shortcuts` list for mobile and tablet. Because desktop shows
-  only `navigation` and smaller widths show only `shortcuts`.
+- **site-header-defaults** MUST Leave `navigation`, `shortcuts` and `menu` out unless the page has
+  its own: the publication's complete navigation and Meny panel come from `siteContent[brand]`
+  (`site-content.ts`), the same content Storybook shows. These defaults are on purpose, so a page
+  never renders a half-empty panel or a dead Meny button. Never type a navigation from memory; to
+  change one item (mark the current section), map over `siteContent[brand].navigation`. Because the
+  navigation belongs to the publication, not the page, and changes in one place.
+- **site-header-nav-data** MUST When passing your own, give `navigation` as groups
+  (`SiteNavItem[][]`; a divider is drawn between groups) and a flat `shortcuts` list for mobile and
+  tablet. Because desktop shows only `navigation` and smaller widths show only `shortcuts`.
 - **site-header-current** MUST Mark the page's section with `current: true` on its `SiteNavItem`.
   Because it sets `aria-current="page"`.
 - **site-header-dropdowns** SHOULD Give a nav item `items` only for big sections (Børs, 400 Rikeste,
@@ -57,9 +64,10 @@ The Figma Type is responsive CSS, not a prop.
   signed out. Because `user` swaps "Logg inn" for the avatar link; "Kjøp" always shows.
 - **site-header-search-mobile** MUST Pass `onSearchPress` and open a search view from it. Because
   below `md` the search field is hidden and the icon does nothing else.
-- **site-header-menu** SHOULD Pass `menu` (`SiteMenuContent`) so Meny opens the full-width
-  `SiteMenuPanel`. Without it the button only calls `onMenuPress`.
-- **site-header-ticker** SHOULD Pass `tickerItems` with values already formatted (`"1 193,30"`,
+- **site-header-menu** SHOULD Leave `menu` to its default. `menu={null}` removes the panel, and the
+  Meny button then shows only when `onMenuPress` opens something else. Because a Meny button that
+  does nothing is worse than none.
+- **site-header-ticker** SHOULD Pass `tickerItems` with values already formatted (`"1.193,30"`,
   `"-1,59%"`) and `direction` matching the sign. Because the bar prints strings as given and colors by
   `direction`. Leave it out (or empty) to hide the bar.
 - **site-header-once** MUST Render one `SiteHeader` per page, at the top, outside `<main>`. Because
@@ -67,21 +75,21 @@ The Figma Type is responsive CSS, not a prop.
 
 ## Props
 
-| Prop            | Values                               | Default |
-| :-------------- | :----------------------------------- | :------ |
-| `brand`         | `fa` · `kapital` · `motor`           | `fa`    |
-| `navigation`    | `SiteNavItem[][]` (required)         |         |
-| `shortcuts`     | `SiteNavItem[]` (required)           |         |
-| `tickerItems`   | `TickerItem[]`                       |         |
-| `user`          | `{ initials: string; href: string }` |         |
-| `collapsed`     | boolean (desktop only)               | `false` |
-| `menu`          | `SiteMenuContent`                    |         |
-| `onMenuPress`   | `() => void`                         |         |
-| `onSearchPress` | `() => void` (mobile search icon)    |         |
-| `homeHref`      | string                               | `"/"`   |
-| `loginHref`     | string                               | `"#"`   |
-| `subscribeHref` | string ("Kjøp")                      | `"#"`   |
-| `className`     | layout only (`sticky top-0 z-30`)    |         |
+| Prop            | Values                                | Default                         |
+| :-------------- | :------------------------------------ | :------------------------------ |
+| `brand`         | `fa` · `kapital` · `motor`            | `fa`                            |
+| `navigation`    | `SiteNavItem[][]`                     | `siteContent[brand].navigation` |
+| `shortcuts`     | `SiteNavItem[]`                       | `siteContent[brand].shortcuts`  |
+| `tickerItems`   | `TickerItem[]`                        |                                 |
+| `user`          | `{ initials: string; href: string }`  |                                 |
+| `collapsed`     | boolean (desktop only)                | `false`                         |
+| `menu`          | `SiteMenuContent` · `null` (no panel) | `siteContent[brand].menu`       |
+| `onMenuPress`   | `() => void`                          |                                 |
+| `onSearchPress` | `() => void` (mobile search icon)     |                                 |
+| `homeHref`      | string                                | `"/"`                           |
+| `loginHref`     | string                                | `"#"`                           |
+| `subscribeHref` | string ("Kjøp")                       | `"#"`                           |
+| `className`     | layout only (`sticky top-0 z-30`)     |                                 |
 
 ## Types
 
@@ -96,8 +104,15 @@ from `fa-icons`; partners open in a new tab), `highlights?` (bold links), `eAvis
 
 ## Notes
 
+- `siteContent` (`site-content.ts`) holds the per-publication defaults for the header and the
+  footer: navigation, shortcuts, Meny panel, footer links, publisher info, copyright, disclaimer,
+  social links. Kapital and Motor reuse Finansavisen's until theirs is designed
+  (`docs/figma-parity.md` §2).
 - `TickerBar` and `SiteMenuPanel` are exported, but `SiteHeader` renders both; use them through
-  `tickerItems` and `menu`. Nav dropdowns (`NavDropdown`) and nav links are internal.
+  `tickerItems` and `menu`.
+- `TickerBar` has a `duration` prop (seconds per loop, default `26`) that `SiteHeader` doesn't
+  expose, so the speed is fixed from the header. Ask for a prop rather than rendering the bar
+  yourself. Nav dropdowns (`NavDropdown`) and nav links are internal.
 
 ## Accessibility
 
@@ -113,50 +128,27 @@ from `fa-icons`; partners open in a new tab), `highlights?` (bold links), `eAvis
 ## Example
 
 ```tsx
-const navigation: SiteNavItem[][] = [
-    [
-        { label: "Siste nytt", href: "/siste" },
-        { label: "MittFa", href: "/mittfa" },
-    ],
-    [
-        {
-            label: "Børs",
-            href: "/bors",
-            current: true,
-            items: [
-                { label: "Børsoversikt", href: "/bors" },
-                { label: "Råvarer", href: "/raavarer" },
-                { label: "Fond", href: "/fond" },
-            ],
-        },
-        { label: "Makro", href: "/makro" },
-        { label: "Eiendom", href: "/eiendom" },
-    ],
-];
-
+// A Finansavisen page: navigation, shortcuts and the Meny panel are the publication's defaults
+// (site-content.ts). Pass only what the page knows: ticker, user, hrefs and the search handler.
 <SiteHeader
     brand="fa"
     className="sticky top-0 z-30"
     collapsed={isScrolled}
     tickerItems={[
-        { label: "Oslo Børs", value: "1 193,30", change: "0,84%", direction: "up", href: "/ticker/OSEBX" },
+        { label: "Oslo Børs", value: "1.193,30", change: "+0,84%", direction: "up", href: "/ticker/OSEBX" },
         { label: "Brent spot", value: "81,42", change: "-1,12%", direction: "down", href: "/ticker/BRENT" },
     ]}
-    navigation={navigation}
-    shortcuts={[
-        { label: "Siste", href: "/siste" },
-        { label: "Børs", href: "/bors", current: true },
-        { label: "Forum", href: "/forum" },
-    ]}
-    menu={{
-        columns: [{ title: "Podcast", href: "/podcast", items: [{ label: "Aksjepodden", href: "/podcast/aksjepodden" }] }],
-        eAvis: { weekday: "Fredag", date: "23.10.2026", href: "/eavis" },
-    }}
     user={session ? { initials: "KH", href: "/min-side" } : undefined}
     loginHref="/logg-inn"
     subscribeHref="/abonnement"
     onSearchPress={openSearch}
 />;
+
+// Marking the page's section: start from the defaults, change the one item.
+const navigation = siteContent.fa.navigation.map((group) => group.map((item) => (item.href === "/bors" ? { ...item, current: true } : item)));
+const shortcuts = siteContent.fa.shortcuts.map((item) => (item.href === "/bors" ? { ...item, current: true } : item));
+
+<SiteHeader brand="fa" navigation={navigation} shortcuts={shortcuts} tickerItems={ticker} onSearchPress={openSearch} />;
 ```
 
 ## Figma parity

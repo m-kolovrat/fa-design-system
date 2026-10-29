@@ -67,6 +67,7 @@ import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radi
 
 - `RadioGroup` stacks vertically with `gap-4`; `orientation` only changes the arrow-key direction,
   it isn't styled.
+- `className` on `RadioGroup`, `RadioCardGroup` and `RadioCard` is layout only.
 - `RadioCardGroup` stacks with `gap-3`; pass `className="grid gap-3 md:grid-cols-3"` for a row of
   cards.
 

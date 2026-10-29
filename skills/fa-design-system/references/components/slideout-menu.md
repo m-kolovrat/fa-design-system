@@ -54,6 +54,13 @@ import { SlideoutMenu } from "fa-design-system/components/application/slideout-m
 `SlideoutMenu.Header`: `onClose`, plus `<header>` props. `SlideoutMenu.Content`: `<div>` props
 (`role` defaults to `"main"`). `SlideoutMenu.Footer`: `<footer>` props, with a top divider.
 
+## Notes
+
+- `slideout-menu.tsx` also exports `ModalOverlay`, `Modal` and `Dialog`, the React Aria parts it is
+  built from. They are not the dialog `Modal` from `modals/modal.tsx`: an auto-import that picks this
+  `Modal` renders a side panel instead of a dialog. Import `Modal` from
+  `fa-design-system/components/application/modals/modal` and `SlideoutMenu` from here.
+
 ## Accessibility
 
 - Focus is trapped in the panel and returns to the trigger on close; Escape closes it.

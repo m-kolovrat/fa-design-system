@@ -3,6 +3,7 @@
 import type { FC, ReactNode } from "react";
 import { Link as AriaLink } from "react-aria-components";
 import { type SiteBrand, type SiteNavItem, siteBrands } from "@/components/application/site-header/site-brands";
+import { siteContent } from "@/components/application/site-header/site-content";
 import { AppStoreButton, GooglePlayButton } from "@/components/base/buttons/app-store-buttons";
 import { Button } from "@/components/base/buttons/button";
 import { Facebook, Instagram, LinkedIn, TikTok, X } from "@/components/foundations/social-icons";
@@ -22,17 +23,17 @@ export interface SiteFooterProps {
      * @default "fa"
      */
     brand?: SiteBrand;
-    /** Link columns. */
-    links: SiteNavItem[][];
-    /** Publisher lines shown under the logo. */
-    publisherInfo: string[];
-    /** Copyright line under the publisher info. */
-    copyright: string;
-    /** Data-provider credits at the bottom. */
-    disclaimer: ReactNode;
+    /** Link columns. Defaults to the publication's (`siteContent[brand].footer`, see site-content.ts). */
+    links?: SiteNavItem[][];
+    /** Publisher lines shown under the logo. Defaults to the publication's. */
+    publisherInfo?: string[];
+    /** Copyright line under the publisher info. Defaults to the publication's. */
+    copyright?: string;
+    /** Data-provider credits at the bottom. Defaults to the publication's. */
+    disclaimer?: ReactNode;
     /** Where "Les mer." after the disclaimer points. Hidden when omitted. */
     disclaimerHref?: string;
-    /** Social media links (`x`, `facebook`, `instagram`, `tiktok`, `linkedin`), in order. */
+    /** Social media links (`x`, `facebook`, `instagram`, `tiktok`, `linkedin`), in order. Defaults to the publication's. */
     socialLinks?: { platform: keyof typeof socialIcons; href: string }[];
     /** Where "Kontakt oss" points. */
     contactHref?: string;
@@ -58,12 +59,12 @@ export interface SiteFooterProps {
  */
 export const SiteFooter = ({
     brand = "fa",
-    links,
-    publisherInfo,
-    copyright,
-    disclaimer,
+    links: linksProp,
+    publisherInfo: publisherInfoProp,
+    copyright: copyrightProp,
+    disclaimer: disclaimerProp,
     disclaimerHref,
-    socialLinks = [],
+    socialLinks: socialLinksProp,
     contactHref = "#",
     appTitle = "Bruk Finansavisen-appen",
     appDescription = "Få nyhetsvarsler og en personalisert FA-opplevelse",
@@ -75,6 +76,12 @@ export const SiteFooter = ({
 }: SiteFooterProps) => {
     const theme = siteBrands[brand];
     const Logo = theme.logo;
+    const defaults = siteContent[brand].footer;
+    const links = linksProp ?? defaults.links;
+    const publisherInfo = publisherInfoProp ?? defaults.publisherInfo;
+    const copyright = copyrightProp ?? defaults.copyright;
+    const disclaimer = disclaimerProp ?? defaults.disclaimer;
+    const socialLinks = socialLinksProp ?? defaults.socialLinks;
 
     return (
         <footer className={cx(theme.surface, className)}>

@@ -15,7 +15,7 @@ export type Period = (typeof PERIODS)[number];
 
 export interface PeriodOption {
     id: Period;
-    /** The change over the period in percent (`0.42` shows "+0,42 %"). Shown under the label when set. */
+    /** The change over the period in percent (`0.42` shows "+0,42%"). Shown under the label when set. */
     change?: number;
 }
 
@@ -40,8 +40,12 @@ export const styles = sortCx({
     },
 });
 
-const formatChange = (percent: number) =>
-    new Intl.NumberFormat("nb-NO", { style: "percent", minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: "exceptZero" }).format(percent / 100);
+/** Norwegian change: `+0,42%`, `-1,10%`, `0,00%` (comma decimals, hyphen minus, no space before %). */
+const formatChange = (percent: number) => {
+    const rounded = Number(percent.toFixed(2));
+    const sign = rounded > 0 ? "+" : rounded < 0 ? "-" : "";
+    return `${sign}${Math.abs(rounded).toFixed(2).replace(".", ",")}%`;
+};
 
 export interface PeriodSelectorProps extends Omit<
     AriaToggleButtonGroupProps,

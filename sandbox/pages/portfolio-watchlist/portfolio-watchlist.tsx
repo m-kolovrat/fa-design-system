@@ -703,12 +703,13 @@ const NewsCard = ({ watchlist }: { watchlist: Watchlist }) => {
 
                 <Tabs.Panel id={sourceId} className="flex flex-1 flex-col">
                     {shown.length === 0 ? (
-                        <EmptyState
-                            className="py-10"
-                            icon={Help}
-                            title="Ingen nyheter med dette filteret"
-                            description="Velg «Alle» eller fjern kategoriene for å se alle nyhetene om aksjene dine."
-                        />
+                        <div className="py-10">
+                            <EmptyState
+                                icon={Help}
+                                title="Ingen nyheter med dette filteret"
+                                description="Velg «Alle» eller fjern kategoriene for å se alle nyhetene om aksjene dine."
+                            />
+                        </div>
                     ) : (
                         <ul className="mt-2 flex flex-col">
                             {shown.map((n) => (
@@ -794,7 +795,9 @@ const DividendsCard = ({ watchlist }: { watchlist: Watchlist }) => {
             <CardHeader titleId="card-dividends" title="Kommende utbytter" />
             <div className="px-4 py-2 md:px-6">
                 {items.length === 0 ? (
-                    <EmptyState className="py-8" icon={Wallet} title="Ingen kommende utbytter" description="Ingen av aksjene i listen har varslet utbytte." />
+                    <div className="py-8">
+                        <EmptyState icon={Wallet} title="Ingen kommende utbytter" description="Ingen av aksjene i listen har varslet utbytte." />
+                    </div>
                 ) : (
                     <>
                         <div className="grid grid-cols-[1fr_auto_auto] gap-4 border-b border-secondary py-2 text-xs font-medium text-quaternary">
@@ -1023,22 +1026,23 @@ const WatchlistView = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpe
 
             {isEmpty ? (
                 <section aria-label="Tom liste" className={card}>
-                    <EmptyState
-                        className="px-4 py-16"
-                        icon={Wallet}
-                        title="Ingen transaksjoner ennå"
-                        description="Registrer ditt første kjøp for å se verdi, avkastning, nyheter og kommende hendelser for aksjene dine."
-                        secondaryAction={
-                            <Button size="md" color="secondary" href="/bors">
-                                Se Oslo Børs
-                            </Button>
-                        }
-                        primaryAction={
-                            <Button size="md" iconLeading={Plus}>
-                                Registrer kjøp
-                            </Button>
-                        }
-                    />
+                    <div className="px-4 py-16">
+                        <EmptyState
+                            icon={Wallet}
+                            title="Ingen transaksjoner ennå"
+                            description="Registrer ditt første kjøp for å se verdi, avkastning, nyheter og kommende hendelser for aksjene dine."
+                            secondaryAction={
+                                <Button size="md" color="secondary" href="/bors">
+                                    Se Oslo Børs
+                                </Button>
+                            }
+                            primaryAction={
+                                <Button size="md" iconLeading={Plus}>
+                                    Registrer kjøp
+                                </Button>
+                            }
+                        />
+                    </div>
                 </section>
             ) : (
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-6">

@@ -7,7 +7,7 @@ Figma: Tables/Table. Figma's Table cell lead text, supporting text and leading v
 
 ```ts
 import { Table, TableCard } from "fa-design-system/components/application/table/table";
-import type { SortDescriptor } from "react-aria-components";
+import type { SortDescriptor as AriaSortDescriptor } from "react-aria-components";
 ```
 
 ## Use when
@@ -61,7 +61,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 - **table-actions-label** MUST Give icon actions in a row a label: `ButtonUtility` with `tooltip`,
   or `Dropdown.DotsButton`. Don't use the exported `TableRowActionsDropdown`; it's a demo with
   English labels and no handlers.
-- **table-numbers** SHOULD Format numbers Norwegian style (`1 234,50`, `+2,4 %`) and add
+- **table-numbers** SHOULD Format numbers Norwegian style (`1.234,50`, `+2,4%`) and add
   `tabular-nums` to numeric cells so digits line up.
 - **table-instrument-cell** MUST Show an instrument (company, fund, index) as one cell: logo, full
   name on top, ticker under it ("Instrument cell" in `page-patterns.md`); never a ticker column next
@@ -80,7 +80,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 | Component          | Props                                                                                                                                                                                                           |
 | :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `TableCard.Root`   | `size` `sm` · `md` (default `md`), `div` attributes                                                                                                                                                             |
-| `TableCard.Header` | `title` (required), `badge` (string → gray modern `Badge`, or a node), `description`, `contentTrailing`                                                                                                         |
+| `TableCard.Header` | `title` (string, required), `badge` (string → gray modern `Badge`, or a node), `description` (string), `contentTrailing` (node), `className`                                                                    |
 | `Table`            | React Aria `Table` props: `aria-label`, `selectionMode`, `selectedKeys`, `onSelectionChange`, `sortDescriptor`, `onSortChange`, `onRowAction`; `size` (see **table-size-once**)                                 |
 | `Table.Header`     | `bordered` (default `true`), `size`, `columns`                                                                                                                                                                  |
 | `Table.Head`       | `id`, `label`, `tooltip` (help icon), `isRowHeader`, `allowsSorting`, `className`                                                                                                                               |
@@ -104,7 +104,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 ## Example
 
 ```tsx
-const [sort, setSort] = useState<SortDescriptor>({ column: "change", direction: "descending" });
+const [sort, setSort] = useState<AriaSortDescriptor>({ column: "change", direction: "descending" });
 const rows = useMemo(
     () =>
         [...stocks].sort((a, b) => {
@@ -115,7 +115,7 @@ const rows = useMemo(
 );
 
 <TableCard.Root size="sm">
-    <TableCard.Header title="Mest omsatt på Oslo Børs" badge="Sanntid" description="Oppdatert 14:32" />
+    <TableCard.Header title="Mest omsatt på Oslo Børs" badge="Sanntid" />
     <Table aria-label="Mest omsatt på Oslo Børs" sortDescriptor={sort} onSortChange={setSort}>
         <Table.Header>
             <Table.Head id="name" label="Aksje" isRowHeader className="w-full" />
@@ -146,7 +146,7 @@ const rows = useMemo(
 </TableCard.Root>;
 ```
 
-`stocks`: `{ name: "Equinor", ticker: "EQNR", logo: "/logos/equinor.svg", last: 287.4, lastLabel: "287,40", change: 2.4, changeLabel: "+2,40 %" }`, …
+`stocks`: `{ name: "Equinor", ticker: "EQNR", logo: "/logos/equinor.svg", last: 287.4, lastLabel: "287,40", change: 2.4, changeLabel: "+2,40%" }`, …
 
 ## See also
 

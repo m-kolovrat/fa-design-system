@@ -10,6 +10,7 @@ import { Input } from "@/components/base/input/input";
 import { cx } from "@/utils/cx";
 import { NavDropdown } from "./nav-dropdown";
 import { type SiteBrand, type SiteNavItem, siteBrands } from "./site-brands";
+import { siteContent } from "./site-content";
 import { type SiteMenuContent, SiteMenuPanel } from "./site-menu-panel";
 import { TickerBar, type TickerItem } from "./ticker-bar";
 
@@ -103,10 +104,13 @@ export interface SiteHeaderProps {
     brand?: SiteBrand;
     /** Market ticker shown above the header. Hidden when empty. */
     tickerItems?: TickerItem[];
-    /** Desktop navigation. Each inner array is a group; groups are split by a divider. */
-    navigation: SiteNavItem[][];
-    /** Shorter link list shown on mobile and tablet. */
-    shortcuts: SiteNavItem[];
+    /**
+     * Desktop navigation. Each inner array is a group; groups are split by a divider.
+     * Defaults to the publication's navigation (`siteContent[brand]`, see site-content.ts).
+     */
+    navigation?: SiteNavItem[][];
+    /** Shorter link list shown on mobile and tablet. Defaults to the publication's shortcuts. */
+    shortcuts?: SiteNavItem[];
     /** The signed-in user. Without it, the header shows "Logg inn". */
     user?: { initials: string; href: string };
     /**
@@ -121,8 +125,11 @@ export interface SiteHeaderProps {
     loginHref?: string;
     /** Where the "Kjøp" (subscribe) button points. */
     subscribeHref?: string;
-    /** Content of the panel the Meny button opens. Without it, the button only calls `onMenuPress`. */
-    menu?: SiteMenuContent;
+    /**
+     * Content of the panel the Meny button opens. Defaults to the publication's menu; `null` renders
+     * no panel, and then the button shows only when `onMenuPress` is set.
+     */
+    menu?: SiteMenuContent | null;
     /** Called when the menu button is pressed. */
     onMenuPress?: () => void;
     /** Called when the search button is pressed (mobile, where the search field is hidden). */
@@ -138,14 +145,14 @@ export interface SiteHeaderProps {
 export const SiteHeader = ({
     brand = "fa",
     tickerItems,
-    navigation,
-    shortcuts,
+    navigation: navigationProp,
+    shortcuts: shortcutsProp,
     user,
     collapsed = false,
     homeHref = "/",
     loginHref = "#",
     subscribeHref = "#",
-    menu,
+    menu: menuProp,
     onMenuPress,
     onSearchPress,
     className,
@@ -153,6 +160,11 @@ export const SiteHeader = ({
     const theme = siteBrands[brand];
     const Logo = theme.logo;
     const LogoCollapsed = theme.logoCollapsed;
+    const content = siteContent[brand];
+    const navigation = navigationProp ?? content.navigation;
+    const shortcuts = shortcutsProp ?? content.shortcuts;
+    const menu = menuProp === undefined ? content.menu : (menuProp ?? undefined);
+    const showMenuButton = Boolean(menu || onMenuPress);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
@@ -202,7 +214,7 @@ export const SiteHeader = ({
             {tickerItems && tickerItems.length > 0 && <TickerBar items={tickerItems} />}
 
             <div className={cx("flex flex-col items-center gap-2 px-4 pt-4 lg:gap-4 lg:px-7.5 lg:pb-3", collapsed && "lg:hidden")}>
-                <div className="flex w-full items-center justify-between gap-8">
+                <div className="flex w-full items-center justify-between gap-3 md:gap-8">
                     <div className="flex flex-1">
                         <AriaLink
                             href={homeHref}
@@ -242,10 +254,12 @@ export const SiteHeader = ({
                             </AriaLink>
                         )}
 
-                        <AriaButton {...menuButtonProps} className={cx(iconButtonClassName, "-m-1 gap-3 p-1 lg:m-0 lg:px-3 lg:py-2")}>
-                            <span className="hidden text-sm font-semibold text-primary_on-brand lg:inline">Meny</span>
-                            <MenuIcon className="size-6" />
-                        </AriaButton>
+                        {showMenuButton && (
+                            <AriaButton {...menuButtonProps} className={cx(iconButtonClassName, "-m-1 gap-3 p-1 lg:m-0 lg:px-3 lg:py-2")}>
+                                <span className="hidden text-sm font-semibold text-primary_on-brand lg:inline">Meny</span>
+                                <MenuIcon className="size-6" />
+                            </AriaButton>
+                        )}
                     </div>
                 </div>
 
@@ -277,9 +291,11 @@ export const SiteHeader = ({
                     </nav>
 
                     <div className="flex w-67 shrink-0 justify-end">
-                        <AriaButton {...menuButtonProps} className={cx(iconButtonClassName, "px-3 py-2")}>
-                            <MenuIcon className="size-6" />
-                        </AriaButton>
+                        {showMenuButton && (
+                            <AriaButton {...menuButtonProps} className={cx(iconButtonClassName, "px-3 py-2")}>
+                                <MenuIcon className="size-6" />
+                            </AriaButton>
+                        )}
                     </div>
                 </div>
             )}

@@ -61,7 +61,7 @@ Plus React Aria `Slider` props.
 ## Example
 
 ```tsx
-const formatNok = (value: number) => new Intl.NumberFormat("nb-NO", { style: "currency", currency: "NOK", maximumFractionDigits: 0 }).format(value);
+const formatNok = (value: number) => `${nb(value, { decimals: 0 })} kr`; // `nb`: "Change value" in page-patterns.md
 
 <div className="flex flex-col gap-3">
     <p className="text-sm font-medium text-secondary">Kurs</p>

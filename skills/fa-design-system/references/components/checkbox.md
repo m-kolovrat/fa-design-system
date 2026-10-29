@@ -51,6 +51,7 @@ import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
 | `isDisabled`                            | boolean (`opacity-50`)            |         |
 | `isRequired`, `isInvalid`, `isReadOnly` | boolean                           |         |
 | `name`, `value`                         | string, for form data             |         |
+| `className`                             | layout only                       |         |
 
 Plus React Aria `Checkbox` props. `CheckboxBase` (the box alone): `size`, `isSelected`,
 `isIndeterminate`, `isDisabled`, `isFocusVisible`, `className`.

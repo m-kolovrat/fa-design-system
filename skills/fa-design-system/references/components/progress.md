@@ -20,7 +20,7 @@ import { CircleProgressBar } from "fa-design-system/components/base/progress-ind
 - The duration is unknown (loading, saving): `LoadingIndicator`, or `isLoading` on the `Button`.
 - Several values compared on rings: activity gauges in [charts](charts.md).
 - Numbered steps in a flow: progress steps are **not in code yet** (see Coverage gaps).
-- A price change or a ranking: a number with `BadgeWithIcon`, not a bar.
+- A price change: a colored span ("Change value" in `page-patterns.md`), not a bar or a badge.
 
 ## Rules
 
@@ -77,7 +77,7 @@ percent is rounded, like the other circles. No `label` or `valueFormatter`.
 ## Example
 
 ```tsx
-const nok = (v: number) => `${v.toLocaleString("nb-NO")} kr`;
+const nok = (v: number) => `${nb(v, { decimals: 0 })} kr`; // `nb`: "Change value" in page-patterns.md
 
 <div className="flex flex-col gap-2">
     <p className="text-sm font-medium text-secondary">Sparemål: ny bil</p>

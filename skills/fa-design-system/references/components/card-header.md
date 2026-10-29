@@ -50,10 +50,11 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 | `divider`      | boolean: a `border-secondary` line under it | `true`  |
 | `headingLevel` | `2` · `3`                                   | `2`     |
 | `titleId`      | string: the heading's id                    |         |
+| `className`    | layout only                                 |         |
 
 ## Notes
 
-- The card is the level-2 surface from [layout.md](../layout.md), plus `overflow-hidden` so the
+- The card is the level-2 surface from [page-patterns.md](../page-patterns.md#surfaces), plus `overflow-hidden` so the
   divider meets the border: `overflow-hidden rounded-2xl border border-secondary bg-primary_alt`.
 - Anything that switches the card's content (a view, a source filter, Årlig / Kvartalsvis) is tabs
   in the body, `type="button-minimal"` `size="sm"`, hugging their content (rule

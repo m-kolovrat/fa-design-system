@@ -40,15 +40,16 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 ## Props
 
-| Part                   | Props                                                                                                                            | Default |
-| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------- | :------ |
-| `PinInput` (root)      | `size`: `xxxs` (36px) · `xxs` (40px) · `xs` (44px) · `sm` (64px) · `md` (80px) · `lg` (96px)                                     | `md`    |
-|                        | `disabled`, `invalid`: boolean                                                                                                   |         |
-| `PinInput.Group`       | `maxLength` (default `4`), `pattern`, `value`, `onChange(value: string)`, `onComplete`, `autoFocus`, `autoComplete`, `inputMode` |         |
-| `PinInput.Slot`        | `index` (required)                                                                                                               |         |
-| `PinInput.Label`       | `Label` props (`isRequired`, `tooltip`)                                                                                          |         |
-| `PinInput.Description` | `HintText` props (`isInvalid`, `className` merges with the size class)                                                           |         |
-| `PinInput.Separator`   | none                                                                                                                             |         |
+| Part                   | Props                                                                                                                                                                         | Default |
+| :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
+| `PinInput` (root)      | `size`: `xxxs` (36px) · `xxs` (40px) · `xs` (44px) · `sm` (64px) · `md` (80px) · `lg` (96px)                                                                                  | `md`    |
+|                        | `disabled`, `invalid`: boolean                                                                                                                                                |         |
+| `PinInput.Group`       | `maxLength` (default `4`), `pattern`, `value`, `onChange(value: string)`, `onComplete`, `autoFocus`, `autoComplete`, `inputMode`                                              |         |
+|                        | `width` (the hidden input's `size` attribute), `inputClassName` (classes on the hidden input), `containerClassName` (classes on the row of boxes, merged with the size class) |         |
+| `PinInput.Slot`        | `index` (required)                                                                                                                                                            |         |
+| `PinInput.Label`       | `Label` props (`isRequired`, `tooltip`)                                                                                                                                       |         |
+| `PinInput.Description` | `HintText` props (`isInvalid`, `className` merges with the size class)                                                                                                        |         |
+| `PinInput.Separator`   | none                                                                                                                                                                          |         |
 
 ## Notes
 

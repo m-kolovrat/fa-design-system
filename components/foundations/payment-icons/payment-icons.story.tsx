@@ -119,6 +119,15 @@ const icons = [
 
 export default {
     title: "Foundations/Payment Icons",
+    parameters: {
+        // flags-logos.md covers the payment icons; its full page is on Foundations / Flags.
+        docs: {
+            description: {
+                component:
+                    "Card and wallet icons for payment forms (`PaymentInput`, radio cards). Usage rules: see **Foundations / Flags** (`flags-logos.md`).",
+            },
+        },
+    },
     decorators: [
         (Story: FC) => (
             <div className="flex min-h-screen w-full overflow-auto bg-primary p-8 [.docs-story_&]:min-h-0">

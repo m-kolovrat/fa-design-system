@@ -6,6 +6,30 @@
             "runtimeExecutable": "npm",
             "runtimeArgs": ["run", "storybook"],
             "port": 6006
+        },
+        {
+            "name": "storybook-alt",
+            "runtimeExecutable": "npx",
+            "runtimeArgs": ["storybook", "dev", "-p", "6007", "--no-open"],
+            "port": 6007
+        },
+        {
+            "name": "sandbox",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "sandbox"],
+            "port": 6008
+        },
+        {
+            "name": "sandbox-alt",
+            "runtimeExecutable": "npx",
+            "runtimeArgs": ["storybook", "dev", "-c", ".storybook-sandbox", "-p", "6009", "--no-open"],
+            "port": 6009
+        },
+        {
+            "name": "fa-icons-preview",
+            "runtimeExecutable": "python3",
+            "runtimeArgs": ["-m", "http.server", "4310", "--directory", "../fa-icons/preview"],
+            "port": 4310
         }
     ]
 }

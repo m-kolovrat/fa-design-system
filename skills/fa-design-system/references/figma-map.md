@@ -332,18 +332,18 @@ icon); the other badge exports take only `color="gray"`.
 
 ## Navigation (Finansavisen, Kapital, Motor)
 
-| Figma                                       | Code                                                                                                       |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Header, Fa / Kapital / Motor Header         | `SiteHeader`, `fa-design-system/components/application/site-header/site-header`                            |
-| `Brand=Fa/Kapital/Motor`                    | `brand="fa"` / `"kapital"` / `"motor"`                                                                     |
-| `Type=Desktop/Tablet/Mobile`                | nothing (responsive: mobile below `md`, tablet `md`, desktop `lg`)                                         |
-| `Type=Collapsed`                            | `collapsed`                                                                                                |
-| `Bors Bar=True`                             | `tickerItems={[…]}`                                                                                        |
-| `Log In=True` / `Avatar=True`               | no `user` / `user={{ initials, href }}`                                                                    |
-| Footer, Fa / Kapital / Motor Footer         | `SiteFooter`, `fa-design-system/components/application/site-footer/site-footer`; `brand`, `Type` as Header |
-| Ticker bar, Bors Bar                        | `TickerBar`, `.../site-header/ticker-bar`; use it through `tickerItems`                                    |
-| Menu panel                                  | `SiteMenuPanel`; pass `menu={…}` to `SiteHeader`. `View` is state                                          |
-| \_Header search, \_Header login, \_Nav link | built into `SiteHeader`                                                                                    |
+| Figma                                       | Code                                                                                                                                                                 |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Header, Fa / Kapital / Motor Header         | `SiteHeader`, `fa-design-system/components/application/site-header/site-header`                                                                                      |
+| `Brand=Fa/Kapital/Motor`                    | `brand="fa"` / `"kapital"` / `"motor"`                                                                                                                               |
+| `Type=Desktop/Tablet/Mobile`                | nothing (responsive: mobile below `md`, tablet `md`, desktop `lg`)                                                                                                   |
+| `Type=Collapsed`                            | `collapsed`                                                                                                                                                          |
+| `Bors Bar=True`                             | `tickerItems={[…]}`                                                                                                                                                  |
+| `Log In=True` / `Avatar=True`               | no `user` / `user={{ initials, href }}`                                                                                                                              |
+| Footer, Fa / Kapital / Motor Footer         | `SiteFooter`, `fa-design-system/components/application/site-footer/site-footer`; `brand`, `Type` as Header                                                           |
+| Ticker bar, Bors Bar                        | `TickerBar`, `.../site-header/ticker-bar`; use it through `tickerItems`                                                                                              |
+| Menu panel                                  | `SiteMenuPanel`; `SiteHeader` opens it with the publication's default `menu` (`siteContent[brand]`); `menu={…}` overrides, `menu={null}` removes it. `View` is state |
+| \_Header search, \_Header login, \_Nav link | built into `SiteHeader`                                                                                                                                              |
 
 ## Application navigation
 
@@ -477,19 +477,26 @@ base, \_Date picker menu, \_Modal header, \_Modal footer, \_Prompt modal header,
 actions, \_Carousel arrow, \_Header search, \_Header login, \_Nav link: each is mapped in its
 parent's table above.
 
+## Shared assets and small icons
+
+| Figma                                           | Code                                                                                                     |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| \_Dot (inside Badge, Tag, Select, Button group) | `Dot`, `fa-design-system/components/foundations/dot-icon`; color with `className="text-fg-*"`            |
+| — (no Figma component)                          | `PlayButtonIcon`, `fa-design-system/components/foundations/play-button-icon`                             |
+| — (pattern from another library, no local main) | `BackgroundPattern`, `fa-design-system/components/shared-assets/background-patterns`, `pattern` + `size` |
+| — (no Figma component)                          | `Illustration`, `fa-design-system/components/shared-assets/illustrations`, `type` + `size`               |
+| — (no Figma component)                          | `QRCode` / `GradientScan`, `fa-design-system/components/shared-assets/qr-code`                           |
+| — (no Figma component)                          | `IPhoneMockup`, `fa-design-system/components/shared-assets/iphone-mockup`                                |
+| — (no Figma component)                          | `SectionDivider`, `fa-design-system/components/shared-assets/section-divider`                            |
+
+The "—" rows are code-only (`docs/figma-parity.md` §3): nothing in a Figma frame maps to them, so
+use them only when the brief asks for them, and say so. Pages: `components/dot-icon.md`,
+`components/shared-assets.md`.
+
 ## Not in code
 
-Report these; use the stand-in only where one is given (SKILL.md → Coverage gaps).
-
-- **Avatar group**: `Avatar`s in a `flex -space-x-2` row, `<Avatar initials="+4" />` for the
-  overflow. Parity §2.
-- **Social button groups**: no stand-in; a row of `SocialButton`s is the closest.
-- **Date picker modal**: no stand-in; `DatePicker` / `DateRangePicker` open a popover at every width.
-- **Nav featured cards** (13 types): two exist only as Storybook demos, none exported. Parity §2.
-- **Mac App Store** badge. Parity §2.
-- **Missing From Code pages**: Activity feeds, Calendars (month / week / day views), Code
-  snippets, Command menus, Messaging, Progress steps, Text editors, Video players. No stand-in; ask
-  before building. Parity §2.
+The one list is `docs/figma-parity.md` §2 (shipped with the package); the stand-ins are in
+`SKILL.md` → Coverage gaps. Report anything from that list; build only the stand-ins.
 
 ## Mismatches
 
@@ -510,8 +517,8 @@ Figma options with no code value, and code values Figma lacks. Don't map them yo
   parity §4 and §6.
 - Pagination dot group: `isBrand` on `PaginationDot` has no Figma option
   (`components/application/pagination/pagination-dot.tsx:11`).
-- Table `Dividers=Alternating fills`: no prop; the demos restyle rows with `className`
-  (`components/application/table/table.demo.tsx:172`).
+- Table `Dividers=Alternating fills`: no prop; `odd:bg-secondary` on each `Table.Row` and
+  `className="bg-primary"` on `Table.Header` (rule **table-no-restyle** in [table](components/table.md)).
 - Table cell lead action `Type=Radio/Toggle`: only checkbox selection
   (`components/application/table/table.tsx:151`).
 - Card header `Avatar`, `Dropdown icon`: neither `CardHeader` nor `TableCard.Header` has them; `Divider=False` exists only on `CardHeader`

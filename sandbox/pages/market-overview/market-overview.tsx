@@ -39,7 +39,7 @@ import {
     SwedenSekFlag,
     UnitedStatesUsdFlag,
 } from "fa-icons";
-import type { Key, Selection, SortDescriptor } from "react-aria-components";
+import type { Key as AriaKey, Selection as AriaSelection, SortDescriptor as AriaSortDescriptor } from "react-aria-components";
 import { Area, AreaChart, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import {
     type EarningsCall,
@@ -357,7 +357,7 @@ const IndexChartCard = ({ instrument, isLive, className }: { instrument: MarketI
 
 /** 5. Market list: indices, commodities, FX, crypto, rates. The selected row is the charted instrument. */
 const MarketListCard = ({ selectedId, onSelect, className }: { selectedId: string; onSelect: (id: string) => void; className?: string }) => {
-    const [groups, setGroups] = useState<Selection>(new Set(assetGroups.map((g) => g.id)));
+    const [groups, setGroups] = useState<AriaSelection>(new Set(assetGroups.map((g) => g.id)));
     const visible = marketInstruments.filter((m) => groups === "all" || groups.has(m.group));
     const count = groups === "all" ? assetGroups.length : groups.size;
 
@@ -502,12 +502,11 @@ const NewsCard = ({ className }: { className?: string }) => {
                         ))}
                     </Tabs.List>
                 </div>
-                <Tabs.Panel
-                    id={selected}
-                    className="h-112 overflow-y-auto rounded-sm outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
+                <Tabs.Panel id={selected} className="h-112 overflow-y-auto">
                     {items.length === 0 ? (
-                        <EmptyState icon={Search} title="Ingen nyheter her ennå" description="Det er ingen saker i denne kategorien i dag." className="py-12" />
+                        <div className="py-12">
+                            <EmptyState icon={Search} title="Ingen nyheter her ennå" description="Det er ingen saker i denne kategorien i dag." />
+                        </div>
                     ) : (
                         <ul className="flex flex-col">
                             {items.map((n) => (
@@ -542,7 +541,7 @@ const NewsCard = ({ className }: { className?: string }) => {
 };
 
 /** 8. My watchlist: key figures with a hide-amount toggle, then the holdings table. */
-const WatchlistCard = ({ watchlist, onWatchlistChange, className }: { watchlist: Key; onWatchlistChange: (key: Key) => void; className?: string }) => {
+const WatchlistCard = ({ watchlist, onWatchlistChange, className }: { watchlist: AriaKey; onWatchlistChange: (key: AriaKey) => void; className?: string }) => {
     const [hidden, setHidden] = useState(false);
     const rows = watchlistItems.map((w) => {
         const value = w.quantity === undefined ? undefined : w.quantity * w.last;
@@ -803,7 +802,13 @@ const ReportsCard = ({ className }: { className?: string }) => {
                     meta={`${r.date} • ${r.type}`}
                     trailing={
                         r.hasFile ? (
-                            <Button color="tertiary" size="sm" iconLeading={Download} href="#" aria-label={`Last ned ${r.type.toLowerCase()} fra ${r.name}`} />
+                            <Button
+                                color="tertiary"
+                                size="sm"
+                                iconLeading={Download}
+                                href={`/filer/rapporter/${r.ticker}-${r.id}.pdf`}
+                                aria-label={`Last ned ${r.type.toLowerCase()} fra ${r.name}`}
+                            />
                         ) : undefined
                     }
                 />
@@ -820,10 +825,10 @@ const ReportsCard = ({ className }: { className?: string }) => {
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                     </Tabs.List>
-                    <Tabs.Panel id="latest" className="pt-3">
+                    <Tabs.Panel id="latest" className="mt-3">
                         <ScrollList label="Siste rapporter">{list(reports.latest)}</ScrollList>
                     </Tabs.Panel>
-                    <Tabs.Panel id="upcoming" className="pt-3">
+                    <Tabs.Panel id="upcoming" className="mt-3">
                         <ScrollList label="Kommende rapporter">{list(reports.upcoming)}</ScrollList>
                     </Tabs.Panel>
                 </Tabs>
@@ -864,16 +869,18 @@ const EarningsCallsCard = ({ className }: { className?: string }) => {
                         <Tabs.Item id="upcoming" label="Kommende" />
                         <Tabs.Item id="live" label="Live" />
                     </Tabs.List>
-                    <Tabs.Panel id="latest" className="pt-3">
+                    <Tabs.Panel id="latest" className="mt-3">
                         <ScrollList label="Siste resultatpresentasjoner">{list(earningsCalls.latest)}</ScrollList>
                     </Tabs.Panel>
-                    <Tabs.Panel id="upcoming" className="pt-3">
+                    <Tabs.Panel id="upcoming" className="mt-3">
                         <ScrollList label="Kommende resultatpresentasjoner">{list(earningsCalls.upcoming)}</ScrollList>
                     </Tabs.Panel>
-                    <Tabs.Panel id="live" className="pt-3">
+                    <Tabs.Panel id="live" className="mt-3">
                         <ScrollList label="Direktesendte resultatpresentasjoner">
                             {earningsCalls.live.length === 0 ? (
-                                <EmptyState icon={Calendar} title="Ingen direktesendinger nå" description="Se kommende presentasjoner." className="py-12" />
+                                <div className="py-12">
+                                    <EmptyState icon={Calendar} title="Ingen direktesendinger nå" description="Se kommende presentasjoner." />
+                                </div>
                             ) : (
                                 list(earningsCalls.live)
                             )}
@@ -896,7 +903,7 @@ const PresentationsCard = ({ className }: { className?: string }) => {
                     ticker={p.ticker}
                     title={p.title}
                     meta={p.date}
-                    trailing={<Button color="tertiary" size="sm" iconLeading={Play} href="#" aria-label={`Spill av ${p.title}`} />}
+                    trailing={<Button color="tertiary" size="sm" iconLeading={Play} href={`/tv/presentasjoner/${p.id}`} aria-label={`Spill av ${p.title}`} />}
                 />
             ))}
         </ul>
@@ -911,18 +918,19 @@ const PresentationsCard = ({ className }: { className?: string }) => {
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                     </Tabs.List>
-                    <Tabs.Panel id="latest" className="pt-3">
+                    <Tabs.Panel id="latest" className="mt-3">
                         <ScrollList label="Siste kvartalspresentasjoner">{list(presentations.latest)}</ScrollList>
                     </Tabs.Panel>
-                    <Tabs.Panel id="upcoming" className="pt-3">
+                    <Tabs.Panel id="upcoming" className="mt-3">
                         <ScrollList label="Kommende kvartalspresentasjoner">
                             {presentations.upcoming.length === 0 ? (
-                                <EmptyState
-                                    icon={Calendar}
-                                    title="Ingen kommende presentasjoner"
-                                    description="Nye presentasjoner vises her når selskapene har satt en dato."
-                                    className="py-12"
-                                />
+                                <div className="py-12">
+                                    <EmptyState
+                                        icon={Calendar}
+                                        title="Ingen kommende presentasjoner"
+                                        description="Nye presentasjoner vises her når selskapene har satt en dato."
+                                    />
+                                </div>
                             ) : (
                                 list(presentations.upcoming)
                             )}
@@ -936,7 +944,7 @@ const PresentationsCard = ({ className }: { className?: string }) => {
 
 /** 19. Sectors, sortable, % descending by default. */
 const SectorsCard = ({ className }: { className?: string }) => {
-    const [sort, setSort] = useState<SortDescriptor>({ column: "change", direction: "descending" });
+    const [sort, setSort] = useState<AriaSortDescriptor>({ column: "change", direction: "descending" });
     const rows = useMemo(
         () =>
             [...sectors].sort((a, b) => {
@@ -1016,7 +1024,13 @@ const CalendarCard = ({ className }: { className?: string }) => (
                         <Table.Cell className={numCell}>
                             {r.hasFile ? (
                                 <span className="inline-flex">
-                                    <ButtonUtility icon={Download} size="sm" color="tertiary" tooltip={`Last ned rapport fra ${r.name}`} href="#" />
+                                    <ButtonUtility
+                                        icon={Download}
+                                        size="sm"
+                                        color="tertiary"
+                                        tooltip={`Last ned rapport fra ${r.name}`}
+                                        href={`/filer/rapporter/${r.ticker}-${r.id}.pdf`}
+                                    />
                                 </span>
                             ) : (
                                 "–"
@@ -1047,9 +1061,9 @@ const span = {
 /** Børs: the market overview page (Finansavisen). */
 export const MarketOverviewPage = () => {
     const [isLive, setIsLive] = useState(false);
-    const [market, setMarket] = useState<Set<Key>>(new Set(["no"]));
+    const [market, setMarket] = useState<Set<AriaKey>>(new Set(["no"]));
     const [instrumentId, setInstrumentId] = useState("OSEBX");
-    const [watchlist, setWatchlist] = useState<Key>("hoved");
+    const [watchlist, setWatchlist] = useState<AriaKey>("hoved");
 
     const marketLabel = markets.find((m) => market.has(m.id))?.label ?? "Norge";
     const instrument = marketInstruments.find((m) => m.id === instrumentId) ?? marketInstruments[0];

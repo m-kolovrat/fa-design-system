@@ -22,31 +22,45 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 - Dark mode is the `.dark-mode` class on `<html>` or a root element. Every semantic token switches
   on its own.
 - The publication is the `brand` prop on `SiteHeader` / `SiteFooter` (`"fa" | "kapital" | "motor"`).
+  Both carry the publication's navigation, Meny panel and footer content by default
+  (`siteContent[brand]`); pass those props only to override them.
+- **Code is the source of truth.** The library, its tokens and this skill define the system; Figma
+  is where changes are designed. When a frame you were given and the library disagree, build what
+  the library has and report the difference (it belongs in `docs/figma-parity.md`).
   Everything else is shared.
 - Import paths below are the package paths (`fa-design-system/components/...`). Inside the library
-  repo itself (its demos and stories), the same files are imported as `@/components/...`.
+  repo itself (its demos and stories), the same files are imported through its `@/` alias.
+- Add the system's ESLint preset to the app so the rules below fail the build instead of a review:
+
+    ```js
+    // eslint.config.mjs
+    import { faDesignSystem } from "fa-design-system/eslint";
+
+    export default [...yourParserAndPluginSetup, ...faDesignSystem];
+    ```
+
+    It uses core rules only; every message starts with the rule id it enforces.
+
 - Mentions of `docs/figma-parity.md`, `docs/overrides.md`, `docs/icons.md`, `TOKENS.md` and `CLAUDE.md` refer to
   files in the library repo. In an app they're under `node_modules/fa-design-system/`; open them
   only when a reference page sends you there.
 
 ## Steps
 
-1. **Plan before you write code.** Read [references/page-patterns.md](references/page-patterns.md)
-   and pick the page shell that fits. Then write the plan into your reply: each section of the
-   page, top to bottom, and the component (from the [index](#component-index)) or stand-in (from
-   [Coverage gaps](#coverage-gaps)) that covers it. For a Figma frame, map each layer with
-   [references/figma-map.md](references/figma-map.md). For a reference product, name what each of
-   its parts becomes here; take its structure, not its look. Anything with no match goes into the
-   plan as "not in the system" before you build it.
-2. Lay the page out with the surfaces, card grid and text pairings in
-   [references/layout.md](references/layout.md).
-3. **Open each component's reference page before using it**: it says when to use it, which props,
+1. **Plan before you write code.** Read [references/page-patterns.md](references/page-patterns.md):
+   pick the page shell, lay the page out with its surfaces, grid and text pairings, then write the
+   plan into your reply: each section of the page, top to bottom, and the component (from the
+   [index](#component-index)) or stand-in (from [Coverage gaps](#coverage-gaps)) that covers it.
+   For a Figma frame, map each layer with [references/figma-map.md](references/figma-map.md). For
+   a reference product, name what each of its parts becomes here; take its structure, not its
+   look. Anything with no match goes into the plan as "not in the system" before you build it.
+2. **Open each component's reference page before using it**: it says when to use it, which props,
    sizes and colors exist, and that component's rules.
-4. Build only from those components and the tokens in [references/tokens.md](references/tokens.md).
+3. Build only from those components and the tokens in [references/tokens.md](references/tokens.md).
    Something the plan marked "not in the system" is composed from existing components and tokens;
    tell the person what you built and that it has no Figma frame yet. Never invent a token, size or
    variant.
-5. Before handing over, go through the rules below, look at the result at mobile and desktop width
+4. Before handing over, go through the rules below, look at the result at mobile and desktop width
    in both themes, and run the project's checks (`npm test` in the library repo). In your reply,
    list anything you couldn't resolve, such as a missing component or a rule you had to bend.
 
@@ -67,31 +81,18 @@ decides which way it goes. Write "No new patterns or clashes" when there are non
 
 ## Changing a component
 
-When a component doesn't do what the screen needs, take the lightest option that works, in this
-order, and say in your reply which one you used:
-
-1. **Props and layout classes.** Use the component's props; `className` only for layout (width,
-   margins, placement, grid spans), never for color, size or radius.
-2. **Wrap it** in an app component for app-specific behavior or content, keeping the library
-   component inside unchanged.
-3. **Ask for a variant.** A missing size, color or state goes to the design system owner: it's
-   designed in Figma, added to the library and shipped in the next version. Use the closest
-   existing variant until then and say so.
-4. **Patch it temporarily** with `patch-package` for an urgent bug fix, and report the bug so the
-   patch can be removed after the next release.
-5. **Try a branch.** Point the dependency at a branch or tag of the library
-   (`github:m-kolovrat/fa-design-system#fix-table`) to test a change before it's released.
-6. **Eject it** only when the app really needs its own version: copy the source from
-   `node_modules/fa-design-system/components/<path>.tsx` into the app, change its `@/…` imports to
-   `fa-design-system/…`, and import the copy instead. The app then owns that file and stops getting
-   its updates. Ejecting always needs the person's go-ahead, and it's reported as a clash.
+When a component doesn't do what the screen needs, take the lightest option that works, in the order
+given in [references/changing-a-component.md](references/changing-a-component.md): props and
+layout classes, a wrapper, a variant request, a temporary patch, a branch, and only with the
+person's go-ahead an eject. Say in your reply which one you used.
 
 ## Priority order
 
 When two rules pull in different directions, settle it with these questions, in order:
 
 1. Can everyone use it: keyboard, screen reader, contrast?
-2. Does it match Figma: the component's own variants and the frame you were given?
+2. Does it match the library: the component's own props and variants (code is the source of
+   truth), and then the frame you were given?
 3. Does it stay inside the system: library components, semantic tokens, the scales?
 4. Anything else.
 
@@ -113,8 +114,9 @@ specific one; follow it.
       `<div onClick={open} className="cursor-pointer rounded-md border px-3 py-2">Velg</div>`
 2. **fa-no-invented-variants** NEVER Add a size, color, variant or token that the component or
    `theme.css` doesn't have, and never change a component's fill, border, text color, radius or
-   size through `className` to fake one. Report the gap instead. Because Figma is the source; a
-   variant that exists only in code drifts from design, and a restyle is an untracked override.
+   size through `className` to fake one. Report the gap instead. Because the library owner decides
+   variants: one added at a call site is invisible to the system and drifts from the design, and a
+   restyle is an untracked override.
     - Wrong: `<Button className="bg-success-solid">Kjøp</Button>`, `<Badge className="bg-blue-100 text-blue-700">Ny</Badge>`
 3. **fa-state-props** MUST Express states with the component's props (`isDisabled`, `isLoading`,
    `isInvalid`, `isSelected`), never with classes. Because each component maps states to the Figma
@@ -125,9 +127,12 @@ specific one; follow it.
    `{open && …}`. Because React Aria plays the closing animation and returns focus to the trigger
    only while the component is still in the tree.
 5. **fa-links** MUST Use `Button` with `href` and `color="link-color"` / `"link-gray"` for
-   standalone action links ("Se alle", "Les mer"). Plain links inside running text stay `<a>` and
-   follow the `prose` styles. Because there is no separate Link component, and a hand-styled link
-   misses the focus ring and hover token.
+   standalone action links ("Se alle", "Les mer"). A name, headline or ticker that opens its own
+   page is a plain `<a>` carrying the focus ring (`rounded-xs outline-focus-ring transition
+focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:underline` on a
+   headline, `hover:text-brand-secondary` in a table cell, see `table-cell-links`), never a link
+   `Button`. Plain links inside running text stay `<a>` and follow the `prose` styles. Because
+   there is no separate Link component, and a hand-styled link misses the focus ring and hover token.
 6. **fa-brand-via-prop** MUST Change publication looks only through `brand` and the existing brand
    config (`siteBrands`). Never restyle a component per brand at the call site. Because overrides
    live in exactly one place (see `docs/overrides.md`).
@@ -162,8 +167,10 @@ specific one; follow it.
 
 11. **fa-icons-only** MUST Take icons from `fa-icons` (file-type icons from
     `@untitledui/file-icons`); no emoji as icons. Pass a component reference to `icon` props, or a
-    JSX element with `data-icon`. Size with `size-4` / `size-5` / `size-6`, color with `text-fg-*`,
-    never `stroke-*`. Because the set is built from Figma, and the stroke scales with the size.
+    JSX element with `data-icon`. Size with `size-4` / `size-5` / `size-6`, color with `text-fg-*`;
+    never a stroke width (`stroke-1`, `stroke-2`) on an icon. Recharts series and cursors are the
+    exception: they take `stroke-utility-*` as `charts.md` says. Because the set is built from
+    Figma, and the stroke scales with the size.
     - Correct: `<Button iconLeading={Plus}>Legg til</Button>`, `<Bell className="size-5 text-fg-quaternary" />`
     - Wrong: `import { Bell } from "lucide-react";`
     - The `flag` icon is exported as `FlagIcon`; `Flag` is the country flag component. Rename an
@@ -175,8 +182,8 @@ specific one; follow it.
     lock marking a Pluss article, a warning next to a figure); `fa-icons` then exposes it as an
     image. Because a screen reader skips every unnamed icon, so meaning that lives only in an icon,
     or only in a color, is lost.
-    - Correct: `<ButtonUtility icon={Edit} tooltip="Rediger" />`, `<Lock aria-label="Pluss-artikkel" />`
-    - Wrong: `<Button iconLeading={<Edit data-icon aria-label="Rediger" />} />` (the button still has
+    - Correct: `<ButtonUtility icon={Pen} tooltip="Rediger" />`, `<Lock aria-label="Pluss-artikkel" />`
+    - Wrong: `<Button iconLeading={<Pen data-icon aria-label="Rediger" />} />` (the button still has
       no name)
     - Color alone isn't a name: a green or red change value is fine because its sign says the same;
       a status dot with no text needs text next to it.
@@ -193,8 +200,8 @@ specific one; follow it.
 ### Content
 
 15. **fa-real-content** MUST Write content the way Finansavisen would: Norwegian headlines and
-    labels, Oslo Børs companies and tickers, NOK with Norwegian formatting (`1 234,50 kr`,
-    `+2,4 %`), dates near today. Never Lorem ipsum, "John Doe", "Company Inc." or `$1,234.56`. When
+    labels, Oslo Børs companies and tickers, NOK with Norwegian formatting (`1.234,50 kr`,
+    `+2,4%`), dates near today. Never Lorem ipsum, "John Doe", "Company Inc." or `$1,234.56`. When
     the screen depends on a real number you don't have (a share price, a subscription price), use a
     plausible value and say in your reply that it needs replacing. Because Finansavisen content is
     long Norwegian headlines, company names and figures; short English placeholders hide wrapping
@@ -211,11 +218,13 @@ specific one; follow it.
 ### Layout and files
 
 18. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
-    [references/layout.md](references/layout.md), which owns the layout rules. Flexible for now;
-    report where a design differs.
-19. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix.
-    Because it keeps library components and the primitives they wrap apart.
-    - Correct: `import { Button as AriaButton } from "react-aria-components";`
+    [references/page-patterns.md](references/page-patterns.md), which owns the layout rules.
+    Flexible for now; report where a design differs.
+19. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix,
+    types included. Because it keeps library components and the primitives they wrap apart.
+    - Correct: `import { Button as AriaButton } from "react-aria-components";`,
+      `import type { SortDescriptor as AriaSortDescriptor } from "react-aria-components";`
+    - Wrong: `import type { Key, SortDescriptor } from "react-aria-components";`
 20. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
 
 ## Choosing between similar components
@@ -241,9 +250,10 @@ own; use the stand-in and say so.
 
 - Avatar group: `Avatar`s in a `flex -space-x-2` row, with `<Avatar initials="+4" />` for the
   overflow (not `AvatarCount`, which is a notification bubble).
-- Progress steps, command bar, activity feed, messaging, calendar views, code snippet, text
-  editor, video player: no stand-in. Ask before building.
-- Finansavisen patterns with no component yet: filter chip, change value (`+1,65 %`),
+- Everything else in `docs/figma-parity.md` §2 (progress steps, command bar, activity feed,
+  messaging, calendar views, code snippet, text editor, video player, date picker modal, social
+  button groups, nav featured cards, Mac App Store badge): no stand-in. Ask before building.
+- Finansavisen patterns with no component yet: filter chip, change value (`+1,65%`),
   live indicator, news feed item, article teaser and header, key-figure row, logo
   stack, follow chips, AI prompt chips, paywall box.
   [references/page-patterns.md](references/page-patterns.md) gives the stand-in for each. Compose
@@ -320,6 +330,12 @@ Each entry links to its reference page. Open it before using the component.
   `fa-design-system/components/application/carousel/carousel-base`
 - [Flags and logos](references/components/flags-logos.md): `Flag`, publication logos from
   `fa-icons`.
+- [Dot and play button](references/components/dot-icon.md): `Dot` for the dot slots of badge,
+  tag, select and button group; `PlayButtonIcon` over a video poster.
+  `fa-design-system/components/foundations/dot-icon`
+- [Shared assets](references/components/shared-assets.md): marketing and onboarding decoration
+  (`BackgroundPattern`, `Illustration`, `QRCode`, `IPhoneMockup`, `SectionDivider`); not for data
+  pages. `fa-design-system/components/shared-assets/*`
 
 ### Feedback
 

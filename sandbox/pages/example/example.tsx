@@ -48,7 +48,7 @@ export const ExamplePage = () => {
                         <CardHeader
                             titleId="winners"
                             title="Vinnere"
-                            actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="#" aria-label="Se alle vinnere" />}
+                            actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="/bors/vinnere" aria-label="Se alle vinnere" />}
                         />
                         <ul className={cx(cardBody, "flex flex-col")}>
                             {winners.map((s) => (

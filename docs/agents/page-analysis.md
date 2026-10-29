@@ -110,7 +110,7 @@ round logos and avatars.
 ## 5. What this means for the provisional rules
 
 The `anti-*` rules below were in `anti-patterns.md`, since folded into `SKILL.md`: nested cards is
-`layout-one-card-level` in `layout.md`, emoji and hype are `fa-plain-copy`, scroll reveal is part of
+`layout-one-card-level` in `page-patterns.md`, emoji and hype are `fa-plain-copy`, scroll reveal is part of
 `fa-no-invented-effects`.
 
 | Rule                 | Evidence                                                                              | Decision                                                                                     |

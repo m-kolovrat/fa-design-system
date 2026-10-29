@@ -24,7 +24,7 @@ import { NativeSelect } from "fa-design-system/components/base/select/select-nat
 import { FeaturedIcon } from "fa-design-system/components/foundations/featured-icon/featured-icon";
 import { cx } from "fa-design-system/utils/cx";
 import { Calendar, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Download, Users } from "fa-icons";
-import type { Selection, SortDescriptor } from "react-aria-components";
+import type { Selection as AriaSelection, SortDescriptor as AriaSortDescriptor } from "react-aria-components";
 import { Button as AriaButton, I18nProvider as AriaI18nProvider } from "react-aria-components";
 import { LATEST_DATA_RECEIVED, LATEST_TRADE_DATE, type Trade, instruments, investors, trades } from "./data";
 
@@ -194,12 +194,12 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
     const [searchOpen, setSearchOpen] = useState(false);
     const [methodOpen, setMethodOpen] = useState(false);
 
-    const [stockKeys, setStockKeys] = useState<Selection>(new Set());
-    const [investorKeys, setInvestorKeys] = useState<Selection>(new Set());
+    const [stockKeys, setStockKeys] = useState<AriaSelection>(new Set());
+    const [investorKeys, setInvestorKeys] = useState<AriaSelection>(new Set());
     const [period, setPeriod] = useState<Period | null>("1D");
     const [range, setRange] = useState<Range>(rangeFor("1D"));
     const [draft, setDraft] = useState<Range>(range);
-    const [sort, setSort] = useState<SortDescriptor>({ column: "value", direction: "descending" });
+    const [sort, setSort] = useState<AriaSortDescriptor>({ column: "value", direction: "descending" });
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(100);
     const [selected, setSelected] = useState<Trade | null>(null);
@@ -250,17 +250,18 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
     const investorItems: SelectItemType[] = investors.map((i) => ({ id: i.id, label: i.name }));
 
     const empty = (
-        <EmptyState
-            icon={Calendar}
-            title="Ingen handler i perioden"
-            description="Aksjonærregisteret oppdateres bare på handelsdager. Velg en lengre periode eller fjern filtrene."
-            primaryAction={
-                <Button size="md" onPress={() => applyRange(rangeFor("1M"), "1M")}>
-                    Vis siste måned
-                </Button>
-            }
-            className="py-12"
-        />
+        <div className="py-12">
+            <EmptyState
+                icon={Calendar}
+                title="Ingen handler i perioden"
+                description="Aksjonærregisteret oppdateres bare på handelsdager. Velg en lengre periode eller fjern filtrene."
+                primaryAction={
+                    <Button size="md" onPress={() => applyRange(rangeFor("1M"), "1M")}>
+                        Vis siste måned
+                    </Button>
+                }
+            />
+        </div>
     );
 
     return (
@@ -351,7 +352,7 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                             </Button>
                         </div>
 
-                        <Tabs.Panel id={currentTab} className="pt-6">
+                        <Tabs.Panel id={currentTab} className="mt-6">
                             <section
                                 aria-label="Siste handler"
                                 aria-busy={isLoading}

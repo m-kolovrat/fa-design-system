@@ -7,7 +7,7 @@ props. Figma: Input date, Input number, Input file, Input tags outer (Input fiel
 import { InputDate } from "fa-design-system/components/base/input/input-date";
 import { InputFile } from "fa-design-system/components/base/input/input-file";
 import { InputNumber } from "fa-design-system/components/base/input/input-number";
-import { PaymentInput } from "fa-design-system/components/base/input/input-payment";
+import { PaymentInput, formatCardNumber } from "fa-design-system/components/base/input/input-payment";
 import { InputTags } from "fa-design-system/components/base/input/input-tags";
 import { InputTagsOuter } from "fa-design-system/components/base/input/input-tags-outer";
 ```
@@ -55,7 +55,10 @@ Shared: `size` (`sm` · `md` · `lg`), `label`, `hint`, `isRequired`, `hideRequi
 | `InputNumber`                  | `value` / `defaultValue` / `onChange` (number), `minValue`, `maxValue`, `step`, `formatOptions`, `orientation` (`vertical` · `horizontal`), `placeholder` |
 | `InputFile`                    | `acceptedFileTypes` (string[]), `allowsMultiple`, `isLoading`, `onChange(files: FileList \| null)`, `buttonText`, `placeholder`                           |
 | `InputTags` / `InputTagsOuter` | `value` / `defaultValue` / `onChange` (string[]), `onTagAdded`, `onTagRemoved`, `validate`, `maxTags`, `allowDuplicates`, `placeholder`, `tooltip`        |
-| `PaymentInput`                 | `Input` props; `onChange(digits: string)`                                                                                                                 |
+| `PaymentInput`                 | `Input` props; `onChange(digits: string)`, `maxLength` (the longest value including the spaces, default `19`)                                             |
+
+`formatCardNumber(digits)` is the exported helper `PaymentInput` uses: it strips non-digits and
+groups the rest in fours ("1234 5678 9012 3456"), for showing a stored card number the same way.
 
 ## Accessibility
 
@@ -96,5 +99,5 @@ Shared: `size` (`sm` · `md` · `lg`), `label`, `hint`, `isRequired`, `hideRequi
 
 ## See also
 
-Storybook: Base components / Inputs / Variants. Related: [input](input.md), [date-picker](date-picker.md),
+Storybook: Base components / Inputs. Related: [input](input.md), [date-picker](date-picker.md),
 [file-upload](file-upload.md), [tags](tags.md).

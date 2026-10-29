@@ -1162,7 +1162,9 @@ const PresentationsCard = () => (
     <Card id="card-presentations" className="lg:col-span-2">
         <CardHeader titleId="card-presentations" title="Kvartalspresentasjoner" />
         <div className={cx(cardBody, "flex flex-1 items-center justify-center")}>
-            <EmptyState icon={Tv} title="Ingen presentasjoner" description="Norwegian har ingen kvartalspresentasjoner på video ennå." className="py-8" />
+            <div className="py-8">
+                <EmptyState icon={Tv} title="Ingen presentasjoner" description="Norwegian har ingen kvartalspresentasjoner på video ennå." />
+            </div>
         </div>
     </Card>
 );
@@ -1260,7 +1262,7 @@ export const StockPage = () => {
 
                 <Tabs selectedKey={stockTabs[0].id}>
                     <StockTabs />
-                    <Tabs.Panel id={stockTabs[0].id} className="pt-6">
+                    <Tabs.Panel id={stockTabs[0].id} className="mt-6">
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
                             <NewsCard />
                             <ConsensusCard />

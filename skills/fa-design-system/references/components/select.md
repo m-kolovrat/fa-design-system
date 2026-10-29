@@ -27,7 +27,7 @@ import { TagSelect } from "fa-design-system/components/base/select/tag-select";
 - **select-item-text** MUST Give each `Select.Item` its text as a string child or `label`. Because
   the trigger shows the selected item's label; JSX children leave it blank.
 - **select-value-api** SHOULD Control `Select` / `Select.ComboBox` with `value` + `onChange` (a
-  `Key`). `selectedKey` / `onSelectionChange` still work but are deprecated in React Aria.
+  `AriaKey`). `selectedKey` / `onSelectionChange` still work but are deprecated in React Aria.
 - **select-placeholder** MUST Pass a Norwegian `placeholder` ("Velg fylke", "Søk etter selskap").
   Because the defaults are English ("Select", "Search").
 - **select-multiple** MUST Use `MultiSelect` or `TagSelect` for several values, never
@@ -51,13 +51,26 @@ Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 3
 
 - `Select`: `icon` (leading), `value` / `defaultValue` / `onChange`, `name`.
 - `Select.ComboBox`: `icon`, `shortcut` (shows "⌘K", default `true`; set `false` unless bound),
-  `onInputChange`, `value` / `onChange`.
-- `MultiSelect`: `selectedKeys`, `onSelectionChange`, `showSearch` (`true`), `showFooter`
-  (`true`), `onReset`, `onSelectAll`, `selectedCountFormatter`, `supportingText`,
-  `emptyStateTitle`, `emptyStateDescription`. Items: `MultiSelect.Item`.
+  `shortcutClassName` (classes on the shortcut hint), `onInputChange`, `value` / `onChange`.
+- `MultiSelect`: `selectedKeys` / `defaultSelectedKeys` (`AriaSelection`, i.e. `Selection` from `react-aria-components`), `onSelectionChange`,
+  `showSearch` (`true`), `showFooter` (`true`), `onReset`, `onSelectAll`, `selectedCountFormatter`,
+  `supportingText`, `emptyStateTitle` (default "No results found"), `emptyStateDescription`
+  (default "Please try a different search term."), `className` (root). Items: `MultiSelect.Item`.
 - `TagSelect`: `selectedItems` (`ListData`, required), `onItemInserted`, `onItemCleared`,
-  `valueFormatter`, `icon`, `shortcut` (off by default). Items: `TagSelect.Item`.
-- `NativeSelect`: `options` (`{ label, value }[]`), `label`, `hint`, `size`, plus `<select>` props.
+  `valueFormatter`, `icon`, `shortcut` (off by default), `shortcutClassName`. Items:
+  `TagSelect.Item`.
+- `NativeSelect`: `options` (`{ label, value, disabled? }[]`, required), `label`, `hint`, `size`,
+  `selectClassName` (classes on the `<select>` itself), plus `<select>` props.
+
+`MultiSelect` statics, rendered by `MultiSelect` itself and exported for composing your own popover:
+
+- `MultiSelect.Footer`: `onReset`, `onSelectAll`, `size` (`sm` · `md` · `lg`, default `sm`; every
+  size renders `sm` buttons), `className`. Its button labels "Reset" and "Select all" are fixed
+  English with no prop; use `showFooter={false}` when that isn't acceptable.
+- `MultiSelect.EmptyState`: `title` (default "No results found"), `description` (default "Please
+  try a different search term."), `onClearSearch` (shows a "Clear search" link button, fixed
+  English, only when passed), `className`. Inside `MultiSelect`, set the texts through
+  `emptyStateTitle` / `emptyStateDescription`.
 
 `SelectItemType` / item props: `id`, `label`, `supportingText`, `icon`, `avatarUrl`,
 `isDisabled`; items also take `selectionIndicator` (`checkmark` · `checkbox` · `none`, default
@@ -79,7 +92,7 @@ const fylker: SelectItemType[] = [
     { id: "vestland", label: "Vestland" },
     { id: "trondelag", label: "Trøndelag" },
 ];
-const [fylke, setFylke] = useState<Key | null>(null); // Key from "react-aria-components"
+const [fylke, setFylke] = useState<AriaKey | null>(null); // import type { Key as AriaKey } from "react-aria-components"
 
 <Select label="Fylke" placeholder="Velg fylke" items={fylker} value={fylke} onChange={setFylke}>
     {(item) => <Select.Item id={item.id}>{item.label}</Select.Item>}

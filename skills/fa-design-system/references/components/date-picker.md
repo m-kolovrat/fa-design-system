@@ -68,6 +68,11 @@ their calendar; today always gets a dot as well. The picker's calendar takes no 
   above the calendar instead, and between `md` and `lg` no presets.
 - `Calendar` shows days outside the month greyed out; `RangeCalendar` hides them unless
   `showOutOfRangeDates`.
+- `range-calendar` also exports `RangePresetButton` (`value: { start, end }`, children as the
+  label, button attributes): a preset that selects its range and shows as selected while the
+  calendar's value matches; `DateRangePicker`'s desktop preset column is made of them. And
+  `RangeCalendarContextProvider`: wrap it around a `RangeCalendar` and your own `RangePresetButton`s
+  so they share the selection (`RangeCalendar` wraps itself in one when none is above it).
 
 Standalone calendars:
 

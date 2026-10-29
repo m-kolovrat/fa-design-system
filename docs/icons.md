@@ -1,7 +1,7 @@
 # Adding or updating icons, flags and logos
 
-Figma is the source, the [`fa-icons`](https://github.com/m-kolovrat/fa-icons) repo builds the
-package, and this repo only installs it. Never add an SVG or icon component here, and don't pull in
+Icons are designed in Figma, the [`fa-icons`](https://github.com/m-kolovrat/fa-icons) repo builds
+the package, and this repo only installs it; the package is what the system uses. Never add an SVG or icon component here, and don't pull in
 another icon library: an icon `fa-icons` doesn't have is designed in Figma first. File type icons
 come from `@untitledui/file-icons`.
 
