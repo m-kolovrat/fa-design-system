@@ -66,9 +66,9 @@ plain page content.
 
 ### Data table
 
-`Table` (or `TableCard`) with: header labels `text-xs font-medium uppercase tracking-wide
-text-quaternary`, cells `text-sm`, numbers right-aligned with `tabular-nums`, sortable headers
-(`allowsSorting`). Show each instrument as one cell: see "Instrument cell".
+`Table` (or `TableCard`) with: the header labels `Table.Head` renders (`text-xs font-semibold
+text-quaternary`, sentence case; don't restyle them), cells `text-sm`, numbers right-aligned with
+`tabular-nums`, sortable headers (`allowsSorting`). Show each instrument as one cell: see "Instrument cell".
 
 From `md` up, show every column with no sideways scroll. Below `md`, the table becomes a list: see
 "Data table on mobile".
@@ -77,7 +77,8 @@ From `md` up, show every column with no sideways scroll. Below `md`, the table b
 
 Below `md`, the table becomes a list: each row shows only the key information, and tapping it opens
 a sheet with the rest. Example: a Bjellesauer trade shows the investor and the company on the left,
-the trade value and the change in shares on the right; the sheet shows the full transaction.
+the trade value and the change in shares on the right; the sheet shows the full transaction. The
+sheet is `Modal mobile="sheet"`: a bottom sheet below `sm`, a centered dialog between `sm` and `md`.
 
 - **Row, left:** what the row is about. Two columns may share it, one over the other (investor over
   company): the main one in `text-sm text-primary`, the second in `text-sm text-tertiary`.
@@ -166,25 +167,33 @@ Uppercase ticker, brand pill. Always a link to the stock page when it's interact
 
 ### Change value — no component yet
 
-A signed number colored by direction: the relative change alone (`+0,42 %`), or the absolute
-change followed by the relative one in brackets (`+0,03 (+0,42 %)`). Always a colored `span`, never
+A signed number colored by direction: the relative change alone (`+0,42%`), or the absolute
+change followed by the relative one in brackets (`+0,03 (+0,42%)`). Always a colored `span`, never
 a `Badge` or `BadgeWithIcon`.
 
 ```tsx
-const nb = (v: number, options: Intl.NumberFormatOptions = {}) =>
-    new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: "exceptZero", ...options }).format(v);
+/** Norwegian number: a dot between thousands, a comma before decimals. `sign` adds + or - (for changes). */
+const nb = (v: number, { decimals = 2, sign = false }: { decimals?: number; sign?: boolean } = {}) => {
+    const rounded = Number(v.toFixed(decimals));
+    const [int, frac] = Math.abs(rounded).toFixed(decimals).split(".");
+    const prefix = rounded < 0 ? "-" : sign && rounded > 0 ? "+" : "";
+    return `${prefix}${int.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}${frac ? `,${frac}` : ""}`;
+};
 
-/** `percent` in percent (0.42 for +0,42 %), `value` in the instrument's currency. */
+/** `percent` in percent (0.42 for +0,42%), `value` in the instrument's currency. */
 const Change = ({ percent, value }: { percent: number; value?: number }) => (
     <span className={cx("tabular-nums", percent > 0 && "text-success-primary", percent < 0 && "text-error-primary", percent === 0 && "text-tertiary")}>
-        {value === undefined ? nb(percent / 100, { style: "percent" }) : `${nb(value)} (${nb(percent / 100, { style: "percent" })})`}
+        {value === undefined ? `${nb(percent, { sign: true })}%` : `${nb(value, { sign: true })} (${nb(percent, { sign: true })}%)`}
     </span>
 );
 ```
 
-- Format with `nb-NO` as everywhere else: comma decimals, a space as thousands separator, a real
-  minus sign (`−`), a space before `%`, and two decimals. The output is `+0,03 (+0,42 %)`,
-  `−1 234,50 (−2,10 %)`, `0,00 %`.
+- Norwegian number format, wherever a figure shows: a dot between thousands, a comma before
+  decimals, a hyphen for minus, no space before `%`, and a plus on every positive change. Decimals
+  follow the figure (prices and percentages usually 2, share counts 0, rates up to 4). The output
+  is `+0,03 (+0,42%)`, `-1.234,50 (-2,10%)`, `0,00%`. Use `nb` for prices and counts too
+  (`nb(1234.5)` → `1.234,50`, `nb(60278, { decimals: 0 })` → `60.278`); never `toLocaleString` or
+  `Intl.NumberFormat` for numbers, which put a space between thousands.
 - Color follows the sign: green up, red down, `text-tertiary` for 0. The sign is always shown, so
   the color is never the only signal.
 - Never color by hand with green/red palette classes; never drop the sign.
@@ -222,7 +231,7 @@ The instrument cell (logo, name over ticker or a meta line), plus a trailing act
 ### Key figures — no component yet
 
 Label above a large figure, several side by side in one card (Watchlist: Porteføljeverdi,
-Gevinst/tap i dag, …). Label `text-xs text-tertiary`, figure `text-display-xs font-semibold`, the
+Gevinst/tap i dag, …). Label `text-xs font-medium text-tertiary`, figure `text-display-xs font-semibold`, the
 change under it as a change value.
 
 ### Article teaser — no component yet
@@ -231,6 +240,8 @@ Image, kicker ("Oppgang på Oslo Børs:"), bold headline, optional label pill ("
 "Børsoppdatering", "Pluss"), and a save button (`ButtonUtility icon={Plus}`). Some teasers sit on a
 solid brand or dark fill with `text-primary_on-brand` headlines. Opinion teasers use a serif italic
 headline, which has **no token yet**: report it rather than adding a font.
+The headline is a plain `<a>` with the focus ring and `hover:underline` (rule `fa-links`); the save
+button is the only `Button` in a teaser.
 
 ### Article header — no component yet
 
@@ -248,7 +259,7 @@ Running text in the `prose` class, about 690 px wide on the live site. The live 
 font-bold`; quotes as bold body text; captions `text-sm text-tertiary` with the credit ("FOTO: …").
 After the body, in this order: a "Legg til MittFa" follow card, related widgets (for example the
 forum threads for the company), the AI-use note, and the comments section. Those boxes are insets
-(`rounded-2xl bg-tertiary p-4`) on the white reading page.
+(`rounded-xl bg-tertiary p-3`, the inset from `layout.md`) on the white reading page.
 
 ### Follow chips — no component yet
 

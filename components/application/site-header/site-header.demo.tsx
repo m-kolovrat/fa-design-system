@@ -7,10 +7,10 @@ import type { SiteMenuContent } from "./site-menu-panel";
 import type { TickerItem } from "./ticker-bar";
 
 export const tickerItems: TickerItem[] = [
-    { label: "Oslo Børs", value: "1.193,30", change: "11,69%", direction: "up", href: "/ticker/OSEBX" },
-    { label: "Brent spot", value: "96,09", change: "2,98%", direction: "up", href: "/ticker/Brent%20Spot%3DF" },
-    { label: "Dollar", value: "10,51", change: "1,27%", direction: "up", href: "/ticker/USDNOK" },
-    { label: "Euro", value: "11,64", change: "0,46%", direction: "up", href: "/ticker/EURNOK" },
+    { label: "Oslo Børs", value: "1.193,30", change: "+11,69%", direction: "up", href: "/ticker/OSEBX" },
+    { label: "Brent spot", value: "96,09", change: "+2,98%", direction: "up", href: "/ticker/Brent%20Spot%3DF" },
+    { label: "Dollar", value: "10,51", change: "+1,27%", direction: "up", href: "/ticker/USDNOK" },
+    { label: "Euro", value: "11,64", change: "+0,46%", direction: "up", href: "/ticker/EURNOK" },
     { label: "US 10 ÅR", value: "3,83", change: "-1,59%", direction: "down", href: "/ticker/US10Y" },
     { label: "Bitcoin", value: "60.278", change: "-0,44%", direction: "down", href: "/ticker/BTCNOK" },
     { label: "Gull", value: "2.510,38", change: "-1,84%", direction: "down", href: "/ticker/XAUUSD" },

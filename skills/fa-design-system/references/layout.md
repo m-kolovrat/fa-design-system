@@ -4,10 +4,10 @@ How surfaces stack, how cards are arranged on a page, and how two pieces of text
 Measured on the live Finansavisen pages (October 2026); the evidence is in
 `docs/agents/page-analysis.md` in the library repo.
 
-> **Status: flexible.** These rules describe what the pages do today and are still being settled.
-> Follow them by default, but when a design or an existing page does something else, follow the
-> design and say so in your reply (see "Redesigning an existing page" in `SKILL.md`). Decided so
-> far: cards have a border, three page widths, and a 16 px gutter on mobile.
+> **Decided:** cards have a border, three page widths, and a 16 px gutter on mobile (the MUST rules
+> below). **Everything else is flexible:** it describes what the pages do today. Follow it by
+> default, but when a design or an existing page does something else, follow the design and say so
+> in your reply (see "Redesigning an existing page" in `SKILL.md`).
 
 ## 1. Surfaces
 
@@ -52,12 +52,13 @@ Rules:
 - **layout-reading-page** SHOULD Set article pages on a white page (`bg-primary_alt`); widgets
   inside the article are insets.
 - **layout-emphasis-rare** SHOULD Use at most one or two emphasis cards per view.
-- **layout-states** Row hover `bg-primary_hover`; a selected row or chip `bg-active` or
-  `bg-brand-primary_alt`.
+- **layout-states** SHOULD Keep the components' own hover and selected fills: a table row hovers
+  `bg-secondary` (what `Table.Row` renders); a selected row or chip `bg-active` or
+  `bg-brand-primary_alt`. Because a second hover token per page is an untracked restyle.
 
 - **layout-card-border** MUST Give every card a `border-secondary` border, although the live site
   has none. Decided by the design owner.
-- **layout-mobile-gutter** SHOULD Keep a 16 px gutter on mobile (`px-4`), 32 px from `md`
+- **layout-mobile-gutter** MUST Keep a 16 px gutter on mobile (`px-4`), 32 px from `md`
   (`md:px-8`). Cards keep their radius and border at every width; they don't run edge to edge.
   Decided by the design owner.
 
@@ -146,13 +147,13 @@ The same pairings appear on every page. Use these instead of inventing a new arr
 | Meta over title            | 14:44 · DOFG · Børsmelding / DOF Group ASA – Sale of vessel | Meta `text-xs text-tertiary`, items separated by `·`; title under it                                                                                                                         |
 | Name over identifier       | Equinor / EQNR · Forumhai / 15:07                           | Name `text-sm font-medium text-primary`, identifier `text-sm text-tertiary` under it; an instrument adds its logo before (instrument cell in `page-patterns.md`)                             |
 | Heading with inline meta   | Siste nytt 23. okt 15:09 · Innlegg og svar (1.912)          | Heading, then the meta on the same baseline in a smaller `text-tertiary` style; counts in parentheses                                                                                        |
-| Value with its change      | 7,16 +0,03 (+0,42 %)                                        | Value first, then the signed, colored change: absolute, then percent in parentheses                                                                                                          |
+| Value with its change      | 7,16 +0,03 (+0,42%)                                         | Value first, then the signed, colored change: absolute, then percent in parentheses                                                                                                          |
 | Card header, right slot    | → · "Last ned" · filter · sort dropdown                     | Up to three actions in `CardHeader`'s `actions`: sm icon-only `Button`s, or a labelled sm `Button` / `Dropdown`; a source credit ("Levert av Finwire") goes in the card body, not the header |
 
 And:
 
-- **Missing value:** "–" in a table cell. An empty card shows `EmptyState` ("Ingen data
-  tilgjengelig"), not an empty table.
+- **Missing value:** "–" in a table cell. An empty table shows `EmptyState` ("Ingen data
+  tilgjengelig") through `Table.Body`'s `renderEmptyState`, so the headers stay (`empty-state-in-table`).
 - **Truncation:** names in tables end in "…"; excerpts are clamped to two lines (`line-clamp-2`);
   long posts end in "Les mer".
 - **Alignment:** text left, numbers right, each column header aligned with its column.

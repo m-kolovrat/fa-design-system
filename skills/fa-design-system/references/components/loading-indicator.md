@@ -53,7 +53,8 @@ import { LoadingIndicator } from "fa-design-system/components/application/loadin
 
 ## Accessibility
 
-- The spin is a CSS `animate-spin` loop; it's the one looping animation the system allows.
+- The spin is a CSS `animate-spin` loop, one of the two looping animations the system allows (the
+  other is the ticker bar's scroll).
 - Move focus to the loaded content (or announce it) when loading ends if the reader triggered it.
 
 ## Example

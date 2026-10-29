@@ -479,17 +479,8 @@ parent's table above.
 
 ## Not in code
 
-Report these; use the stand-in only where one is given (SKILL.md → Coverage gaps).
-
-- **Avatar group**: `Avatar`s in a `flex -space-x-2` row, `<Avatar initials="+4" />` for the
-  overflow. Parity §2.
-- **Social button groups**: no stand-in; a row of `SocialButton`s is the closest.
-- **Date picker modal**: no stand-in; `DatePicker` / `DateRangePicker` open a popover at every width.
-- **Nav featured cards** (13 types): two exist only as Storybook demos, none exported. Parity §2.
-- **Mac App Store** badge. Parity §2.
-- **Missing From Code pages**: Activity feeds, Calendars (month / week / day views), Code
-  snippets, Command menus, Messaging, Progress steps, Text editors, Video players. No stand-in; ask
-  before building. Parity §2.
+The one list is `docs/figma-parity.md` §2 (shipped with the package); the stand-ins are in
+`SKILL.md` → Coverage gaps. Report anything from that list; build only the stand-ins.
 
 ## Mismatches
 

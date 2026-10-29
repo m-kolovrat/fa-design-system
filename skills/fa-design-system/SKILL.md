@@ -125,9 +125,12 @@ specific one; follow it.
    `{open && …}`. Because React Aria plays the closing animation and returns focus to the trigger
    only while the component is still in the tree.
 5. **fa-links** MUST Use `Button` with `href` and `color="link-color"` / `"link-gray"` for
-   standalone action links ("Se alle", "Les mer"). Plain links inside running text stay `<a>` and
-   follow the `prose` styles. Because there is no separate Link component, and a hand-styled link
-   misses the focus ring and hover token.
+   standalone action links ("Se alle", "Les mer"). A name, headline or ticker that opens its own
+   page is a plain `<a>` carrying the focus ring (`rounded-xs outline-focus-ring transition
+focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:underline` on a
+   headline, `hover:text-brand-secondary` in a table cell, see `table-cell-links`), never a link
+   `Button`. Plain links inside running text stay `<a>` and follow the `prose` styles. Because
+   there is no separate Link component, and a hand-styled link misses the focus ring and hover token.
 6. **fa-brand-via-prop** MUST Change publication looks only through `brand` and the existing brand
    config (`siteBrands`). Never restyle a component per brand at the call site. Because overrides
    live in exactly one place (see `docs/overrides.md`).
@@ -162,8 +165,10 @@ specific one; follow it.
 
 11. **fa-icons-only** MUST Take icons from `fa-icons` (file-type icons from
     `@untitledui/file-icons`); no emoji as icons. Pass a component reference to `icon` props, or a
-    JSX element with `data-icon`. Size with `size-4` / `size-5` / `size-6`, color with `text-fg-*`,
-    never `stroke-*`. Because the set is built from Figma, and the stroke scales with the size.
+    JSX element with `data-icon`. Size with `size-4` / `size-5` / `size-6`, color with `text-fg-*`;
+    never a stroke width (`stroke-1`, `stroke-2`) on an icon. Recharts series and cursors are the
+    exception: they take `stroke-utility-*` as `charts.md` says. Because the set is built from
+    Figma, and the stroke scales with the size.
     - Correct: `<Button iconLeading={Plus}>Legg til</Button>`, `<Bell className="size-5 text-fg-quaternary" />`
     - Wrong: `import { Bell } from "lucide-react";`
     - The `flag` icon is exported as `FlagIcon`; `Flag` is the country flag component. Rename an
@@ -193,8 +198,8 @@ specific one; follow it.
 ### Content
 
 15. **fa-real-content** MUST Write content the way Finansavisen would: Norwegian headlines and
-    labels, Oslo Børs companies and tickers, NOK with Norwegian formatting (`1 234,50 kr`,
-    `+2,4 %`), dates near today. Never Lorem ipsum, "John Doe", "Company Inc." or `$1,234.56`. When
+    labels, Oslo Børs companies and tickers, NOK with Norwegian formatting (`1.234,50 kr`,
+    `+2,4%`), dates near today. Never Lorem ipsum, "John Doe", "Company Inc." or `$1,234.56`. When
     the screen depends on a real number you don't have (a share price, a subscription price), use a
     plausible value and say in your reply that it needs replacing. Because Finansavisen content is
     long Norwegian headlines, company names and figures; short English placeholders hide wrapping
@@ -241,9 +246,10 @@ own; use the stand-in and say so.
 
 - Avatar group: `Avatar`s in a `flex -space-x-2` row, with `<Avatar initials="+4" />` for the
   overflow (not `AvatarCount`, which is a notification bubble).
-- Progress steps, command bar, activity feed, messaging, calendar views, code snippet, text
-  editor, video player: no stand-in. Ask before building.
-- Finansavisen patterns with no component yet: filter chip, change value (`+1,65 %`),
+- Everything else in `docs/figma-parity.md` §2 (progress steps, command bar, activity feed,
+  messaging, calendar views, code snippet, text editor, video player, date picker modal, social
+  button groups, nav featured cards, Mac App Store badge): no stand-in. Ask before building.
+- Finansavisen patterns with no component yet: filter chip, change value (`+1,65%`),
   live indicator, news feed item, article teaser and header, key-figure row, logo
   stack, follow chips, AI prompt chips, paywall box.
   [references/page-patterns.md](references/page-patterns.md) gives the stand-in for each. Compose

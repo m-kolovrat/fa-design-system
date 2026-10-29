@@ -5,7 +5,10 @@ it controls. Figma: Period selector (Layout = Fit / Scroll, Change), \_Period it
 Hover / Current / Focus). The Figma components are still drafts on the "Test" page.
 
 ```ts
+import { CardHeader } from "fa-design-system/components/application/card-header/card-header";
 import { PERIODS, type Period, PeriodSelector } from "fa-design-system/components/application/period-selector/period-selector";
+
+// for the example
 ```
 
 ## Use when
@@ -50,7 +53,7 @@ import { PERIODS, type Period, PeriodSelector } from "fa-design-system/component
 - **`layout="fit"`:** the periods share the width. When they don't fit, they keep their natural width
   and the row scrolls sideways.
 - **`layout="scroll"`:** natural width, left aligned; for mobile, or wherever many periods show.
-- **`change`:** the change over the period in percent (`0.42` shows `+0,42 %`), colored green, red,
+- **`change`:** the change over the period in percent (`0.42` shows `+0,42%`), colored green, red,
   or gray for 0, in Norwegian format (same as "Change value" in `page-patterns.md`).
 
 States follow Figma's \_Period item: no fill and `text-quaternary` by default, `bg-primary_hover` on
@@ -60,7 +63,7 @@ and only the focus ring on keyboard focus.
 ## Accessibility
 
 - It's a radio group named "Periode"; arrow keys move between periods, Space or Enter selects.
-- Each period's accessible name includes its change ("5D −1,10 %").
+- Each period's accessible name includes its change ("5D -1,10%").
 - The chart above still needs a heading and a one-line summary (`charts-text-alternative`).
 
 ## Example
@@ -68,22 +71,24 @@ and only the focus ring on keyboard focus.
 ```tsx
 const [period, setPeriod] = useState<Period>("1Y");
 
-<section className="rounded-2xl border border-secondary bg-primary_alt p-4 md:p-5">
-    <h2 className="text-lg font-semibold text-primary">Equinor (EQNR)</h2>
-    <p className="text-sm text-tertiary">Kursutvikling {period}: +18,90 %</p>
-    <div className="mt-4 h-56">{/* the chart for `period` */}</div>
-    <PeriodSelector
-        className="mt-4"
-        periods={[
-            { id: "1D", change: 0.42 },
-            { id: "1M", change: 3.25 },
-            { id: "YTD", change: 12.4 },
-            { id: "1Y", change: 18.9 },
-            { id: "5Y", change: 88.6 },
-        ]}
-        selectedPeriod={period}
-        onPeriodChange={setPeriod}
-    />
+<section aria-labelledby="card-eqnr" className="overflow-hidden rounded-2xl border border-secondary bg-primary_alt">
+    <CardHeader title="Equinor (EQNR)" titleId="card-eqnr" />
+    <div className="px-4 py-5 md:px-6">
+        <p className="text-sm text-tertiary">Kursutvikling {period}: +18,90%</p>
+        <div className="mt-4 h-56">{/* the chart for `period` */}</div>
+        <PeriodSelector
+            className="mt-4"
+            periods={[
+                { id: "1D", change: 0.42 },
+                { id: "1M", change: 3.25 },
+                { id: "YTD", change: 12.4 },
+                { id: "1Y", change: 18.9 },
+                { id: "5Y", change: 88.6 },
+            ]}
+            selectedPeriod={period}
+            onPeriodChange={setPeriod}
+        />
+    </div>
 </section>;
 ```
 

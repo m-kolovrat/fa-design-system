@@ -1,6 +1,6 @@
 # Badge
 
-A short, non-interactive status or label ("Aktiv", "Utbytte", "+2,4 %"). `BadgeGroup` is a
+A short, non-interactive status or label ("Aktiv", "Utbytte", "Pluss"). `BadgeGroup` is a
 badge plus a message line, for announcements. Figma: Badges/Badge, Badges/Badge group.
 
 ```ts
@@ -21,7 +21,7 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
 - The message needs a sentence and an action: `Alert`, or `notify()` for a passing confirmation.
 - A number on an avatar or icon ("+5"): `AvatarCount` (see [avatar](avatar.md)).
 - It should be clickable: a `Button` (badges have no press handler; only `BadgeWithButton`'s ×).
-- A price or value change (`+0,42 %`): a colored span, see "Change value" in `page-patterns.md`.
+- A price or value change (`+0,42%`): a colored span, see "Change value" in `page-patterns.md`.
 
 ## Rules
 
@@ -33,7 +33,7 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
   `BadgeWithFlag`, `BadgeWithImage`, `BadgeWithButton` and `BadgeIcon` (the types allow nothing
   else). `BadgeWithDot` and `BadgeWithIcon` take any color with `modern`; it colors only the dot or
   icon. Because the modern surface is always white with a gray ring.
-- **badge-not-only-color** MUST Put the meaning in the text, not just the color ("−1,2 %", "Feilet").
+- **badge-not-only-color** MUST Put the meaning in the text, not just the color ("-1,2%", "Feilet").
   Because color alone fails for color-blind readers and in grayscale.
 - **badge-icon-reference** MUST Pass `iconLeading` / `iconTrailing` / `icon` as a component
   reference (`iconLeading={ArrowUp}`), not JSX. Because the badge sizes the icon to `size-3` and

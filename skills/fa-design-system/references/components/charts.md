@@ -43,7 +43,7 @@ Patterns (`components/application/charts/`): `line-charts.demo.tsx` (area/line, 
 - One value against a target with no chart around it: `ProgressBar` / `ProgressBarCircle`
   ([progress](progress.md)).
 - Exact values the reader will look up or compare row by row: [table](table.md).
-- A single change figure: text plus `BadgeWithIcon` ("+2,4 %").
+- A single change figure: a colored span ("Change value" in `page-patterns.md`), not a chart or a badge.
 
 ## How color works
 
@@ -71,9 +71,10 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
 - **charts-shared-parts** MUST Use `content={<ChartTooltipContent />}` on `Tooltip` (add
   `isPieChart` / `isRadialChart` for those) and `content={<ChartLegendContent />}` on `Legend`.
   Because they are Figma's chart marker and legend.
-- **charts-norwegian-format** MUST Format ticks and tooltips with `nb-NO`: `formatter` /
-  `tickFormatter` / `labelFormatter` with `toLocaleString("nb-NO")` and `toLocaleDateString("nb-NO",
-…)`. Because the demos use the browser locale and English placeholder labels.
+- **charts-norwegian-format** MUST Format ticks and tooltips Norwegian style: numbers with the `nb`
+  helper ("Change value" in `page-patterns.md`: dot thousands, comma decimals), dates with
+  `toLocaleDateString("nb-NO", …)`. Never `toLocaleString` for numbers (it puts a space between
+  thousands). Because the demos use the browser locale and English placeholder labels.
 - **charts-direction-color** SHOULD Use `text-utility-success-600` / `text-utility-error-600` only
   when a series means up or down (a single stock vs. its previous close), never for categories.
 - **charts-responsive** MUST Wrap in `ResponsiveContainer initialDimension={{ width: 1, height: 1 }}`
@@ -86,7 +87,7 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
   Because one fixed place lets readers find the periods without looking, and keeps the header free
   for the title and actions.
 - **charts-text-alternative** MUST Give each chart a heading and a one-line text summary ("EQNR er
-  opp 12,4 % siste 12 måneder"), or a table toggle. Because the SVG isn't readable by screen readers.
+  opp 12,4% siste 12 måneder"), or a table toggle. Because the SVG isn't readable by screen readers.
 
 ## Example
 
@@ -102,10 +103,10 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
                 tickLine={false}
                 tickFormatter={(d) => new Date(d).toLocaleDateString("nb-NO", { month: "short" })}
             />
-            <YAxis fill="currentColor" axisLine={false} tickLine={false} tickFormatter={(v) => Number(v).toLocaleString("nb-NO")} />
+            <YAxis fill="currentColor" axisLine={false} tickLine={false} tickFormatter={(v) => nb(Number(v), { decimals: 0 })} />
             <Tooltip
                 content={<ChartTooltipContent />}
-                formatter={(v) => `${Number(v).toLocaleString("nb-NO", { minimumFractionDigits: 2 })} kr`}
+                formatter={(v) => `${nb(Number(v))} kr`}
                 labelFormatter={(d) => new Date(d as Date).toLocaleDateString("nb-NO", { day: "numeric", month: "long" })}
                 cursor={{ className: "stroke-utility-brand-600 stroke-2" }}
             />

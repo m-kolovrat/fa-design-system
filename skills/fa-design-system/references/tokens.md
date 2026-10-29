@@ -149,12 +149,12 @@ variable's number (`alpha-white-90` → `bg-alpha-white/90`).
 
 ## Type
 
-Font: Inter (`font-body`, `font-display`), `font-mono` for code and figures that must align.
+Font: Inter (`font-body`, `font-display`); `font-mono` only for code. Figures that must align use `tabular-nums`.
 
 | Class                      | Use (from the live pages)                                                                                       |
 | :------------------------- | :-------------------------------------------------------------------------------------------------------------- |
 | `text-xs font-medium`      | Meta (time, source, "Publisert …"), badges, table header labels. The most used size                             |
-| `text-sm`                  | Table cells, excerpts, list rows; `font-semibold` for tickers and row titles                                    |
+| `text-sm`                  | Table cells, excerpts, list rows                                                                                |
 | `text-md`                  | Text in cards and widgets; `font-bold` for small teaser headlines                                               |
 | `text-lg font-semibold`    | Card titles (`CardHeader`) ("Vinnere", "Mest omsatte")                                                          |
 | `text-lg`                  | Live article body size (18/30); the library `prose` class sets 16/24, so keep `prose` and report the difference |
@@ -167,8 +167,7 @@ the display steps (44, 62, 68 px), and opinion headlines use a serif italic (Mer
 no token. These are open questions for the design owner: use the nearest token and mention it,
 don't add arbitrary sizes or a font.
 
-Uppercase only for table header labels (`text-xs font-medium uppercase tracking-wide
-text-quaternary`) and tickers. Everything else is sentence case.
+Uppercase only for tickers (`EQNR`). Everything else, table header labels included, is sentence case.
 
 Weights: `font-normal`, `font-medium` (meta, labels), `font-semibold` (titles, buttons),
 `font-bold` (headlines). Running article text uses the `prose` class (`styles/typography.css`).

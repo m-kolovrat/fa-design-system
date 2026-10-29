@@ -59,7 +59,7 @@ The Figma Type is responsive CSS, not a prop.
   below `md` the search field is hidden and the icon does nothing else.
 - **site-header-menu** SHOULD Pass `menu` (`SiteMenuContent`) so Meny opens the full-width
   `SiteMenuPanel`. Without it the button only calls `onMenuPress`.
-- **site-header-ticker** SHOULD Pass `tickerItems` with values already formatted (`"1 193,30"`,
+- **site-header-ticker** SHOULD Pass `tickerItems` with values already formatted (`"1.193,30"`,
   `"-1,59%"`) and `direction` matching the sign. Because the bar prints strings as given and colors by
   `direction`. Leave it out (or empty) to hide the bar.
 - **site-header-once** MUST Render one `SiteHeader` per page, at the top, outside `<main>`. Because
@@ -139,7 +139,7 @@ const navigation: SiteNavItem[][] = [
     className="sticky top-0 z-30"
     collapsed={isScrolled}
     tickerItems={[
-        { label: "Oslo Børs", value: "1 193,30", change: "0,84%", direction: "up", href: "/ticker/OSEBX" },
+        { label: "Oslo Børs", value: "1.193,30", change: "+0,84%", direction: "up", href: "/ticker/OSEBX" },
         { label: "Brent spot", value: "81,42", change: "-1,12%", direction: "down", href: "/ticker/BRENT" },
     ]}
     navigation={navigation}
