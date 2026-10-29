@@ -1,126 +1,88 @@
 # Tokens
 
 The closed list. Use a token through its Tailwind class; never a hex value, a Tailwind palette color
-(`gray-500`) or a primitive ramp step (`brand-700`). Source: `styles/theme.css`, synced from the
-Figma file (see `TOKENS.md` in the library repo). All color tokens switch for dark mode
-(`.dark-mode`) on their own.
+(`gray-500`) or a primitive ramp step (`brand-700`) (rule 7 in `SKILL.md`). Source:
+`styles/theme.css`, synced from the Figma file (see `TOKENS.md` in the library repo). All color
+tokens switch for dark mode (`.dark-mode`) on their own.
 
 How the class is spelled: text colors are `text-<name>` (`text-primary`), backgrounds
 `bg-<name>` (`bg-primary`), borders `border-<name>` and also `ring-<name>` / `outline-<name>`
 (`border-secondary`, `ring-primary`). Foreground tokens are used with any prefix:
 `text-fg-quaternary`, `bg-fg-brand-primary`, `stroke-fg-tertiary`.
 
+Grouped rows: `text-tertiary` (+ `_hover`, `_on-brand`) lists `text-tertiary`, `text-tertiary_hover`
+and `text-tertiary_on-brand`; `bg-error-primary` / `-secondary` lists both. `_hover` is the hover
+shade, `_on-brand` the same role on a brand or dark card, `_subtle` a lighter step, `-solid` the
+filled dark version, `_alt` a twin that swaps to another token in dark mode.
+
 ## Text Color
 
-Use text color variables to manage all text fill colors in your designs across light and dark modes.
-
-| Name                       | Usage                                                                                                                                                                |
-| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| text-primary               | Primary text such as page headings.                                                                                                                                  |
-| text-primary_on-brand      | Primary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. CTA sections).                                         |
-| text-secondary             | Secondary text such as labels and section headings.                                                                                                                  |
-| text-secondary_hover       | Secondary text when in hover state.                                                                                                                                  |
-| text-secondary_on-brand    | Secondary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. CTA sections).                                       |
-| text-tertiary              | Tertiary text such as supporting text and paragraph text.                                                                                                            |
-| text-tertiary_hover        | Tertiary text when in hover state.                                                                                                                                   |
-| text-tertiary_on-brand     | Tertiary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. CTA sections).                                        |
-| text-quaternary            | Quaternary text for more subtle and lower-contrast text, such as footer column headings.                                                                             |
-| text-quaternary_on-brand   | Quaternary text when used on solid brand color backgrounds. Commonly used for brand theme website sections (e.g. footers).                                           |
-| text-white                 | Text that is always white, regardless of the mode.                                                                                                                   |
-| text-placeholder           | Default color for placeholder text such as input field placeholders. This can be changed to gray-400, but gray-500 is more accessible because it is higher contrast. |
-| text-placeholder_subtle    | A lower-contrast alternative to text-placeholder for placeholder text that should recede further, such as a secondary field in a multi-part input.                   |
-| text-disabled              | Default text color for disabled form elements and controls.                                                                                                          |
-| text-brand-primary         | Primary brand text useful for headings (e.g. cards in pricing page headers).                                                                                         |
-| text-brand-secondary       | Secondary brand text for brand buttons, as well as accented text, highlights, and subheadings (e.g. subheadings in blog post cards).                                 |
-| text-brand-secondary_hover | Secondary brand text when in hover state (e.g. brand buttons).                                                                                                       |
-| text-brand-tertiary        | Tertiary brand text for lighter accented text and highlights (e.g. numbers in metric cards).                                                                         |
-| text-brand-tertiary_alt    | An alternative to tertiary brand text that is lighter in dark mode (e.g. numbers in metric cards).                                                                   |
-| text-error-primary         | Default error state semantic text color (e.g. input field error states).                                                                                             |
-| text-warning-primary       | Default warning state semantic text color.                                                                                                                           |
-| text-success-primary       | Default success state semantic text color.                                                                                                                           |
+| Name                                       | Use                                           |
+| :----------------------------------------- | :-------------------------------------------- |
+| `text-primary` (+ `_on-brand`)             | Headlines, page titles, table figures         |
+| `text-secondary` (+ `_hover`, `_on-brand`) | Labels, table header text, section headings   |
+| `text-tertiary` (+ `_hover`, `_on-brand`)  | Excerpts, article lead, supporting text       |
+| `text-quaternary` (+ `_on-brand`)          | Faintest text: footer column headings         |
+| `text-white`                               | White in both themes (text on a photo)        |
+| `text-placeholder` (+ `_subtle`)           | Placeholders; `_subtle` for a secondary field |
+| `text-disabled`                            | Disabled inputs and ButtonGroup items         |
+| `text-brand-primary`                       | Brand-colored headings                        |
+| `text-brand-secondary` (+ `_hover`)        | Link buttons, accented subheadings            |
+| `text-brand-tertiary` (+ `_alt`)           | Lighter brand accent (metric card figures)    |
+| `text-error-primary`                       | Field errors, a negative change figure        |
+| `text-warning-primary`                     | Warning text in alerts                        |
+| `text-success-primary`                     | Success text, a positive change figure        |
 
 ## Border Color
 
-Use border color variables to manage all stroke colors in your designs across light and dark modes. You can use the same values for `ring-` and `outline-` as well (i.e. `ring-primary` `outline-secondary`).
-
-| Name                   | Usage                                                                                                                                                                                   |
-| :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| border-primary         | High contrast borders. These are used for components such as input fields, button groups, and checkboxes.                                                                               |
-| border-secondary       | Medium contrast borders. This is the most commonly used border color and is the default for most components (e.g. file uploaders), cards (such as tables), and content dividers.        |
-| border-secondary_alt   | An alternative to secondary border that uses alpha transparency. This is used exclusively for floating menus such as input dropdowns and notifications to create sharper bottom border. |
-| border-tertiary        | Low contrast borders useful for very subtle dividers and borders such as line and bar chart axis dividers.                                                                              |
-| border-brand           | Default brand border color. Useful for active states in components such as input fields.                                                                                                |
-| border-brand_alt       | An brand border color that switches to gray when in dark mode. Useful for components such as brand-style variants of banners and footers.                                               |
-| border-error           | Default error state semantic border color. Useful for error states in components such as input fields and file uploaders.                                                               |
-| border-error_subtle    | A more subtle (lower contrast) alternative for error state semantic borders such as error state input fields.                                                                           |
-| border-disabled        | Border for disabled controls (e.g. disabled radio cards and inputs in Figma).                                                                                                           |
-| border-disabled_subtle | Subtler disabled border (e.g. disabled secondary buttons).                                                                                                                              |
+| Name                            | Use                                              |
+| :------------------------------ | :----------------------------------------------- |
+| `border-primary`                | Inputs, button groups, checkboxes                |
+| `border-secondary` (+ `_alt`)   | Card and row borders; `_alt` on floating menus   |
+| `border-tertiary`               | Faint dividers, chart axis lines                 |
+| `border-brand` (+ `_alt`)       | Focused input; `_alt` turns gray in dark mode    |
+| `border-error` (+ `_subtle`)    | Invalid input border                             |
+| `border-disabled` (+ `_subtle`) | Disabled RadioCard and input (`_subtle`: Button) |
 
 ## Foreground Color
 
-Use foreground color variables to manage all non-text foreground elements in your designs across light and dark modes. Can be used via `text-`, `bg-`, `ring-`, `outline-`, `stroke-`, `fill-`, etc.
-
-| Name                   | Usage                                                                                                                                                         |
-| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| fg-primary             | Highest contrast non-text foreground elements such as icons.                                                                                                  |
-| fg-secondary           | High contrast non-text foreground elements such as icons.                                                                                                     |
-| fg-secondary_hover     | Secondary foreground elements when in hover state.                                                                                                            |
-| fg-tertiary            | Medium contrast non-text foreground elements such as icons.                                                                                                   |
-| fg-tertiary_hover      | Tertiary foreground elements when in hover state.                                                                                                             |
-| fg-quaternary          | Low contrast non-text foreground elements such as icons in buttons, help icons and icons used in input fields.                                                |
-| fg-quaternary_hover    | Quaternary foreground elements when in hover state, such as help icons.                                                                                       |
-| fg-white               | Foreground elements that are always white, regardless of the mode.                                                                                            |
-| fg-brand-primary       | Primary brand color non-text foreground elements such as featured icons and progress bars.                                                                    |
-| fg-brand-primary_alt   | An alternative for primary brand color non-text foreground elements that switches to gray when in dark mode such as active horizontal tabs.                   |
-| fg-brand-secondary     | Secondary brand color non-text foreground elements such as accents and arrows in marketing site sections (e.g. hero header sections).                         |
-| fg-brand-secondary_alt | An alternative for secondary brand color non-text foreground elements that switches to gray when in dark mode such as brand buttons.                          |
-| fg-error-primary       | Primary error state color for non-text foreground elements such as featured icons.                                                                            |
-| fg-error-secondary     | Secondary error state color for non-text foreground elements such as icons in error state input fields and negative metrics item charts and icons.            |
-| fg-warning-primary     | Primary warning state color for non-text foreground elements such as featured icons.                                                                          |
-| fg-warning-secondary   | Secondary warning state color for non-text foreground elements.                                                                                               |
-| fg-success-primary     | Primary success state color for non-text foreground elements such as featured icons.                                                                          |
-| fg-success-secondary   | Secondary success state color for non-text foreground elements such as button dots, avatar online indicator dots, and positive metrics item charts and icons. |
-| fg-disabled            | Disabled text and icons in buttons.                                                                                                                           |
-| fg-disabled_subtle     | Subtler disabled foreground (e.g. button group icons and dots).                                                                                               |
+| Name                                | Use                                                |
+| :---------------------------------- | :------------------------------------------------- |
+| `fg-primary`                        | Highest contrast icons                             |
+| `fg-secondary` (+ `_hover`)         | Icons beside primary text                          |
+| `fg-tertiary` (+ `_hover`)          | Icons beside secondary text                        |
+| `fg-quaternary` (+ `_hover`)        | Input, button and help icons; the most used        |
+| `fg-white`                          | White icons in both themes                         |
+| `fg-brand-primary` (+ `_alt`)       | Brand icons, progress bar; `_alt` gray in dark     |
+| `fg-brand-secondary` (+ `_alt`)     | Brand arrows and accents; `_alt` gray in dark      |
+| `fg-error-primary` / `-secondary`   | Error FeaturedIcon / ticker-bar down arrow         |
+| `fg-warning-primary` / `-secondary` | Warning FeaturedIcon / warning icon in text        |
+| `fg-success-primary` / `-secondary` | Success FeaturedIcon / ticker-bar up arrow, dots   |
+| `fg-disabled` (+ `_subtle`)         | Disabled Button; `_subtle` ButtonGroup icons, dots |
 
 ## Background Color
 
-Use background color variables to manage all fill colors for elements in your designs across light and dark modes.
-
-| Name                    | Usage                                                                                                                                                                                         |
-| :---------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| bg-primary              | The primary background color (white) used across all layouts and components.                                                                                                                  |
-| bg-primary_alt          | An alternative primary background color (white) that switches to bg-secondary when in dark mode.                                                                                              |
-| bg-primary_hover        | Primary background hover color. This acts as the default hover state background color for components with white backgrounds (e.g. input dropdown menu items).                                 |
-| bg-primary-solid        | The primary dark background color used across layouts and components. This switches to bg-secondary when in dark mode and is useful for components such as tooltips and Text editor tooltips. |
-| bg-secondary            | The secondary background color used to create contrast against white backgrounds, such as website section backgrounds.                                                                        |
-| bg-secondary_alt        | An alternative secondary background color that switches to bg-primary when in dark mode. Useful for components such as border-style horizontal tabs.                                          |
-| bg-secondary_hover      | Secondary background hover color. Useful for hover states for components with gray-50 backgrounds such as active states (e.g. navigation items and date pickers).                             |
-| bg-secondary_subtle     | An alternative secondary background color that is slightly lighter and more subtle in light mode. This is useful for components such as banners.                                              |
-| bg-secondary-solid      | The secondary dark background color used across layouts and components. This is useful for components such as featured icons.                                                                 |
-| bg-tertiary             | The tertiary background color used to create contrast against light backgrounds such as toggles.                                                                                              |
-| bg-quaternary           | The quaternary background color used to create contrast against light backgrounds, such as sliders and progress bars.                                                                         |
-| bg-active               | Default active background color for components such as selected menu items in input dropdowns.                                                                                                |
-| bg-overlay              | Default background color for background overlays. These are useful for overlay components such as modals.                                                                                     |
-| bg-brand-primary        | The primary brand background color. Useful for components such as check icons.                                                                                                                |
-| bg-brand-primary_alt    | An alternative primary brand background color that switches to bg-secondary when in dark mode. Useful for components such as active horizontal tabs.                                          |
-| bg-brand-secondary      | The secondary brand background color. Useful for components such as featured icons.                                                                                                           |
-| bg-brand-solid          | Default solid (dark) brand background color. Useful for components such as toggles and messages.                                                                                              |
-| bg-brand-solid_hover    | Solid brand background color when in hover state. Useful for components such as toggles.                                                                                                      |
-| bg-brand-section        | This is the default dark brand color background used for website sections such as CTA sections and testimonials. Switches to bg-secondary when in dark mode.                                  |
-| bg-brand-section_subtle | An alternative brand section background color to provide contrast for website sections such as FAQ sections. Switches to bg-primary when in dark mode.                                        |
-| bg-error-primary        | Primary error state background color for components such as buttons.                                                                                                                          |
-| bg-error-secondary      | Secondary error state background color for components such as featured icons.                                                                                                                 |
-| bg-error-solid          | Default solid (dark) error state background color for components such as buttons, featured icons and metric items.                                                                            |
-| bg-error-solid_hover    | Default solid (dark) error hover state background color for components such as buttons.                                                                                                       |
-| bg-warning-primary      | Primary warning state background color for components.                                                                                                                                        |
-| bg-warning-secondary    | Secondary warning state background color for components such as featured icons.                                                                                                               |
-| bg-warning-solid        | Default solid (dark) warning state background color for components such as featured icons.                                                                                                    |
-| bg-success-primary      | Primary success state background color for components.                                                                                                                                        |
-| bg-success-secondary    | Secondary success state background color for components such as featured icons.                                                                                                               |
-| bg-success-solid        | Default solid (dark) success state background color for components such as featured icons and metric items.                                                                                   |
-| bg-disabled             | Fill for disabled solid controls (e.g. disabled primary buttons).                                                                                                                             |
-| bg-disabled_subtle      | Subtle disabled fill (e.g. selected + disabled button group items, disabled radio cards).                                                                                                     |
+| Name                                           | Use                                                         |
+| :--------------------------------------------- | :---------------------------------------------------------- |
+| `bg-primary` (+ `_alt`, `_hover`)              | White; `_alt` is the card; `_hover` menu item hover         |
+| `bg-primary-solid`                             | Dark fill: tooltips, emphasis card                          |
+| `bg-secondary` (+ `_alt`, `_hover`, `_subtle`) | Gray surface, row hover; `_alt` is the page                 |
+| `bg-secondary-solid`                           | Dark gray fill (gray FeaturedIcon)                          |
+| `bg-tertiary`                                  | Inset inside a card, toggle track                           |
+| `bg-quaternary`                                | Slider and progress tracks, chart grid                      |
+| `bg-active`                                    | Selected menu item or table row                             |
+| `bg-overlay`                                   | Modal scrim (owned by the component)                        |
+| `bg-brand-primary` (+ `_alt`)                  | Light brand tint; `_alt` selected chip, active tab          |
+| `bg-brand-secondary`                           | Brand FeaturedIcon, brand badge                             |
+| `bg-brand-solid` (+ `_hover`)                  | Primary button, toggle on, emphasis card                    |
+| `bg-brand-section` (+ `_subtle`)               | Full-width brand band (newsletter, subscribe CTA)           |
+| `bg-error-primary` / `-secondary`              | Error alert and badge fill / error FeaturedIcon             |
+| `bg-error-solid` (+ `_hover`)                  | Destructive button, negative metric                         |
+| `bg-warning-primary` / `-secondary`            | Warning alert and badge fill / FeaturedIcon                 |
+| `bg-warning-solid`                             | Solid warning fill                                          |
+| `bg-success-primary` / `-secondary`            | Success alert and badge fill / FeaturedIcon                 |
+| `bg-success-solid`                             | Solid success fill, positive metric                         |
+| `bg-disabled` (+ `_subtle`)                    | Disabled Button; `_subtle` ButtonGroup, RadioCard, PinInput |
 
 ## Focus ring
 
@@ -136,36 +98,37 @@ In page code, prefer a component's `color` prop over these classes.
 
 ## Alpha (see-through fills)
 
-For a see-through fill, use `alpha-white` or `alpha-black` with an opacity modifier, never
-`bg-white/50` or `bg-black/20`: `bg-alpha-white/90`, `bg-alpha-black/20`. The step is the Figma
-variable's number (`alpha-white-90` → `bg-alpha-white/90`).
+For a see-through fill use `alpha-white` or `alpha-black` with an opacity modifier
+(`bg-alpha-white/90`, `bg-alpha-black/20`), never `bg-white/50` or `bg-black/20`. The step is the
+Figma variable's number (`alpha-white-90` → `bg-alpha-white/90`).
 
-- `alpha-white` is white in light mode and the dark surface color in dark mode: a see-through
-  **surface**, such as a control sitting on a photo (carousel arrows, a play button).
-- `alpha-black` is black in light mode and white in dark mode: a see-through **contrast** layer,
-  such as a darkening wash over an image.
+- `alpha-white`: white in light mode, the dark surface color in dark mode. A see-through
+  **surface**: a control on a photo (carousel arrows, a play button).
+- `alpha-black`: black in light mode, white in dark mode. A see-through **contrast** layer: a
+  darkening wash over an image.
 - Steps in use in the library: `alpha-white/30`, `/50`, `/90`, `alpha-black/20`.
-- The scrim behind a modal is `bg-overlay`, and it belongs to the component; don't add your own.
+- The scrim behind a modal is `bg-overlay` and belongs to the component; don't add your own.
 
 ## Type
 
-Font: Inter (`font-body`, `font-display`); `font-mono` only for code. Figures that must align use `tabular-nums`.
+Font: Inter (`font-body`, `font-display`); `font-mono` only for code. Figures that must align use
+`tabular-nums`.
 
-| Class                      | Use (from the live pages)                                                                                       |
-| :------------------------- | :-------------------------------------------------------------------------------------------------------------- |
-| `text-xs font-medium`      | Meta (time, source, "Publisert …"), badges, table header labels. The most used size                             |
-| `text-sm`                  | Table cells, excerpts, list rows                                                                                |
-| `text-md`                  | Text in cards and widgets; `font-bold` for small teaser headlines                                               |
-| `text-lg font-semibold`    | Card titles (`CardHeader`) ("Vinnere", "Mest omsatte")                                                          |
-| `text-lg`                  | Live article body size (18/30); the library `prose` class sets 16/24, so keep `prose` and report the difference |
-| `text-xl`                  | Section titles ("Mest lest"), article subheadings (`font-bold`)                                                 |
-| `text-display-xs` – `-sm`  | Page titles, key figures, article lead (`text-display-xs font-medium text-tertiary`)                            |
-| `text-display-md` – `-2xl` | Front-page and article headlines                                                                                |
+| Class                      | Use (from the live pages)                                                            |
+| :------------------------- | :----------------------------------------------------------------------------------- |
+| `text-xs font-medium`      | Meta (time, source, "Publisert …"), badges, table header labels; the most used       |
+| `text-sm`                  | Table cells, excerpts, list rows                                                     |
+| `text-md`                  | Text in cards and widgets; `font-bold` for small teaser headlines                    |
+| `text-lg font-semibold`    | Card titles (`CardHeader`) ("Vinnere", "Mest omsatte")                               |
+| `text-lg`                  | Live article body (18/30); the `prose` class sets 16/24: keep `prose`, report it     |
+| `text-xl`                  | Section titles ("Mest lest"), article subheadings (`font-bold`)                      |
+| `text-display-xs` – `-sm`  | Page titles, key figures, article lead (`text-display-xs font-medium text-tertiary`) |
+| `text-display-md` – `-2xl` | Front-page and article headlines                                                     |
 
-The live site sets `text-lg` and `text-xl` on a 24 px line height and uses headline sizes between
-the display steps (44, 62, 68 px), and opinion headlines use a serif italic (Merriweather) that has
-no token. These are open questions for the design owner: use the nearest token and mention it,
-don't add arbitrary sizes or a font.
+The live site sets `text-lg` and `text-xl` on a 24 px line height, uses headline sizes between the
+display steps (44, 62, 68 px) and a serif italic (Merriweather) for opinion headlines; none has a
+token. Open questions for the design owner: use the nearest token and mention it, don't add
+arbitrary sizes or a font.
 
 Uppercase only for tickers (`EQNR`). Everything else, table header labels included, is sentence case.
 
@@ -190,7 +153,7 @@ shadows.
   step.
 - Page gutter: `px-4 md:px-8` (16 px on mobile, 32 px from `md`); cards keep their radius on
   mobile. Page widths: 1376, 1280 (`max-w-container`) and 980 px, see "Page width" in
-  `layout.md`. Gap between cards: `gap-6` (24 px).
+  `page-patterns.md`. Gap between cards: `gap-6` (24 px).
 - Breakpoints: Tailwind's (`sm` 640, `md` 768, `lg` 1024, `xl` 1280, `2xl` 1536) plus `xxs` 320 and
   `xs` 600. The site header and footer switch layout at `md` (tablet) and `lg` (desktop).
 

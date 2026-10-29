@@ -211,4 +211,4 @@ asks for them, and say in your reply that the Figma frame has no component for i
 
 Storybook: not shown in Storybook yet. Related: [featured-icon](featured-icon.md),
 [empty-state](empty-state.md), [dot-icon](dot-icon.md), [app-navigation](app-navigation.md);
-page widths in `references/layout.md`.
+page widths in "Page width" of `references/page-patterns.md`.

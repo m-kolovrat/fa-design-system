@@ -5,7 +5,7 @@
  *
  * - Drops the leading `# Title` line (the Docs page already shows the component's title).
  * - Can keep only some `## ` sections, or leave some out (`sections`, `omit`, `intro`).
- * - Rewrites relative links (`select.md`, `../layout.md`) to the file on GitHub, since the
+ * - Rewrites relative links (`select.md`, `../page-patterns.md`) to the file on GitHub, since the
  *   Storybook build has no copy of the skill folder to link to.
  * - Leaves fenced code blocks and inline code untouched.
  *

@@ -47,22 +47,20 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 
 ## Steps
 
-1. **Plan before you write code.** Read [references/page-patterns.md](references/page-patterns.md)
-   and pick the page shell that fits. Then write the plan into your reply: each section of the
-   page, top to bottom, and the component (from the [index](#component-index)) or stand-in (from
-   [Coverage gaps](#coverage-gaps)) that covers it. For a Figma frame, map each layer with
-   [references/figma-map.md](references/figma-map.md). For a reference product, name what each of
-   its parts becomes here; take its structure, not its look. Anything with no match goes into the
-   plan as "not in the system" before you build it.
-2. Lay the page out with the surfaces, card grid and text pairings in
-   [references/layout.md](references/layout.md).
-3. **Open each component's reference page before using it**: it says when to use it, which props,
+1. **Plan before you write code.** Read [references/page-patterns.md](references/page-patterns.md):
+   pick the page shell, lay the page out with its surfaces, grid and text pairings, then write the
+   plan into your reply: each section of the page, top to bottom, and the component (from the
+   [index](#component-index)) or stand-in (from [Coverage gaps](#coverage-gaps)) that covers it.
+   For a Figma frame, map each layer with [references/figma-map.md](references/figma-map.md). For
+   a reference product, name what each of its parts becomes here; take its structure, not its
+   look. Anything with no match goes into the plan as "not in the system" before you build it.
+2. **Open each component's reference page before using it**: it says when to use it, which props,
    sizes and colors exist, and that component's rules.
-4. Build only from those components and the tokens in [references/tokens.md](references/tokens.md).
+3. Build only from those components and the tokens in [references/tokens.md](references/tokens.md).
    Something the plan marked "not in the system" is composed from existing components and tokens;
    tell the person what you built and that it has no Figma frame yet. Never invent a token, size or
    variant.
-5. Before handing over, go through the rules below, look at the result at mobile and desktop width
+4. Before handing over, go through the rules below, look at the result at mobile and desktop width
    in both themes, and run the project's checks (`npm test` in the library repo). In your reply,
    list anything you couldn't resolve, such as a missing component or a rule you had to bend.
 
@@ -83,24 +81,10 @@ decides which way it goes. Write "No new patterns or clashes" when there are non
 
 ## Changing a component
 
-When a component doesn't do what the screen needs, take the lightest option that works, in this
-order, and say in your reply which one you used:
-
-1. **Props and layout classes.** Use the component's props; `className` only for layout (width,
-   margins, placement, grid spans), never for color, size or radius.
-2. **Wrap it** in an app component for app-specific behavior or content, keeping the library
-   component inside unchanged.
-3. **Ask for a variant.** A missing size, color or state goes to the design system owner: it's
-   designed in Figma, added to the library and shipped in the next version. Use the closest
-   existing variant until then and say so.
-4. **Patch it temporarily** with `patch-package` for an urgent bug fix, and report the bug so the
-   patch can be removed after the next release.
-5. **Try a branch.** Point the dependency at a branch or tag of the library
-   (`github:m-kolovrat/fa-design-system#fix-table`) to test a change before it's released.
-6. **Eject it** only when the app really needs its own version: copy the source from
-   `node_modules/fa-design-system/components/<path>.tsx` into the app, change its `@/…` imports to
-   `fa-design-system/…`, and import the copy instead. The app then owns that file and stops getting
-   its updates. Ejecting always needs the person's go-ahead, and it's reported as a clash.
+When a component doesn't do what the screen needs, take the lightest option that works, in the order
+given in [references/changing-a-component.md](references/changing-a-component.md): props and
+layout classes, a wrapper, a variant request, a temporary patch, a branch, and only with the
+person's go-ahead an eject. Say in your reply which one you used.
 
 ## Priority order
 
@@ -234,8 +218,8 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
 ### Layout and files
 
 18. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
-    [references/layout.md](references/layout.md), which owns the layout rules. Flexible for now;
-    report where a design differs.
+    [references/page-patterns.md](references/page-patterns.md), which owns the layout rules.
+    Flexible for now; report where a design differs.
 19. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix,
     types included. Because it keeps library components and the primitives they wrap apart.
     - Correct: `import { Button as AriaButton } from "react-aria-components";`,

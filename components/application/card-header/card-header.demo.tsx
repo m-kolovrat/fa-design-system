@@ -7,7 +7,7 @@ import { Avatar } from "@/components/base/avatar/avatar";
 import { Button } from "@/components/base/buttons/button";
 import { cx } from "@/utils/cx";
 
-/** A card: the surface from layout.md, without padding so the header and body set their own. */
+/** A card: the surface from page-patterns.md, without padding so the header and body set their own. */
 export const card = "overflow-hidden rounded-2xl border border-secondary bg-primary_alt";
 /** The card body under a `CardHeader`: the same side padding as the header. */
 export const cardBody = "px-4 py-5 md:px-6";
