@@ -60,16 +60,16 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 
 `ButtonUtility`:
 
-| Prop               | Values                                          | Default     |
-| :----------------- | :---------------------------------------------- | :---------- |
-| `size`             | `xs` (16px icon) · `sm` (20px icon)             | `sm`        |
-| `color`            | `secondary` (bordered) · `tertiary` (no border) | `secondary` |
-| `icon`             | icon component or element                       |             |
-| `tooltip`          | string: the tooltip, and the accessible name    |             |
-| `className`        | layout only                                     |             |
-| `tooltipPlacement` | React Aria `Placement`                          | `top`       |
-| `isDisabled`       | boolean (`opacity-50`)                          |             |
-| `href`             | string: renders a link                          |             |
+| Prop               | Values                                                              | Default     |
+| :----------------- | :------------------------------------------------------------------ | :---------- |
+| `size`             | `xs` (16px icon) · `sm` (20px icon)                                 | `sm`        |
+| `color`            | `secondary` (bordered) · `tertiary` (no border)                     | `secondary` |
+| `icon`             | icon component or element                                           |             |
+| `tooltip`          | string: the tooltip, and the accessible name                        |             |
+| `className`        | layout only                                                         |             |
+| `tooltipPlacement` | React Aria `Placement`                                              | `top`       |
+| `isDisabled`       | boolean (`fg-disabled` icon, `border-disabled_subtle` on secondary) |             |
+| `href`             | string: renders a link                                              |             |
 
 `CloseButton` (plus React Aria `Button` props such as `onPress`):
 
