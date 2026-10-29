@@ -24,20 +24,29 @@ dev server. Use **npm** (`package-lock.json`).
 ```bash
 npm install --legacy-peer-deps   # first time only (eslint peer conflict)
 npm run storybook                # Storybook at http://localhost:6006
-npm test                         # type-check + lint + prettier + token parity (run before every commit)
+npm test                         # type-check + lint + prettier + token parity + skill drift (run before every commit)
 npm run lint                     # eslint --fix on components/
 npm run prettier                 # prettier --write on the repo
 npm run tokens:check             # styles/theme.css vs tokens/figma-tokens.json (see TOKENS.md)
+npm run skill:check              # the skill vs the source: import paths, links, index, props tables, no demo pointers
+npm run layout:check             # every story at 375 and 1440 px: nothing wider than the viewport (needs Playwright, see the script)
 npm run build-storybook          # static Storybook in ./storybook-static
 npm run build                    # the installable package in ./dist (also runs on install via `prepare`)
 npm run sandbox                  # sandbox Storybook at http://localhost:6008 (pages and experiment runs)
-npm run sandbox:check            # type-check + prettier for sandbox/ only (not part of npm test)
+npm run sandbox:check            # type-check + prettier + the fa-design-system eslint preset on sandbox/pages (not part of npm test)
 ```
 
 **Restart Storybook after adding a new component file.** Tailwind doesn't pick up classes from
 files created while Storybook is running, so a new component renders unstyled until restarted.
 
 Releasing, what ships and why import paths are public API: [`docs/releasing.md`](docs/releasing.md).
+
+**Guards.** `skill:check` fails `npm test` when a skill page names a prop, path or file that doesn't
+exist, so a component change that forgets its page is caught. `eslint/index.mjs` is the skill's
+global rules as ESLint core rules, shipped as `fa-design-system/eslint` for apps and run on
+`sandbox/pages` by `sandbox:check`; it isn't run on `components/`, where the library legitimately
+uses raw elements and primitives. `layout:check` is the overflow probe (run it against a running
+Storybook before a release).
 
 **The sandbox** (`sandbox/`) is for building pages with the library and running experiments. Nothing
 in the library imports it, it isn't shipped, and `npm test` skips it. Sandbox pages import by package

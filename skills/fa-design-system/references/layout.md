@@ -1,8 +1,8 @@
 # Layout
 
 How surfaces stack, how cards are arranged on a page, and how two pieces of text are paired.
-Measured on the live Finansavisen pages (October 2026); the evidence is in
-`docs/agents/page-analysis.md` in the library repo.
+Measured on the live Finansavisen pages (October 2026); the measurements are kept in the library
+repo, not in the package.
 
 > **Decided:** cards have a border, three page widths, and a 16 px gutter on mobile (the MUST rules
 > below). **Everything else is flexible:** it describes what the pages do today. Follow it by

@@ -1,16 +1,18 @@
 # Carousel
 
 A row of slides you page through with arrows, dots, swipe or arrow keys. Headless parts on
-Embla Carousel: the library gives structure and behavior, the demo gives the Figma look. Figma:
-Carousel image + \_Carousel arrow (kept on Figma's Pagination page).
+Embla Carousel: the library gives structure and behavior; the arrows and dots that give it the
+Figma look are the markup in the example below. Figma: Carousel image + \_Carousel arrow (kept on
+Figma's Pagination page).
 
 ```ts
 import { Carousel, useCarousel } from "fa-design-system/components/application/carousel/carousel-base";
 import { PaginationDot } from "fa-design-system/components/application/pagination/pagination-dot";
 ```
 
-Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `CarouselLg`, and a
-`CarouselIndicator` that wires `PaginationDot` to the carousel). Start from it.
+Pattern: Storybook **Application / Carousels** (Carousel md, Carousel lg), which is the example
+below: two arrow triggers over the slides and a `CarouselIndicator` that wires `PaginationDot` to
+`useCarousel()`. Start from it.
 
 ## Use when
 
@@ -35,15 +37,16 @@ Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `Car
   `NextTrigger`, on the `asChild` child, or on your own `<button>` in the render prop. Because the
   built-in labels are English ("Previous slide", "Next slide", "Go to slide 1") and only apply when
   you pass none.
-- **carousel-indicator** SHOULD Use `PaginationDot` for the dots, as the demo's `CarouselIndicator`
-  does (`page={selectedIndex + 1}`, `total={scrollSnaps.length}`, `onPageChange` →
+- **carousel-indicator** SHOULD Use `PaginationDot` for the dots, as the example's
+  `CarouselIndicator` does (`page={selectedIndex + 1}`, `total={scrollSnaps.length}`, `onPageChange` →
   `api.scrollTo`). `framed` when it sits on a photo. Because it is the Figma dot pagination.
 - **carousel-alt** MUST Give every image a real Norwegian `alt` (what it shows), or `alt=""` with a
   visible caption. Because slides are images first.
 - **carousel-no-autoplay** NEVER Add an autoplay plugin without a pause button and a reduced-motion
   check. Because moving content that can't be stopped fails WCAG 2.2.2.
-- **carousel-arrow-style** SHOULD Copy the arrow classes from the demo (white circle, `size-9` md /
-  `size-11` lg, `text-fg-secondary`, focus ring, `disabled:opacity-50`) and keep the focus ring.
+- **carousel-arrow-style** SHOULD Copy the arrow classes from the example (`arrow`: white circle,
+  `size-9` md / `size-11` lg, `text-fg-secondary`, focus ring, `disabled:opacity-50`) and keep the
+  focus ring.
 
 ## Props
 
@@ -74,6 +77,11 @@ Pattern: `components/application/carousel/carousel.demo.tsx` (`CarouselMd`, `Car
 const arrow =
     "absolute top-1/2 z-10 flex size-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-alpha-white/90 p-2 text-fg-secondary outline-focus-ring backdrop-blur-xs focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
 
+const CarouselIndicator = ({ size = "md", framed }: { size?: "md" | "lg"; framed?: boolean }) => {
+    const { selectedIndex, scrollSnaps, api } = useCarousel();
+    return <PaginationDot size={size} framed={framed} page={selectedIndex + 1} total={scrollSnaps.length} onPageChange={(page) => api?.scrollTo(page - 1)} />;
+};
+
 <Carousel.Root aria-label="Bilder fra prøvekjøringen av Volvo EX30" className="relative aspect-[1.6] max-w-160">
     <Carousel.PrevTrigger>
         {({ onClick, isDisabled }) => (
@@ -102,8 +110,8 @@ const arrow =
 </Carousel.Root>;
 ```
 
-`arrow` is `CarouselMd`'s trigger classes without the side; `CarouselIndicator` is copied from
-`carousel.demo.tsx`.
+`CarouselIndicator` isn't exported; the few lines above live in your app. `arrow` is the `md`
+trigger; `lg` uses `size-11` with a `size-6` icon.
 
 ## See also
 

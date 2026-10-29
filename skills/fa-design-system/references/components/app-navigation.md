@@ -148,7 +148,7 @@ const items: NavItemType[] = [
 ## Figma parity
 
 Story frames point at navigation frames that haven't had a Fa redesign yet. `docs/figma-parity.md` §2 lists navigation
-featured cards as only partly in code (two demo cards in `featured-cards.demo.tsx`, not exported
+featured cards as only partly in code (two cards that exist only as library demos, not exported
 components); don't import them as library parts.
 
 ## See also

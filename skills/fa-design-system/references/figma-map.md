@@ -517,8 +517,8 @@ Figma options with no code value, and code values Figma lacks. Don't map them yo
   parity §4 and §6.
 - Pagination dot group: `isBrand` on `PaginationDot` has no Figma option
   (`components/application/pagination/pagination-dot.tsx:11`).
-- Table `Dividers=Alternating fills`: no prop; the demos restyle rows with `className`
-  (`components/application/table/table.demo.tsx:172`).
+- Table `Dividers=Alternating fills`: no prop; `odd:bg-secondary` on each `Table.Row` and
+  `className="bg-primary"` on `Table.Header` (rule **table-no-restyle** in [table](components/table.md)).
 - Table cell lead action `Type=Radio/Toggle`: only checkbox selection
   (`components/application/table/table.tsx:151`).
 - Card header `Avatar`, `Dropdown icon`: neither `CardHeader` nor `TableCard.Header` has them; `Divider=False` exists only on `CardHeader`

@@ -2,9 +2,9 @@
 
 Line, area, bar, pie, radar and radial (gauge) charts. There are **no chart components**: each
 chart is a Recharts 3 composition styled with tokens, plus three shared helpers from `charts-base`.
-The demo files are the patterns; copy the one closest to your need. Figma: Line and bar chart (one
-component there, separate demos here), Chart marker (= `ChartTooltipContent`), plus the pie, radar,
-gauge and progress circle charts.
+The Storybook stories are the patterns; copy the one closest to your need. Figma: Line and bar chart
+(one component there, separate stories here), Chart marker (= `ChartTooltipContent`), plus the pie,
+radar, gauge and progress circle charts.
 
 ```ts
 import { ChartActiveDot, ChartLegendContent, ChartTooltipContent, selectEvenlySpacedItems } from "fa-design-system/components/application/charts/charts-base";
@@ -26,10 +26,11 @@ import {
 } from "recharts";
 ```
 
-Patterns (`components/application/charts/`): `line-charts.demo.tsx` (area/line, `LineChart01`…),
-`bar-charts.demo.tsx` (`BarChart`, stacked and combined bar + line), `pie-charts.demo.tsx` (donut,
-`xxs`…`lg` = 120–280px), `radar-charts.demo.tsx`, `activity-gauges.demo.tsx` (concentric
-`RadialBar` rings with a center label), `progress-circles.demo.tsx` (single `RadialBar` ring).
+Patterns (Storybook, **Application / Charts**): Line chart 01–04 (area and line), Bar chart, Bar
+chart 02 and 03 (stacked, and combined bar + line), Pie chart xxs–lg (donut, 120–280px), Radar
+chart, Activity gauge xs–lg (concentric `RadialBar` rings with a center label), Progress circle
+xs–lg (single `RadialBar` ring). Each story's source is its pattern; the example below is the line
+chart.
 
 ## Use when
 
@@ -74,13 +75,13 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
 - **charts-norwegian-format** MUST Format ticks and tooltips Norwegian style: numbers with the `nb`
   helper ("Change value" in `page-patterns.md`: dot thousands, comma decimals), dates with
   `toLocaleDateString("nb-NO", …)`. Never `toLocaleString` for numbers (it puts a space between
-  thousands). Because the demos use the browser locale and English placeholder labels.
+  thousands). Because the patterns use the browser locale and English placeholder labels.
 - **charts-direction-color** SHOULD Use `text-utility-success-600` / `text-utility-error-600` only
   when a series means up or down (a single stock vs. its previous close), never for categories.
 - **charts-responsive** MUST Wrap in `ResponsiveContainer initialDimension={{ width: 1, height: 1 }}`
   inside an element with a fixed height (`h-60`). Use `useBreakpoint("lg")` to drop axis labels and
   move the legend on mobile, and `selectEvenlySpacedItems` to thin out x ticks.
-- **charts-no-animation** SHOULD Keep `isAnimationActive={false}` as in the demos.
+- **charts-no-animation** SHOULD Keep `isAnimationActive={false}` as the patterns do.
 - **charts-period-below** MUST Put the period selector directly under the chart it controls, full
   width of the chart, never above it, beside it or in the card header. When a chart has periods,
   every chart on every page does it the same way (see [period-selector](period-selector.md)).

@@ -29,7 +29,18 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
   the library has and report the difference (it belongs in `docs/figma-parity.md`).
   Everything else is shared.
 - Import paths below are the package paths (`fa-design-system/components/...`). Inside the library
-  repo itself (its demos and stories), the same files are imported as `@/components/...`.
+  repo itself (its demos and stories), the same files are imported through its `@/` alias.
+- Add the system's ESLint preset to the app so the rules below fail the build instead of a review:
+
+    ```js
+    // eslint.config.mjs
+    import { faDesignSystem } from "fa-design-system/eslint";
+
+    export default [...yourParserAndPluginSetup, ...faDesignSystem];
+    ```
+
+    It uses core rules only; every message starts with the rule id it enforces.
+
 - Mentions of `docs/figma-parity.md`, `docs/overrides.md`, `docs/icons.md`, `TOKENS.md` and `CLAUDE.md` refer to
   files in the library repo. In an app they're under `node_modules/fa-design-system/`; open them
   only when a reference page sends you there.
