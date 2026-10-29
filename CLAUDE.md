@@ -102,10 +102,12 @@ skill's rules and `references/tokens.md`. What's specific to building components
 ### Tokens
 
 A component may use a primitive ramp step (`brand-700`) only when its Figma component is bound to
-that primitive (as in `site-brands.ts`). Color, radius, spacing and type tokens are synced from
-Figma: don't edit `styles/theme.css` values on your own. Change Figma first, update
-`tokens/figma-tokens.json`, then `theme.css`, and run `npm run tokens:check`. `TOKENS.md` explains
-the layers and how to read values from Figma.
+that primitive (as in `site-brands.ts`). Color, radius, spacing and type tokens are kept in sync
+with Figma: `styles/theme.css` is what the system uses, `tokens/figma-tokens.json` is the Figma
+snapshot it's checked against. Don't change a token on one side only: design the change in Figma
+if it needs exploring, then land it in `theme.css` and the snapshot in one commit and run
+`npm run tokens:check`. A mismatch is reported, never taken silently from either side. `TOKENS.md`
+explains the layers and how to read values from Figma.
 
 ### Transitions
 
@@ -138,9 +140,14 @@ Icons, flags and logos come from the `fa-icons` package; file type icons from
 `@untitledui/file-icons`. Never add an SVG or icon component here. To add or change one, follow
 [`docs/icons.md`](docs/icons.md) (Figma → `fa-icons` → bump the tag here).
 
-## Figma Parity
+## Source of truth and Figma parity
 
-Known gaps between Figma and code are tracked in [`docs/figma-parity.md`](docs/figma-parity.md).
+**Code is the source of truth.** The library, its tokens and the skill are the system for everyone
+who uses it: designers, engineers and agents. Figma is where designers explore, and where a
+component or a change is designed before it's built; once built, the code version is the one that
+counts. When Figma and code disagree, code stands until the design owner decides otherwise, and the
+difference is logged in [`docs/figma-parity.md`](docs/figma-parity.md), the ledger of every known
+gap, with an owner.
 
 - **Before working on a component**, check it there. If it's listed, point out the gap and the
   suggested action to the user before starting.
@@ -152,8 +159,9 @@ Known gaps between Figma and code are tracked in [`docs/figma-parity.md`](docs/f
   [`docs/overrides.md`](docs/overrides.md). Keep each one in a single place on each side: a `_`
   sub-component in Figma, one config or wrapper in code (e.g. `siteBrands[brand].search`). When a
   second place needs the same restyle, propose a real variant instead.
-- **Figma first:** a new component is designed in Figma, then recreated in code from it. Don't
-  invent one in code without its Figma frame.
+- **Design before build:** a new component or variant is designed in Figma first, then built in
+  code from its frame. Don't invent one in code without a frame, and don't leave one in Figma that
+  code never got: build it, or log it in the parity doc's §2 until it's decided.
 
 ## Adding a new component
 

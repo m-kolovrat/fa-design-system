@@ -24,6 +24,9 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 - The publication is the `brand` prop on `SiteHeader` / `SiteFooter` (`"fa" | "kapital" | "motor"`).
   Both carry the publication's navigation, Meny panel and footer content by default
   (`siteContent[brand]`); pass those props only to override them.
+- **Code is the source of truth.** The library, its tokens and this skill define the system; Figma
+  is where changes are designed. When a frame you were given and the library disagree, build what
+  the library has and report the difference (it belongs in `docs/figma-parity.md`).
   Everything else is shared.
 - Import paths below are the package paths (`fa-design-system/components/...`). Inside the library
   repo itself (its demos and stories), the same files are imported as `@/components/...`.
@@ -93,7 +96,8 @@ order, and say in your reply which one you used:
 When two rules pull in different directions, settle it with these questions, in order:
 
 1. Can everyone use it: keyboard, screen reader, contrast?
-2. Does it match Figma: the component's own variants and the frame you were given?
+2. Does it match the library: the component's own props and variants (code is the source of
+   truth), and then the frame you were given?
 3. Does it stay inside the system: library components, semantic tokens, the scales?
 4. Anything else.
 
@@ -115,8 +119,9 @@ specific one; follow it.
       `<div onClick={open} className="cursor-pointer rounded-md border px-3 py-2">Velg</div>`
 2. **fa-no-invented-variants** NEVER Add a size, color, variant or token that the component or
    `theme.css` doesn't have, and never change a component's fill, border, text color, radius or
-   size through `className` to fake one. Report the gap instead. Because Figma is the source; a
-   variant that exists only in code drifts from design, and a restyle is an untracked override.
+   size through `className` to fake one. Report the gap instead. Because the library owner decides
+   variants: one added at a call site is invisible to the system and drifts from the design, and a
+   restyle is an untracked override.
     - Wrong: `<Button className="bg-success-solid">Kjøp</Button>`, `<Badge className="bg-blue-100 text-blue-700">Ny</Badge>`
 3. **fa-state-props** MUST Express states with the component's props (`isDisabled`, `isLoading`,
    `isInvalid`, `isSelected`), never with classes. Because each component maps states to the Figma

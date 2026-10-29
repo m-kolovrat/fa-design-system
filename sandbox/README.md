@@ -53,7 +53,7 @@ Figma frame or a live page to follow, and which model should build it.
 4. Writes the notes: components used, stand-ins, placeholder figures, and the **Patterns** section
    from the skill (new patterns, clashes). That list is what tells us what the system is missing.
 
-What a page finds goes to the design system the usual way: Figma first, then the library. Sandbox
+What a page finds goes to the design system the usual way: designed in Figma, then built in the library. Sandbox
 code is never moved into `components/`.
 
 ## Experiment runs

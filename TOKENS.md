@@ -1,8 +1,9 @@
 # Design tokens: Figma ↔ code
 
-How a change made to the **Figma design system** ("Fa Design System") maps to a change in
-**this repo**. The goal: a designer says _"I changed X"_ and an engineer can find exactly one
-place named `X`.
+How the tokens in **this repo** (`styles/theme.css`, the source of truth) and the variables in the
+**Figma design system** ("Fa Design System") stay in sync: the same names on both sides, a committed
+Figma snapshot (`tokens/figma-tokens.json`) and a check that compares them. The goal: whoever says
+_"I changed X"_ on either side, the other side has exactly one place named `X`.
 
 ---
 
@@ -160,7 +161,7 @@ Everything above (§1–7) covers colour, radius, spacing, and type — the prop
 extract and outside `npm run tokens:check` — the parity script will not flag a motion edit,
 correct or not, because it only diffs colour/radius/spacing/type against Figma.
 
-Until a motion collection exists in the Figma library, **code is the source of truth** for these
+There is no motion collection in the Figma library yet, so nothing checks these
 values: they were derived from the `emil-design-eng` design-engineering skill grounded in what
 was already in the codebase, not synced from a design file. If Figma gains a motion spec later,
 reconcile it here the same way §5's worked examples do, and consider extending
