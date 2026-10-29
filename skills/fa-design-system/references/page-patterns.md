@@ -13,14 +13,17 @@ report the difference.
 
 ```tsx
 <div className="min-h-dvh bg-secondary_alt">
-    <SiteHeader brand="fa" navigation={navigation} shortcuts={shortcuts} tickerItems={ticker} />
+    <SiteHeader brand="fa" className="sticky top-0 z-30" collapsed={isScrolled} tickerItems={ticker} user={user} onSearchPress={openSearch} />
     <main className="mx-auto w-full max-w-[1376px] px-4 py-6 md:px-8">{/* page content */}</main>
-    <SiteFooter brand="fa" links={footerLinks} publisherInfo={publisher} copyright={copyright} disclaimer={disclaimer} />
+    <SiteFooter brand="fa" />
 </div>
 ```
 
 - The page background and the cards follow the surface levels in [layout.md](layout.md). The
   main width is 1376, 1280 or 980 px depending on the page type ("Page width" in layout.md).
+- Navigation, shortcuts, the Meny panel and the footer content are the publication's defaults
+  (`siteContent[brand]`, see [site-header](components/site-header.md)); don't pass them unless the
+  page has its own. To mark the current section, map over `siteContent[brand].navigation`.
 - One `SiteHeader` and one `SiteFooter` per page, with the same `brand`. An article takes the brand
   of its publication (a Kapital article shows `brand="kapital"`).
 - One `h1` per page.

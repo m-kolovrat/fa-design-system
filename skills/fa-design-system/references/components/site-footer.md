@@ -7,6 +7,7 @@ links, link columns, the app box and the data-provider credits. Same `brand` and
 ```ts
 import { SiteFooter } from "fa-design-system/components/application/site-footer/site-footer";
 import type { SiteNavItem } from "fa-design-system/components/application/site-header/site-brands";
+import { siteContent } from "fa-design-system/components/application/site-header/site-content";
 ```
 
 ## Use when
@@ -26,12 +27,16 @@ import type { SiteNavItem } from "fa-design-system/components/application/site-h
   `siteBrands` (the header's config).
 - **site-footer-app-copy** MUST Pass `appTitle` (and `appDescription`) for `kapital` and `motor`.
   Because the defaults name Finansavisen ("Bruk Finansavisen-appen", "… FA-opplevelse").
-- **site-footer-links** SHOULD Pass `links` as two or three short columns (`SiteNavItem[][]`):
-  services first, legal and privacy last. Because columns have no headings; grouping is the only
-  structure.
+- **site-footer-defaults** MUST Leave `links`, `publisherInfo`, `copyright`, `disclaimer` and
+  `socialLinks` out unless the page has its own: they default to the publication's content in
+  `siteContent[brand].footer` (`site-content.ts`), the same the header uses and Storybook shows. On
+  purpose, like the header's defaults. Because the footer belongs to the publication, not the page.
+- **site-footer-links** SHOULD When passing `links`, give two or three short columns
+  (`SiteNavItem[][]`): services first, legal and privacy last. Because columns have no headings;
+  grouping is the only structure.
 - **site-footer-legal** MUST Keep publisher info, copyright and the data-provider `disclaimer`
-  accurate for the publication. Because they are legal credits (Hegnar Media, Millistream, Nikkei,
-  TradingView), not decoration.
+  accurate for the publication when overriding them. Because they are legal credits (Hegnar Media,
+  Millistream, Nikkei, TradingView), not decoration.
 - **site-footer-social** SHOULD List only platforms the publication uses, via `socialLinks`
   (`x` · `facebook` · `instagram` · `tiktok` · `linkedin`). Because the icons come with the
   component; NEVER add other icon sets for more platforms.
@@ -45,12 +50,12 @@ import type { SiteNavItem } from "fa-design-system/components/application/site-h
 | Prop             | Values                                            | Default                                                |
 | :--------------- | :------------------------------------------------ | :----------------------------------------------------- |
 | `brand`          | `fa` · `kapital` · `motor`                        | `fa`                                                   |
-| `links`          | `SiteNavItem[][]` (required)                      |                                                        |
-| `publisherInfo`  | `string[]` (required), one line each              |                                                        |
-| `copyright`      | string (required)                                 |                                                        |
-| `disclaimer`     | ReactNode (required)                              |                                                        |
+| `links`          | `SiteNavItem[][]`                                 | `siteContent[brand].footer.links`                      |
+| `publisherInfo`  | `string[]`, one line each                         | `siteContent[brand].footer.publisherInfo`              |
+| `copyright`      | string                                            | `siteContent[brand].footer.copyright`                  |
+| `disclaimer`     | ReactNode                                         | `siteContent[brand].footer.disclaimer`                 |
 | `disclaimerHref` | string; adds "Les mer." after the disclaimer      |                                                        |
-| `socialLinks`    | `{ platform, href }[]`                            | `[]`                                                   |
+| `socialLinks`    | `{ platform, href }[]`                            | `siteContent[brand].footer.socialLinks`                |
 | `contactHref`    | string ("Kontakt oss")                            | `"#"`                                                  |
 | `appTitle`       | string                                            | `"Bruk Finansavisen-appen"`                            |
 | `appDescription` | string                                            | `"Få nyhetsvarsler og en personalisert FA-opplevelse"` |
@@ -69,6 +74,17 @@ import type { SiteNavItem } from "fa-design-system/components/application/site-h
 ## Example
 
 ```tsx
+// A Finansavisen page: links, publisher info, copyright, disclaimer and social links are the
+// publication's defaults (site-content.ts). Pass the hrefs the page knows.
+<SiteFooter
+    brand="fa"
+    disclaimerHref="/om-data"
+    contactHref="/kontakt-oss"
+    appStoreHref="https://apps.apple.com/no/app/finansavisen"
+    googlePlayHref="https://play.google.com/store/apps/details?id=no.finansavisen"
+/>;
+
+// Overriding everything, for a publication with its own content:
 <SiteFooter
     brand="kapital"
     links={[
@@ -96,7 +112,7 @@ import type { SiteNavItem } from "fa-design-system/components/application/site-h
     appDescription="Les nye utgaver og arkivet der du er"
     appStoreHref="https://apps.apple.com/no/app/kapital"
     googlePlayHref="https://play.google.com/store/apps/details?id=no.kapital"
-/>
+/>;
 ```
 
 ## Figma parity

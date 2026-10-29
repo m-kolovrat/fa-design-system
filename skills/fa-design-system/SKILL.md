@@ -22,6 +22,8 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 - Dark mode is the `.dark-mode` class on `<html>` or a root element. Every semantic token switches
   on its own.
 - The publication is the `brand` prop on `SiteHeader` / `SiteFooter` (`"fa" | "kapital" | "motor"`).
+  Both carry the publication's navigation, Meny panel and footer content by default
+  (`siteContent[brand]`); pass those props only to override them.
   Everything else is shared.
 - Import paths below are the package paths (`fa-design-system/components/...`). Inside the library
   repo itself (its demos and stories), the same files are imported as `@/components/...`.

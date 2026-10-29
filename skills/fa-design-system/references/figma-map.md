@@ -332,18 +332,18 @@ icon); the other badge exports take only `color="gray"`.
 
 ## Navigation (Finansavisen, Kapital, Motor)
 
-| Figma                                       | Code                                                                                                       |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Header, Fa / Kapital / Motor Header         | `SiteHeader`, `fa-design-system/components/application/site-header/site-header`                            |
-| `Brand=Fa/Kapital/Motor`                    | `brand="fa"` / `"kapital"` / `"motor"`                                                                     |
-| `Type=Desktop/Tablet/Mobile`                | nothing (responsive: mobile below `md`, tablet `md`, desktop `lg`)                                         |
-| `Type=Collapsed`                            | `collapsed`                                                                                                |
-| `Bors Bar=True`                             | `tickerItems={[…]}`                                                                                        |
-| `Log In=True` / `Avatar=True`               | no `user` / `user={{ initials, href }}`                                                                    |
-| Footer, Fa / Kapital / Motor Footer         | `SiteFooter`, `fa-design-system/components/application/site-footer/site-footer`; `brand`, `Type` as Header |
-| Ticker bar, Bors Bar                        | `TickerBar`, `.../site-header/ticker-bar`; use it through `tickerItems`                                    |
-| Menu panel                                  | `SiteMenuPanel`; pass `menu={…}` to `SiteHeader`. `View` is state                                          |
-| \_Header search, \_Header login, \_Nav link | built into `SiteHeader`                                                                                    |
+| Figma                                       | Code                                                                                                                                                                 |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Header, Fa / Kapital / Motor Header         | `SiteHeader`, `fa-design-system/components/application/site-header/site-header`                                                                                      |
+| `Brand=Fa/Kapital/Motor`                    | `brand="fa"` / `"kapital"` / `"motor"`                                                                                                                               |
+| `Type=Desktop/Tablet/Mobile`                | nothing (responsive: mobile below `md`, tablet `md`, desktop `lg`)                                                                                                   |
+| `Type=Collapsed`                            | `collapsed`                                                                                                                                                          |
+| `Bors Bar=True`                             | `tickerItems={[…]}`                                                                                                                                                  |
+| `Log In=True` / `Avatar=True`               | no `user` / `user={{ initials, href }}`                                                                                                                              |
+| Footer, Fa / Kapital / Motor Footer         | `SiteFooter`, `fa-design-system/components/application/site-footer/site-footer`; `brand`, `Type` as Header                                                           |
+| Ticker bar, Bors Bar                        | `TickerBar`, `.../site-header/ticker-bar`; use it through `tickerItems`                                                                                              |
+| Menu panel                                  | `SiteMenuPanel`; `SiteHeader` opens it with the publication's default `menu` (`siteContent[brand]`); `menu={…}` overrides, `menu={null}` removes it. `View` is state |
+| \_Header search, \_Header login, \_Nav link | built into `SiteHeader`                                                                                                                                              |
 
 ## Application navigation
 
