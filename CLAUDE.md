@@ -136,6 +136,8 @@ exactly with the neutral disabled tokens from `theme.css`:
 - `Button`: disabled text and icon `fg-disabled`; primary, secondary and destructive get the
   `bg-disabled_subtle` fill, secondary also a `border-disabled_subtle`. No disabled shadows. Text
   and icon greying is in `common.root`, fill and border in each color variant.
+- `ButtonUtility`: `fg-disabled` icon; secondary keeps its `bg-primary` fill with a `border-disabled_subtle`
+  border.
 - `ButtonGroup`: `bg-disabled_subtle` fill, `text-disabled` text, `fg-disabled_subtle` icons and
   dots, border unchanged.
 - `RadioCard`: `bg-disabled_subtle` fill and `ring-disabled` border.
