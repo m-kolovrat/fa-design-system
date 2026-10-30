@@ -15,7 +15,8 @@ const sizes = {
     sm: {
         root: "p-2 pr-2.5 gap-2 *:data-icon:size-4",
         text: "text-sm",
-        textContainer: "gap-x-1.5",
+        // Figma _Select menu item: 8px between label and supporting text at every size.
+        textContainer: "gap-x-2",
         check: "size-4",
         checkbox: "sm" as const,
     },
@@ -109,13 +110,15 @@ export const SelectItem = ({
                         Icon
                     ) : null}
 
-                    <div className={cx("flex w-full min-w-0 flex-1 flex-wrap", sizes[size].textContainer)}>
-                        <AriaText slot="label" className={cx("truncate font-medium whitespace-nowrap text-primary", sizes[size].text)}>
+                    {/* Figma _Select menu item: one line. The label keeps its width (cut only if it alone is too long);
+                        the supporting text takes the rest and is cut with an ellipsis instead of wrapping. */}
+                    <div className={cx("flex w-full min-w-0 flex-1", sizes[size].textContainer)}>
+                        <AriaText slot="label" className={cx("max-w-full shrink-0 truncate font-medium whitespace-nowrap text-primary", sizes[size].text)}>
                             {label || (typeof children === "function" ? children(state) : children)}
                         </AriaText>
 
                         {supportingText && (
-                            <AriaText slot="description" className={cx("whitespace-nowrap text-tertiary", sizes[size].text)}>
+                            <AriaText slot="description" className={cx("min-w-0 truncate whitespace-nowrap text-tertiary", sizes[size].text)}>
                                 {supportingText}
                             </AriaText>
                         )}

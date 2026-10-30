@@ -76,6 +76,10 @@ Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 3
 `isDisabled`; items also take `selectionIndicator` (`checkmark` · `checkbox` · `none`, default
 `checkmark`) and `selectionIndicatorAlign` (`left` · `right`, default `right`).
 
+An item, and the selected value in the trigger, is always one line: the label keeps its full width,
+and `supportingText` fills the rest and is cut with an ellipsis instead of wrapping (Figma
+`_Select menu item`). Keep the label short and put the long part in `supportingText`.
+
 ## Accessibility
 
 - Type-ahead, arrow keys and Escape come from React Aria; the label is linked for `Select`,
