@@ -3,7 +3,7 @@
 **Prompt:** `/Users/mihovil/Desktop/portfolio-watchlist-brief.md` (PM brief written from screenshots, in
 English). Built as Finansavisen (`brand="fa"`), logged in, all copy in Norwegian.
 
-- **Shell:** `SiteHeader` (sticky, `collapsed` from scroll, Watchlist `current`, `user`) and `SiteFooter`;
+- **Shell:** `SiteHeader` (sticky, Watchlist `current`, `user`) and `SiteFooter`;
   `max-w-container` (1280 px, "logged-in app pages") with `px-4 md:px-8`; card grid with `gap-6`.
 - **Components:** `SiteHeader`, `SiteFooter`, `Tabs` (watchlists: `underline`; transactions:
   `button-minimal` in the card body), `NativeSelect` (watchlist picker below `md`), `CardHeader`,

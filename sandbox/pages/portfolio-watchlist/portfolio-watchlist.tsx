@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { type ReactNode, createContext, useContext, useMemo, useState } from "react";
 import { CardHeader } from "fa-design-system/components/application/card-header/card-header";
 import { ChartLegendContent, ChartTooltipContent } from "fa-design-system/components/application/charts/charts-base";
 import { EmptyState } from "fa-design-system/components/application/empty-state/empty-state";
@@ -1216,14 +1216,6 @@ export const PortfolioWatchlistPage = () => {
     const [selected, setSelected] = useState<AriaKey>(watchlists[0].id);
     const [sheet, setSheet] = useState<SheetContent | null>(null);
     const [sheetOpen, setSheetOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-
-    useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 160);
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
 
     const openSheet = (content: SheetContent) => {
         setSheet(content);
@@ -1236,7 +1228,6 @@ export const PortfolioWatchlistPage = () => {
                 <SiteHeader
                     brand="fa"
                     className="sticky top-0 z-30"
-                    collapsed={scrolled}
                     navigation={navigation}
                     shortcuts={shortcuts}
                     tickerItems={tickerItems}

@@ -22,7 +22,6 @@ export const { navigation, shortcuts, menu } = siteContent.fa;
 
 interface SiteHeaderDemoProps extends Partial<SiteHeaderProps> {
     brand?: SiteBrand;
-    collapsed?: boolean;
     signedIn?: boolean;
 }
 
@@ -30,6 +29,6 @@ interface SiteHeaderDemoProps extends Partial<SiteHeaderProps> {
  * The header as a page gets it: the publication's default navigation, shortcuts and menu from
  * `site-content.ts`, plus a sample ticker. Any `SiteHeader` prop passed overrides the default.
  */
-export const SiteHeaderDemo = ({ brand = "fa", collapsed, signedIn, ...props }: SiteHeaderDemoProps) => (
-    <SiteHeader brand={brand} collapsed={collapsed} tickerItems={tickerItems} user={signedIn ? { initials: "X", href: "/min-side" } : undefined} {...props} />
+export const SiteHeaderDemo = ({ brand = "fa", signedIn, ...props }: SiteHeaderDemoProps) => (
+    <SiteHeader brand={brand} tickerItems={tickerItems} user={signedIn ? { initials: "X", href: "/min-side" } : undefined} {...props} />
 );

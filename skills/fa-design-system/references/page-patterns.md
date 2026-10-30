@@ -18,7 +18,7 @@ Don't turn a stand-in into a new shared component on your own.
 
 ```tsx
 <div className="min-h-dvh bg-secondary_alt">
-    <SiteHeader brand="fa" className="sticky top-0 z-30" collapsed={isScrolled} tickerItems={ticker} user={user} onSearchPress={openSearch} />
+    <SiteHeader brand="fa" className="sticky top-0 z-30" tickerItems={ticker} user={user} onSearchPress={openSearch} />
     <main className="mx-auto w-full max-w-[1376px] px-4 py-6 md:px-8">{/* page content */}</main>
     <SiteFooter brand="fa" />
 </div>
