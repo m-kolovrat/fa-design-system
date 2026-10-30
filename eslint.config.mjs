@@ -1,4 +1,3 @@
-import nextPlugin from "@next/eslint-plugin-next";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
@@ -37,7 +36,6 @@ export default [
             react: reactPlugin,
             "react-hooks": reactHooksPlugin,
             "jsx-a11y": jsxA11yPlugin,
-            "@next/next": nextPlugin,
         },
         rules: {
             "unused-imports/no-unused-imports": "error",
@@ -55,10 +53,6 @@ export default [
             // React Hooks rules
             "react-hooks/rules-of-hooks": "error",
             "react-hooks/exhaustive-deps": "warn",
-
-            // Next.js rules (disabled for component library)
-            "@next/next/no-img-element": "off",
-            "@next/next/no-html-link-for-pages": "off",
 
             "prettier/prettier": [
                 "warn",
@@ -80,7 +74,6 @@ export default [
             "max-len": "off",
             "jsx-a11y/alt-text": "error",
 
-            // Added to address the specific error you were getting
             "@typescript-eslint/no-empty-object-type": "off",
         },
     },

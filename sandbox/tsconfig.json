@@ -4,12 +4,9 @@
         "baseUrl": "..",
         "paths": {
             "@/*": ["./*"],
-            "@/components/*": ["./components/*"],
-            "@/utils/*": ["./utils/*"],
-            "@/hooks/*": ["./hooks/*"],
             "fa-design-system/*": ["./*"]
         }
     },
-    "include": ["../next-env.d.ts", "./**/*.ts", "./**/*.tsx"],
+    "include": ["./**/*.ts", "./**/*.tsx"],
     "exclude": ["../node_modules", "../dist"]
 }

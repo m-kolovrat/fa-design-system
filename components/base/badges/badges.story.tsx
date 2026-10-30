@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ArrowRight } from "fa-icons";
 import { iconArg, iconArgType } from "@/components/internal/icon-controls";
 import badgeDoc from "@/skills/fa-design-system/references/components/badge.md?raw";

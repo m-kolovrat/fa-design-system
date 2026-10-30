@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BjellesauerPage } from "./05-bjellesauer";
 
 const meta: Meta<typeof BjellesauerPage> = {

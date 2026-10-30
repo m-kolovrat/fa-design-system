@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { PERIODS, type Period, PeriodSelector } from "@/components/application/period-selector/period-selector";
 import { PeriodSelectorUnderChart, equinorPeriods } from "@/components/application/period-selector/period-selector.demo";
 import periodSelectorDoc from "@/skills/fa-design-system/references/components/period-selector.md?raw";

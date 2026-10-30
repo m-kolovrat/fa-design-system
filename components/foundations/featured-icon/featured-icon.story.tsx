@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { iconArg, iconArgType } from "@/components/internal/icon-controls";
 import featuredIconDoc from "@/skills/fa-design-system/references/components/featured-icon.md?raw";
 import { FeaturedIcon } from "./featured-icon";

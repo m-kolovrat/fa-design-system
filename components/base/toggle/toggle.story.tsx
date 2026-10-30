@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import toggleDoc from "@/skills/fa-design-system/references/components/toggle.md?raw";
 import { Toggle, ToggleBase } from "./toggle";
 

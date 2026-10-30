@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ChevronRight, Download, Filter } from "fa-icons";
 import { CardHeader } from "@/components/application/card-header/card-header";
 import { CardWithActions, CardWithLink, CardWithTabs, card, cardBody } from "@/components/application/card-header/card-header.demo";

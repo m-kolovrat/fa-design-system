@@ -1,5 +1,5 @@
 import type { ComponentProps, FC } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ButtonGroupItem, ButtonGroup as ButtonGroupRoot } from "@/components/base/button-group/button-group";
 import * as ButtonGroup from "@/components/base/button-group/button-group.demo";
 import { iconArg, iconArgType } from "@/components/internal/icon-controls";

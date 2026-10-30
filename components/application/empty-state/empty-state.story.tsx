@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/react-vite";
 import { Plus, Restart } from "fa-icons";
 import { EmptyState, type EmptyStateProps, ErrorState } from "@/components/application/empty-state/empty-state";
 import { Button } from "@/components/base/buttons/button";

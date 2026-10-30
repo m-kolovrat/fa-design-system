@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import checkboxDoc from "@/skills/fa-design-system/references/components/checkbox.md?raw";
 import { Checkbox, CheckboxBase } from "./checkbox";
 

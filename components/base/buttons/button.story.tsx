@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Plus, Upload } from "fa-icons";
 import { iconArgType } from "@/components/internal/icon-controls";
 import buttonDoc from "@/skills/fa-design-system/references/components/button.md?raw";
