@@ -77,7 +77,7 @@ percent is rounded, like the other circles. No `label` or `valueFormatter`.
 ## Example
 
 ```tsx
-const nok = (v: number) => `${nb(v, { decimals: 0 })} kr`; // `nb`: "Change value" in page-patterns.md
+const nok = (v: number) => `${formatNumber(v, { decimals: 0 })} kr`; // formatNumber: fa-design-system/utils/format-number
 
 <div className="flex flex-col gap-2">
     <p className="text-sm font-medium text-secondary">Sparemål: ny bil</p>

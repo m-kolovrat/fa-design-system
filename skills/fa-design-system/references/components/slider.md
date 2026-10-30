@@ -61,7 +61,7 @@ Plus React Aria `Slider` props.
 ## Example
 
 ```tsx
-const formatNok = (value: number) => `${nb(value, { decimals: 0 })} kr`; // `nb`: "Change value" in page-patterns.md
+const formatNok = (value: number) => `${formatNumber(value, { decimals: 0 })} kr`; // formatNumber: fa-design-system/utils/format-number
 
 <div className="flex flex-col gap-3">
     <p className="text-sm font-medium text-secondary">Kurs</p>

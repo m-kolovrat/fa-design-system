@@ -7,6 +7,7 @@ import {
     type ToggleButtonGroupProps as AriaToggleButtonGroupProps,
 } from "react-aria-components";
 import { cx, sortCx } from "@/utils/cx";
+import { formatNumber } from "@/utils/format-number";
 
 /** Every period a chart can offer, in display order. The labels are the same in Norwegian. */
 export const PERIODS = ["1D", "5D", "1M", "3M", "6M", "YTD", "1Y", "3Y", "5Y", "10Y"] as const;
@@ -40,12 +41,8 @@ export const styles = sortCx({
     },
 });
 
-/** Norwegian change: `+0,42%`, `-1,10%`, `0,00%` (comma decimals, hyphen minus, no space before %). */
-const formatChange = (percent: number) => {
-    const rounded = Number(percent.toFixed(2));
-    const sign = rounded > 0 ? "+" : rounded < 0 ? "-" : "";
-    return `${sign}${Math.abs(rounded).toFixed(2).replace(".", ",")}%`;
-};
+/** Norwegian change: `+0,42%`, `-1,10%`, `0,00%`. */
+const formatChange = (percent: number) => `${formatNumber(percent, { sign: true })}%`;
 
 export interface PeriodSelectorProps extends Omit<
     AriaToggleButtonGroupProps,
