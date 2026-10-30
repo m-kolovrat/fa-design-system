@@ -58,7 +58,8 @@
         "scripts/setup.mjs",
         "!**/*.story.tsx",
         "!**/*.demo.tsx",
-        "!components/internal"
+        "!components/internal",
+        "!**/*.test.ts"
     ],
     "bin": {
         "fa-design-system": "scripts/setup.mjs"
@@ -75,11 +76,12 @@
         "prettier:check": "prettier . --check",
         "type-check": "tsc --noEmit",
         "tokens:check": "node scripts/check-token-parity.mjs",
-        "test": "npm run type-check && npm run lint:check && npm run prettier:check && npm run tokens:check && npm run skill:check",
+        "test": "npm run type-check && npm run lint:check && npm run prettier:check && npm run tokens:check && npm run skill:check && npm run unit",
         "build": "node scripts/build-package.mjs",
         "prepare": "node scripts/build-package.mjs",
         "skill:check": "node scripts/check-skill.mjs",
-        "layout:check": "node scripts/check-layout.mjs"
+        "layout:check": "node scripts/check-layout.mjs",
+        "unit": "vitest run"
     },
     "keywords": [
         "react",
@@ -90,6 +92,9 @@
         "typescript"
     ],
     "license": "MIT",
+    "engines": {
+        "node": ">=22"
+    },
     "bugs": {
         "url": "https://github.com/m-kolovrat/fa-design-system/issues"
     },
@@ -162,7 +167,6 @@
         "tsc-alias": "^1.9.9",
         "typescript": "^5.9.3",
         "vite": "^8.1.5",
-        "vite-tsconfig-paths": "^6.1.1",
         "vitest": "^5.0.5"
     }
 }

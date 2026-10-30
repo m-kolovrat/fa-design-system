@@ -14,7 +14,7 @@
         "plugins": []
     },
     "include": ["components/**/*.ts", "components/**/*.tsx", "hooks/**/*.ts", "utils/**/*.ts", "utils/**/*.tsx", "types/**/*.d.ts"],
-    "exclude": ["node_modules", "dist", "components/internal/**", "**/*.story.tsx", "**/*.demo.tsx"],
+    "exclude": ["node_modules", "dist", "components/internal/**", "**/*.story.tsx", "**/*.demo.tsx", "**/*.test.ts"],
     "tsc-alias": {
         "resolveFullPaths": true
     }
