@@ -316,8 +316,10 @@ Each entry links to its reference page. Open it before using the component.
   `fa-design-system/components/base/avatar/avatar`
 - [Featured icon](references/components/featured-icon.md): an icon on a tinted shape for emphasis.
   `fa-design-system/components/foundations/featured-icon/featured-icon`
-- [Card header](references/components/card-header.md): the title row of every card, with up to
-  three actions. `fa-design-system/components/application/card-header/card-header`
+- [Card header](references/components/card-header.md): the title row of every card, with
+  supporting text and up to three actions. `fa-design-system/components/application/card-header/card-header`
+- [Card footer](references/components/card-footer.md): one "Se alle" link at the bottom of a card.
+  `fa-design-system/components/application/card-footer/card-footer`
 - [Tooltip](references/components/tooltip.md): a short label on hover and focus.
   `fa-design-system/components/base/tooltip/tooltip`
 - [Progress](references/components/progress.md): bars and circles.
