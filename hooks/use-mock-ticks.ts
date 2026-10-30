@@ -15,6 +15,11 @@ export interface UseMockTicksOptions {
  * A made-up live value for prototypes and stories: a deterministic random walk from `start`, one step per
  * `interval`. Pauses while the tab is hidden. Never use it for real data.
  *
+ * It exists to feed `Num`'s `live` highlight (`components/base/num/num.tsx`) where no market feed is
+ * wired up. `Num` itself doesn't know this hook: it compares the text it rendered last time with the
+ * new one, so a WebSocket, polling or a store subscription works the same way. The rules for which
+ * figures tick, and where to call this, are in `skills/fa-design-system/references/components/num.md`.
+ *
  * ```tsx
  * const price = useMockTicks(412.3);
  * const change = price - 412.3;
