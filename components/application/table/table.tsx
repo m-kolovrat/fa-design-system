@@ -228,33 +228,44 @@ const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadP
                 )
             }
         >
-            {(state) => (
-                <AriaGroup className="flex items-center gap-1">
-                    <div className="flex items-center gap-1">
-                        {label && <span className="text-xs font-semibold whitespace-nowrap text-quaternary">{label}</span>}
-                        {typeof children === "function" ? children(state) : children}
-                    </div>
+            {(state) => {
+                // Figma _Table header label State=Hover: label text-tertiary, sort and help icons fg-quaternary_hover.
+                const isHovered = state.allowsSorting && state.isHovered;
+                const sortIconClassName = cx("text-fg-quaternary", isHovered && "text-fg-quaternary_hover");
 
-                    {tooltip && (
-                        <Tooltip title={tooltip} placement="top">
-                            <TooltipTrigger
-                                aria-label={tooltip}
-                                // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
-                                className="cursor-pointer text-fg-quaternary outline-focus-ring hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid"
-                            >
-                                <Help className="size-4" />
-                            </TooltipTrigger>
-                        </Tooltip>
-                    )}
+                return (
+                    <AriaGroup className="flex items-center gap-1">
+                        <div className="flex items-center gap-1">
+                            {label && (
+                                <span className={cx("text-xs font-semibold whitespace-nowrap text-quaternary", isHovered && "text-tertiary")}>{label}</span>
+                            )}
+                            {typeof children === "function" ? children(state) : children}
+                        </div>
 
-                    {state.allowsSorting &&
-                        (state.sortDirection ? (
-                            <ArrowDown className={cx("size-3 text-fg-quaternary", state.sortDirection === "ascending" && "rotate-180")} />
-                        ) : (
-                            <ChevronUpDown size={12} className="text-fg-quaternary" />
-                        ))}
-                </AriaGroup>
-            )}
+                        {tooltip && (
+                            <Tooltip title={tooltip} placement="top">
+                                <TooltipTrigger
+                                    aria-label={tooltip}
+                                    // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
+                                    className={cx(
+                                        "cursor-pointer text-fg-quaternary outline-focus-ring hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid",
+                                        isHovered && "text-fg-quaternary_hover",
+                                    )}
+                                >
+                                    <Help className="size-4" />
+                                </TooltipTrigger>
+                            </Tooltip>
+                        )}
+
+                        {state.allowsSorting &&
+                            (state.sortDirection ? (
+                                <ArrowDown className={cx("size-3", sortIconClassName, state.sortDirection === "ascending" && "rotate-180")} />
+                            ) : (
+                                <ChevronUpDown size={12} className={sortIconClassName} />
+                            ))}
+                    </AriaGroup>
+                );
+            }}
         </AriaColumn>
     );
 };
