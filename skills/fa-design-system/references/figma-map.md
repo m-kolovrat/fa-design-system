@@ -76,13 +76,16 @@ Read every table the same way:
 
 ## Card header
 
-| Figma                           | Code                                                                            |
-| ------------------------------- | ------------------------------------------------------------------------------- |
-| Card header (draft on "Test")   | `CardHeader`, `fa-design-system/components/application/card-header/card-header` |
-| `Title` / `Badge`               | `title` / `badge`                                                               |
-| `Action 1` … `Action 3`         | the buttons passed in `actions` (sm icon-only `Button`s; `Hierarchy` → `color`) |
-| `Divider`                       | `divider`                                                                       |
-| `Breakpoint=Mobile` / `Desktop` | nothing: 16px sides below `md`, 24px from `md`                                  |
+| Figma                             | Code                                                                                                                  |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Card header (draft on "Test")     | `CardHeader`, `fa-design-system/components/application/card-header/card-header`                                       |
+| `Title` / `Badge`                 | `title` / `badge`                                                                                                     |
+| `Supporting text` / `Description` | `description` (leave it out when Supporting text is off)                                                              |
+| `Action 1` … `Action 3`           | the buttons passed in `actions` (sm icon-only `Button`s; `Hierarchy` → `color`)                                       |
+| `Divider`                         | `divider`                                                                                                             |
+| `Actions=False`                   | leave `actions` out                                                                                                   |
+| Card footer (draft on "Test")     | `CardFooter`, `fa-design-system/components/application/card-footer/card-footer`; the Link button's label → `children` |
+| `Breakpoint=Mobile` / `Desktop`   | nothing: 16px sides below `md`, 24px from `md`                                                                        |
 
 ## Period selector
 
@@ -337,7 +340,6 @@ icon); the other badge exports take only `color="gray"`.
 | Header, Fa / Kapital / Motor Header         | `SiteHeader`, `fa-design-system/components/application/site-header/site-header`                                                                                      |
 | `Brand=Fa/Kapital/Motor`                    | `brand="fa"` / `"kapital"` / `"motor"`                                                                                                                               |
 | `Type=Desktop/Tablet/Mobile`                | nothing (responsive: mobile below `md`, tablet `md`, desktop `lg`)                                                                                                   |
-| `Type=Collapsed`                            | `collapsed`                                                                                                                                                          |
 | `Bors Bar=True`                             | `tickerItems={[…]}`                                                                                                                                                  |
 | `Log In=True` / `Avatar=True`               | no `user` / `user={{ initials, href }}`                                                                                                                              |
 | Footer, Fa / Kapital / Motor Footer         | `SiteFooter`, `fa-design-system/components/application/site-footer/site-footer`; `brand`, `Type` as Header                                                           |
@@ -409,18 +411,18 @@ icon); the other badge exports take only `color="gray"`.
 
 ## Tables
 
-| Figma                                  | Code                                                                                                                                             |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Table                                  | `Table` (+ `TableCard.Root`), `fa-design-system/components/application/table/table`                                                              |
-| `Example=…`                            | content only; table.md has the patterns                                                                                                          |
-| `Dividers=Divider line`                | default                                                                                                                                          |
-| `Dividers=Alternating fills`           | no prop, see Mismatches                                                                                                                          |
-| Table header cell                      | `Table.Head` (`label`, `tooltip`)                                                                                                                |
-| `Size=sm/md`                           | `size` on `Table` (or `Table.Header` / `Table.Row` / `Table.Cell`)                                                                               |
-| `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                                                                 |
-| Table cell                             | `Table.Cell`: `Lead text` / `Supporting text` / the avatar or icon → `leadText` / `supportingText` / `leading`; other types composed inside      |
-| Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                                                                        |
-| Card header                            | `CardHeader` for content cards (`title`, `badge`, `actions`, `divider`); in a table card, `TableCard.Header` (`contentTrailing`), see Mismatches |
+| Figma                                  | Code                                                                                                                                                        |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Table                                  | `Table` (+ `TableCard.Root`), `fa-design-system/components/application/table/table`                                                                         |
+| `Example=…`                            | content only; table.md has the patterns                                                                                                                     |
+| `Dividers=Divider line`                | default                                                                                                                                                     |
+| `Dividers=Alternating fills`           | no prop, see Mismatches                                                                                                                                     |
+| Table header cell                      | `Table.Head` (`label`, `tooltip`); `_Table header label` `Arrow` → `allowsSorting` + the sort state (Chevron selector when unsorted), `State=Hover` → hover |
+| `Size=sm/md`                           | `size` on `Table` (or `Table.Header` / `Table.Row` / `Table.Cell`)                                                                                          |
+| `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                                                                            |
+| Table cell                             | `Table.Cell`: `Lead text` / `Supporting text` / the avatar or icon → `leadText` / `supportingText` / `leading`; other types composed inside                 |
+| Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                                                                                   |
+| Table card header                      | `TableCard.Header` (`title`, `badge`, `description`, `contentTrailing`), see Mismatches; for content cards see Card header                                  |
 
 ## Tabs, tags, tooltips
 
@@ -521,8 +523,8 @@ Figma options with no code value, and code values Figma lacks. Don't map them yo
   `className="bg-primary"` on `Table.Header` (rule **table-no-restyle** in [table](components/table.md)).
 - Table cell lead action `Type=Radio/Toggle`: only checkbox selection
   (`components/application/table/table.tsx:151`).
-- Card header `Avatar`, `Dropdown icon`: neither `CardHeader` nor `TableCard.Header` has them; `Divider=False` exists only on `CardHeader`
-  (`components/application/table/table.tsx:62`).
+- Table card header `Avatar=True` and the dropdown icon: `TableCard.Header` has neither
+  (`components/application/table/table.tsx:72`).
 - Header `Buy=False`: "Kjøp" always renders
   (`components/application/site-header/site-header.tsx:226`).
 - Date picker modal: no code (`DatePicker` is a popover,
