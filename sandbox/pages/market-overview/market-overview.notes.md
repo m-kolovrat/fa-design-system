@@ -62,9 +62,24 @@ volume ratios, short positions, dividends, dates, headlines, watchlist holdings,
 (a seeded random walk ending at the last price). "Levert av Quartr" and the publisher lines in the
 footer need checking. Logos are `Avatar` initials. Links point to `#…` anchors.
 
+## Figures and live updates
+
+Every figure is `Num` (`fa-design-system/components/base/num/num`); strings (chart axis ticks and
+tooltip) use `formatNumber`. No `Intl.NumberFormat` left; units go in `suffix` (`%`, ` kr`, ` M`,
+` mrd`). Fixed on the way: the space before `%` in short interest and in the chart sentence, and the
+`+` on the volume ratio (a ratio, not a change).
+
+Ticking via `useMockTicks` (prototype data, a seeded random walk), with the day change derived from
+the moving price: the chart card's last price and change (and its "i dag" sentence and the 1D period
+chip), the market list rows, winners/losers, most traded and hot stocks (last, +/−, %), and the
+watchlist rows plus the portfolio value and day change above them. Static: turnover, volume ratio,
+short interest, days to cover, all-time highs/lows, 1-year and period returns, sectors, the chart
+series. Seeds come from the ticker, so a stock in several cards shows the same price; the chart card
+takes its quote from the selected market row, so the two agree.
+
 ## Not built
 
-- Live updates and the green/red cell flash (no motion token or component; deferred).
+- The green/red cell flash on update (no motion token or component; deferred).
 - Loading skeletons (no skeleton component in the library).
 - Search view for the mobile header search icon and the "Finn instrument" button (handlers are
   no-ops).
@@ -101,9 +116,9 @@ footer need checking. Logos are `Avatar` initials. Links point to `#…` anchors
   component.
 - **Selected row:** the brief has a light blue row with blue text; `Table.Row` uses `bg-secondary`.
   `layout-states` says a selected row is `bg-active` or `bg-brand-primary_alt`. Kept the component.
-- **Number format:** the brief wants a period as thousands separator ("1.612,48"); the skill wants
-  `nb-NO` (space). Followed the skill. "M" / "mrd" for millions and billions come from the brief; the
-  skill has no rule for them.
+- **Number format:** settled: the system's format is now the brief's ("1.612,48", `Num` /
+  `formatNumber`). "M" / "mrd" for millions and billions come from the brief; the skill has no rule
+  for them.
 - **Number of rows:** the brief has about 20 winners/losers; used 14 so the row matches the market
   list.
 - **Row actions:** "Company row" says a trailing icon-only `Button`; `table-actions-label` says
@@ -111,3 +126,5 @@ footer need checking. Logos are `Avatar` initials. Links point to `#…` anchors
   calendar table, so the same download action looks different in two cards.
 - **Header search:** the brief's pill search with an AI sparkle and "Søk ticker eller spør AI" is not
   a `SiteHeader` option; used the header's own search.
+
+**`live` (30 Oct):** only the ticking prices (market list, winners/losers, watchlist, most traded, hot stocks, the chart card) and the watchlist's values and total are `live`. Changes and percentages aren't (num.md). The chart card's price is keyed by instrument and the watchlist figures by list, so switching either doesn't flash.

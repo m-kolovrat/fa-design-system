@@ -326,22 +326,22 @@ Uppercase ticker, brand pill. Always a link to the stock page when it's interact
 ### Change value — no component yet
 
 A signed number colored by direction: the relative change alone (`+0,42%`), or the absolute
-change followed by the relative one in brackets (`+0,03 (+0,42%)`). Always a colored `span`, never
-a `Badge` or `BadgeWithIcon`.
+change followed by the relative one in brackets (`+0,03 (+0,42%)`). Always a colored `span` around
+[`Num`](components/num.md), never a `Badge` or `BadgeWithIcon`. The span colours it by sign, so its `Num`s are never `live`.
 
 ```tsx
-/** Norwegian number: a dot between thousands, a comma before decimals. `sign` adds + or - (for changes). */
-const nb = (v: number, { decimals = 2, sign = false }: { decimals?: number; sign?: boolean } = {}) => {
-    const rounded = Number(v.toFixed(decimals));
-    const [int, frac] = Math.abs(rounded).toFixed(decimals).split(".");
-    const prefix = rounded < 0 ? "-" : sign && rounded > 0 ? "+" : "";
-    return `${prefix}${int.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}${frac ? `,${frac}` : ""}`;
-};
+import { Num } from "fa-design-system/components/base/num/num";
 
 /** `percent` in percent (0.42 for +0,42%), `value` in the instrument's currency. */
 const Change = ({ percent, value }: { percent: number; value?: number }) => (
-    <span className={cx("tabular-nums", percent > 0 && "text-success-primary", percent < 0 && "text-error-primary", percent === 0 && "text-tertiary")}>
-        {value === undefined ? `${nb(percent, { sign: true })}%` : `${nb(value, { sign: true })} (${nb(percent, { sign: true })}%)`}
+    <span className={cx(percent > 0 && "text-success-primary", percent < 0 && "text-error-primary", percent === 0 && "text-tertiary")}>
+        {value === undefined ? (
+            <Num value={percent} sign suffix="%" />
+        ) : (
+            <>
+                <Num value={value} sign /> (<Num value={percent} sign suffix="%" />)
+            </>
+        )}
     </span>
 );
 ```
@@ -349,9 +349,10 @@ const Change = ({ percent, value }: { percent: number; value?: number }) => (
 - Norwegian number format, wherever a figure shows: a dot between thousands, a comma before
   decimals, a hyphen for minus, no space before `%`, and a plus on every positive change. Decimals
   follow the figure (prices and percentages usually 2, share counts 0, rates up to 4). The output
-  is `+0,03 (+0,42%)`, `-1.234,50 (-2,10%)`, `0,00%`. Use `nb` for prices and counts too
-  (`nb(1234.5)` → `1.234,50`, `nb(60278, { decimals: 0 })` → `60.278`); never `toLocaleString` or
-  `Intl.NumberFormat` for numbers, which put a space between thousands.
+  is `+0,03 (+0,42%)`, `-1.234,50 (-2,10%)`, `0,00%`. Show prices and counts with `Num` too
+  (`<Num value={1234.5} />` → `1.234,50`, `<Num value={60278} decimals={0} />` → `60.278`), and use
+  `formatNumber` from `fa-design-system/utils/format-number` where only a string fits. Never
+  `toLocaleString` or `Intl.NumberFormat` for numbers, which put a space between thousands.
 - Color follows the sign: green up, red down, `text-tertiary` for 0. The sign is always shown, so
   the color is never the only signal.
 - Never color by hand with green/red palette classes; never drop the sign.

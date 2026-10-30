@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { CardHeader } from "fa-design-system/components/application/card-header/card-header";
 import { ChartTooltipContent } from "fa-design-system/components/application/charts/charts-base";
 import { EmptyState } from "fa-design-system/components/application/empty-state/empty-state";
@@ -16,10 +16,13 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
 import { Button } from "fa-design-system/components/base/buttons/button";
 import { ButtonUtility } from "fa-design-system/components/base/buttons/button-utility";
 import { Dropdown } from "fa-design-system/components/base/dropdown/dropdown";
+import { Num } from "fa-design-system/components/base/num/num";
 import { Select } from "fa-design-system/components/base/select/select";
 import { Toggle } from "fa-design-system/components/base/toggle/toggle";
 import { useBreakpoint } from "fa-design-system/hooks/use-breakpoint";
+import { useMockTicks } from "fa-design-system/hooks/use-mock-ticks";
 import { cx } from "fa-design-system/utils/cx";
+import { formatNumber } from "fa-design-system/utils/format-number";
 import {
     ArrowRight,
     Calendar,
@@ -84,40 +87,96 @@ const numHead = "px-5 [&>div]:justify-end";
 const numCell = "text-right tabular-nums whitespace-nowrap";
 
 /* ------------------------------------------------------------------------------------------------
- * Norwegian number formatting
+ * Figures (num.md): every number is a `Num`, strings use `formatNumber`
  * ---------------------------------------------------------------------------------------------- */
 
-const nb = (value: number, options: Intl.NumberFormatOptions = {}) =>
-    new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2, ...options }).format(value);
-
 /** Prices use as many decimals as they need: penny stocks get four. */
-const price = (value: number, decimals?: number) => {
-    const d = decimals ?? (value < 1 ? 4 : value < 10 ? 3 : 2);
-    return nb(value, { minimumFractionDigits: d, maximumFractionDigits: d });
-};
+const priceDecimals = (value: number) => (value < 1 ? 4 : value < 10 ? 3 : 2);
 
-const signed = (value: number, options: Intl.NumberFormatOptions = {}) => nb(value, { signDisplay: "exceptZero", ...options });
-
-const percent = (value: number) => signed(value / 100, { style: "percent" });
+/** `live` for prices that tick (num.md: num-live-only-feeds). */
+const price = (value: number, decimals = priceDecimals(value), live = false) => <Num value={value} decimals={decimals} live={live} />;
 
 /** 640 890 000 → "640,89 M", 1 310 000 000 → "1,31 mrd". */
-const amount = (value: number) => (value >= 1e9 ? `${nb(value / 1e9)} mrd` : `${nb(value / 1e6)} M`);
+const amount = (value: number) => (value >= 1e9 ? <Num value={value / 1e9} suffix=" mrd" /> : <Num value={value / 1e6} suffix=" M" />);
 
 /** Change value (page-patterns.md, no component yet): a signed number colored by direction. */
 const Change = ({ pct, value, decimals }: { pct: number; value?: number; decimals?: number }) => (
     <span className={cx("tabular-nums", pct > 0 && "text-success-primary", pct < 0 && "text-error-primary", pct === 0 && "text-tertiary")}>
-        {value === undefined
-            ? percent(pct)
-            : `${signed(value, { minimumFractionDigits: decimals ?? 2, maximumFractionDigits: decimals ?? 2 })} (${percent(pct)})`}
+        {value === undefined ? (
+            <Num value={pct} sign suffix="%" />
+        ) : (
+            <>
+                <Num value={value} decimals={decimals} sign /> (<Num value={pct} sign suffix="%" />)
+            </>
+        )}
     </span>
 );
 
 /** A signed number in the same colors, for +/− columns where the percent has its own column. */
 const SignedValue = ({ value, decimals }: { value: number; decimals?: number }) => (
     <span className={cx("tabular-nums", value > 0 && "text-success-primary", value < 0 && "text-error-primary", value === 0 && "text-tertiary")}>
-        {signed(value, decimals === undefined ? {} : { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
+        <Num value={value} decimals={decimals} sign />
     </span>
 );
+
+/* ------------------------------------------------------------------------------------------------
+ * Live quotes (prototype data): `useMockTicks` moves the last price, the day change follows it
+ * ---------------------------------------------------------------------------------------------- */
+
+interface QuoteBase {
+    last: number;
+    /** Absolute change today; derived from `changePct` when the data has none. */
+    change?: number;
+    changePct: number;
+}
+
+interface LiveQuote {
+    last: number;
+    change: number;
+    changePct: number;
+}
+
+/** A quote at `last`: the change keeps today's opening point, so it moves with the price. */
+const quoteAt = (base: QuoteBase, last: number): LiveQuote => {
+    const change = (base.change ?? base.last - base.last / (1 + base.changePct / 100)) + (last - base.last);
+    return { last, change, changePct: (change / (last - change)) * 100 };
+};
+
+/** The moving last price and the day change derived from it, so the two always agree. */
+const useLiveQuote = (base: QuoteBase, seed: number): LiveQuote => {
+    const last = useMockTicks(base.last, { seed });
+    const { change, changePct } = base;
+    return useMemo(() => quoteAt({ last: base.last, change, changePct }, last), [base.last, change, changePct, last]);
+};
+
+/**
+ * A `Table.Row` whose cells show a live quote. Hooks can't run in `Table.Body`'s render callback, so
+ * the row is its own component. `onQuote` hands the quote to a parent that shows it elsewhere too.
+ */
+const LiveRow = ({
+    id,
+    href,
+    base,
+    seed,
+    onQuote,
+    children,
+}: {
+    id: string;
+    href?: string;
+    base: QuoteBase;
+    seed: number;
+    onQuote?: (id: string, quote: LiveQuote) => void;
+    children: (quote: LiveQuote) => ReactNode;
+}) => {
+    const quote = useLiveQuote(base, seed);
+    useEffect(() => onQuote?.(id, quote), [id, quote, onQuote]);
+
+    return (
+        <Table.Row id={id} href={href}>
+            {children(quote)}
+        </Table.Row>
+    );
+};
 
 /** Instrument cell in a table: `Table.Cell` props for the logo (initials until logos exist), name over ticker. */
 const instrumentCell = (name: string, code: string) => ({
@@ -259,13 +318,29 @@ const markets = [
 ];
 
 /** 4. Index chart: the selected instrument, its value and change, the chart and the period selector. */
-const IndexChartCard = ({ instrument, isLive, className }: { instrument: MarketInstrument; isLive: boolean; className?: string }) => {
+const IndexChartCard = ({
+    instrument,
+    quote,
+    isLive,
+    className,
+}: {
+    instrument: MarketInstrument;
+    /** The live quote from the instrument's row in the market list; the static figures until it arrives. */
+    quote?: LiveQuote;
+    isLive: boolean;
+    className?: string;
+}) => {
     const [period, setPeriod] = useState<Period>("1D");
     const isDesktop = useBreakpoint("lg");
     const chartPeriod = period as ChartPeriod;
     const data = useMemo(() => buildSeries(instrument, chartPeriod), [instrument, chartPeriod]);
-    const change = periodChange(instrument, chartPeriod);
-    const periodOptions: PeriodOption[] = chartPeriods.map((id) => ({ id, change: periodChange(instrument, id) }));
+    const live = quote ?? instrument;
+    /** Today's change moves with the live price; the longer periods are historical. */
+    const liveChange = (id: ChartPeriod) => (id === "1D" ? live.changePct : periodChange(instrument, id));
+    const change = liveChange(chartPeriod);
+    /** The line's colour follows the (static) chart data, not the ticking figure. */
+    const chartChange = periodChange(instrument, chartPeriod);
+    const periodOptions: PeriodOption[] = chartPeriods.map((id) => ({ id, change: liveChange(id) }));
     const periodLabel: Record<ChartPeriod, string> = {
         "1D": "i dag",
         "5D": "siste fem dager",
@@ -299,13 +374,16 @@ const IndexChartCard = ({ instrument, isLive, className }: { instrument: MarketI
             />
             <div className={cx(cardBody, "flex flex-1 flex-col")}>
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <p className="text-display-sm font-semibold text-primary tabular-nums">{price(instrument.last, instrument.decimals)}</p>
+                    <p className="text-display-sm font-semibold text-primary tabular-nums">
+                        {/* A new instrument, or its row's quote arriving after a switch, mounts a fresh figure: neither is a market move. */}
+                        <Num key={`${instrument.id}:${quote ? "live" : "static"}`} value={live.last} decimals={instrument.decimals} live />
+                    </p>
                     <p className="text-md font-medium">
-                        <Change pct={instrument.changePct} value={instrument.change} decimals={instrument.decimals} />
+                        <Change pct={live.changePct} value={live.change} decimals={instrument.decimals} />
                     </p>
                 </div>
                 <p className="mt-1 text-sm text-tertiary">
-                    {instrument.name} er {change >= 0 ? "opp" : "ned"} {nb(Math.abs(change))} % {periodLabel[chartPeriod]}.
+                    {instrument.name} er {change >= 0 ? "opp" : "ned"} <Num value={Math.abs(change)} suffix="%" /> {periodLabel[chartPeriod]}.
                 </p>
                 <div className="mt-4 h-72 min-h-72 flex-1">
                     <ResponsiveContainer initialDimension={{ width: 1, height: 1 }} className="h-full">
@@ -327,11 +405,11 @@ const IndexChartCard = ({ instrument, isLive, className }: { instrument: MarketI
                                 tickLine={false}
                                 width={isDesktop ? 64 : 52}
                                 domain={["auto", "auto"]}
-                                tickFormatter={(v: number) => nb(v, { minimumFractionDigits: 0, maximumFractionDigits: instrument.last < 100 ? 2 : 0 })}
+                                tickFormatter={(v: number) => formatNumber(v, { decimals: instrument.last < 100 ? 2 : 0 })}
                             />
                             <ChartTooltip
                                 content={<ChartTooltipContent />}
-                                formatter={(v) => price(Number(v), instrument.decimals)}
+                                formatter={(v) => formatNumber(Number(v), { decimals: instrument.decimals })}
                                 labelFormatter={(i) => data[Number(i)]?.full ?? ""}
                                 cursor={{ className: "stroke-utility-brand-600 stroke-2" }}
                             />
@@ -340,7 +418,7 @@ const IndexChartCard = ({ instrument, isLive, className }: { instrument: MarketI
                                 name={instrument.name}
                                 type="monotone"
                                 isAnimationActive={false}
-                                className={change >= 0 ? "text-utility-success-600" : "text-utility-error-600"}
+                                className={chartChange >= 0 ? "text-utility-success-600" : "text-utility-error-600"}
                                 stroke="currentColor"
                                 strokeWidth={1.5}
                                 fill="none"
@@ -356,7 +434,18 @@ const IndexChartCard = ({ instrument, isLive, className }: { instrument: MarketI
 };
 
 /** 5. Market list: indices, commodities, FX, crypto, rates. The selected row is the charted instrument. */
-const MarketListCard = ({ selectedId, onSelect, className }: { selectedId: string; onSelect: (id: string) => void; className?: string }) => {
+const MarketListCard = ({
+    selectedId,
+    onSelect,
+    onQuote,
+    className,
+}: {
+    selectedId: string;
+    onSelect: (id: string) => void;
+    /** Receives the selected row's live quote, for the chart card. */
+    onQuote?: (id: string, quote: LiveQuote) => void;
+    className?: string;
+}) => {
     const [groups, setGroups] = useState<AriaSelection>(new Set(assetGroups.map((g) => g.id)));
     const visible = marketInstruments.filter((m) => groups === "all" || groups.has(m.group));
     const count = groups === "all" ? assetGroups.length : groups.size;
@@ -407,15 +496,23 @@ const MarketListCard = ({ selectedId, onSelect, className }: { selectedId: strin
                     <Table.Head id="last" label="Siste" className={numHead} />
                     <Table.Head id="change" label="%" className={numHead} />
                 </Table.Header>
-                <Table.Body items={visible} renderEmptyState={() => <p className="p-5 text-sm text-tertiary">Velg minst ett marked.</p>}>
+                <Table.Body
+                    items={visible}
+                    dependencies={[selectedId, onQuote]}
+                    renderEmptyState={() => <p className="p-5 text-sm text-tertiary">Velg minst ett marked.</p>}
+                >
                     {(m) => (
-                        <Table.Row id={m.id}>
-                            <Table.Cell {...instrumentCell(m.name, m.code)} />
-                            <Table.Cell className={numCell}>{price(m.last, m.decimals)}</Table.Cell>
-                            <Table.Cell className={numCell}>
-                                <Change pct={m.changePct} />
-                            </Table.Cell>
-                        </Table.Row>
+                        <LiveRow id={m.id} base={m} seed={hash(m.id)} onQuote={m.id === selectedId ? onQuote : undefined}>
+                            {(q) => (
+                                <>
+                                    <Table.Cell {...instrumentCell(m.name, m.code)} />
+                                    <Table.Cell className={numCell}>{price(q.last, m.decimals, true)}</Table.Cell>
+                                    <Table.Cell className={numCell}>
+                                        <Change pct={q.changePct} />
+                                    </Table.Cell>
+                                </>
+                            )}
+                        </LiveRow>
                     )}
                 </Table.Body>
             </Table>
@@ -439,13 +536,17 @@ const MoversCard = ({ id, title, rows, href, className }: { id: string; title: s
             </Table.Header>
             <Table.Body items={rows.map((r) => ({ ...r, id: r.ticker }))}>
                 {(s) => (
-                    <Table.Row id={s.id} href={instrumentHref(s.ticker)}>
-                        <Table.Cell {...instrumentCell(s.name, s.ticker)} />
-                        <Table.Cell className={numCell}>{price(s.last)}</Table.Cell>
-                        <Table.Cell className={numCell}>
-                            <Change pct={s.changePct} />
-                        </Table.Cell>
-                    </Table.Row>
+                    <LiveRow id={s.id} href={instrumentHref(s.ticker)} base={s} seed={hash(s.ticker)}>
+                        {(q) => (
+                            <>
+                                <Table.Cell {...instrumentCell(s.name, s.ticker)} />
+                                <Table.Cell className={numCell}>{price(q.last, priceDecimals(s.last), true)}</Table.Cell>
+                                <Table.Cell className={numCell}>
+                                    <Change pct={q.changePct} />
+                                </Table.Cell>
+                            </>
+                        )}
+                    </LiveRow>
                 )}
             </Table.Body>
         </Table>
@@ -543,16 +644,17 @@ const NewsCard = ({ className }: { className?: string }) => {
 /** 8. My watchlist: key figures with a hide-amount toggle, then the holdings table. */
 const WatchlistCard = ({ watchlist, onWatchlistChange, className }: { watchlist: AriaKey; onWatchlistChange: (key: AriaKey) => void; className?: string }) => {
     const [hidden, setHidden] = useState(false);
-    const rows = watchlistItems.map((w) => {
-        const value = w.quantity === undefined ? undefined : w.quantity * w.last;
-        const dayChange = value === undefined ? undefined : value - value / (1 + w.changePct / 100);
-        return { ...w, id: w.ticker, value, dayChange };
-    });
+    // The rows tick on their own and report their quote here, so the summary adds up the same figures.
+    const [quotes, setQuotes] = useState<Record<string, LiveQuote>>({});
+    const onQuote = useCallback((id: string, quote: LiveQuote) => setQuotes((q) => (q[id] === quote ? q : { ...q, [id]: quote })), []);
+    /** Holding value and today's change in NOK, from a quote. */
+    const holding = (quantity: number | undefined, quote: LiveQuote) =>
+        quantity === undefined ? { value: undefined, dayChange: undefined } : { value: quantity * quote.last, dayChange: quantity * quote.change };
+    const rows = watchlistItems.map((w) => ({ ...w, id: w.ticker, ...holding(w.quantity, quotes[w.ticker] ?? quoteAt(w, w.last)) }));
     const total = rows.reduce((sum, r) => sum + (r.value ?? 0), 0);
     const totalDay = rows.reduce((sum, r) => sum + (r.dayChange ?? 0), 0);
     const totalDayPct = (totalDay / (total - totalDay)) * 100;
     const masked = "• • • •";
-    const kr = (v: number) => `${nb(v)} kr`;
 
     return (
         <section aria-labelledby="card-watchlist" className={className}>
@@ -581,7 +683,7 @@ const WatchlistCard = ({ watchlist, onWatchlistChange, className }: { watchlist:
                     <p className="text-xs text-tertiary">Porteføljeverdi</p>
                     <div className="flex items-center gap-2">
                         <p className="text-display-xs font-semibold text-primary tabular-nums">
-                            {hidden ? <span aria-label="Skjult beløp">{masked}</span> : kr(total)}
+                            {hidden ? <span aria-label="Skjult beløp">{masked}</span> : <Num key={String(watchlist)} value={total} suffix=" kr" live />}
                         </p>
                         <Button
                             color="tertiary"
@@ -607,18 +709,27 @@ const WatchlistCard = ({ watchlist, onWatchlistChange, className }: { watchlist:
                 </Table.Header>
                 <Table.Body items={rows}>
                     {(r) => (
-                        <Table.Row id={r.id} href={instrumentHref(r.ticker)}>
-                            <Table.Cell {...instrumentCell(r.name, r.ticker)} />
-                            <Table.Cell className={numCell}>{price(r.last)}</Table.Cell>
-                            <Table.Cell className={numCell}>{r.value === undefined ? "–" : hidden ? masked : nb(r.value)}</Table.Cell>
-                            <Table.Cell className={numCell}>
-                                {r.dayChange === undefined ? "–" : hidden ? masked : <SignedValue value={r.dayChange} />}
-                            </Table.Cell>
-                            <Table.Cell className={numCell}>
-                                <Change pct={r.changePct} />
-                            </Table.Cell>
-                            <Table.Cell className={numCell}>{r.totalPct === undefined ? "–" : <Change pct={r.totalPct} />}</Table.Cell>
-                        </Table.Row>
+                        <LiveRow id={r.id} href={instrumentHref(r.ticker)} base={r} seed={hash(r.ticker)} onQuote={onQuote}>
+                            {(q) => {
+                                const { value, dayChange } = holding(r.quantity, q);
+                                return (
+                                    <>
+                                        <Table.Cell {...instrumentCell(r.name, r.ticker)} />
+                                        <Table.Cell className={numCell}>{price(q.last, priceDecimals(r.last), true)}</Table.Cell>
+                                        <Table.Cell className={numCell}>
+                                            {value === undefined ? "–" : hidden ? masked : <Num key={String(watchlist)} value={value} live />}
+                                        </Table.Cell>
+                                        <Table.Cell className={numCell}>
+                                            {dayChange === undefined ? "–" : hidden ? masked : <SignedValue value={dayChange} />}
+                                        </Table.Cell>
+                                        <Table.Cell className={numCell}>
+                                            <Change pct={q.changePct} />
+                                        </Table.Cell>
+                                        <Table.Cell className={numCell}>{r.totalPct === undefined ? "–" : <Change pct={r.totalPct} />}</Table.Cell>
+                                    </>
+                                );
+                            }}
+                        </LiveRow>
                     )}
                 </Table.Body>
             </Table>
@@ -644,17 +755,21 @@ const MostTradedCard = ({ className }: { className?: string }) => (
             </Table.Header>
             <Table.Body items={mostTraded.map((r) => ({ ...r, id: r.ticker }))}>
                 {(r) => (
-                    <Table.Row id={r.id} href={instrumentHref(r.ticker)}>
-                        <Table.Cell {...instrumentCell(r.name, r.ticker)} />
-                        <Table.Cell className={numCell}>{amount(r.turnover)}</Table.Cell>
-                        <Table.Cell className={numCell}>{price(r.last)}</Table.Cell>
-                        <Table.Cell className={numCell}>
-                            <SignedValue value={r.change} />
-                        </Table.Cell>
-                        <Table.Cell className={numCell}>
-                            <Change pct={r.changePct} />
-                        </Table.Cell>
-                    </Table.Row>
+                    <LiveRow id={r.id} href={instrumentHref(r.ticker)} base={r} seed={hash(r.ticker)}>
+                        {(q) => (
+                            <>
+                                <Table.Cell {...instrumentCell(r.name, r.ticker)} />
+                                <Table.Cell className={numCell}>{amount(r.turnover)}</Table.Cell>
+                                <Table.Cell className={numCell}>{price(q.last, priceDecimals(r.last), true)}</Table.Cell>
+                                <Table.Cell className={numCell}>
+                                    <SignedValue value={q.change} />
+                                </Table.Cell>
+                                <Table.Cell className={numCell}>
+                                    <Change pct={q.changePct} />
+                                </Table.Cell>
+                            </>
+                        )}
+                    </LiveRow>
                 )}
             </Table.Body>
         </Table>
@@ -679,17 +794,23 @@ const UnusualVolumeCard = ({ className }: { className?: string }) => (
             </Table.Header>
             <Table.Body items={unusualVolume.map((r) => ({ ...r, id: r.ticker }))}>
                 {(r) => (
-                    <Table.Row id={r.id} href={instrumentHref(r.ticker)}>
-                        <Table.Cell {...instrumentCell(r.name, r.ticker)} />
-                        <Table.Cell className={numCell}>{percent(r.volumeRatioPct)}</Table.Cell>
-                        <Table.Cell className={numCell}>{price(r.last)}</Table.Cell>
-                        <Table.Cell className={numCell}>
-                            <SignedValue value={r.change} decimals={r.last < 10 ? 4 : 2} />
-                        </Table.Cell>
-                        <Table.Cell className={numCell}>
-                            <Change pct={r.changePct} />
-                        </Table.Cell>
-                    </Table.Row>
+                    <LiveRow id={r.id} href={instrumentHref(r.ticker)} base={r} seed={hash(r.ticker)}>
+                        {(q) => (
+                            <>
+                                <Table.Cell {...instrumentCell(r.name, r.ticker)} />
+                                <Table.Cell className={numCell}>
+                                    <Num value={r.volumeRatioPct} suffix="%" />
+                                </Table.Cell>
+                                <Table.Cell className={numCell}>{price(q.last, priceDecimals(r.last), true)}</Table.Cell>
+                                <Table.Cell className={numCell}>
+                                    <SignedValue value={q.change} decimals={r.last < 10 ? 4 : 2} />
+                                </Table.Cell>
+                                <Table.Cell className={numCell}>
+                                    <Change pct={q.changePct} />
+                                </Table.Cell>
+                            </>
+                        )}
+                    </LiveRow>
                 )}
             </Table.Body>
         </Table>
@@ -727,9 +848,13 @@ const ShortedCard = ({ className }: { className?: string }) => (
                 {(r) => (
                     <Table.Row id={r.id} href={instrumentHref(r.ticker)}>
                         <Table.Cell {...instrumentCell(r.name, r.ticker)} />
-                        <Table.Cell className={numCell}>{`${nb(r.shortPct)} %`}</Table.Cell>
+                        <Table.Cell className={numCell}>
+                            <Num value={r.shortPct} suffix="%" />
+                        </Table.Cell>
                         <Table.Cell className={numCell}>{amount(r.shortValue)}</Table.Cell>
-                        <Table.Cell className={numCell}>{nb(r.daysToCover, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</Table.Cell>
+                        <Table.Cell className={numCell}>
+                            <Num value={r.daysToCover} decimals={1} />
+                        </Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>
@@ -1047,6 +1172,39 @@ const CalendarCard = ({ className }: { className?: string }) => (
  * Page
  * ---------------------------------------------------------------------------------------------- */
 
+/**
+ * 4 + 5. The chart card and the market list, with the card between them in the grid as `children`.
+ * The selected market row reports its live quote, so the chart's figure and the row agree. The quote
+ * lives here rather than in the page, so a tick re-renders these cards only.
+ */
+const ChartAndMarketCards = ({
+    instrument,
+    onSelect,
+    isLive,
+    children,
+}: {
+    instrument: MarketInstrument;
+    onSelect: (id: string) => void;
+    isLive: boolean;
+    children: ReactNode;
+}) => {
+    const [quote, setQuote] = useState<LiveQuote & { id: string }>();
+    const onQuote = useCallback((id: string, q: LiveQuote) => setQuote({ id, ...q }), []);
+
+    return (
+        <>
+            <IndexChartCard
+                instrument={instrument}
+                quote={quote?.id === instrument.id ? quote : undefined}
+                isLive={isLive}
+                className={cx(card, span.twoThirds)}
+            />
+            {children}
+            <MarketListCard selectedId={instrument.id} onSelect={onSelect} onQuote={onQuote} className={cx(card, span.thirdWide)} />
+        </>
+    );
+};
+
 /** Spans in the 6-column card grid: md is two columns, lg six (layout.md "Card grid"). */
 const span = {
     third: "lg:col-span-2",
@@ -1140,10 +1298,9 @@ export const MarketOverviewPage = () => {
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
-                    <IndexChartCard instrument={instrument} isLive={isLive} className={cx(card, span.twoThirds)} />
-                    <SectorsCard className={cx(card, span.thirdWide)} />
-
-                    <MarketListCard selectedId={instrumentId} onSelect={setInstrumentId} className={cx(card, span.thirdWide)} />
+                    <ChartAndMarketCards instrument={instrument} onSelect={setInstrumentId} isLive={isLive}>
+                        <SectorsCard className={cx(card, span.thirdWide)} />
+                    </ChartAndMarketCards>
                     <MoversCard id="card-winners" title="Vinnere" rows={winners} href="/bors/vinnere" className={cx(card, span.third)} />
                     <MoversCard id="card-losers" title="Tapere" rows={losers} href="/bors/tapere" className={cx(card, span.third)} />
 

@@ -72,8 +72,8 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
 - **charts-shared-parts** MUST Use `content={<ChartTooltipContent />}` on `Tooltip` (add
   `isPieChart` / `isRadialChart` for those) and `content={<ChartLegendContent />}` on `Legend`.
   Because they are Figma's chart marker and legend.
-- **charts-norwegian-format** MUST Format ticks and tooltips Norwegian style: numbers with the `nb`
-  helper ("Change value" in `page-patterns.md`: dot thousands, comma decimals), dates with
+- **charts-norwegian-format** MUST Format ticks and tooltips Norwegian style: numbers with
+  `formatNumber` from `fa-design-system/utils/format-number` (dot thousands, comma decimals), dates with
   `toLocaleDateString("nb-NO", …)`. Never `toLocaleString` for numbers (it puts a space between
   thousands). Because the patterns use the browser locale and English placeholder labels.
 - **charts-direction-color** SHOULD Use `text-utility-success-600` / `text-utility-error-600` only
@@ -113,10 +113,10 @@ stroke-utility-brand-600 stroke-2` (or `activeDot={<ChartActiveDot />}`); gauge 
                 tickLine={false}
                 tickFormatter={(d) => new Date(d).toLocaleDateString("nb-NO", { month: "short" })}
             />
-            <YAxis fill="currentColor" axisLine={false} tickLine={false} tickFormatter={(v) => nb(Number(v), { decimals: 0 })} />
+            <YAxis fill="currentColor" axisLine={false} tickLine={false} tickFormatter={(v) => formatNumber(Number(v), { decimals: 0 })} />
             <Tooltip
                 content={<ChartTooltipContent />}
-                formatter={(v) => `${nb(Number(v))} kr`}
+                formatter={(v) => `${formatNumber(Number(v))} kr`}
                 labelFormatter={(d) => new Date(d as Date).toLocaleDateString("nb-NO", { day: "numeric", month: "long" })}
                 cursor={{ className: "stroke-utility-brand-600 stroke-2" }}
             />

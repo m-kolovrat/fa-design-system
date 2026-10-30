@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Price Update Variations</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <style>
+            /* Fa Design System tokens, resolved from styles/theme.css (light, then .dark-mode). */
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #fafafa;
+                --border: #e9eaeb;
+                --fg: #181d27;
+                --fg-secondary: #414651;
+                --fg-tertiary: #535862;
+                --success: #079455; /* text-success-primary */
+                --error: #e12339; /* text-error-primary */
+                --tint-success: #dcfae6; /* bg-success-secondary */
+                --tint-error: #fce0e3; /* bg-error-secondary */
+                --chip: #f5f5f5;
+                --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+                color-scheme: light;
+            }
+            @media (prefers-color-scheme: dark) {
+                :root:not([data-theme="light"]) {
+                    --bg: #0c0e12;
+                    --bg-secondary: #13161b;
+                    --border: #22262f;
+                    --fg: #f7f7f7;
+                    --fg-secondary: #cecfd2;
+                    --fg-tertiary: #94979c;
+                    --success: #47cd89;
+                    --error: #ee5667;
+                    --tint-success: #053321;
+                    --tint-error: #511013;
+                    --chip: #22262f;
+                    color-scheme: dark;
+                }
+            }
+            :root[data-theme="dark"] {
+                --bg: #0c0e12;
+                --bg-secondary: #13161b;
+                --border: #22262f;
+                --fg: #f7f7f7;
+                --fg-secondary: #cecfd2;
+                --fg-tertiary: #94979c;
+                --success: #47cd89;
+                --error: #ee5667;
+                --tint-success: #053321;
+                --tint-error: #511013;
+                --chip: #22262f;
+                color-scheme: dark;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                background: var(--bg-secondary);
+                color: var(--fg);
+                font-family:
+                    Inter,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    Arial,
+                    sans-serif;
+                -webkit-font-smoothing: antialiased;
+            }
+            .page {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 40px 32px 64px;
+            }
+            h1 {
+                font-size: 30px;
+                line-height: 38px;
+                font-weight: 600;
+                margin: 0 0 8px;
+                letter-spacing: -0.01em;
+            }
+            .lede {
+                font-size: 16px;
+                line-height: 24px;
+                color: var(--fg-tertiary);
+                margin: 0;
+                max-width: 760px;
+            }
+
+            /* Controls */
+            .controls {
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                align-items: center;
+                margin: 24px -32px 24px;
+                padding: 12px 32px;
+                background: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
+                backdrop-filter: blur(8px);
+                border-bottom: 1px solid var(--border);
+            }
+            .group {
+                display: inline-flex;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                overflow: hidden;
+                background: var(--bg);
+            }
+            .group button,
+            .btn {
+                font: inherit;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--fg-secondary);
+                background: var(--bg);
+                border: 0;
+                padding: 8px 14px;
+                cursor: pointer;
+            }
+            .group button + button {
+                border-left: 1px solid var(--border);
+            }
+            .group button[aria-pressed="true"] {
+                background: var(--chip);
+                color: var(--fg);
+            }
+            .btn {
+                border: 1px solid var(--border);
+                border-radius: 8px;
+            }
+            button:focus-visible {
+                outline: 2px solid #035cb5;
+                outline-offset: 2px;
+            }
+            .label {
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--fg-tertiary);
+            }
+            .spacer {
+                flex: 1;
+            }
+
+            /* Cards */
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+                gap: 16px;
+            }
+            .card {
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .card header {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            .letter {
+                display: inline-grid;
+                place-items: center;
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+                background: var(--chip);
+                font-size: 13px;
+            }
+            .tag {
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--fg-tertiary);
+                border: 1px solid var(--border);
+                border-radius: 999px;
+                padding: 1px 8px;
+            }
+            .desc {
+                font-size: 14px;
+                line-height: 20px;
+                color: var(--fg-tertiary);
+                margin: 0;
+            }
+            .cost {
+                font-size: 12px;
+                line-height: 18px;
+                color: var(--fg-tertiary);
+                margin: 0;
+                padding-top: 12px;
+                border-top: 1px solid var(--border);
+                margin-top: auto;
+            }
+
+            .hero {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .hero .name {
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--fg-tertiary);
+            }
+            .hero .line {
+                display: flex;
+                align-items: baseline;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .cell {
+                border-radius: 6px;
+            }
+            .price {
+                font-size: 36px;
+                line-height: 44px;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                font-variant-numeric: tabular-nums;
+                white-space: nowrap;
+            }
+            .unit {
+                font-size: 14px;
+                font-weight: 500;
+                color: var(--fg-tertiary);
+            }
+            .change {
+                font-size: 14px;
+                font-weight: 500;
+                font-variant-numeric: tabular-nums;
+            }
+            .pos {
+                color: var(--success);
+            }
+            .neg {
+                color: var(--error);
+            }
+            .zero {
+                color: var(--fg-tertiary);
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 14px;
+            }
+            th {
+                text-align: left;
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--fg-tertiary);
+                padding: 0 8px 6px;
+                border-bottom: 1px solid var(--border);
+            }
+            td {
+                padding: 7px 8px;
+                border-bottom: 1px solid var(--border);
+                font-variant-numeric: tabular-nums;
+                white-space: nowrap;
+            }
+            tr:last-child td {
+                border-bottom: 0;
+            }
+            th.num,
+            td.num {
+                text-align: right;
+            }
+            td.name {
+                font-weight: 500;
+                width: 100%;
+            }
+            td.last {
+                font-weight: 500;
+            }
+
+            /* ── The variations. The changed tail is always one span; --c is green or red by direction. ── */
+            .up {
+                --c: var(--success);
+                --tint: var(--tint-success);
+            }
+            .down {
+                --c: var(--error);
+                --tint: var(--tint-error);
+            }
+
+            /* Each effect is built from phases (hold, then fade…) whose durations are custom properties on the card,
+               so the sliders under each card retime it live. A later phase starts with an animation-delay. */
+            @keyframes hold {
+                from,
+                to {
+                    color: var(--c);
+                }
+            }
+            @keyframes fadeto {
+                from {
+                    color: var(--c);
+                }
+                to {
+                    color: var(--fg);
+                }
+            }
+
+            /* A · TradingView: on, then straight back. No easing. */
+            .tail.tv {
+                animation: hold var(--tv-hold, 750ms) linear;
+            }
+
+            /* A, timer flavour: a plain class, removed by a timer. No animation runs at all. */
+            .tail.flash.up {
+                color: var(--success);
+            }
+            .tail.flash.down {
+                color: var(--error);
+            }
+
+            /* B · Fade back: holds, then eases back to the text colour. */
+            .tail.fade {
+                animation:
+                    hold var(--fade-hold, 400ms) linear,
+                    fadeto var(--fade-out, 700ms) var(--ease-out) var(--fade-hold, 400ms);
+            }
+
+            /* G · Nudge: TradingView's colour, plus the changed digits arrive from the direction of the move. */
+            .tail.nudge {
+                display: inline-block;
+                animation:
+                    hold var(--nudge-hold, 1000ms) linear,
+                    nudge var(--nudge-slide, 500ms) var(--ease-out);
+            }
+            .tail.nudge.down {
+                --from: calc(var(--nudge-distance, 0.3em) * -1);
+            }
+            .tail.nudge.up {
+                --from: var(--nudge-distance, 0.3em);
+            }
+            @keyframes nudge {
+                from {
+                    transform: translateY(var(--from));
+                    opacity: 0.3;
+                }
+            }
+
+            /* The sliders under each card. */
+            .tune {
+                display: grid;
+                grid-template-columns: auto 1fr 4.5em;
+                align-items: center;
+                gap: 4px 12px;
+                padding: 10px 12px;
+                border-radius: 10px;
+                background: var(--bg-secondary);
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--fg-tertiary);
+            }
+            .tune input {
+                width: 100%;
+                height: 16px;
+                margin: 0;
+                accent-color: var(--fg);
+            }
+            .tune output {
+                color: var(--fg);
+                font-variant-numeric: tabular-nums;
+                text-align: right;
+            }
+            .tune button {
+                grid-column: 1 / -1;
+                justify-self: start;
+                font: inherit;
+                font-size: 12px;
+                color: var(--fg-secondary);
+                background: none;
+                border: 0;
+                padding: 2px 0;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .tail.nudge {
+                    animation: hold var(--nudge-hold, 1000ms) linear;
+                }
+            }
+
+            /* Load test */
+            .load {
+                margin-top: 32px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .load h2 {
+                font-size: 18px;
+                margin: 0;
+            }
+            .load .row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                align-items: center;
+            }
+            .readout {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+            .readout div {
+                background: var(--bg-secondary);
+                border-radius: 10px;
+                padding: 10px 12px;
+            }
+            .readout span {
+                display: block;
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--fg-tertiary);
+            }
+            .readout strong {
+                font-size: 20px;
+                font-weight: 600;
+                font-variant-numeric: tabular-nums;
+            }
+            .results caption {
+                caption-side: bottom;
+                text-align: left;
+                font-size: 12px;
+                line-height: 18px;
+                color: var(--fg-tertiary);
+                padding-top: 8px;
+            }
+            .loadgrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+                gap: 2px 12px;
+                font-size: 13px;
+                font-weight: 500;
+                font-variant-numeric: tabular-nums;
+                text-align: right;
+                max-height: 420px;
+                overflow: auto;
+            }
+
+            .sources {
+                margin-top: 40px;
+                font-size: 14px;
+                line-height: 22px;
+                color: var(--fg-tertiary);
+            }
+            .sources h2 {
+                font-size: 16px;
+                color: var(--fg);
+                margin: 0 0 8px;
+            }
+            .sources ul {
+                margin: 0;
+                padding-left: 18px;
+            }
+            .sources a {
+                color: var(--fg-secondary);
+            }
+
+            @media (max-width: 640px) {
+                .page {
+                    padding: 24px 16px 48px;
+                }
+                .controls {
+                    margin: 16px -16px;
+                    padding: 10px 16px;
+                }
+                .grid {
+                    grid-template-columns: 1fr;
+                }
+                .price {
+                    font-size: 30px;
+                    line-height: 38px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <h1>Price update variations</h1>
+            <p class="lede">
+                Three ways to show that a live figure changed, and a load test for pages with many of them. Every card gets the same ticks, so you can compare
+                them side by side. The digits that changed are the ones that react; the rest of the figure stays still. Changes and percentages next to the
+                price just update, as on TradingView.
+            </p>
+
+            <div class="controls" role="toolbar" aria-label="Controls">
+                <span class="label">Tick every</span>
+                <div class="group" id="speed">
+                    <button data-ms="2000" aria-pressed="false">2 s</button>
+                    <button data-ms="1000" aria-pressed="true">1 s</button>
+                    <button data-ms="400" aria-pressed="false">0,4 s</button>
+                </div>
+                <button class="btn" id="pause">Pause</button>
+                <button class="btn" id="tickUp">Tick up</button>
+                <button class="btn" id="tickDown">Tick down</button>
+                <span class="spacer"></span>
+                <div class="group" id="theme">
+                    <button data-theme="light" aria-pressed="false">Light</button>
+                    <button data-theme="dark" aria-pressed="false">Dark</button>
+                </div>
+            </div>
+
+            <div class="grid" id="grid"></div>
+
+            <section class="load" aria-labelledby="load-title">
+                <h2 id="load-title">Load test</h2>
+                <p class="desc">
+                    Many figures ticking at once, as on a market page. About 60% of them change every second. The cards above pause while it runs. Keep this
+                    window in front while measuring: a hidden page gets almost no frames.
+                </p>
+                <div class="row">
+                    <span class="label">Variation</span>
+                    <div class="group" id="loadVariant">
+                        <button data-v="plain" aria-pressed="false">None</button>
+                        <button data-v="flash" aria-pressed="true">A · timer</button>
+                        <button data-v="tv" aria-pressed="false">A · CSS</button>
+                        <button data-v="fade" aria-pressed="false">B</button>
+                        <button data-v="nudge" aria-pressed="false">G</button>
+                    </div>
+                    <span class="label">Figures</span>
+                    <div class="group" id="loadCount">
+                        <button data-n="100" aria-pressed="false">100</button>
+                        <button data-n="500" aria-pressed="true">500</button>
+                        <button data-n="1000" aria-pressed="false">1.000</button>
+                        <button data-n="2000" aria-pressed="false">2.000</button>
+                    </div>
+                    <button class="btn" id="loadRun">Start</button>
+                </div>
+                <div class="readout">
+                    <div><span>Frames per second</span><strong id="rFps">–</strong></div>
+                    <div><span>Slowest frame</span><strong id="rWorst">–</strong></div>
+                    <div><span>Script per tick</span><strong id="rScript">–</strong></div>
+                    <div><span>Animations running</span><strong id="rAnims">–</strong></div>
+                </div>
+                <table class="results">
+                    <caption>
+                        Measured 29 Oct 2026 in Claude's browser pane on a Mac (60 fps is the ceiling). Frames per second; in brackets, the slowest 5% of frames
+                        where they are longer than a normal frame. Default timings. A slower phone reaches each limit sooner.
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>Figures</th>
+                            <th class="num">None</th>
+                            <th class="num">A · timer</th>
+                            <th class="num">A · CSS</th>
+                            <th class="num">B</th>
+                            <th class="num">G</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>100</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                        </tr>
+                        <tr>
+                            <td>500</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">60 (33 ms)</td>
+                        </tr>
+                        <tr>
+                            <td>1.000</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">59</td>
+                            <td class="num">59</td>
+                            <td class="num">56 (33 ms)</td>
+                        </tr>
+                        <tr>
+                            <td>2.000</td>
+                            <td class="num">60</td>
+                            <td class="num">60</td>
+                            <td class="num">39 (34 ms)</td>
+                            <td class="num">24 (67 ms)</td>
+                            <td class="num">17 (117 ms)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="loadgrid" id="loadGrid"></div>
+            </section>
+
+            <div class="sources">
+                <h2>Where these come from</h2>
+                <ul>
+                    <li>
+                        <strong>A</strong>: TradingView symbol page, measured live: the changed digits get a <code>growing</code>/<code>falling</code> class for
+                        750 ms, colour only, removed by a timer.
+                    </li>
+                    <li>
+                        <strong>B</strong>: close to <a href="https://www.npmjs.com/package/react-stock-ticker">react-stock-ticker</a> (MIT), colour on change
+                        with a transition back.
+                    </li>
+                    <li><strong>G</strong>: A plus a short slide, made for this comparison.</li>
+                    <li>
+                        Left out: rolling digits (<a href="https://number-flow.barvian.me/">NumberFlow</a>,
+                        <a href="https://numbers.sfinterface.com/">@sfinterface/numbers</a>) render a strip of digits per column, which is what made the market
+                        overview slow; and AG Grid's cell flash and delta label.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            // The sliders under each card: [custom property, label, min, max, step, default, unit].
+            const timing = (v, label, min, max, value) => [v, label, min, max, 10, value, "ms"];
+            const tunes = {
+                tv: [timing("--tv-hold", "Colour", 0, 2000, 750)],
+                fade: [timing("--fade-hold", "Hold", 0, 1500, 400), timing("--fade-out", "Fade", 50, 2000, 700)],
+                nudge: [
+                    timing("--nudge-slide", "Slide", 60, 800, 500),
+                    timing("--nudge-hold", "Colour", 0, 2000, 1000),
+                    ["--nudge-distance", "Distance", 0.05, 1, 0.01, 0.3, "em"],
+                ],
+            };
+            const unitText = (value, unit) => `${String(value).replace(".", ",")} ${unit}`;
+
+            const variants = [
+                {
+                    key: "tv",
+                    letter: "A",
+                    name: "TradingView",
+                    tag: "exact copy",
+                    desc: "The changed digits turn green or red (750 ms on TradingView), then switch straight back. No easing, no movement.",
+                    cost: "One span per figure, colour only. A new tick restarts the 750 ms.",
+                },
+                {
+                    key: "fade",
+                    letter: "B",
+                    name: "Fade back",
+                    tag: "softer",
+                    desc: "Same colour on the changed digits, held briefly, then eased back to the text colour over about 700 ms.",
+                    cost: "One span, a colour animation. Reads calmer when prices tick fast.",
+                },
+                {
+                    key: "nudge",
+                    letter: "G",
+                    name: "Nudge",
+                    tag: "A + motion",
+                    desc: "TradingView's colour, and the changed digits slide in from the direction of the move.",
+                    cost: "One span, a transform on that span only. Turned off with reduced motion.",
+                },
+            ];
+
+            // Norwegian format, as formatNumber: dot thousands, comma decimals, hyphen minus.
+            // One formatter per option set, reused: building an Intl.NumberFormat is the expensive part.
+            const formatters = new Map();
+            const fmt = (v, d = 2, sign = false) => {
+                const key = `${d}${sign}`;
+                if (!formatters.has(key))
+                    formatters.set(
+                        key,
+                        new Intl.NumberFormat("de-DE", {
+                            minimumFractionDigits: d,
+                            maximumFractionDigits: d,
+                            signDisplay: sign ? "exceptZero" : "negative",
+                        }),
+                    );
+                return formatters.get(key).format(v);
+            };
+
+            const hero = { name: "Equinor · siste", open: 284.2, last: 287.4 };
+            const rows = [
+                { name: "Kongsberg Gruppen", last: 1648.0 },
+                { name: "DNB Bank", last: 214.6 },
+                { name: "Mowi", last: 197.35 },
+            ];
+
+            /** One figure. Splits at the first character that differs and marks only the changed tail. */
+            class Figure {
+                constructor(el, variant, hold = 750) {
+                    this.el = el;
+                    this.variant = variant;
+                    this.hold = hold;
+                    this.value = null;
+                    this.text = "";
+                    this.timer = 0;
+                }
+                set(value) {
+                    const next = fmt(value);
+                    const prev = this.text;
+                    const previous = this.value;
+                    this.value = value;
+                    this.text = next;
+                    if (!prev || next === prev || this.variant === "plain") {
+                        if (next !== prev) this.el.textContent = next;
+                        return;
+                    }
+                    const dir = value > previous ? "up" : "down";
+                    let i = 0;
+                    while (i < prev.length && i < next.length && prev[i] === next[i]) i++;
+                    const tail = document.createElement("span");
+                    tail.textContent = next.slice(i);
+                    tail.className = `tail ${this.variant} ${dir}`;
+                    this.el.replaceChildren(next.slice(0, i), tail);
+                    if (this.variant === "flash") {
+                        clearTimeout(this.timer);
+                        this.timer = setTimeout(() => tail.classList.remove("flash"), this.hold);
+                    }
+                }
+            }
+
+            const grid = document.getElementById("grid");
+            const cards = variants.map((v) => {
+                const card = document.createElement("article");
+                card.className = "card";
+                card.innerHTML = `
+                    <header>
+                        <div class="title"><span class="letter">${v.letter}</span>${v.name}<span class="tag">${v.tag}</span></div>
+                        <p class="desc">${v.desc}</p>
+                    </header>
+                    <div class="hero">
+                        <span class="name">${hero.name}</span>
+                        <div class="line">
+                            <span class="cell"><span class="price"></span></span>
+                            <span class="unit">NOK</span>
+                        </div>
+                        <span class="change"></span>
+                    </div>
+                    <table>
+                        <thead><tr><th>Aksje</th><th class="num">Siste</th></tr></thead>
+                        <tbody>${rows
+                            .map((r) => `<tr><td class="name">${r.name}</td><td class="num last cell"><span class="fig"></span></td></tr>`)
+                            .join("")}</tbody>
+                    </table>
+                    <div class="tune">${tunes[v.key]
+                        .map(
+                            ([prop, label, min, max, step, value, unit]) =>
+                                `<label for="${v.key}${prop}">${label}</label><input id="${v.key}${prop}" type="range" min="${min}" max="${max}" step="${step}" value="${value}" data-var="${prop}" data-unit="${unit}" data-default="${value}" /><output>${unitText(value, unit)}</output>`,
+                        )
+                        .join("")}<button type="button">Reset</button></div>
+                    <p class="cost">${v.cost}</p>`;
+                grid.append(card);
+                const inputs = [...card.querySelectorAll(".tune input")];
+                const show = (input) => {
+                    card.style.setProperty(input.dataset.var, `${input.value}${input.dataset.unit}`);
+                    input.nextElementSibling.textContent = unitText(input.value, input.dataset.unit);
+                };
+                inputs.forEach((input) => {
+                    input.addEventListener("input", () => show(input));
+                    show(input);
+                });
+                card.querySelector(".tune button").addEventListener("click", () =>
+                    inputs.forEach((input) => {
+                        input.value = input.dataset.default;
+                        show(input);
+                    }),
+                );
+                const heroFig = new Figure(card.querySelector(".price"), v.key);
+                const rowFigs = [...card.querySelectorAll("tbody tr")].map((tr) => new Figure(tr.querySelector(".fig"), v.key));
+                return { heroFig, rowFigs, change: card.querySelector(".change") };
+            });
+
+            // One shared feed, so every card shows identical ticks.
+            let seed = 7;
+            const rand = () => {
+                seed = (seed * 9301 + 49297) % 233280;
+                return seed / 233280;
+            };
+            const move = (v, scale, bias = 0) => v * (1 + ((rand() - 0.5) * 2 + bias) * scale);
+
+            const render = () => {
+                const change = hero.last - hero.open;
+                const pct = (change / hero.open) * 100;
+                const tone = change > 0 ? "pos" : change < 0 ? "neg" : "zero";
+                for (const c of cards) {
+                    c.heroFig.set(hero.last);
+                    c.rowFigs.forEach((f, i) => f.set(rows[i].last));
+                    c.change.className = `change ${tone}`;
+                    c.change.textContent = `${fmt(change, 2, true)} (${fmt(pct, 2, true)}%)`;
+                }
+            };
+
+            const tick = (bias = 0) => {
+                hero.last = Math.round(move(hero.last, 0.0015, bias) * 100) / 100;
+                // Not every row moves every tick, as in a real table.
+                rows.forEach((r) => {
+                    if (bias !== 0 || rand() < 0.45) r.last = Math.round(move(r.last, 0.0012, bias) * 100) / 100;
+                });
+                render();
+            };
+
+            let ms = 1000;
+            let timer = null;
+            let paused = false;
+            const start = () => {
+                clearInterval(timer);
+                if (!paused) timer = setInterval(() => !document.hidden && tick(), ms);
+            };
+
+            document.querySelectorAll("#speed button").forEach((b) =>
+                b.addEventListener("click", () => {
+                    ms = Number(b.dataset.ms);
+                    document.querySelectorAll("#speed button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+                    start();
+                }),
+            );
+            const pause = document.getElementById("pause");
+            pause.addEventListener("click", () => {
+                paused = !paused;
+                pause.textContent = paused ? "Play" : "Pause";
+                start();
+            });
+            document.getElementById("tickUp").addEventListener("click", () => tick(0.9));
+            document.getElementById("tickDown").addEventListener("click", () => tick(-0.9));
+
+            const themeButtons = document.querySelectorAll("#theme button");
+            const applyTheme = (t) => {
+                document.documentElement.dataset.theme = t;
+                themeButtons.forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.theme === t)));
+            };
+            themeButtons.forEach((b) => b.addEventListener("click", () => applyTheme(b.dataset.theme)));
+            applyTheme(matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+            // ── Load test ──
+            const load = { variant: "flash", count: 500, figures: [], values: [], timer: 0, raf: 0, running: false, scripts: [] };
+            const loadGrid = document.getElementById("loadGrid");
+            const pick = (groupId, attr, onPick) =>
+                document.querySelectorAll(`#${groupId} button`).forEach((b) =>
+                    b.addEventListener("click", () => {
+                        document.querySelectorAll(`#${groupId} button`).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+                        onPick(b.dataset[attr]);
+                        if (load.running) startLoad();
+                    }),
+                );
+            pick("loadVariant", "v", (v) => (load.variant = v));
+            pick("loadCount", "n", (n) => (load.count = Number(n)));
+
+            const stopLoad = () => {
+                clearInterval(load.timer);
+                cancelAnimationFrame(load.raf);
+                load.figures.forEach((f) => clearTimeout(f.timer));
+                load.running = false;
+                document.getElementById("loadRun").textContent = "Start";
+            };
+            const startLoad = () => {
+                stopLoad();
+                if (!paused) pause.click();
+                load.running = true;
+                document.getElementById("loadRun").textContent = "Stop";
+                loadGrid.replaceChildren();
+                load.values = Array.from({ length: load.count }, (_, i) => 20 + ((i * 7919) % 2000) + ((i * 13) % 100) / 100);
+                load.figures = load.values.map((v) => {
+                    const el = document.createElement("span");
+                    loadGrid.append(el);
+                    const f = new Figure(el, load.variant);
+                    f.set(v);
+                    return f;
+                });
+                load.scripts = [];
+                load.timer = setInterval(() => {
+                    const t0 = performance.now();
+                    load.values = load.values.map((v, i) => {
+                        if (rand() > 0.6) return v;
+                        const next = Math.round(move(v, 0.0015) * 100) / 100;
+                        load.figures[i].set(next);
+                        return next;
+                    });
+                    load.scripts.push(performance.now() - t0);
+                    if (load.scripts.length > 5) load.scripts.shift();
+                }, 1000);
+                // Frame counter: frames per second and the slowest frame, over the last two seconds.
+                let last = performance.now();
+                let frames = [];
+                const loop = (now) => {
+                    frames.push(now - last);
+                    last = now;
+                    const window2s = [];
+                    let sum = 0;
+                    for (let i = frames.length - 1; i >= 0 && sum < 2000; i--) {
+                        sum += frames[i];
+                        window2s.push(frames[i]);
+                    }
+                    frames = window2s.reverse();
+                    if (frames.length > 3) {
+                        document.getElementById("rFps").textContent = Math.round((frames.length / sum) * 1000);
+                        document.getElementById("rWorst").textContent = `${Math.round(Math.max(...frames))} ms`;
+                        const avg = load.scripts.length ? load.scripts.reduce((a, b) => a + b, 0) / load.scripts.length : 0;
+                        document.getElementById("rScript").textContent = `${avg.toFixed(1).replace(".", ",")} ms`;
+                        document.getElementById("rAnims").textContent = document.getAnimations().length;
+                    }
+                    load.raf = requestAnimationFrame(loop);
+                };
+                load.raf = requestAnimationFrame(loop);
+            };
+            document.getElementById("loadRun").addEventListener("click", () => (load.running ? stopLoad() : startLoad()));
+
+            render();
+            start();
+        </script>
+    </body>
+</html>

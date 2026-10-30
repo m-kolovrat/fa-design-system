@@ -308,6 +308,8 @@ Each entry links to its reference page. Open it before using the component.
 
 ### Display
 
+- [Num](references/components/num.md): every figure (price, value, change, count), Norwegian
+  format; `live` figures colour their changed digits for a moment when a market feed updates them. `fa-design-system/components/base/num/num`
 - [Badge](references/components/badge.md): a short status or label; `BadgeWithDot`,
   `BadgeWithIcon`, `BadgeGroup`. `fa-design-system/components/base/badges/badges`
 - [Avatar](references/components/avatar.md): `Avatar`, `AvatarLabelGroup`, `AvatarProfilePhoto`.
