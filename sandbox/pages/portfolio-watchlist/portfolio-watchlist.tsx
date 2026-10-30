@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 import { CardHeader } from "fa-design-system/components/application/card-header/card-header";
 import { ChartLegendContent, ChartTooltipContent } from "fa-design-system/components/application/charts/charts-base";
 import { EmptyState } from "fa-design-system/components/application/empty-state/empty-state";
@@ -19,10 +19,13 @@ import { Badge } from "fa-design-system/components/base/badges/badges";
 import { Button } from "fa-design-system/components/base/buttons/button";
 import { ButtonUtility } from "fa-design-system/components/base/buttons/button-utility";
 import { Dropdown } from "fa-design-system/components/base/dropdown/dropdown";
+import { Num } from "fa-design-system/components/base/num/num";
 import { NativeSelect } from "fa-design-system/components/base/select/select-native";
 import { Tooltip, TooltipTrigger } from "fa-design-system/components/base/tooltip/tooltip";
 import { useBreakpoint } from "fa-design-system/hooks/use-breakpoint";
+import { useMockTicks } from "fa-design-system/hooks/use-mock-ticks";
 import { cx } from "fa-design-system/utils/cx";
+import { formatNumber } from "fa-design-system/utils/format-number";
 import { ChevronDown, ChevronRight, Download, Help, Pen, Plus, Settings, Sort, Wallet } from "fa-icons";
 import type { Key as AriaKey, SortDescriptor as AriaSortDescriptor } from "react-aria-components";
 import { Button as AriaButton } from "react-aria-components";
@@ -30,6 +33,7 @@ import { CartesianGrid, Legend, Line, LineChart, Tooltip as RechartsTooltip, Res
 import {
     type Holding,
     type Instrument,
+    type Kpi,
     type Watchlist,
     calendarEvents,
     cashMovements,
@@ -42,13 +46,14 @@ import {
 } from "./portfolio-watchlist-data";
 
 // ---------------------------------------------------------------------------------------------------------------------
-// Formatting (nb-NO: comma decimals, space thousands, real minus sign)
+// Formatting: figures are `Num` (`formatNumber` where only a string fits). Dot thousands, comma decimals, hyphen
+// minus, `%` with no space, a plus on every positive change.
 
-const nf = (v: number, decimals = 2, options: Intl.NumberFormatOptions = {}) =>
-    new Intl.NumberFormat("nb-NO", { minimumFractionDigits: decimals, maximumFractionDigits: decimals, ...options }).format(v);
-
-const pct = (v: number, decimals = 2) => nf(v / 100, decimals, { style: "percent", signDisplay: "exceptZero" });
-const kr = (v: number, decimals = 0, signed = false) => `${nf(v, decimals, signed ? { signDisplay: "exceptZero" } : {})} kr`;
+/** A change in percent as a string (chart ticks, tooltips, option labels): `+0,84%`. */
+const pct = (v: number, decimals = 2) => `${formatNumber(v, { decimals, sign: true })}%`;
+/** An amount in kroner: `1.284.650 kr`. */
+/** `live` for values that move with the prices (num.md: num-live-only-feeds). */
+const kr = (v: number, decimals = 0, signed = false, live = false) => <Num value={v} decimals={decimals} sign={signed} suffix=" kr" live={live} />;
 const priceDecimals = (v: number) => (v < 10 ? 4 : 2);
 
 const dateShort = (iso: string) => new Date(iso).toLocaleDateString("nb-NO", { day: "numeric", month: "short" });
@@ -57,12 +62,76 @@ const dateLong = (iso: string) => new Date(iso).toLocaleDateString("nb-NO", { da
 /** "Change value" stand-in from page-patterns.md: a signed, colored span. */
 const Change = ({ percent, value, decimals = 2 }: { percent: number; value?: number; decimals?: number }) => (
     <span className={cx("tabular-nums", percent > 0 && "text-success-primary", percent < 0 && "text-error-primary", percent === 0 && "text-tertiary")}>
-        {value === undefined ? pct(percent) : `${nf(value, decimals, { signDisplay: "exceptZero" })} (${pct(percent)})`}
+        {value === undefined ? (
+            <Num value={percent} sign suffix="%" />
+        ) : (
+            <>
+                <Num value={value} decimals={decimals} sign /> (<Num value={percent} sign suffix="%" />)
+            </>
+        )}
     </span>
 );
 
 /** A return that may be missing ("–"). */
 const MaybeChange = ({ percent }: { percent: number | null }) => (percent === null ? <span className="text-tertiary">–</span> : <Change percent={percent} />);
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Live prices (prototype): each instrument's last price is a `useMockTicks` walk with its own seed. What follows the
+// price (day change, market value, unrealised gain, weight, the portfolio's value and day change) is derived from it.
+
+/** The instrument at a new last price: the day change moves with it, the previous close stays put. */
+const withLast = (base: Instrument, last: number): Instrument => {
+    const change = base.change + (last - base.last);
+    return { ...base, last, change, changePct: (change / (base.last - base.change)) * 100 };
+};
+
+/** One `useMockTicks` per instrument. The instruments are a constant from the data file, so the calls are fixed. */
+const useLivePrices = (): Record<string, Instrument> => {
+    const lasts: Record<string, number> = {
+        EQNR: useMockTicks(instruments.EQNR.last, { seed: 1 }),
+        DNB: useMockTicks(instruments.DNB.last, { seed: 2 }),
+        KOG: useMockTicks(instruments.KOG.last, { seed: 3 }),
+        MOWI: useMockTicks(instruments.MOWI.last, { seed: 4 }),
+        NHY: useMockTicks(instruments.NHY.last, { seed: 5 }),
+        TEL: useMockTicks(instruments.TEL.last, { seed: 6 }),
+        ORK: useMockTicks(instruments.ORK.last, { seed: 7 }),
+        GJF: useMockTicks(instruments.GJF.last, { seed: 8 }),
+        XAUNOK: useMockTicks(instruments.XAUNOK.last, { seed: 9 }),
+        NOKSEK: useMockTicks(instruments.NOKSEK.last, { seed: 10 }),
+    };
+    return Object.fromEntries(Object.entries(instruments).map(([key, base]) => [key, withLast(base, lasts[key] ?? base.last)]));
+};
+
+const LivePrices = createContext<Record<string, Instrument>>(instruments);
+
+/** Holds the live prices, so only the figures that read them re-render on a tick (not the charts). */
+const LivePricesProvider = ({ children }: { children: ReactNode }) => {
+    const prices = useLivePrices();
+    return <LivePrices.Provider value={prices}>{children}</LivePrices.Provider>;
+};
+
+/** The list's totals at the given prices: the data's figures moved by what the holdings have moved since. */
+const livePortfolio = (watchlist: Watchlist, live: Record<string, Instrument>) => {
+    const move = watchlist.holdings.reduce((sum, h) => sum + h.quantity * (live[h.ticker].last - instruments[h.ticker].last), 0);
+    const previousClose = watchlist.metrics.value / (1 + watchlist.dayChange / 100);
+    return {
+        move,
+        value: watchlist.metrics.value + move,
+        holdingsValue: watchlist.metrics.holdingsValue + move,
+        dayChange: previousClose ? watchlist.dayChange + (move / previousClose) * 100 : watchlist.dayChange,
+    };
+};
+
+const useLivePortfolio = (watchlist: Watchlist) => livePortfolio(watchlist, useContext(LivePrices));
+
+/** A key figure at the live prices: the value and day change move, and the return since start with them. */
+const liveKpi = (kpi: Kpi, portfolio: ReturnType<typeof livePortfolio>): Kpi => {
+    if (!kpi.live) return kpi;
+    const value = kpi.value + portfolio.move;
+    if (kpi.live === "day") return { ...kpi, value, percent: portfolio.dayChange };
+    if (kpi.live === "gain" && kpi.percent !== undefined) return { ...kpi, value, percent: (value / kpi.value) * kpi.percent };
+    return { ...kpi, value };
+};
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Shell data (header, footer)
@@ -102,11 +171,11 @@ const shortcuts: SiteNavItem[] = [
 ];
 
 const tickerItems: TickerItem[] = [
-    { label: "Oslo Børs", value: "1 612,48", change: "0,61%", direction: "up", href: "/ticker/OSEBX" },
-    { label: "Brent spot", value: "81,74", change: "1,32%", direction: "up", href: "/ticker/BRENT" },
-    { label: "Dollar", value: "10,86", change: "-0,21%", direction: "down", href: "/ticker/USDNOK" },
-    { label: "Euro", value: "11,72", change: "0,08%", direction: "up", href: "/ticker/EURNOK" },
-    { label: "Gull", value: "43 812,50", change: "0,66%", direction: "up", href: "/ticker/XAUNOK" },
+    { label: "Oslo Børs", value: formatNumber(1612.48), change: pct(0.61), direction: "up", href: "/ticker/OSEBX" },
+    { label: "Brent spot", value: formatNumber(81.74), change: pct(1.32), direction: "up", href: "/ticker/BRENT" },
+    { label: "Dollar", value: formatNumber(10.86), change: pct(-0.21), direction: "down", href: "/ticker/USDNOK" },
+    { label: "Euro", value: formatNumber(11.72), change: pct(0.08), direction: "up", href: "/ticker/EURNOK" },
+    { label: "Gull", value: formatNumber(43812.5), change: pct(0.66), direction: "up", href: "/ticker/XAUNOK" },
 ];
 
 const menu: SiteMenuContent = {
@@ -243,6 +312,31 @@ const tickFormat = (period: Period) => (value: number) => {
 // ---------------------------------------------------------------------------------------------------------------------
 // Cards
 
+/** The key figures row, at the live prices (its own component, so a tick doesn't re-render the chart). */
+const KeyFigures = ({ watchlist }: { watchlist: Watchlist }) => {
+    const portfolio = useLivePortfolio(watchlist);
+    return (
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 xl:grid-cols-5">
+            {watchlist.kpis.map((base) => {
+                const kpi = liveKpi(base, portfolio);
+                return (
+                    <div key={kpi.label} className="flex min-w-0 flex-col gap-1">
+                        <dt className="text-xs text-tertiary">{kpi.label}</dt>
+                        <dd className="flex flex-col gap-0.5">
+                            <span className="text-lg font-semibold whitespace-nowrap text-primary tabular-nums sm:text-display-xs">
+                                {kr(kpi.value, 0, kpi.signed, kpi.live === "value")}
+                            </span>
+                            <span className="text-sm">
+                                {kpi.percent === undefined ? <span className="text-tertiary">NOK</span> : <Change percent={kpi.percent} />}
+                            </span>
+                        </dd>
+                    </div>
+                );
+            })}
+        </dl>
+    );
+};
+
 const PerformanceCard = ({ watchlist }: { watchlist: Watchlist }) => {
     const [period, setPeriod] = useState<Period>("1Y");
     const isDesktop = useBreakpoint("lg");
@@ -254,21 +348,7 @@ const PerformanceCard = ({ watchlist }: { watchlist: Watchlist }) => {
             <CardHeader titleId="card-performance" title="Utvikling" />
             <div className={cardBody}>
                 {/* Key figures — no component yet (page-patterns) */}
-                <dl className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 xl:grid-cols-5">
-                    {watchlist.kpis.map((kpi) => (
-                        <div key={kpi.label} className="flex min-w-0 flex-col gap-1">
-                            <dt className="text-xs text-tertiary">{kpi.label}</dt>
-                            <dd className="flex flex-col gap-0.5">
-                                <span className="text-lg font-semibold whitespace-nowrap text-primary tabular-nums sm:text-display-xs">
-                                    {kr(kpi.value, 0, kpi.signed)}
-                                </span>
-                                <span className="text-sm">
-                                    {kpi.percent === undefined ? <span className="text-tertiary">NOK</span> : <Change percent={kpi.percent} />}
-                                </span>
-                            </dd>
-                        </div>
-                    ))}
-                </dl>
+                <KeyFigures key={watchlist.id} watchlist={watchlist} />
 
                 <div className="mt-6 h-64">
                     <ResponsiveContainer initialDimension={{ width: 1, height: 1 }} className="h-full">
@@ -352,14 +432,15 @@ const HelpLabel = ({ label, title, description }: { label: string; title: string
 
 const MetricsCard = ({ watchlist }: { watchlist: Watchlist }) => {
     const m = watchlist.metrics;
-    const share = (v: number) => nf((v / m.value) * 100, 1) + " %";
+    const portfolio = useLivePortfolio(watchlist);
+    const share = (v: number) => <Num value={(v / portfolio.value) * 100} decimals={1} suffix="%" />;
     const rows: { label: ReactNode; value: ReactNode; indent?: boolean }[] = [
-        { label: "Porteføljeverdi", value: kr(m.value) },
+        { label: "Porteføljeverdi", value: kr(portfolio.value, 0, false, true) },
         {
             label: "Beholdning",
             value: (
                 <>
-                    {kr(m.holdingsValue)} <span className="text-tertiary">· {share(m.holdingsValue)}</span>
+                    {kr(portfolio.holdingsValue, 0, false, true)} <span className="text-tertiary">· {share(portfolio.holdingsValue)}</span>
                 </>
             ),
             indent: true,
@@ -379,15 +460,15 @@ const MetricsCard = ({ watchlist }: { watchlist: Watchlist }) => {
         },
         {
             label: <HelpLabel label="Beta (3 år)" title="Beta" description="Hvor mye porteføljen svinger når Hovedindeksen svinger. 1 betyr like mye." />,
-            value: nf(m.beta),
+            value: <Num value={m.beta} />,
         },
         {
             label: <HelpLabel label="Standardavvik (3 år)" title="Standardavvik" description="Hvor mye avkastningen har variert per år, siste tre år." />,
-            value: `${nf(m.stdDev, 1)} %`,
+            value: <Num value={m.stdDev} decimals={1} suffix="%" />,
         },
-        { label: "Direkteavkastning*", value: `${nf(m.dividendYield, 1)} %` },
-        { label: "P/E 12 mnd*", value: nf(m.pe, 1) },
-        { label: "Pris/bok*", value: nf(m.pb, 1) },
+        { label: "Direkteavkastning*", value: <Num value={m.dividendYield} decimals={1} suffix="%" /> },
+        { label: "P/E 12 mnd*", value: <Num value={m.pe} decimals={1} /> },
+        { label: "Pris/bok*", value: <Num value={m.pb} decimals={1} /> },
         { label: "Mottatt utbytte (12 mnd)", value: kr(m.dividendsReceived) },
     ];
 
@@ -423,7 +504,7 @@ interface Column {
     render: (row: HoldingRow) => ReactNode;
 }
 
-const priceCell = (r: HoldingRow) => <span>{nf(r.instrument.last, priceDecimals(r.instrument.last))}</span>;
+const priceCell = (r: HoldingRow) => <Num value={r.instrument.last} decimals={priceDecimals(r.instrument.last)} live />;
 const changeAbsCell = (r: HoldingRow) => <Change percent={r.instrument.changePct} />;
 
 const views: Record<string, Column[]> = {
@@ -434,7 +515,7 @@ const views: Record<string, Column[]> = {
             label: "+/−",
             render: (r) => (
                 <span className={cx(r.instrument.change > 0 && "text-success-primary", r.instrument.change < 0 && "text-error-primary")}>
-                    {nf(r.instrument.change, priceDecimals(r.instrument.last), { signDisplay: "exceptZero" })}
+                    <Num value={r.instrument.change} decimals={priceDecimals(r.instrument.last)} sign />
                 </span>
             ),
         },
@@ -442,11 +523,11 @@ const views: Record<string, Column[]> = {
         { id: "type", label: "Type", render: (r) => ({ stock: "Aksje", commodity: "Råvare", fx: "Valuta" })[r.instrument.assetType] },
     ],
     beholdning: [
-        { id: "qty", label: "Antall", render: (r) => nf(r.quantity, 0) },
-        { id: "avg", label: "Snittkurs", wideOnly: true, render: (r) => nf(r.avgPrice, priceDecimals(r.avgPrice)) },
-        { id: "value", label: "Markedsverdi", render: (r) => kr(r.value) },
+        { id: "qty", label: "Antall", render: (r) => <Num value={r.quantity} decimals={0} /> },
+        { id: "avg", label: "Snittkurs", wideOnly: true, render: (r) => <Num value={r.avgPrice} decimals={priceDecimals(r.avgPrice)} /> },
+        { id: "value", label: "Markedsverdi", render: (r) => kr(r.value, 0, false, true) },
         { id: "gain", label: "Urealisert", render: (r) => <Change percent={r.gainPct} value={r.gain} decimals={0} /> },
-        { id: "weight", label: "Andel", render: (r) => `${nf(r.weight, 1)} %` },
+        { id: "weight", label: "Andel", render: (r) => <Num value={r.weight} decimals={1} suffix="%" /> },
     ],
     historikk: [
         { id: "last", label: "Siste", render: priceCell },
@@ -456,7 +537,7 @@ const views: Record<string, Column[]> = {
             wideOnly: true,
             render: (r) => (
                 <span className={cx(r.instrument.change > 0 && "text-success-primary", r.instrument.change < 0 && "text-error-primary")}>
-                    {nf(r.instrument.change, priceDecimals(r.instrument.last), { signDisplay: "exceptZero" })}
+                    <Num value={r.instrument.change} decimals={priceDecimals(r.instrument.last)} sign />
                 </span>
             ),
         },
@@ -472,21 +553,21 @@ const views: Record<string, Column[]> = {
             id: "pe",
             label: "P/E",
             tooltip: "Kurs delt på resultat per aksje siste 12 måneder",
-            render: (r) => (r.instrument.pe === null ? "–" : nf(r.instrument.pe, 1)),
+            render: (r) => (r.instrument.pe === null ? "–" : <Num value={r.instrument.pe} decimals={1} />),
         },
         {
             id: "pb",
             label: "P/B",
             tooltip: "Kurs delt på bokført egenkapital per aksje",
-            render: (r) => (r.instrument.pb === null ? "–" : nf(r.instrument.pb, 1)),
+            render: (r) => (r.instrument.pb === null ? "–" : <Num value={r.instrument.pb} decimals={1} />),
         },
         {
             id: "yield",
             label: "Direkteavk.",
             tooltip: "Siste 12 måneders utbytte delt på dagens kurs",
-            render: (r) => (r.instrument.dividendYield === null ? "–" : `${nf(r.instrument.dividendYield, 1)} %`),
+            render: (r) => (r.instrument.dividendYield === null ? "–" : <Num value={r.instrument.dividendYield} decimals={1} suffix="%" />),
         },
-        { id: "value", label: "Markedsverdi", render: (r) => kr(r.value) },
+        { id: "value", label: "Markedsverdi", render: (r) => kr(r.value, 0, false, true) },
     ],
 };
 
@@ -497,47 +578,88 @@ const sortOptions = [
     { id: "ytd", label: "Avkastning i år" },
 ];
 
+/** The list's holdings at the given prices: market value, unrealised gain and weight follow the last price. */
+const holdingRows = (watchlist: Watchlist, prices: Record<string, Instrument>): HoldingRow[] => {
+    const rows = watchlist.holdings.map((h) => {
+        const instrument = prices[h.ticker];
+        const value = h.quantity * instrument.last;
+        const cost = h.quantity * h.avgPrice;
+        return { ...h, key: h.ticker, instrument, value, gain: value - cost, gainPct: ((value - cost) / cost) * 100, weight: 0 };
+    });
+    const total = rows.reduce((sum, r) => sum + r.value, 0);
+    rows.forEach((r) => (r.weight = (r.value / total) * 100));
+    return rows;
+};
+
+/** One holding at the live prices, for figures rendered outside the card (the mobile sheet). */
+const LiveHolding = ({ watchlist, ticker, children }: { watchlist: Watchlist; ticker: string; children: (row: HoldingRow) => ReactNode }) => {
+    const row = holdingRows(watchlist, useContext(LivePrices)).find((r) => r.key === ticker);
+    return row ? children(row) : null;
+};
+
 const HoldingsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpenSheet: (content: SheetContent) => void }) => {
     const [viewId, setViewId] = useState<string>("historikk");
     const [sortBy, setSortBy] = useState<AriaKey>("value");
     const columns = views[viewId];
 
-    const rows: HoldingRow[] = useMemo(() => {
-        const base = watchlist.holdings.map((h) => {
-            const instrument = instruments[h.ticker];
-            const value = h.quantity * instrument.last;
-            const cost = h.quantity * h.avgPrice;
-            return { ...h, key: h.ticker, instrument, value, gain: value - cost, gainPct: ((value - cost) / cost) * 100, weight: 0 };
-        });
-        const total = base.reduce((sum, r) => sum + r.value, 0);
-        base.forEach((r) => (r.weight = (r.value / total) * 100));
+    const live = useContext(LivePrices);
+
+    // Sorted on the data's figures, so a tick never reorders the rows; the rows themselves are at the live prices.
+    const order = useMemo(() => {
         const sorters: Record<string, (a: HoldingRow, b: HoldingRow) => number> = {
             name: (a, b) => a.instrument.name.localeCompare(b.instrument.name, "nb"),
             day: (a, b) => b.instrument.changePct - a.instrument.changePct,
             value: (a, b) => b.value - a.value,
             ytd: (a, b) => (b.instrument.returns.YTD ?? -Infinity) - (a.instrument.returns.YTD ?? -Infinity),
         };
-        return base.sort(sorters[sortBy as string]);
+        return holdingRows(watchlist, instruments)
+            .sort(sorters[sortBy as string])
+            .map((r) => r.key);
     }, [watchlist, sortBy]);
+    const byKey = new Map(holdingRows(watchlist, live).map((r) => [r.key, r]));
+    const rows = order.flatMap((key) => byKey.get(key) ?? []);
+    // Rows are keyed by watchlist too: switching lists mounts fresh rows, so their live figures don't flash.
 
+    // The sheet's price-led figures read the live prices too, so they keep ticking while it's open.
     const openRow = (r: HoldingRow) =>
         onOpenSheet({
             title: r.instrument.name,
             description: r.instrument.ticker,
             key: (
-                <p className="flex items-baseline gap-2">
-                    <span className="text-display-xs font-semibold text-primary tabular-nums">{nf(r.instrument.last, priceDecimals(r.instrument.last))}</span>
-                    <span className="text-sm">
-                        <Change percent={r.instrument.changePct} value={r.instrument.change} decimals={priceDecimals(r.instrument.last)} />
-                    </span>
-                </p>
+                <LiveHolding watchlist={watchlist} ticker={r.key}>
+                    {(h) => (
+                        <p className="flex items-baseline gap-2">
+                            <span className="text-display-xs font-semibold text-primary tabular-nums">
+                                <Num value={h.instrument.last} decimals={priceDecimals(h.instrument.last)} live />
+                            </span>
+                            <span className="text-sm">
+                                <Change percent={h.instrument.changePct} value={h.instrument.change} decimals={priceDecimals(h.instrument.last)} />
+                            </span>
+                        </p>
+                    )}
+                </LiveHolding>
             ),
             rows: [
-                ["Antall", nf(r.quantity, 0)],
-                ["Snittkurs", nf(r.avgPrice, priceDecimals(r.avgPrice))],
-                ["Markedsverdi", kr(r.value)],
-                ["Urealisert", <Change key="g" percent={r.gainPct} value={r.gain} decimals={0} />],
-                ["Andel", `${nf(r.weight, 1)} %`],
+                ["Antall", <Num key="q" value={r.quantity} decimals={0} />],
+                ["Snittkurs", <Num key="a" value={r.avgPrice} decimals={priceDecimals(r.avgPrice)} />],
+                [
+                    "Markedsverdi",
+                    <LiveHolding key="v" watchlist={watchlist} ticker={r.key}>
+                        {(h) => kr(h.value, 0, false, true)}
+                    </LiveHolding>,
+                ],
+                [
+                    "Urealisert",
+                    <LiveHolding key="g" watchlist={watchlist} ticker={r.key}>
+                        {(h) => <Change percent={h.gainPct} value={h.gain} decimals={0} />}
+                    </LiveHolding>,
+                ],
+                [
+                    "Andel",
+                    <LiveHolding key="w" watchlist={watchlist} ticker={r.key}>
+                        {(h) => <Num value={h.weight} decimals={1} suffix="%" />}
+                    </LiveHolding>,
+                ],
                 ["1M", <MaybeChange key="1m" percent={r.instrument.returns["1M"]} />],
                 ["3M", <MaybeChange key="3m" percent={r.instrument.returns["3M"]} />],
                 ["YTD", <MaybeChange key="ytd" percent={r.instrument.returns.YTD} />],
@@ -599,7 +721,7 @@ const HoldingsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpen
                         </Table.Header>
                         <Table.Body items={rows}>
                             {(r) => (
-                                <Table.Row id={r.key} href={`/aksje/${r.instrument.ticker}`}>
+                                <Table.Row id={`${watchlist.id}:${r.key}`} href={`/aksje/${r.instrument.ticker}`}>
                                     <Table.Cell {...instrumentCell(r.instrument)} />
                                     {columns.map((c) => (
                                         <Table.Cell key={c.id} className={cx("text-right whitespace-nowrap tabular-nums", c.wideOnly && "max-lg:hidden")}>
@@ -619,12 +741,12 @@ const HoldingsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpen
                 <ul className="divide-y divide-secondary">
                     {rows.map((r) => (
                         <MobileRow
-                            key={r.key}
+                            key={`${watchlist.id}:${r.key}`}
                             onPress={() => openRow(r)}
                             left={<InstrumentCell instrument={r.instrument} />}
                             right={
                                 <>
-                                    <span className="font-medium text-primary tabular-nums">{nf(r.instrument.last, priceDecimals(r.instrument.last))}</span>
+                                    <Num value={r.instrument.last} decimals={priceDecimals(r.instrument.last)} live className="font-medium text-primary" />
                                     <Change percent={r.instrument.changePct} />
                                 </>
                             }
@@ -867,8 +989,8 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
             rows: [
                 ["Instrument", `${instrument.name} (${instrument.ticker})`],
                 ["Dato", dateLong(t.date)],
-                ["Antall", nf(t.quantity, 0)],
-                ["Kurs", nf(t.price, priceDecimals(t.price))],
+                ["Antall", <Num key="q" value={t.quantity} decimals={0} />],
+                ["Kurs", <Num key="p" value={t.price} decimals={priceDecimals(t.price)} />],
                 ["Kurtasje", kr(t.fees, 2)],
                 ["Fra/til kontanter", t.affectsCash ? "Ja" : "Nei"],
             ],
@@ -908,8 +1030,12 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
                                         <Table.Cell>
                                             <TradeType type={t.type} />
                                         </Table.Cell>
-                                        <Table.Cell className="text-right tabular-nums">{nf(t.quantity, 0)}</Table.Cell>
-                                        <Table.Cell className="text-right whitespace-nowrap tabular-nums">{nf(t.price, priceDecimals(t.price))}</Table.Cell>
+                                        <Table.Cell className="text-right tabular-nums">
+                                            <Num value={t.quantity} decimals={0} />
+                                        </Table.Cell>
+                                        <Table.Cell className="text-right whitespace-nowrap tabular-nums">
+                                            <Num value={t.price} decimals={priceDecimals(t.price)} />
+                                        </Table.Cell>
                                         <Table.Cell className="text-right whitespace-nowrap tabular-nums">{kr(t.fees, 2)}</Table.Cell>
                                         <Table.Cell className="max-lg:hidden">{t.affectsCash ? "Ja" : "Nei"}</Table.Cell>
                                     </Table.Row>
@@ -985,7 +1111,9 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
                                     <Table.Cell {...instrumentCell(instruments[d.ticker])} />
                                     <Table.Cell className="whitespace-nowrap tabular-nums max-md:hidden">{dateLong(d.date)}</Table.Cell>
                                     <Table.Cell className="text-right whitespace-nowrap tabular-nums max-md:hidden">{kr(d.perShare, 2)}</Table.Cell>
-                                    <Table.Cell className="text-right tabular-nums max-md:hidden">{nf(d.quantity, 0)}</Table.Cell>
+                                    <Table.Cell className="text-right tabular-nums max-md:hidden">
+                                        <Num value={d.quantity} decimals={0} />
+                                    </Table.Cell>
                                     <Table.Cell className="text-right whitespace-nowrap tabular-nums">{kr(d.perShare * d.quantity)}</Table.Cell>
                                 </Table.Row>
                             )}
@@ -1047,7 +1175,7 @@ const WatchlistView = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpe
             ) : (
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-6">
                     <PerformanceCard watchlist={watchlist} />
-                    <MetricsCard watchlist={watchlist} />
+                    <MetricsCard key={watchlist.id} watchlist={watchlist} />
                     <HoldingsCard watchlist={watchlist} onOpenSheet={onOpenSheet} />
                     <div className="lg:col-span-4">
                         <NewsCard watchlist={watchlist} />
@@ -1065,6 +1193,23 @@ const WatchlistView = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpe
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Page
+
+/** The watchlist's live day change, for its tab label. */
+const WatchlistDayChange = ({ watchlist }: { watchlist: Watchlist }) => <Change percent={useLivePortfolio(watchlist).dayChange} />;
+
+/** The watchlist picker below `md`; each option carries the list's live day change. */
+const WatchlistSelect = ({ value, onChange, className }: { value: string; onChange: (id: string) => void; className?: string }) => {
+    const live = useContext(LivePrices);
+    return (
+        <NativeSelect
+            aria-label="Velg watchlist"
+            value={value}
+            onChange={(event) => onChange(event.target.value)}
+            options={watchlists.map((w) => ({ label: `${w.name} (${pct(livePortfolio(w, live).dayChange)} i dag)`, value: w.id }))}
+            className={className}
+        />
+    );
+};
 
 /** A logged-in portfolio watchlist: performance against OSEBX, key figures, holdings, news, events and trades. */
 export const PortfolioWatchlistPage = () => {
@@ -1086,85 +1231,81 @@ export const PortfolioWatchlistPage = () => {
     };
 
     return (
-        <div className="min-h-dvh bg-secondary_alt">
-            <SiteHeader
-                brand="fa"
-                className="sticky top-0 z-30"
-                collapsed={scrolled}
-                navigation={navigation}
-                shortcuts={shortcuts}
-                tickerItems={tickerItems}
-                menu={menu}
-                user={{ initials: "KH", href: "/min-side" }}
-                loginHref="/logg-inn"
-                subscribeHref="/abonnement"
-                onSearchPress={() => {
-                    // Placeholder: opens the search view in the app.
-                }}
-            />
+        <LivePricesProvider>
+            <div className="min-h-dvh bg-secondary_alt">
+                <SiteHeader
+                    brand="fa"
+                    className="sticky top-0 z-30"
+                    collapsed={scrolled}
+                    navigation={navigation}
+                    shortcuts={shortcuts}
+                    tickerItems={tickerItems}
+                    menu={menu}
+                    user={{ initials: "KH", href: "/min-side" }}
+                    loginHref="/logg-inn"
+                    subscribeHref="/abonnement"
+                    onSearchPress={() => {
+                        // Placeholder: opens the search view in the app.
+                    }}
+                />
 
-            <main className="mx-auto w-full max-w-container px-4 py-6 md:px-8">
-                <Tabs selectedKey={selected} onSelectionChange={setSelected}>
-                    <NativeSelect
-                        aria-label="Velg watchlist"
-                        value={selected as string}
-                        onChange={(event) => setSelected(event.target.value)}
-                        options={watchlists.map((w) => ({ label: `${w.name} (${pct(w.dayChange)} i dag)`, value: w.id }))}
-                        className="md:hidden"
-                    />
-                    <Tabs.List type="underline" size="sm" aria-label="Mine watchlister" className="max-md:hidden">
+                <main className="mx-auto w-full max-w-container px-4 py-6 md:px-8">
+                    <Tabs selectedKey={selected} onSelectionChange={setSelected}>
+                        <WatchlistSelect value={selected as string} onChange={setSelected} className="md:hidden" />
+                        <Tabs.List type="underline" size="sm" aria-label="Mine watchlister" className="max-md:hidden">
+                            {watchlists.map((w) => (
+                                <Tabs.Item key={w.id} id={w.id}>
+                                    {w.name}
+                                    <span className="text-xs font-medium">
+                                        <WatchlistDayChange watchlist={w} />
+                                    </span>
+                                </Tabs.Item>
+                            ))}
+                        </Tabs.List>
                         {watchlists.map((w) => (
-                            <Tabs.Item key={w.id} id={w.id}>
-                                {w.name}
-                                <span className="text-xs font-medium">
-                                    <Change percent={w.dayChange} />
-                                </span>
-                            </Tabs.Item>
+                            <Tabs.Panel key={w.id} id={w.id}>
+                                <WatchlistView watchlist={w} onOpenSheet={openSheet} />
+                            </Tabs.Panel>
                         ))}
-                    </Tabs.List>
-                    {watchlists.map((w) => (
-                        <Tabs.Panel key={w.id} id={w.id}>
-                            <WatchlistView watchlist={w} onOpenSheet={openSheet} />
-                        </Tabs.Panel>
-                    ))}
-                </Tabs>
-            </main>
+                    </Tabs>
+                </main>
 
-            <Modal isOpen={sheetOpen} onOpenChange={setSheetOpen} mobile="sheet">
-                <ModalHeader title={sheet?.title ?? ""} description={sheet?.description} />
-                <ModalBody>
-                    {sheet?.key}
-                    <dl className="flex flex-col">
-                        {sheet?.rows.map(([label, value]) => (
-                            <div key={label} className="flex justify-between gap-4 border-b border-secondary py-2.5 text-sm last:border-b-0">
-                                <dt className="text-tertiary">{label}</dt>
-                                <dd className="font-medium text-primary tabular-nums">{value}</dd>
-                            </div>
-                        ))}
-                    </dl>
-                    {sheet?.href && (
-                        <Button color="secondary" size="lg" href={sheet.href} iconTrailing={ChevronRight}>
-                            Gå til aksjesiden
-                        </Button>
-                    )}
-                </ModalBody>
-            </Modal>
+                <Modal isOpen={sheetOpen} onOpenChange={setSheetOpen} mobile="sheet">
+                    <ModalHeader title={sheet?.title ?? ""} description={sheet?.description} />
+                    <ModalBody>
+                        {sheet?.key}
+                        <dl className="flex flex-col">
+                            {sheet?.rows.map(([label, value]) => (
+                                <div key={label} className="flex justify-between gap-4 border-b border-secondary py-2.5 text-sm last:border-b-0">
+                                    <dt className="text-tertiary">{label}</dt>
+                                    <dd className="font-medium text-primary tabular-nums">{value}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                        {sheet?.href && (
+                            <Button color="secondary" size="lg" href={sheet.href} iconTrailing={ChevronRight}>
+                                Gå til aksjesiden
+                            </Button>
+                        )}
+                    </ModalBody>
+                </Modal>
 
-            <SiteFooter
-                brand="fa"
-                links={footerLinks}
-                publisherInfo={["Utgis av Hegnar Media AS", "Hoffsveien 70 A, 0214 Oslo", "Sjefredaktør/adm.dir: Trygve Hegnar"]}
-                copyright="©2026 Hegnar Media AS"
-                disclaimer="Børsdata levert av Millistream. Indekser og valuta er forsinket minst 15 minutter."
-                disclaimerHref="/om-data"
-                socialLinks={[
-                    { platform: "facebook", href: "https://facebook.com/finansavisen" },
-                    { platform: "linkedin", href: "https://linkedin.com/company/finansavisen" },
-                ]}
-                contactHref="/kontakt-oss"
-                appStoreHref="https://apps.apple.com/no/app/finansavisen"
-                googlePlayHref="https://play.google.com/store/apps/details?id=no.finansavisen"
-            />
-        </div>
+                <SiteFooter
+                    brand="fa"
+                    links={footerLinks}
+                    publisherInfo={["Utgis av Hegnar Media AS", "Hoffsveien 70 A, 0214 Oslo", "Sjefredaktør/adm.dir: Trygve Hegnar"]}
+                    copyright="©2026 Hegnar Media AS"
+                    disclaimer="Børsdata levert av Millistream. Indekser og valuta er forsinket minst 15 minutter."
+                    disclaimerHref="/om-data"
+                    socialLinks={[
+                        { platform: "facebook", href: "https://facebook.com/finansavisen" },
+                        { platform: "linkedin", href: "https://linkedin.com/company/finansavisen" },
+                    ]}
+                    contactHref="/kontakt-oss"
+                    appStoreHref="https://apps.apple.com/no/app/finansavisen"
+                    googlePlayHref="https://play.google.com/store/apps/details?id=no.finansavisen"
+                />
+            </div>
+        </LivePricesProvider>
     );
 };

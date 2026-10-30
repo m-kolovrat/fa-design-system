@@ -25,6 +25,17 @@ English). Built as Finansavisen (`brand="fa"`), logged in, all copy in Norwegian
   headlines and times, calendar dates, dividend amounts, transactions, ticker bar values. The
   `onSearchPress` handler is a no-op, and buttons ("Ny transaksjon", "Rediger", AI prompts) have no
   handlers.
+- **Figures:** every figure is `Num` (strings for chart ticks, the tooltip, the mobile watchlist picker and the
+  ticker bar use `formatNumber`): `1.284.650 kr`, `+0,84%`, `-1,10`. The old `nb-NO` helpers (space thousands,
+  real minus, space before `%`) are gone.
+- **Live figures (prototype data):** each instrument's last price ticks with `useMockTicks` (one seed per
+  instrument, in a provider at the top of the page). Derived from it: the day change (`+/−` and `%`), market
+  value, unrealised gain and weight per holding (table, mobile rows and the open sheet); the list's
+  Porteføljeverdi, Avkastning i dag, Avkastning/Urealisert siden start (key figures), Porteføljeverdi and
+  Beholdning (Nøkkeltall), and the day change in the watchlist tabs and picker. The totals are the data's
+  figures moved by what the holdings moved (the invented totals don't add up to the holdings). Not live: quantities,
+  snittkurs, realised return, returns by period, P/E/P/B/yield, dividends, transactions, chart series and
+  the ticker bar. Sorting uses the data's figures, so a tick never reorders rows.
 
 ## Differences from the brief
 
@@ -45,7 +56,7 @@ English). Built as Finansavisen (`brand="fa"`), logged in, all copy in Norwegian
 **New patterns**
 
 - Watchlist switcher as `underline` tabs whose label carries a change value (`Tabs.Item` children:
-  name + colored `+0,84 %`); on mobile a `NativeSelect` with the change in the option text.
+  name + colored `+0,84%`); on mobile a `NativeSelect` with the change in the option text.
 - Page title row: `h1` + `ButtonUtility` (settings) on the left, AI prompt chips on the right.
 - `Table` inside a `CardHeader` card: the controls (ButtonGroup / Tabs) sit in a padded strip, the
   table runs edge to edge under it, pagination is the card's last child. No reference describes this.
@@ -64,3 +75,5 @@ border bg-primary_alt`; used the layout card + `CardHeader` instead of `TableCar
 - Instrument cell uses the round `Avatar` (page-patterns); avatar.md says companies use
   `rounded={false}`.
 - Brief: chips/tables scroll, fixed-height news list; skill: no sideways table scroll, no inner scroll.
+
+**`live` (30 Oct):** prices, market values, Porteføljeverdi and Beholdning are `live`; changes, returns and shares aren't (num.md). Key figures and metrics are keyed by watchlist, and holding rows by watchlist and ticker, so switching lists doesn't flash.

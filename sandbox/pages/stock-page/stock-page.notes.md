@@ -47,10 +47,10 @@ Norwegian Air Shuttle (NAS). Brand `fa`; all copy in Norwegian; ad rails dropped
 
 ## Placeholders
 
-All figures are invented and need real data: NAS price 18,46, change +0,38 (+2,10 %), period returns, key data
-(open, high, low, bid, ask, volume 6 482 117, turnover 119,4 M, market cap 19,5 mrd, P/E 7,84, EPS 2,35, report
+All figures are invented and need real data: NAS price 18,46, change +0,38 (+2,10%), period returns, key data
+(open, high, low, bid, ask, volume 6.482.117, turnover 119,4 M, market cap 19,5 mrd, P/E 7,84, EPS 2,35, report
 dates), the price series (generated), revenue and operating result, order book, key figures (ISIN is NAS's real
-one, NO0010196140; shares 1 056 412 830 is invented), dividends, recommendations, target prices, technicals,
+one, NO0010196140; shares 1.056.412.830 is invented), dividends, recommendations, target prices, technicals,
 volume comparisons, trades, calendar, reports, earnings calls, news items and video titles. "Levert av Infront"
 is a placeholder data-vendor credit.
 
@@ -75,7 +75,7 @@ is a placeholder data-vendor credit.
   `xl`, so the select shows below `xl`.
 - **Key-data labels:** brief wants small uppercase grey labels; layout.md says uppercase only for table headers.
   Followed layout.md (`text-xs font-medium text-tertiary`).
-- **Thousands separator:** brief says period (`1.234`); the skill says space (`1 234`). Followed the skill.
+- **Thousands separator:** brief says period (`1.234`); now the system format too (`Num` / `formatNumber`), so no clash.
 - **News card:** brief scrolls the list inside a fixed-height card; `layout-equal-height` says show a limited
   number of rows. Showed 5 rows plus pagination. Thumbnails dropped (no images).
 - **"Upcoming" highlight:** brief uses a light red tint; no token means "upcoming" and red reads as negative. Used a
@@ -85,5 +85,19 @@ is a placeholder data-vendor credit.
   card with `CardHeader`. Used the card + `CardHeader` + `Table` so every card on the page has the same surface
   (`TableCard.Root` is `bg-primary` with a shadow ring, not the layout card).
 - **Small tables on mobile:** kept the 2–3 column tables below `md` instead of the list-and-sheet pattern; they fit.
-- **Live updates and flash on change:** not built (`fa-no-invented-effects`); the brief's flash green/red has no token
-  or motion preset.
+- **Flash on change:** not built (`fa-no-invented-effects`); the brief's flash green/red has no token or motion
+  preset. Live figures roll their digits through `Num` instead (see Figures).
+
+## Figures
+
+Every figure renders with `Num` (JSX) or `formatNumber` (chart ticks and tooltips); the page's own `nb` / `int` /
+`pct` helpers on `Intl.NumberFormat("nb-NO")` are gone. `Change` keeps its colour-by-sign span and renders `Num`s
+inside. Dates still use `toLocaleDateString("nb-NO")`.
+
+**Live (prototype data):** `useMockTicks(stock.last)` is called once in `StockPage`; the day's change and percent are
+derived from it, so they always agree. Ticking: the header price and change, the sticky bar's price and change, the 1D
+change in the period selector and the "NAS er opp … i dag" line, bid (last − 0,02) and ask (last), day high/low
+(widen when the price passes them), market cap (shares × last), and "Nå" plus the upside to the median target in
+Anbefalinger. Static: key figures, longer periods, the price chart series, order book, trades, technicals, news.
+
+**`live` (30 Oct):** the last price (header, sticky bar, recommendations "Nå"), Kjøper/Selger and Høy/Lav are `live`. Changes, the 1D period change and market value aren't (num.md).

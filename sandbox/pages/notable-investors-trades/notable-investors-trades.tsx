@@ -18,11 +18,13 @@ import { getInitials } from "fa-design-system/components/base/avatar/utils";
 import { Badge } from "fa-design-system/components/base/badges/badges";
 import { Button } from "fa-design-system/components/base/buttons/button";
 import { Input } from "fa-design-system/components/base/input/input";
+import { Num } from "fa-design-system/components/base/num/num";
 import { MultiSelect } from "fa-design-system/components/base/select/multi-select";
 import type { SelectItemType } from "fa-design-system/components/base/select/select";
 import { NativeSelect } from "fa-design-system/components/base/select/select-native";
 import { FeaturedIcon } from "fa-design-system/components/foundations/featured-icon/featured-icon";
 import { cx } from "fa-design-system/utils/cx";
+import { formatNumber } from "fa-design-system/utils/format-number";
 import { Calendar, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Download, Users } from "fa-icons";
 import type { Selection as AriaSelection, SortDescriptor as AriaSortDescriptor } from "react-aria-components";
 import { Button as AriaButton, I18nProvider as AriaI18nProvider } from "react-aria-components";
@@ -72,15 +74,16 @@ const tabs = [
 ];
 const currentTab = tabs[0].id;
 
-// ── Formatting (nb-NO) ──────────────────────────────────────────────────────
+// ── Formatting ──────────────────────────────────────────────────────────────
+// Figures go through the library's Num (formatNumber where only a string fits). All of them are historical.
 
-const fmt = (v: number, options: Intl.NumberFormatOptions = {}) => new Intl.NumberFormat("nb-NO", options).format(v);
-const shares = (v: number) => fmt(v, { maximumFractionDigits: 0, signDisplay: "exceptZero" });
-const count = (v: number) => fmt(v, { maximumFractionDigits: 0 });
-const millions = (v: number) => `${fmt(v / 1_000_000, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} mill.`;
-const percent = (v: number, digits = 2) =>
-    fmt(v / 100, { style: "percent", minimumFractionDigits: 2, maximumFractionDigits: digits, signDisplay: "exceptZero" });
-const ownership = (v: number) => fmt(v / 100, { style: "percent", minimumFractionDigits: 2, maximumFractionDigits: 4 });
+const shares = (v: number) => <Num value={v} decimals={0} sign />;
+const count = (v: number) => <Num value={v} decimals={0} />;
+const millions = (v: number) => <Num value={v / 1_000_000} suffix=" mill." />;
+const percent = (v: number) => <Num value={v} sign suffix="%" />;
+/** Stakes take 2 to 4 decimals, as many as they need: 14,36%, 0,0007%. */
+const stakeDecimals = (v: number) => [2, 3].find((d) => Number(v.toFixed(d)) === v) ?? 4;
+const ownership = (v: number) => <Num value={v} decimals={stakeDecimals(v)} suffix="%" />;
 const dateLabel = (iso: string) => new Intl.DateTimeFormat("nb-NO", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(`${iso}T12:00:00`));
 
 const investorById = Object.fromEntries(investors.map((i) => [i.id, i]));
@@ -158,9 +161,9 @@ const exportCsv = (rows: Trade[]) => {
             instrumentByTicker[t.ticker].name,
             t.ticker,
             t.shareChange,
-            fmt(t.relChange, { maximumFractionDigits: 2 }),
+            formatNumber(t.relChange),
             t.value,
-            fmt(t.newOwnership, { maximumFractionDigits: 4 }),
+            formatNumber(t.newOwnership, { decimals: stakeDecimals(t.newOwnership) }),
             t.newHolding,
             dateLabel(t.date),
         ].join(";"),
@@ -373,7 +376,7 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                             }}
                                             onReset={() => setStockKeys(new Set())}
                                             onSelectAll={() => setStockKeys(new Set(stockItems.map((i) => i.id)))}
-                                            selectedCountFormatter={(n) => `${n} valgt`}
+                                            selectedCountFormatter={(n) => `${formatNumber(n, { decimals: 0 })} valgt`}
                                             emptyStateTitle="Ingen aksjer funnet"
                                             emptyStateDescription="Prøv et annet navn eller en ticker."
                                             className="md:w-52"
@@ -396,7 +399,7 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                             }}
                                             onReset={() => setInvestorKeys(new Set())}
                                             onSelectAll={() => setInvestorKeys(new Set(investorItems.map((i) => i.id)))}
-                                            selectedCountFormatter={(n) => `${n} valgt`}
+                                            selectedCountFormatter={(n) => `${formatNumber(n, { decimals: 0 })} valgt`}
                                             emptyStateTitle="Ingen investorer funnet"
                                             emptyStateDescription="Prøv et annet navn."
                                             className="md:w-52"
@@ -679,7 +682,9 @@ const TradeDetails = ({ trade: t }: { trade: Trade }) => {
                 <p className="text-xs font-medium text-tertiary">Verdi</p>
                 <p className="text-display-xs font-semibold text-primary tabular-nums">{millions(t.value)}</p>
                 <p className="text-sm">
-                    <Signed value={t.shareChange}>{shares(t.shareChange)} aksjer</Signed>
+                    <Signed value={t.shareChange}>
+                        <Num value={t.shareChange} decimals={0} sign suffix=" aksjer" />
+                    </Signed>
                 </p>
             </div>
             <div className="flex flex-col divide-y divide-secondary border-y border-secondary">

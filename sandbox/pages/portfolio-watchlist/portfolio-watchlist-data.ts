@@ -80,6 +80,11 @@ export interface Kpi {
     /** Percent; left out for the portfolio value, which shows its currency instead. */
     percent?: number;
     signed?: boolean;
+    /**
+     * How the figure follows the live prices (prototype ticks): `value` and `day` move with the holdings, `gain`
+     * (return since start) moves with them too and its percent with it. Left out for figures that stay put.
+     */
+    live?: "value" | "day" | "gain";
 }
 
 export interface Watchlist {
@@ -254,10 +259,10 @@ export const watchlists: Watchlist[] = [
         ],
         cash: 88250,
         kpis: [
-            { label: "Porteføljeverdi", value: 1284650 },
-            { label: "Avkastning i dag", value: 10712, percent: 0.84, signed: true },
-            { label: "Avkastning siden start", value: 312480, percent: 32.14, signed: true },
-            { label: "Urealisert siden start", value: 268300, percent: 27.6, signed: true },
+            { label: "Porteføljeverdi", value: 1284650, live: "value" },
+            { label: "Avkastning i dag", value: 10712, percent: 0.84, signed: true, live: "day" },
+            { label: "Avkastning siden start", value: 312480, percent: 32.14, signed: true, live: "gain" },
+            { label: "Urealisert siden start", value: 268300, percent: 27.6, signed: true, live: "gain" },
             { label: "Realisert siden start", value: 44180, percent: 4.54, signed: true },
         ],
         periods: [
@@ -294,10 +299,10 @@ export const watchlists: Watchlist[] = [
         ],
         cash: 21400,
         kpis: [
-            { label: "Porteføljeverdi", value: 618930 },
-            { label: "Avkastning i dag", value: -1990, percent: -0.32, signed: true },
-            { label: "Avkastning siden start", value: 96420, percent: 18.45, signed: true },
-            { label: "Urealisert siden start", value: 71880, percent: 13.76, signed: true },
+            { label: "Porteføljeverdi", value: 618930, live: "value" },
+            { label: "Avkastning i dag", value: -1990, percent: -0.32, signed: true, live: "day" },
+            { label: "Avkastning siden start", value: 96420, percent: 18.45, signed: true, live: "gain" },
+            { label: "Urealisert siden start", value: 71880, percent: 13.76, signed: true, live: "gain" },
             { label: "Realisert siden start", value: 24540, percent: 4.69, signed: true },
         ],
         periods: [

@@ -17,30 +17,39 @@ import { Avatar } from "fa-design-system/components/base/avatar/avatar";
 import { Badge, BadgeWithDot } from "fa-design-system/components/base/badges/badges";
 import { Button } from "fa-design-system/components/base/buttons/button";
 import { ButtonUtility } from "fa-design-system/components/base/buttons/button-utility";
+import { Num } from "fa-design-system/components/base/num/num";
 import { NativeSelect } from "fa-design-system/components/base/select/select-native";
 import { Toggle } from "fa-design-system/components/base/toggle/toggle";
 import { useBreakpoint } from "fa-design-system/hooks/use-breakpoint";
+import { useMockTicks } from "fa-design-system/hooks/use-mock-ticks";
 import { cx } from "fa-design-system/utils/cx";
+import { formatNumber } from "fa-design-system/utils/format-number";
 import { Ai, ArrowRight, CalendarAdd, ChevronLeft, ChevronRight, Download, Eye, EyeFilled, Maximize, Play, Plus, Tv } from "fa-icons";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-// ─── Formatting (nb-NO everywhere) ─────────────────────────────────────────────
+// ─── Formatting (Num / formatNumber everywhere) ────────────────────────────────
 
-const nb = (v: number, options: Intl.NumberFormatOptions = {}) =>
-    new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2, ...options }).format(v);
-
-const int = (v: number) => new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 0 }).format(v);
-
-const pct = (v: number) => nb(v / 100, { style: "percent", signDisplay: "exceptZero" });
-
-/** Change value stand-in from page-patterns.md: `percent` in percent (2.1 for +2,10 %), `value` in NOK. */
+/** Change value stand-in from page-patterns.md: `percent` in percent (2.1 for +2,10%), `value` in NOK. */
 const Change = ({ percent, value, className }: { percent: number; value?: number; className?: string }) => (
     <span
         className={cx("tabular-nums", percent > 0 && "text-success-primary", percent < 0 && "text-error-primary", percent === 0 && "text-tertiary", className)}
     >
-        {value === undefined ? pct(percent) : `${nb(value, { signDisplay: "exceptZero" })} (${pct(percent)})`}
+        {value === undefined ? (
+            <Num value={percent} sign suffix="%" />
+        ) : (
+            <>
+                <Num value={value} sign /> (<Num value={percent} sign suffix="%" />)
+            </>
+        )}
     </span>
 );
+
+/** The live quote: last price and the day's change, derived from it so they always agree. */
+interface Quote {
+    last: number;
+    change: number;
+    changePct: number;
+}
 
 // ─── Surfaces (layout.md) ──────────────────────────────────────────────────────
 
@@ -69,15 +78,18 @@ const stock = {
     time: "28. okt. 14:32:05",
 };
 
-const keyData: { label: string; value: ReactNode }[] = [
-    { label: "Åpning", value: nb(18.1) },
-    { label: "Høy", value: nb(18.62) },
-    { label: "P/E 12M", value: nb(7.84) },
-    { label: "Kjøper", value: nb(18.44) },
-    { label: "Lav", value: nb(17.98) },
-    { label: "EPS 12M", value: nb(2.35) },
-    { label: "Selger", value: nb(18.46) },
-    { label: "Markedsverdi", value: "19,5 mrd" },
+const shares = 1_056_412_830;
+
+/** Key data under the price. Bid, ask, day high/low and market cap follow the live price. */
+const keyData = ({ last }: Quote, day: { high: number; low: number }): { label: string; value: ReactNode }[] => [
+    { label: "Åpning", value: <Num value={18.1} /> },
+    { label: "Høy", value: <Num value={day.high} live /> },
+    { label: "P/E 12M", value: <Num value={7.84} /> },
+    { label: "Kjøper", value: <Num value={last - 0.02} live /> },
+    { label: "Lav", value: <Num value={day.low} live /> },
+    { label: "EPS 12M", value: <Num value={2.35} /> },
+    { label: "Selger", value: <Num value={last} live /> },
+    { label: "Markedsverdi", value: <Num value={(shares * last) / 1e9} decimals={1} suffix=" mrd" /> },
     {
         label: "Siste rapport",
         value: (
@@ -86,8 +98,8 @@ const keyData: { label: string; value: ReactNode }[] = [
             </Button>
         ),
     },
-    { label: "Volum", value: int(6_482_117) },
-    { label: "Omsetning", value: "119,4 M" },
+    { label: "Volum", value: <Num value={6_482_117} decimals={0} /> },
+    { label: "Omsetning", value: <Num value={119.4} decimals={1} suffix=" M" /> },
     { label: "Neste rapport", value: "5. feb. 27" },
 ];
 
@@ -262,16 +274,23 @@ const orderBook = {
     ],
 };
 
-const keyFigures: { label: string; value: string }[] = [
+const keyFigures: { label: string; value: ReactNode }[] = [
     { label: "ISIN", value: stock.isin },
-    { label: "12 mnd lav–høy", value: `${nb(11.02)} – ${nb(19.35)}` },
-    { label: "Utbytte 12M", value: `${nb(1.25)} kr` },
-    { label: "Direkteavkastning 12M", value: "6,77 %" },
-    { label: "Pris/salg", value: nb(0.51) },
-    { label: "Pris/bok", value: nb(2.18) },
-    { label: "Egenkapitalavkastning 12M", value: "31,40 %" },
+    {
+        label: "12 mnd lav–høy",
+        value: (
+            <>
+                <Num value={11.02} /> – <Num value={19.35} />
+            </>
+        ),
+    },
+    { label: "Utbytte 12M", value: <Num value={1.25} suffix=" kr" /> },
+    { label: "Direkteavkastning 12M", value: <Num value={6.77} suffix="%" /> },
+    { label: "Pris/salg", value: <Num value={0.51} /> },
+    { label: "Pris/bok", value: <Num value={2.18} /> },
+    { label: "Egenkapitalavkastning 12M", value: <Num value={31.4} suffix="%" /> },
     { label: "Eks-dato", value: "6. mai 26" },
-    { label: "Antall aksjer", value: int(1_056_412_830) },
+    { label: "Antall aksjer", value: <Num value={shares} decimals={0} /> },
 ];
 
 const recommendationSeries = [
@@ -297,16 +316,16 @@ const recommendationHistory = [
     { quarter: "3K26", label: "Overvekt", score: 1.8 },
 ];
 
-const target = { now: 18.46, average: 21.8, median: 22.0, high: 26.0, low: 15.0, upside: 19.18 };
+const target = { average: 21.8, median: 22.0, high: 26.0, low: 15.0 };
 
 type Signal = "buy" | "sell" | "neutral";
 
-const technicals: { id: string; name: string; value: string; signal: Signal }[] = [
-    { id: "sma20", name: "SMA 20", value: nb(17.92), signal: "buy" },
-    { id: "sma50", name: "SMA 50", value: nb(17.1), signal: "buy" },
-    { id: "sma200", name: "SMA 200", value: nb(15.84), signal: "buy" },
-    { id: "rsi14", name: "RSI 14", value: nb(72.4), signal: "sell" },
-    { id: "macd", name: "MACD", value: nb(0.21), signal: "neutral" },
+const technicals: { id: string; name: string; value: number; signal: Signal }[] = [
+    { id: "sma20", name: "SMA 20", value: 17.92, signal: "buy" },
+    { id: "sma50", name: "SMA 50", value: 17.1, signal: "buy" },
+    { id: "sma200", name: "SMA 200", value: 15.84, signal: "buy" },
+    { id: "rsi14", name: "RSI 14", value: 72.4, signal: "sell" },
+    { id: "macd", name: "MACD", value: 0.21, signal: "neutral" },
 ];
 
 const signalBadge: Record<Signal, { color: "success" | "error" | "gray"; label: string }> = {
@@ -475,11 +494,11 @@ const PriceChart = ({ period }: { period: Period }) => {
                         tickLine={false}
                         width={isDesktop ? 48 : 40}
                         domain={["auto", "auto"]}
-                        tickFormatter={(v) => nb(Number(v))}
+                        tickFormatter={(v) => formatNumber(Number(v))}
                     />
                     <Tooltip
                         content={<ChartTooltipContent />}
-                        formatter={(v) => `${nb(Number(v))} kr`}
+                        formatter={(v) => `${formatNumber(Number(v))} kr`}
                         cursor={{ className: "stroke-utility-brand-600 stroke-2" }}
                     />
                     <Area
@@ -499,9 +518,16 @@ const PriceChart = ({ period }: { period: Period }) => {
     );
 };
 
-const StockHeaderCard = ({ priceRef, watch, realtime }: { priceRef: Ref<HTMLDivElement>; watch: Watch; realtime: boolean }) => {
+const StockHeaderCard = ({ priceRef, watch, realtime, quote }: { priceRef: Ref<HTMLDivElement>; watch: Watch; realtime: boolean; quote: Quote }) => {
     const [period, setPeriod] = useState<Period>("1D");
-    const change = periods.find((p) => p.id === period)?.change ?? 0;
+    // The 1D change follows the live price; the longer periods (and the chart series) stay static.
+    const livePeriods = periods.map((p) => (p.id === "1D" ? { ...p, change: quote.changePct } : p));
+    const change = livePeriods.find((p) => p.id === period)?.change ?? 0;
+    // The day's high and low widen when the live price moves past them.
+    const [day, setDay] = useState({ high: 18.62, low: 17.98 });
+    if (quote.last > day.high || quote.last < day.low) {
+        setDay({ high: Math.max(day.high, quote.last), low: Math.min(day.low, quote.last) });
+    }
 
     return (
         <section aria-labelledby="stock-title" className={cx(card, "md:col-span-2 lg:col-span-4")}>
@@ -512,8 +538,8 @@ const StockHeaderCard = ({ priceRef, watch, realtime }: { priceRef: Ref<HTMLDivE
                             {stock.name} ({stock.ticker})
                         </h1>
                         <p className="flex items-baseline gap-3">
-                            <span className="text-display-sm font-semibold text-primary tabular-nums">{nb(stock.last)}</span>
-                            <Change className="text-md font-medium" percent={stock.changePct} value={stock.change} />
+                            <Num value={quote.last} live className="text-display-sm font-semibold text-primary tabular-nums" />
+                            <Change className="text-md font-medium" percent={quote.changePct} value={quote.change} />
                         </p>
                     </div>
                     <WatchlistButton {...watch} />
@@ -537,7 +563,7 @@ const StockHeaderCard = ({ priceRef, watch, realtime }: { priceRef: Ref<HTMLDivE
                 <div className="min-w-0">
                     <div className="mb-2 flex items-center justify-between gap-3">
                         <p className="text-sm text-tertiary">
-                            NAS er {change >= 0 ? "opp" : "ned"} {pct(change).replace(/^[+−-]/, "")} {periodSummary[period]}
+                            NAS er {change >= 0 ? "opp" : "ned"} <Num value={Math.abs(change)} suffix="%" /> {periodSummary[period]}
                         </p>
                         <div className="flex gap-3">
                             <Button color="secondary" size="md" iconLeading={Plus} aria-label="Sammenlign eller legg til indikator" />
@@ -545,10 +571,16 @@ const StockHeaderCard = ({ priceRef, watch, realtime }: { priceRef: Ref<HTMLDivE
                         </div>
                     </div>
                     <PriceChart period={period} />
-                    <PeriodSelector className="mt-4" periods={periods} selectedPeriod={period} onPeriodChange={setPeriod} aria-label="Periode for kursgrafen" />
+                    <PeriodSelector
+                        className="mt-4"
+                        periods={livePeriods}
+                        selectedPeriod={period}
+                        onPeriodChange={setPeriod}
+                        aria-label="Periode for kursgrafen"
+                    />
                 </div>
                 <dl className="grid grid-cols-2 content-start gap-x-6 gap-y-4 sm:grid-cols-3 xl:grid-cols-2">
-                    {keyData.map((d) => (
+                    {keyData(quote, day).map((d) => (
                         <div key={d.label} className="flex flex-col gap-0.5">
                             <dt className="text-xs font-medium text-tertiary">{d.label}</dt>
                             <dd className="text-sm font-semibold text-primary tabular-nums">{d.value}</dd>
@@ -730,8 +762,8 @@ const FinancialsCard = () => {
                 </Tabs.List>
                 <Tabs.Panel id={view} className="flex flex-col gap-4">
                     <p className="text-sm text-tertiary">
-                        Omsetning {latest.period}: {nb(latest.revenue, { maximumFractionDigits: 1, minimumFractionDigits: 1 })} mrd, driftsresultat{" "}
-                        {nb(latest.result, { maximumFractionDigits: 1, minimumFractionDigits: 1 })} mrd.
+                        Omsetning {latest.period}: <Num value={latest.revenue} decimals={1} suffix=" mrd" />, driftsresultat{" "}
+                        <Num value={latest.result} decimals={1} suffix=" mrd" />.
                     </p>
                     <div className="h-60">
                         <ResponsiveContainer initialDimension={{ width: 1, height: 1 }} className="h-full">
@@ -744,11 +776,11 @@ const FinancialsCard = () => {
                                     axisLine={false}
                                     tickLine={false}
                                     width={32}
-                                    tickFormatter={(v) => nb(Number(v), { maximumFractionDigits: 0, minimumFractionDigits: 0 })}
+                                    tickFormatter={(v) => formatNumber(Number(v), { decimals: 0 })}
                                 />
                                 <Tooltip
                                     content={<ChartTooltipContent />}
-                                    formatter={(v) => `${nb(Number(v), { maximumFractionDigits: 1, minimumFractionDigits: 1 })} mrd`}
+                                    formatter={(v) => `${formatNumber(Number(v), { decimals: 1 })} mrd`}
                                     cursor={{ className: "fill-utility-gray-200/20" }}
                                 />
                                 <Bar
@@ -794,10 +826,10 @@ const OrderSide = ({ side, levels, max }: { side: "buy" | "sell"; levels: { qty:
                     <li key={l.price} className="flex flex-col gap-1 border-b border-secondary py-2">
                         <div className="grid grid-cols-2 gap-2 text-sm tabular-nums">
                             <span className={cx("text-tertiary", buy ? "" : "order-2 text-right")}>
-                                {int(l.qty)}
+                                <Num value={l.qty} decimals={0} />
                                 <span className="sr-only"> aksjer til</span>
                             </span>
-                            <span className={cx("font-medium text-primary", buy ? "text-right" : "order-1")}>{nb(l.price)}</span>
+                            <Num value={l.price} className={cx("font-medium text-primary", buy ? "text-right" : "order-1")} />
                         </div>
                         <div className={cx("flex", buy ? "justify-end" : "justify-start")} aria-hidden>
                             <div className={cx("h-1 rounded-full", bar)} style={{ width: `${(l.qty / max) * 100}%` }} />
@@ -808,7 +840,7 @@ const OrderSide = ({ side, levels, max }: { side: "buy" | "sell"; levels: { qty:
             <div className="flex flex-col gap-1 pt-2">
                 <p className={cx("text-sm font-semibold text-primary tabular-nums", buy ? "" : "text-right")}>
                     <span className="sr-only">{buy ? "Totalt kjøp: " : "Totalt salg: "}</span>
-                    {int(total)}
+                    <Num value={total} decimals={0} />
                 </p>
                 <div className={cx("flex", buy ? "justify-end" : "justify-start")} aria-hidden>
                     <div className={cx("h-1 rounded-full", bar)} style={{ width: "100%" }} />
@@ -838,8 +870,9 @@ const OrderBookCard = () => {
                 <OrderSide side="buy" levels={orderBook.bids} max={max} />
                 <OrderSide side="sell" levels={orderBook.asks} max={max} />
                 <p className="sr-only">
-                    Totalt {int(totalBuy)} aksjer på kjøpssiden og {int(totalSell)} på salgssiden ({Math.round((totalBuy / totalMax) * 100)} mot{" "}
-                    {Math.round((totalSell / totalMax) * 100)}).
+                    Totalt <Num value={totalBuy} decimals={0} /> aksjer på kjøpssiden og <Num value={totalSell} decimals={0} /> på salgssiden (
+                    <Num value={(totalBuy / totalMax) * 100} decimals={0} /> mot <Num value={(totalSell / totalMax) * 100} decimals={0} />
+                    ).
                 </p>
             </div>
         </Card>
@@ -876,8 +909,10 @@ const ScaleTrack = ({ markers }: { markers: { position: number; className: strin
     </div>
 );
 
-const RecommendationsCard = () => {
+const RecommendationsCard = ({ last }: { last: number }) => {
     const average = 1.8;
+    // "Nå" and the upside to the median target follow the live price.
+    const upside = (target.median / last - 1) * 100;
     const span = target.high - target.low;
     const at = (v: number) => ((v - target.low) / span) * 100;
 
@@ -921,7 +956,7 @@ const RecommendationsCard = () => {
                         <div className="flex items-baseline justify-between gap-3">
                             <h3 className="text-sm font-medium text-tertiary">Snittanbefaling</h3>
                             <p className="text-sm font-semibold text-primary tabular-nums">
-                                Overvekt {nb(average, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+                                Overvekt <Num value={average} decimals={1} />
                             </p>
                         </div>
                         <ScaleTrack markers={[{ position: ((average - 1) / 4) * 100, className: "bg-fg-success-secondary" }]} />
@@ -935,12 +970,12 @@ const RecommendationsCard = () => {
                         <div className="flex items-baseline justify-between gap-3">
                             <h3 className="text-sm font-medium text-tertiary">Median kursmål</h3>
                             <p className="text-sm font-semibold text-primary tabular-nums">
-                                {nb(target.median)} kr <Change percent={target.upside} />
+                                <Num value={target.median} suffix=" kr" /> <Change percent={upside} />
                             </p>
                         </div>
                         <ScaleTrack
                             markers={[
-                                { position: at(target.now), className: "bg-fg-quaternary" },
+                                { position: at(last), className: "bg-fg-quaternary" },
                                 { position: at(target.average), className: "bg-fg-brand-primary" },
                                 { position: at(target.high), className: "bg-fg-success-secondary" },
                             ]}
@@ -948,15 +983,21 @@ const RecommendationsCard = () => {
                         <dl className="grid grid-cols-3 text-xs">
                             <div>
                                 <dt className="text-tertiary">Nå</dt>
-                                <dd className="font-medium text-primary tabular-nums">{nb(target.now)}</dd>
+                                <dd className="font-medium text-primary tabular-nums">
+                                    <Num value={last} live />
+                                </dd>
                             </div>
                             <div className="text-center">
                                 <dt className="text-tertiary">Snitt</dt>
-                                <dd className="font-medium text-primary tabular-nums">{nb(target.average)}</dd>
+                                <dd className="font-medium text-primary tabular-nums">
+                                    <Num value={target.average} />
+                                </dd>
                             </div>
                             <div className="text-right">
                                 <dt className="text-tertiary">Høy</dt>
-                                <dd className="font-medium text-primary tabular-nums">{nb(target.high)}</dd>
+                                <dd className="font-medium text-primary tabular-nums">
+                                    <Num value={target.high} />
+                                </dd>
                             </div>
                         </dl>
                     </div>
@@ -967,7 +1008,7 @@ const RecommendationsCard = () => {
                                 <li key={h.quarter} className="flex flex-col gap-0.5">
                                     <span className="text-xs text-tertiary">{h.quarter}</span>
                                     <span className="text-xs font-semibold text-primary tabular-nums">
-                                        {h.label} {nb(h.score, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+                                        {h.label} <Num value={h.score} decimals={1} />
                                     </span>
                                 </li>
                             ))}
@@ -992,7 +1033,9 @@ const TechnicalsCard = () => (
                 {(t) => (
                     <Table.Row id={t.id}>
                         <Table.Cell>{t.name}</Table.Cell>
-                        <Table.Cell className="text-right tabular-nums">{t.value}</Table.Cell>
+                        <Table.Cell className="text-right tabular-nums">
+                            <Num value={t.value} />
+                        </Table.Cell>
                         <Table.Cell className="text-right">
                             <Badge color={signalBadge[t.signal].color} size="sm">
                                 {signalBadge[t.signal].label}
@@ -1031,8 +1074,12 @@ const TradesCard = () => (
                 {(t) => (
                     <Table.Row id={t.id}>
                         <Table.Cell className="tabular-nums">{t.time}</Table.Cell>
-                        <Table.Cell className="text-right tabular-nums">{nb(t.price)}</Table.Cell>
-                        <Table.Cell className="text-right tabular-nums">{int(t.qty)}</Table.Cell>
+                        <Table.Cell className="text-right tabular-nums">
+                            <Num value={t.price} />
+                        </Table.Cell>
+                        <Table.Cell className="text-right tabular-nums">
+                            <Num value={t.qty} decimals={0} />
+                        </Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>
@@ -1051,7 +1098,9 @@ const DividendsCard = () => (
             <Table.Body items={dividends}>
                 {(d) => (
                     <Table.Row id={d.id}>
-                        <Table.Cell className="tabular-nums">{nb(d.amount)}</Table.Cell>
+                        <Table.Cell className="tabular-nums">
+                            <Num value={d.amount} />
+                        </Table.Cell>
                         <Table.Cell className="text-right tabular-nums">{d.date}</Table.Cell>
                     </Table.Row>
                 )}
@@ -1147,7 +1196,7 @@ const EarningsCallsCard = () => (
                         <div className="flex min-w-0 flex-col gap-0.5">
                             <p className="text-sm font-medium text-primary">{c.title}</p>
                             <p className="text-xs text-tertiary">
-                                {c.date} · {c.minutes} min
+                                {c.date} · <Num value={c.minutes} decimals={0} suffix=" min" />
                             </p>
                         </div>
                         <ButtonUtility color="tertiary" icon={Play} tooltip={`Spill av ${c.title}`} />
@@ -1170,7 +1219,7 @@ const PresentationsCard = () => (
 );
 
 /** Stand-in: the compact stock bar under the collapsed header (no component, no Figma frame). */
-const StickyStockBar = ({ visible, watch }: { visible: boolean; watch: Watch }) => (
+const StickyStockBar = ({ visible, watch, quote }: { visible: boolean; watch: Watch; quote: Quote }) => (
     <div className={cx("absolute inset-x-0 top-full border-b border-secondary bg-primary_alt", !visible && "hidden")} aria-hidden={!visible}>
         <div className="mx-auto flex w-full max-w-[1376px] items-center justify-between gap-3 px-4 py-2 md:px-8">
             <div className="flex min-w-0 items-baseline gap-3">
@@ -1178,9 +1227,9 @@ const StickyStockBar = ({ visible, watch }: { visible: boolean; watch: Watch }) 
                     {stock.name} <span className="font-normal text-tertiary">{stock.ticker}</span>
                 </p>
                 <p className="flex items-baseline gap-2 text-sm whitespace-nowrap">
-                    <span className="font-semibold text-primary tabular-nums">{nb(stock.last)}</span>
-                    <Change percent={stock.changePct} value={stock.change} className="max-sm:hidden" />
-                    <Change percent={stock.changePct} className="sm:hidden" />
+                    <Num value={quote.last} live className="font-semibold text-primary tabular-nums" />
+                    <Change percent={quote.changePct} value={quote.change} className="max-sm:hidden" />
+                    <Change percent={quote.changePct} className="sm:hidden" />
                 </p>
             </div>
             <WatchlistButton {...watch} />
@@ -1197,6 +1246,10 @@ export const StockPage = () => {
     const priceRef = useRef<HTMLDivElement>(null);
     const [watching, setWatching] = useState(false);
     const [realtime, setRealtime] = useState(false);
+    // Prototype data: the last price ticks, and the day's change is derived from it so the two agree.
+    const last = useMockTicks(stock.last);
+    const change = stock.change + (last - stock.last);
+    const quote: Quote = { last, change, changePct: (change / (last - change)) * 100 };
     const watch: Watch = {
         watching,
         onToggle: () => {
@@ -1249,14 +1302,14 @@ export const StockPage = () => {
                     subscribeHref="/abonnement"
                     onSearchPress={() => undefined}
                 />
-                <StickyStockBar visible={showBar} watch={watch} />
+                <StickyStockBar visible={showBar} watch={watch} quote={quote} />
             </div>
 
             <main className="mx-auto flex w-full max-w-[1376px] flex-col gap-6 px-4 py-6 md:px-8">
                 <RealtimeBanner realtime={realtime} onRealtimeChange={setRealtime} />
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
-                    <StockHeaderCard priceRef={priceRef} watch={watch} realtime={realtime} />
+                    <StockHeaderCard priceRef={priceRef} watch={watch} realtime={realtime} quote={quote} />
                     <VideoCard />
                 </div>
 
@@ -1269,7 +1322,7 @@ export const StockPage = () => {
                             <FinancialsCard />
                             <OrderBookCard />
                             <KeyFiguresCard />
-                            <RecommendationsCard />
+                            <RecommendationsCard last={last} />
                             <TechnicalsCard />
                             <TradesCard />
                             <DividendsCard />

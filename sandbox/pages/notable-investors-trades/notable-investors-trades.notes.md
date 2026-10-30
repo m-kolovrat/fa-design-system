@@ -57,6 +57,15 @@ views exist as link tabs). Brand `fa`, Norwegian copy, invented investors.
   `Ny eierandel` from `xl`, `Ny beholdning` from `2xl`).
 - Brief: ticker pill in the stock column; skill: instrument cell in tables. Followed the skill.
 - Brief: rows ~40 px; `Table size="sm"` rows are 56 px.
-- Brief: period as thousands separator ("1.256.050"), "M" for millions; skill: `nb-NO` (space
-  separator). Used `nb-NO` and "mill.". The library's own `SiteHeader` demo ticker uses periods.
+- Brief: period as thousands separator ("1.256.050"), "M" for millions. Resolved: the decided
+  format is now the brief's (dot thousands, comma decimals, no space before `%`); "mill." kept.
 - Brief: pill search with AI sparkle in the header; `SiteHeader` has its own search field.
+
+## Figures (2026-10-29)
+
+Every figure now goes through the library: `<Num>` in JSX (share changes, relative change,
+value in mill., new stake, new holding, the "Viser x–y av z" counts, the sheet), `formatNumber`
+where only a string fits (CSV export, the "n valgt" count). The page's `Intl.NumberFormat("nb-NO")`
+helpers are gone, which also fixes the space before `%` and the real minus sign. New stake keeps
+2 to 4 decimals, as many as it needs. Nothing ticks: every figure is a
+historical trade.
