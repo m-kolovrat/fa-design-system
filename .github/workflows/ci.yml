@@ -13,7 +13,10 @@ jobs:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
               with:
-                  node-version: 22
+                  node-version-file: .nvmrc
                   cache: npm
             - run: npm ci --legacy-peer-deps
             - run: npm run test
+            # The package build apps install, and the Storybook build Vercel deploys.
+            - run: npm run build
+            - run: npm run build-storybook
