@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronRight, Download, Filter, Plus, Settings } from "fa-icons";
+import { CardFooter } from "@/components/application/card-footer/card-footer";
 import { CardHeader } from "@/components/application/card-header/card-header";
 import { Tabs } from "@/components/application/tabs/tabs";
 import { Avatar } from "@/components/base/avatar/avatar";
@@ -9,8 +10,12 @@ import { cx } from "@/utils/cx";
 
 /** A card: the surface from page-patterns.md, without padding so the header and body set their own. */
 export const card = "overflow-hidden rounded-2xl border border-secondary bg-primary_alt";
-/** The card body under a `CardHeader`: the same side padding as the header. */
+/** The card body under a `CardHeader` with its divider: the same side padding as the header. */
 export const cardBody = "px-4 py-5 md:px-6";
+/** The card body under a `CardHeader` without a divider: no top padding, the header's 20px is the gap. */
+export const cardBodyNoDivider = "px-4 pb-5 md:px-6";
+/** The same, above a `CardFooter` (Figma: 16px). */
+export const cardBodyAboveFooter = "px-4 pb-4 md:px-6";
 
 const winners = [
     { name: "Kongsberg Gruppen", ticker: "KOG", last: "412,60", change: "+6,12 %" },
@@ -105,4 +110,44 @@ export const CardWithTabs = () => (
             </Tabs>
         </div>
     </section>
+);
+
+const DetailTabs = () => (
+    <Tabs>
+        <Tabs.List type="button-minimal" size="sm" aria-label="Visning">
+            <Tabs.Item id="details" label="Mine detaljer" />
+            <Tabs.Item id="profile" label="Profil" />
+        </Tabs.List>
+    </Tabs>
+);
+
+const scenarios = [
+    { id: "full", badge: "10/20 plasser", description: "Administrer teammedlemmene og tilgangene deres.", action: true },
+    { id: "badge", badge: "10/20 plasser", action: true },
+    { id: "action", action: true },
+    { id: "title", action: false },
+] as const;
+
+/** The Figma card scenarios: header without divider, tabs in the body, a "Se alle" footer. */
+export const CardScenarios = () => (
+    <div className="grid w-full grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {scenarios.map((s) => (
+            <section key={s.id} aria-labelledby={`card-${s.id}`} className={card}>
+                <CardHeader
+                    titleId={`card-${s.id}`}
+                    title="Teammedlemmer"
+                    badge={"badge" in s ? s.badge : undefined}
+                    description={"description" in s ? s.description : undefined}
+                    divider={false}
+                    actions={
+                        s.action ? <Button color="secondary" size="sm" iconLeading={ChevronRight} href="#" aria-label="Se alle teammedlemmer" /> : undefined
+                    }
+                />
+                <div className={cardBodyAboveFooter}>
+                    <DetailTabs />
+                </div>
+                <CardFooter href="#">Se alle</CardFooter>
+            </section>
+        ))}
+    </div>
 );

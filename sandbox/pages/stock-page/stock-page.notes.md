@@ -7,7 +7,7 @@ Norwegian Air Shuttle (NAS). Brand `fa`; all copy in Norwegian; ad rails dropped
 
 | #   | Brief section           | Built with                                                                                                                                        |
 | :-- | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1   | Global header           | `SiteHeader brand="fa"` with `collapsed` from scroll, `user`, `menu`; sticky wrapper                                                              |
+| 1   | Global header           | `SiteHeader brand="fa"` with `user`, `menu`; sticky wrapper                                                                                       |
 | 2   | Real-time banner        | Card row: `BadgeWithDot` (Forsinket / Sanntid) + text + `Toggle` (stand-in, no component)                                                         |
 | 3   | Stock header + chart    | Card: `h1`, price, change value, `BadgeWithDot` "Live" (live indicator), Watchlist `Button`, Recharts area chart, `PeriodSelector`, key-data `dl` |
 | 4   | Video carousel          | `Carousel` + `CardHeader` (prev/next as md `Button`s through the triggers' render prop); 16:9 placeholder surface (no video player)               |
@@ -59,7 +59,7 @@ is a placeholder data-vendor credit.
 **New patterns**
 
 - **Real-time strip** above the page: status badge, sentence and a `Toggle` in a slim card row.
-- **Sticky compact stock bar** under the collapsed header (name, ticker, price, change, Watchlist).
+- **Sticky compact stock bar** under the sticky header (name, ticker, price, change, Watchlist).
 - **Instrument title line:** `h1` name (ticker), price in `text-display-sm`, change value, action on the right,
   status line under it. The skill has no "instrument header" pattern.
 - **Order book:** two mirrored columns with proportional bars and side totals.

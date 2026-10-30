@@ -113,12 +113,6 @@ export interface SiteHeaderProps {
     shortcuts?: SiteNavItem[];
     /** The signed-in user. Without it, the header shows "Logg inn". */
     user?: { initials: string; href: string };
-    /**
-     * The desktop header after scrolling: small logo, navigation and menu in one row.
-     * Mobile and tablet are unaffected.
-     * @default false
-     */
-    collapsed?: boolean;
     /** Where the logo links. */
     homeHref?: string;
     /** Where "Logg inn" points (signed out). */
@@ -148,7 +142,6 @@ export const SiteHeader = ({
     navigation: navigationProp,
     shortcuts: shortcutsProp,
     user,
-    collapsed = false,
     homeHref = "/",
     loginHref = "#",
     subscribeHref = "#",
@@ -159,7 +152,6 @@ export const SiteHeader = ({
 }: SiteHeaderProps) => {
     const theme = siteBrands[brand];
     const Logo = theme.logo;
-    const LogoCollapsed = theme.logoCollapsed;
     const content = siteContent[brand];
     const navigation = navigationProp ?? content.navigation;
     const shortcuts = shortcutsProp ?? content.shortcuts;
@@ -213,7 +205,7 @@ export const SiteHeader = ({
         <header className={cx("relative", theme.surface, className)}>
             {tickerItems && tickerItems.length > 0 && <TickerBar items={tickerItems} />}
 
-            <div className={cx("flex flex-col items-center gap-2 px-4 pt-4 lg:gap-4 lg:px-7.5 lg:pb-3", collapsed && "lg:hidden")}>
+            <div className="flex flex-col items-center gap-2 px-4 pt-4 lg:gap-4 lg:px-7.5 lg:pb-3">
                 <div className="flex w-full items-center justify-between gap-3 md:gap-8">
                     <div className="flex flex-1">
                         <AriaLink
@@ -273,32 +265,6 @@ export const SiteHeader = ({
                     <NavGroups groups={navigation} dividerClassName={theme.divider} hoverClassName={theme.hover} activeClassName={theme.sunken} />
                 </nav>
             </div>
-
-            {collapsed && (
-                <div className="hidden items-center justify-between gap-8 px-7.5 pt-4 pb-3 lg:flex">
-                    <div className="flex w-67 shrink-0">
-                        <AriaLink
-                            href={homeHref}
-                            aria-label={theme.name}
-                            className="rounded-xs text-fg-white outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2"
-                        >
-                            <LogoCollapsed className={theme.logoCollapsedClassName} />
-                        </AriaLink>
-                    </div>
-
-                    <nav aria-label="Hovedmeny" className="flex items-center gap-1">
-                        <NavGroups groups={navigation} dividerClassName={theme.divider} hoverClassName={theme.hover} activeClassName={theme.sunken} />
-                    </nav>
-
-                    <div className="flex w-67 shrink-0 justify-end">
-                        {showMenuButton && (
-                            <AriaButton {...menuButtonProps} className={cx(iconButtonClassName, "px-3 py-2")}>
-                                <MenuIcon className="size-6" />
-                            </AriaButton>
-                        )}
-                    </div>
-                </div>
-            )}
 
             <div aria-hidden="true" className="h-2 rounded-t-lg bg-secondary" />
 

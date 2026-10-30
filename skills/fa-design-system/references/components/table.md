@@ -2,7 +2,7 @@
 
 Rows of data to scan, sort and select, built on React Aria's `Table` (keyboard grid navigation,
 sorting and selection come with it). `TableCard` wraps it in a bordered card with a title bar.
-Figma: Tables/Table. Figma's Table cell lead text, supporting text and leading visual are
+Figma: Tables/Table; the title bar (`TableCard.Header`) is Table card header. Figma's Table cell lead text, supporting text and leading visual are
 `Table.Cell` props; its other cell types (badges, trend, actions) are content you put inside.
 
 ```ts
@@ -90,6 +90,9 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 
 ## Notes
 
+- Sortable heads: the sorted column shows its arrow (down, or up when ascending), the other
+  sortable columns the up/down chevron. On hover the label turns `text-tertiary` and its icons
+  `fg-quaternary_hover` (Figma `_Table header label` `State=Hover`).
 - Row height: 72px at `md`, 56px at `sm`. Cell text is `text-sm text-primary`; see
   **table-cell-text**.
 - Put pagination (`PaginationPageMinimalCenter`, `PaginationCardMinimal`) inside `TableCard.Root`

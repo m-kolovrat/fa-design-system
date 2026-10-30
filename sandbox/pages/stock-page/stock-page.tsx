@@ -1218,7 +1218,7 @@ const PresentationsCard = () => (
     </Card>
 );
 
-/** Stand-in: the compact stock bar under the collapsed header (no component, no Figma frame). */
+/** Stand-in: the compact stock bar under the sticky header (no component, no Figma frame). */
 const StickyStockBar = ({ visible, watch, quote }: { visible: boolean; watch: Watch; quote: Quote }) => (
     <div className={cx("absolute inset-x-0 top-full border-b border-secondary bg-primary_alt", !visible && "hidden")} aria-hidden={!visible}>
         <div className="mx-auto flex w-full max-w-[1376px] items-center justify-between gap-3 px-4 py-2 md:px-8">
@@ -1241,7 +1241,6 @@ const StickyStockBar = ({ visible, watch, quote }: { visible: boolean; watch: Wa
 
 /** Stock page, Markedsdata tab, for Norwegian Air Shuttle (NAS). Built from /Users/mihovil/Desktop/stock-page-brief.md. */
 export const StockPage = () => {
-    const [collapsed, setCollapsed] = useState(false);
     const [showBar, setShowBar] = useState(false);
     const priceRef = useRef<HTMLDivElement>(null);
     const [watching, setWatching] = useState(false);
@@ -1259,13 +1258,6 @@ export const StockPage = () => {
     };
 
     useEffect(() => {
-        const onScroll = () => setCollapsed(window.scrollY > 120);
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
-
-    useEffect(() => {
         const el = priceRef.current;
         if (!el) return;
         const observer = new IntersectionObserver(([entry]) => setShowBar(!entry.isIntersecting && entry.boundingClientRect.top < 0), {
@@ -1280,7 +1272,6 @@ export const StockPage = () => {
             <div className="sticky top-0 z-30">
                 <SiteHeader
                     brand="fa"
-                    collapsed={collapsed}
                     navigation={navigation}
                     shortcuts={shortcuts}
                     user={{ initials: "MK", href: "/min-side" }}

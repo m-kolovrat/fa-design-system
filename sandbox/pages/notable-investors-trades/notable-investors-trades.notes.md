@@ -6,7 +6,7 @@ views exist as link tabs). Brand `fa`, Norwegian copy, invented investors.
 - **Shell:** "Data table (Aksjer, Bjellesauer)" from `page-patterns.md`: one card with the filters on
   top and the `Table`, page width 1376 px, `px-4 md:px-8`. Below `md` the table becomes two-column
   rows that open a `Modal` sheet ("Data table on mobile").
-- **Components:** `SiteHeader` (brand `fa`, Bjellesauer `current`, sticky, `collapsed` from scroll,
+- **Components:** `SiteHeader` (brand `fa`, Bjellesauer `current`, sticky,
   `onSearchPress` opens a search `Modal`), `SiteFooter`, `Breadcrumbs`, `FeaturedIcon`, `Tabs`
   (link tabs, `underline`, `sm`) with `NativeSelect` below `md`, `Button` (secondary "Last ned",
   link-color "Les mer om metoden", link names in cells, icon-only prev/next), `MultiSelect` ×2,

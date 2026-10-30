@@ -37,7 +37,7 @@ export default meta;
 
 /** The header with sample content — the controls override its props (switch `brand` here). */
 export const Playground: StoryObj<Partial<SiteHeaderProps>> = {
-    args: { brand: "fa", collapsed: false },
+    args: { brand: "fa" },
     render: (args) => <SiteHeaderDemo {...args} />,
 };
 
@@ -60,10 +60,4 @@ export const SignedIn = () => <SiteHeaderDemo brand="fa" signedIn />;
 SignedIn.storyName = "Signed in";
 SignedIn.parameters = {
     design: { desktop: "17309-1441" },
-};
-
-export const Collapsed = () => <SiteHeaderDemo brand="fa" collapsed />;
-Collapsed.storyName = "Collapsed (desktop)";
-Collapsed.parameters = {
-    design: { desktop: "17310-1981" },
 };

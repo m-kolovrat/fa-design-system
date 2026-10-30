@@ -1,9 +1,8 @@
 # Card header
 
-The header of a card: a title with an optional badge, and up to three actions on the right,
-centred on the title. There is no supporting text. Every card that has a title uses it, whether it holds a widget, a list or plain page
-content. Figma: Card header (the table header on the Tables page has the same anatomy; the draft
-with icon-only actions is "Card header (draft)" on the "Test" page).
+The header of a card: a title with an optional badge and one line of supporting text, and up to
+three actions on the right, centred on the text. Every card that has a title uses it, whether it holds a widget, a list or plain page
+content. Figma: "Card header (draft)" on the "Test" page.
 
 ```ts
 import { CardHeader } from "fa-design-system/components/application/card-header/card-header";
@@ -16,7 +15,8 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 
 ## Use something else when
 
-- A table card: `TableCard.Header` (see [table](table.md)), until the two are merged.
+- A table card: `TableCard.Header` (Figma Table card header; see [table](table.md)). The two stay
+  separate.
 - A modal: `ModalHeader` (see [modal](modal.md)).
 - The page's own title: an `h1` above the cards, not a card.
 
@@ -29,14 +29,18 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
   (`size="sm"`, 36px, `iconLeading`, `aria-label`) in any hierarchy (`primary`, `secondary`,
   `tertiary`), or a labelled sm `Button` or `Dropdown` when the action needs words. Never
   `ButtonUtility`. Because the header's actions are the Figma sm buttons, 12px apart.
-- **card-header-no-subtitle** NEVER Put a subtitle, timestamp or source credit in the header,
-  in `title` or next to it. If the reader needs it ("Oppdatert 14:32", "Levert av Infront"), it goes
-  in the card body or under the content. Because the header is one line: title, badge, actions.
+- **card-header-description** SHOULD Use `description` for one short sentence on what the card
+  holds; it is cut to one line. NEVER Put a timestamp or source credit there or in `title`
+  ("Oppdatert 14:32", "Levert av Infront"); it goes in the card body or under the content. Because
+  the header says what the card is, not how fresh it is.
 - **card-header-one-primary** SHOULD Use at most one `primary` action, last in the row. Because one
   filled button per area is the rule on every page.
-- **card-header-padding** MUST Leave the card itself without padding and give the body under the
-  header `px-4 py-5 md:px-6`. Because the header sets its own padding (16px sides on mobile, 24px from
-  `md`), and the body lines up with it.
+- **card-header-padding** MUST Leave the card itself without padding. The header keeps its own
+  padding (20px top and bottom; 16px sides on mobile, 24px from `md`) and the body lines up with it:
+  `px-4 py-5 md:px-6` under a header with its divider, `px-4 pb-5 md:px-6` (no top padding) under
+  `divider={false}`, and `pb-4` instead of `pb-5` above a [`CardFooter`](card-footer.md). Because
+  without a divider the header's bottom padding is the gap, and with one the body needs its own
+  space under the line.
 - **card-header-heading** SHOULD Keep `headingLevel={2}` under the page's `h1`, `3` for a card inside
   a section that already has an `h2`. Pass `titleId` and `aria-labelledby` on the card `section`.
 
@@ -46,6 +50,7 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 | :------------- | :------------------------------------------ | :------ |
 | `title`        | ReactNode (required)                        |         |
 | `badge`        | string (brand pill `Badge`) or an element   |         |
+| `description`  | ReactNode: one line, cut with an ellipsis   |         |
 | `actions`      | ReactNode: up to three buttons              |         |
 | `divider`      | boolean: a `border-secondary` line under it | `true`  |
 | `headingLevel` | `2` · `3`                                   | `2`     |
@@ -81,5 +86,5 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 
 ## See also
 
-Storybook: Application / Card header. Related: [button](button.md), [table](table.md),
+Storybook: Application / Card header. Related: [card footer](card-footer.md), [button](button.md), [table](table.md),
 [tabs](tabs.md), [modal](modal.md).

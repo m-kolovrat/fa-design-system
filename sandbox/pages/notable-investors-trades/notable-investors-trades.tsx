@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { type CalendarDate, parseDate, startOfYear } from "@internationalized/date";
 import { Breadcrumbs } from "fa-design-system/components/application/breadcrumbs/breadcrumbs";
 import { DateRangePicker } from "fa-design-system/components/application/date-picker/date-range-picker";
@@ -193,7 +193,6 @@ export interface NotableInvestorsTradesPageProps {
 
 /** Bjellesauer – Siste handler: the latest trades by notable investors, with filters, sorting and export. */
 export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvestorsTradesPageProps) => {
-    const [collapsed, setCollapsed] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [methodOpen, setMethodOpen] = useState(false);
 
@@ -206,12 +205,6 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(100);
     const [selected, setSelected] = useState<Trade | null>(null);
-
-    useEffect(() => {
-        const onScroll = () => setCollapsed(window.scrollY > 160);
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
 
     const applyRange = (next: Range, nextPeriod: Period | null) => {
         setRange(next);
@@ -273,7 +266,6 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                 <SiteHeader
                     brand="fa"
                     className="sticky top-0 z-30"
-                    collapsed={collapsed}
                     navigation={navigation}
                     shortcuts={shortcuts}
                     menu={{

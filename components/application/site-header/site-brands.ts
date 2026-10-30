@@ -1,5 +1,5 @@
 import type { FC, SVGProps } from "react";
-import { FaLargeLogo, FaSmallLogo, KapitalLargeLogo, MotorLogo } from "fa-icons";
+import { FaLargeLogo, KapitalLargeLogo, MotorLogo } from "fa-icons";
 
 export type SiteBrand = "fa" | "kapital" | "motor";
 
@@ -19,9 +19,6 @@ interface SiteBrandConfig {
     name: string;
     logo: FC<SVGProps<SVGSVGElement>>;
     logoClassName: string;
-    /** Logo in the collapsed desktop header. */
-    logoCollapsed: FC<SVGProps<SVGSVGElement>>;
-    logoCollapsedClassName: string;
     /** Header and footer background. */
     surface: string;
     /** Inset areas on the surface (the footer app box). */
@@ -56,8 +53,6 @@ export const siteBrands: Record<SiteBrand, SiteBrandConfig> = {
         name: "Finansavisen",
         logo: FaLargeLogo,
         logoClassName: "h-[18px] w-auto lg:h-[29px]",
-        logoCollapsed: FaSmallLogo,
-        logoCollapsedClassName: "h-[29px] w-auto",
         surface: "bg-brand-700",
         sunken: "bg-brand-800",
         hover: "hover:bg-brand-800",
@@ -74,8 +69,6 @@ export const siteBrands: Record<SiteBrand, SiteBrandConfig> = {
         name: "Kapital",
         logo: KapitalLargeLogo,
         logoClassName: "h-[29px] w-auto",
-        logoCollapsed: KapitalLargeLogo,
-        logoCollapsedClassName: "h-[29px] w-auto",
         surface: "bg-orange-dark-600",
         sunken: "bg-orange-dark-800",
         hover: "hover:bg-orange-dark-700",
@@ -93,8 +86,6 @@ export const siteBrands: Record<SiteBrand, SiteBrandConfig> = {
         name: "Motor",
         logo: MotorLogo,
         logoClassName: "h-[18px] w-auto lg:h-6",
-        logoCollapsed: MotorLogo,
-        logoCollapsedClassName: "h-6 w-auto",
         surface: "bg-gray-800",
         sunken: "bg-gray-900",
         hover: "hover:bg-gray-700",

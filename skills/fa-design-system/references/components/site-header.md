@@ -2,7 +2,7 @@
 
 The publication header on every newspaper page: optional market ticker, logo, search, "Logg inn" /
 "Kjøp", the Meny button with its panel, and the section navigation. One component for Finansavisen,
-Kapital and Motor. Figma: Header (Type = Mobile / Tablet / Desktop / Collapsed, Brand), Ticker bar,
+Kapital and Motor. Figma: Header (Type = Mobile / Tablet / Desktop, Brand), Ticker bar,
 Menu panel, \_Nav link, \_Header search, \_Header login.
 
 ```ts
@@ -27,12 +27,11 @@ import type { TickerItem } from "fa-design-system/components/application/site-he
 
 The Figma Type is responsive CSS, not a prop.
 
-| Width              | What shows                                                                                      |
-| :----------------- | :---------------------------------------------------------------------------------------------- |
-| below `md`         | Logo, search icon (calls `onSearchPress`), Logg inn / Kjøp, Meny icon; `shortcuts` row below    |
-| `md` – `lg`        | Search field (sm) appears between logo and buttons; `shortcuts` row below                       |
-| from `lg`          | Search field (md), "Meny" label, avatar when signed in; `navigation` groups with dividers below |
-| `lg` + `collapsed` | One row: small logo, `navigation`, Meny icon. No search, login or avatar                        |
+| Width       | What shows                                                                                      |
+| :---------- | :---------------------------------------------------------------------------------------------- |
+| below `md`  | Logo, search icon (calls `onSearchPress`), Logg inn / Kjøp, Meny icon; `shortcuts` row below    |
+| `md` – `lg` | Search field (sm) appears between logo and buttons; `shortcuts` row below                       |
+| from `lg`   | Search field (md), "Meny" label, avatar when signed in; `navigation` groups with dividers below |
 
 ## Rules
 
@@ -57,9 +56,9 @@ The Figma Type is responsive CSS, not a prop.
 - **site-header-dropdowns** SHOULD Give a nav item `items` only for big sections (Børs, 400 Rikeste,
   Video). Because sub-links show only in the desktop dropdown; the parent link must still lead to a
   page that lists them.
-- **site-header-collapsed** SHOULD Set `collapsed` from your own scroll state (true once the page is
-  scrolled past the full header) and make the header sticky in the page shell. Because the component
-  doesn't watch scrolling, and `collapsed` affects desktop only.
+- **site-header-height** MUST Keep the header the same height while the page scrolls: make it
+  sticky in the page shell (`className="sticky top-0 z-30"`) and don't shrink or swap it on scroll.
+  Because it has no collapsed state (removed 2026-10-30), so content under it never jumps.
 - **site-header-user** MUST Pass `user` (`initials`, `href`) when signed in, and leave it out when
   signed out. Because `user` swaps "Logg inn" for the avatar link; "Kjøp" always shows.
 - **site-header-search-mobile** MUST Pass `onSearchPress` and open a search view from it. Because
@@ -82,7 +81,6 @@ The Figma Type is responsive CSS, not a prop.
 | `shortcuts`     | `SiteNavItem[]`                       | `siteContent[brand].shortcuts`  |
 | `tickerItems`   | `TickerItem[]`                        |                                 |
 | `user`          | `{ initials: string; href: string }`  |                                 |
-| `collapsed`     | boolean (desktop only)                | `false`                         |
 | `menu`          | `SiteMenuContent` · `null` (no panel) | `siteContent[brand].menu`       |
 | `onMenuPress`   | `() => void`                          |                                 |
 | `onSearchPress` | `() => void` (mobile search icon)     |                                 |
@@ -133,7 +131,6 @@ from `fa-icons`; partners open in a new tab), `highlights?` (bold links), `eAvis
 <SiteHeader
     brand="fa"
     className="sticky top-0 z-30"
-    collapsed={isScrolled}
     tickerItems={[
         { label: "Oslo Børs", value: "1.193,30", change: "+0,84%", direction: "up", href: "/ticker/OSEBX" },
         { label: "Brent spot", value: "81,42", change: "-1,12%", direction: "down", href: "/ticker/BRENT" },
@@ -160,5 +157,5 @@ only. Code-only by decision: nav dropdowns, hover fills, ticker auto-scroll. Sea
 
 ## See also
 
-Storybook: Application / Site header (Fa, Kapital, Motor, Signed in, Collapsed). Related:
+Storybook: Application / Site header (Fa, Kapital, Motor, Signed in). Related:
 [site-footer](site-footer.md), [flags-logos](flags-logos.md), [dropdown](dropdown.md).
