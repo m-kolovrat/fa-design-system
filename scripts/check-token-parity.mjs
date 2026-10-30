@@ -2,7 +2,8 @@
 /**
  * Token parity check — theme.css vs. tokens/figma-tokens.json.
  *
- * Figma is the source of truth (see TOKENS.md). This script reads the committed
+ * styles/theme.css is the source of truth and tokens/figma-tokens.json is the Figma
+ * snapshot it's checked against (see TOKENS.md). This script reads the committed
  * Figma extract, parses styles/theme.css with the same lightweight regex
  * technique components/foundations/foundations.story.tsx already uses for its
  * `?raw` import, and fails (non-zero exit) if anything in the extract is:

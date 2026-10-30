@@ -10,7 +10,7 @@ The code is kept in sync with the [Fa Design System Figma file](https://www.figm
 Install a released version from its git tag (React 19 and Tailwind CSS v4.3 are peer dependencies):
 
 ```bash
-npm install github:m-kolovrat/fa-design-system#v0.1.1
+npm install github:m-kolovrat/fa-design-system#v0.2.0
 ```
 
 Import the styles in the app's main stylesheet, right after Tailwind. They bring the tokens,
@@ -46,7 +46,7 @@ it always matches the components. Run setup again after updating the package to 
 ```bash
 npm install --legacy-peer-deps
 npm run storybook   # http://localhost:6006
-npm test            # type-check, lint, prettier and token parity
+npm test            # type-check, lint, prettier, token parity, skill drift and unit tests
 npm run build       # the package in dist/ (also runs on install)
 ```
 
