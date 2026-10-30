@@ -1,6 +1,6 @@
 "use client";
 
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useArgs } from "storybook/preview-api";
 import paginationDoc from "@/skills/fa-design-system/references/components/pagination.md?raw";
 import { cx } from "@/utils/cx";

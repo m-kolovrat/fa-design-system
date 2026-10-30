@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Meta } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/react-vite";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { DropdownAccountBreadcrumb } from "@/components/base/dropdown/dropdown-account-breadcrumb";
 import { DropdownAccountButton } from "@/components/base/dropdown/dropdown-account-button";

@@ -9,7 +9,9 @@ https://claude.ai/artifact/MwwsAanS41WDumXDR12BF7
 > decisions (page widths, the 16 px mobile gutter, `PeriodSelector` under charts, the mobile table
 > pattern, link tabs), so don't copy them as examples and don't edit them to match the current
 > rules. Build pages from the skill instead. To measure again, rerun the same briefs into a new
-> folder and compare the scores with this run.
+> folder and compare the scores with this run. The one later edit: on 30 Oct 2026 the story files'
+> type import changed from `@storybook/nextjs-vite` to `@storybook/react-vite` when the repo dropped
+> Next.js; nothing rendered changed.
 
 ## Setup
 

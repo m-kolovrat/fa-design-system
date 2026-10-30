@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { withOverlayAware } from "@/components/internal/decorators";
 import siteFooterDoc from "@/skills/fa-design-system/references/components/site-footer.md?raw";
 import { cx } from "@/utils/cx";

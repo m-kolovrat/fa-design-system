@@ -1,5 +1,5 @@
 import type { FC, SVGProps } from "react";
-import type { Meta } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/react-vite";
 import {
     FaBokLogo,
     FaLargeLogo,

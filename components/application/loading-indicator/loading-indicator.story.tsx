@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import loadingIndicatorDoc from "@/skills/fa-design-system/references/components/loading-indicator.md?raw";
 import { cx } from "@/utils/cx";
 import { LoadingIndicator } from "./loading-indicator";

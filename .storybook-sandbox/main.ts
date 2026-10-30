@@ -1,4 +1,4 @@
-import type { StorybookConfig } from "@storybook/nextjs-vite";
+import type { StorybookConfig } from "@storybook/react-vite";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -14,7 +14,7 @@ const config: StorybookConfig = {
     stories: ["../sandbox/**/*.story.tsx"],
     addons: ["@storybook/addon-docs", "@storybook/addon-themes"],
     staticDirs: ["../public"],
-    framework: "@storybook/nextjs-vite",
+    framework: "@storybook/react-vite",
     viteFinal: async (viteConfig) => {
         viteConfig.resolve ??= {};
         const aliases = ["components", "hooks", "utils", "styles"].map((dir) => ({

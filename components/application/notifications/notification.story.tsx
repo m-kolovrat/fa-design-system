@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Notification, NotificationToaster, type NotificationType, notify } from "@/components/application/notifications/notification";
 import { Button } from "@/components/base/buttons/button";
 import notificationDoc from "@/skills/fa-design-system/references/components/notification.md?raw";

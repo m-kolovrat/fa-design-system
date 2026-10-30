@@ -24,11 +24,12 @@ dev server. Use **npm** (`package-lock.json`).
 ```bash
 npm install --legacy-peer-deps   # first time only (eslint peer conflict)
 npm run storybook                # Storybook at http://localhost:6006
-npm test                         # type-check + lint + prettier + token parity + skill drift (run before every commit)
+npm test                         # type-check + lint + prettier + token parity + skill drift + unit tests (run before every commit)
 npm run lint                     # eslint --fix on components/
 npm run prettier                 # prettier --write on the repo
 npm run tokens:check             # styles/theme.css vs tokens/figma-tokens.json (see TOKENS.md)
 npm run skill:check              # the skill vs the source: import paths, links, index, props tables, no demo pointers
+npm run unit                     # vitest on the *.test.ts files (pure functions and the guard scripts)
 npm run layout:check             # every story at 375 and 1440 px: nothing wider than the viewport (needs Playwright, see the script)
 npm run build-storybook          # static Storybook in ./storybook-static
 npm run build                    # the installable package in ./dist (also runs on install via `prepare`)
@@ -93,6 +94,9 @@ on their own.
 ## Code conventions
 
 - **Kebab-case file names** for every file (`date-picker.tsx`, not `DatePicker.tsx`).
+- **Unit tests** sit next to their source as `<name>.test.ts` and run with Vitest in a Node
+  environment, so they suit pure functions (`utils/format-number.ts`, `components/internal/skill-doc.ts`)
+  and scripts. Rendering is checked in Storybook, not in tests. Test files don't ship.
 - **`Aria*` prefix** on every import from `react-aria-components`, so library components and the
   primitives they wrap stay apart: `import { Button as AriaButton } from "react-aria-components";`
 - **Props** extend the React Aria props of the wrapped element and add `size`, `color` and icon
@@ -170,9 +174,12 @@ gap, with an owner.
   [`docs/overrides.md`](docs/overrides.md). Keep each one in a single place on each side: a `_`
   sub-component in Figma, one config or wrapper in code (e.g. `siteBrands[brand].search`). When a
   second place needs the same restyle, propose a real variant instead.
-- **Design before build:** a new component or variant is designed in Figma first, then built in
-  code from its frame. Don't invent one in code without a frame, and don't leave one in Figma that
-  code never got: build it, or log it in the parity doc's §2 until it's decided.
+- **Design and build, in either order:** a new component or variant MAY be designed in Figma first
+  and built from its frame, or built in code first when that's the faster way to explore (`Num`
+  was: its live highlight is behaviour only code has). Whichever side comes first, the other
+  follows: a code-first component gets its Figma component, a Figma-first one gets built, or the
+  gap is logged in the parity doc's §2 with an owner until it's decided. Don't leave one on either
+  side unlogged.
 
 ## Adding a new component
 

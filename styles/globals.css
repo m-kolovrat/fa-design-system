@@ -1,2 +1,10 @@
 @import "tailwindcss";
 @import "./index.css";
+
+/* Storybook only: Inter self-hosted from the npm package, so no request leaves for Google Fonts.
+   Apps set --font-inter with their own font pipeline (theme.css reads it, falling back to "Inter"). */
+@import "@fontsource-variable/inter";
+
+:root {
+    --font-inter: "Inter Variable";
+}

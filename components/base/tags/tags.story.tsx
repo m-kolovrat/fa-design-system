@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Selection } from "react-aria-components";
 import tagsDoc from "@/skills/fa-design-system/references/components/tags.md?raw";
 import { Tag, TagGroup, TagList } from "./tags";

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Settings, Success, Trash, Users } from "fa-icons";
 import { PromptModal, PromptModalActions, PromptModalHeader, type PromptModalProps } from "@/components/application/prompt-modal/prompt-modal";
 import { Button } from "@/components/base/buttons/button";

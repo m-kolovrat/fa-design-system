@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Meta } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/react-vite";
 import { Flag, type FlagName, flags } from "fa-icons";
 import flagsLogosDoc from "@/skills/fa-design-system/references/components/flags-logos.md?raw";
 

@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/react-vite";
 import { withOverlayAware } from "@/components/internal/decorators";
 import appNavigationDoc from "@/skills/fa-design-system/references/components/app-navigation.md?raw";
 import { NavButton } from "./base-components/nav-button";

@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/react-vite";
 import chartsDoc from "@/skills/fa-design-system/references/components/charts.md?raw";
 import { cx } from "@/utils/cx";
 import { ChartLegendContent, ChartTooltipContent } from "./charts-base";

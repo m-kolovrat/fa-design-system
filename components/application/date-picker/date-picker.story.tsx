@@ -1,6 +1,6 @@
 "use client";
 
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import datePickerDoc from "@/skills/fa-design-system/references/components/date-picker.md?raw";
 import { cx } from "@/utils/cx";
 import { Calendar } from "./calendar";

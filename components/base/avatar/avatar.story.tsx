@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import avatarDoc from "@/skills/fa-design-system/references/components/avatar.md?raw";
 import { Avatar } from "./avatar";
 import { AvatarLabelGroup } from "./avatar-label-group";

@@ -1,10 +1,10 @@
-import type { StorybookConfig } from "@storybook/nextjs-vite";
+import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
     stories: ["../components/**/*.mdx", "../components/**/*.story.tsx"],
     addons: ["@storybook/addon-docs", "@storybook/addon-themes"],
     staticDirs: ["../public"],
-    framework: "@storybook/nextjs-vite",
+    framework: "@storybook/react-vite",
     // Props tables come from the TypeScript types and their JSDoc, not from hand-written argTypes.
     typescript: {
         reactDocgen: "react-docgen-typescript",

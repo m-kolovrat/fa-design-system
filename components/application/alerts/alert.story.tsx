@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Alert, type AlertColor } from "@/components/application/alerts/alert";
 import { Button } from "@/components/base/buttons/button";
 import alertDoc from "@/skills/fa-design-system/references/components/alert.md?raw";

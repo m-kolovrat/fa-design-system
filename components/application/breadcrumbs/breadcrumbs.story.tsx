@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Home } from "fa-icons";
 import breadcrumbsDoc from "@/skills/fa-design-system/references/components/breadcrumbs.md?raw";
 import { type BreadcrumbItemProps, Breadcrumbs } from "./breadcrumbs";

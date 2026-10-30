@@ -1,5 +1,5 @@
 import type { ComponentPropsWithRef } from "react";
-import type { Meta } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/react-vite";
 import carouselDoc from "@/skills/fa-design-system/references/components/carousel.md?raw";
 import { cx } from "@/utils/cx";
 import { Carousel, type CarouselContentProps, type CarouselProps, type TriggerProps } from "./carousel-base";
