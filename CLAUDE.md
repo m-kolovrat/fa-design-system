@@ -153,7 +153,9 @@ When converting another component to Figma-accurate disabled states, reuse these
 
 Icons, flags and logos come from the `fa-icons` package; file type icons from
 `@untitledui/file-icons`. Never add an SVG or icon component here. To add or change one, follow
-[`docs/icons.md`](docs/icons.md) (Figma → `fa-icons` → bump the tag here).
+[`docs/icons.md`](docs/icons.md) (Figma → a labelled `fa-icons` PR, which releases on merge →
+Renovate's PR bumping the tag here). `renovate.json` watches only `fa-icons`; don't widen it
+without asking.
 
 ## Source of truth and Figma parity
 
