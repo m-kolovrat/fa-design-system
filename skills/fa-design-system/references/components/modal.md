@@ -66,7 +66,7 @@ element), `description`, `showCloseButton` (default `true`), `divider` (default 
 - Focus moves into the dialog on open, is trapped, and returns to the trigger on close.
 - The heading from `ModalHeader` labels the dialog. `Modal` has no prop that puts an `aria-label`
   on the dialog itself, so always keep a `ModalHeader`.
-- The `CloseButton` label defaults to "Close" (English); the sheet handle is decorative.
+- The `CloseButton` is named "Lukk"; the sheet handle is decorative.
 - The footer pads for `env(safe-area-inset-bottom)` on phones; don't add your own spacer.
 
 ## Example

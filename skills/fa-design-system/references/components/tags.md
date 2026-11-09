@@ -59,7 +59,7 @@ its color (`text-fg-*`), `avatarSrc`, `avatarContrastBorder` (default `true`), `
 
 - The group is a grid: arrow keys move between tags, Delete / Backspace removes when `onRemove` is
   set.
-- The × button has a fixed English `aria-label` ("Remove this tag"); the tag text gives context.
+- The × button is named "Fjern" (`strings.removeTag`); the tag text next to it gives the context.
 
 ## Example
 

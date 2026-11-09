@@ -4,6 +4,7 @@ import type { CSSProperties, ComponentPropsWithRef, HTMLAttributes, KeyboardEven
 import { cloneElement, createContext, isValidElement, useCallback, useContext, useEffect, useState } from "react";
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -191,7 +192,7 @@ export interface TriggerProps {
     style?: CSSProperties;
     /** The class name of the trigger. */
     className?: string | ((args: { isDisabled: boolean }) => string);
-    /** The accessible label of the trigger. Defaults to "Previous slide" / "Next slide"; pass a translated label here. */
+    /** The accessible label of the trigger. Defaults to `strings.carousel.previous` / `.next` ("Forrige lysbilde" / "Neste lysbilde"). */
     "aria-label"?: string;
 }
 
@@ -208,7 +209,7 @@ const Trigger = ({ className, children, asChild, direction, style, "aria-label":
 
     const computedClassName = typeof className === "function" ? className({ isDisabled }) : className;
 
-    const defaultAriaLabel = ariaLabel ?? (direction === "prev" ? "Previous slide" : "Next slide");
+    const defaultAriaLabel = ariaLabel ?? (direction === "prev" ? strings.carousel.previous : strings.carousel.next);
 
     // If the children is a render prop, we need to pass the necessary props to the render prop.
     if (typeof children === "function") {
@@ -256,7 +257,7 @@ interface CarouselIndicatorProps {
     style?: CSSProperties;
     /** The class name of the indicator. */
     className?: string | ((args: { isSelected: boolean }) => string);
-    /** The accessible label of the indicator. Defaults to "Go to slide N"; pass a translated label here. */
+    /** The accessible label of the indicator. Defaults to `strings.carousel.goTo` ("Gå til lysbilde N"). */
     "aria-label"?: string;
 }
 
@@ -270,7 +271,7 @@ const CarouselIndicator = ({ index, isSelected = false, children, asChild, class
     };
     const computedClassName = typeof className === "function" ? className({ isSelected }) : className;
 
-    const defaultAriaLabel = ariaLabel ?? `Go to slide ${index + 1}`;
+    const defaultAriaLabel = ariaLabel ?? strings.carousel.goTo(index + 1);
 
     // If the children is a render prop, we need to pass the necessary props to the render prop.
     if (typeof children === "function") {

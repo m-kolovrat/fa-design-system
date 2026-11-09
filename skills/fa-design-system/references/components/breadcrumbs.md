@@ -35,12 +35,13 @@ import { Breadcrumbs } from "fa-design-system/components/application/breadcrumbs
 
 ## Props
 
-| Prop              | Values                                                   | Default   |
-| :---------------- | :------------------------------------------------------- | :-------- |
-| `type`            | `text` · `text-line` (top and bottom borders) · `button` | `text`    |
-| `divider`         | `chevron` · `slash`                                      | `chevron` |
-| `maxVisibleItems` | number ≥ 2: keeps the first `n − 1` and the last item    |           |
-| `className`       | classes on the wrapping `nav` (layout)                   |           |
+| Prop              | Values                                                     | Default   |
+| :---------------- | :--------------------------------------------------------- | :-------- |
+| `type`            | `text` · `text-line` (top and bottom borders) · `button`   | `text`    |
+| `divider`         | `chevron` · `slash`                                        | `chevron` |
+| `maxVisibleItems` | number ≥ 2: keeps the first `n − 1` and the last item      |           |
+| `labels`          | `{ navigation, showAll }`, overrides `strings.breadcrumbs` |           |
+| `className`       | classes on the wrapping `nav` (layout)                     |           |
 
 `Breadcrumbs.Item`: `href`, `icon` (component or element), `children`, `aria-label`, plus React
 Aria `Link` props.
@@ -51,8 +52,8 @@ Aria `Link` props.
 
 ## Accessibility
 
-- Renders `<nav aria-label="Breadcrumbs">` around an ordered React Aria list. The nav label and
-  the "…" button label ("Show all breadcrumbs") are English in code.
+- Renders a `<nav>` named "Brødsmulesti" around an ordered React Aria list; the "…" button is named
+  "Vis hele stien". `labels={{ navigation, showAll }}` overrides them.
 - Focus rings are built in; the current item is not a link target for keyboard users.
 
 ## Example

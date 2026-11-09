@@ -6,6 +6,7 @@ import { OTPInput, OTPInputContext } from "input-otp";
 import { HintText } from "@/components/base/input/hint-text";
 import { Label as LabelBase } from "@/components/base/input/label";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 type PinInputSize = "xxxs" | "xxs" | "xs" | "sm" | "md" | "lg";
 
@@ -98,10 +99,12 @@ export type PinInputGroupProps = DistributiveOmit<OTPInputProps, "maxLength"> & 
     width?: number;
     /** Classes on the hidden input */
     inputClassName?: string;
+    /** The name when there is no `PinInput.Label`. Defaults to "Skriv inn koden" (`strings.pinInput`). */
+    "aria-label"?: string;
 };
 
 /** Holds the slots and the hidden input; takes the value, length and pattern. */
-const Group = ({ inputClassName, containerClassName, width, maxLength = 4, ...props }: PinInputGroupProps) => {
+const Group = ({ inputClassName, containerClassName, width, maxLength = 4, "aria-label": ariaLabel = strings.pinInput, ...props }: PinInputGroupProps) => {
     const { id, size, disabled, invalid } = usePinInputContext();
 
     return (
@@ -112,7 +115,7 @@ const Group = ({ inputClassName, containerClassName, width, maxLength = 4, ...pr
             disabled={disabled}
             aria-invalid={invalid || undefined}
             id={"pin-input-" + id}
-            aria-label="Enter your pin"
+            aria-label={ariaLabel}
             aria-labelledby={"pin-input-label-" + id}
             aria-describedby={"pin-input-description-" + id}
             containerClassName={cx("flex flex-row", styles[size].group, containerClassName)}

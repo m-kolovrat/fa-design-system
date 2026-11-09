@@ -64,8 +64,8 @@ sticky headers.
 ## Accessibility
 
 - Focus is trapped in the panel and returns to the trigger on close; Escape closes it.
-- The header close button is labelled "Close" and the dialog "Slideout menu" (English defaults in
-  code).
+- The header close button is named "Lukk"; the dialog falls back to "Sidepanel" without
+  `aria-labelledby` / `aria-label`.
 - Pass `isDismissable` so a click on the dimmed page closes the panel, as people expect.
 
 ## Example

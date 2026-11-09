@@ -32,11 +32,10 @@ below: two arrow triggers over the slides and a `CarouselIndicator` that wires `
 - **carousel-structure** MUST Nest as `Carousel.Root` > `Carousel.Content` > `Carousel.Item`, with
   `PrevTrigger`, `NextTrigger` and the indicator inside `Root`. Because they read state from the
   root's context (`useCarousel` throws outside it).
-- **carousel-labels** MUST Give the root an `aria-label` ("Bilder fra prøvekjøringen") and give the
-  arrows a Norwegian label (`aria-label="Forrige bilde"`): as a prop on `PrevTrigger` /
-  `NextTrigger`, on the `asChild` child, or on your own `<button>` in the render prop. Because the
-  built-in labels are English ("Previous slide", "Next slide", "Go to slide 1") and only apply when
-  you pass none.
+- **carousel-labels** MUST Give the root an `aria-label` ("Bilder fra prøvekjøringen"). Because it
+  tells people what the slides are. The arrows and dots are named "Forrige lysbilde", "Neste
+  lysbilde" and "Gå til lysbilde 1" (`strings.carousel`); pass `aria-label` on a trigger, its
+  `asChild` child or your own `<button>` for a more specific name ("Forrige bilde").
 - **carousel-indicator** SHOULD Use `PaginationDot` for the dots, as the example's
   `CarouselIndicator` does (`page={selectedIndex + 1}`, `total={scrollSnaps.length}`, `onPageChange` →
   `api.scrollTo`). `framed` when it sits on a photo. Because it is the Figma dot pagination.

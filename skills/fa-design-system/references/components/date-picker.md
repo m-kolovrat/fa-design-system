@@ -28,12 +28,10 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 - **date-picker-value** MUST Pass values as `DateValue` from `@internationalized/date`
   (`today(getLocalTimeZone())`, `parseDate("2026-10-23")`); a range is `{ start, end }`. Because
   React Aria date components don't accept `Date` or strings.
-- **date-picker-name** MUST Pass a Norwegian `aria-label` ("Velg dato", "Velg periode"). Because
-  the default is English ("Date picker", "Date range picker").
-- **date-picker-value-shown** SHOULD Always pass `value` or `defaultValue`. Because the empty
-  trigger text is hard-coded English: "Select date" on `DatePicker`, "Select dates" (placeholder
-  color) on `DateRangePicker`. A range with only one end set shows "Select date" for the missing
-  end.
+- **date-picker-name** SHOULD Pass `label` (visible) or an `aria-label` that says which date it is
+  ("Rapportdato"). Because the default name is the generic "Velg dato" / "Velg periode".
+- **date-picker-value-shown** SHOULD Pass `value` or `defaultValue` when there is a sensible
+  default. Because the empty trigger only says "Velg dato" / "Velg datoer".
 - **date-picker-commit** SHOULD Load data in `onChange` (or `onApply`). Because clicks in the
   calendar and presets are a draft: `onChange` fires once, when Apply commits, and Cancel, Escape
   or a click outside drop the draft.
@@ -89,9 +87,9 @@ Standalone calendars:
 ## Accessibility
 
 - The calendar grid is fully keyboard-operable (arrows, Page Up/Down for months, Enter to pick).
-- Known gap: all built-in texts are hard-coded English: the footer buttons ("Cancel", "Apply"),
-  the range presets ("Today", "Last week" …), `Calendar`'s "Today" button and its date input's
-  `aria-label` ("Date"), and the empty trigger text ("Select date", "Select dates").
+- The built-in texts are Norwegian (`strings.datePicker` in `utils/strings`): "Avbryt" / "Bruk",
+  the presets ("I dag", "Forrige uke" …), `Calendar`'s "I dag" button and the empty trigger text.
+  `labels` overrides any of them. Month and weekday names follow the `I18nProvider` locale.
 
 ## Example
 

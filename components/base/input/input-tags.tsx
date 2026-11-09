@@ -9,6 +9,7 @@ import { Label } from "@/components/base/input/label";
 import { Tag, TagGroup, TagList } from "@/components/base/tags/tags";
 import { Tooltip, TooltipTrigger } from "@/components/base/tooltip/tooltip";
 import { cx, sortCx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 interface TagEntry {
     id: number;
@@ -268,7 +269,12 @@ export const InputTags = ({
                         <div className={cx("relative flex w-full flex-1 flex-row flex-wrap items-center justify-start", size === "sm" ? "gap-1.5" : "gap-2")}>
                             {!isEmpty && (
                                 <div ref={tagGroupRef} onKeyDown={handleTagGroupKeyDown} className="contents">
-                                    <TagGroup label={label || "Tags"} size={size === "lg" ? "md" : size} onRemove={handleRemove} className="contents">
+                                    <TagGroup
+                                        label={label || strings.input.tags}
+                                        size={size === "lg" ? "md" : size}
+                                        onRemove={handleRemove}
+                                        className="contents"
+                                    >
                                         <TagList className="flex flex-wrap gap-1.5 focus:outline-hidden" items={entries}>
                                             {(item) => (
                                                 <Tag

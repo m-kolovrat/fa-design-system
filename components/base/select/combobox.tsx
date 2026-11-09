@@ -12,6 +12,7 @@ import { type CommonProps, SelectContext, type SelectItemType, sizes } from "@/c
 import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { cx } from "@/utils/cx";
 import { isReactComponent } from "@/utils/is-react-component";
+import { strings } from "@/utils/strings";
 
 type ComboBoxAriaProps = AriaComboBoxProps<SelectItemType>;
 
@@ -131,7 +132,7 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
 
 /** A select you can type in to filter the options (`Select.ComboBox`). */
 export const ComboBox = ({
-    placeholder = "Search",
+    placeholder = strings.select.searchPlaceholder,
     shortcut = true,
     size = "md",
     children,

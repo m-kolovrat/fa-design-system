@@ -20,8 +20,11 @@ import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 import { cx } from "@/utils/cx";
+import { type Strings, strings } from "@/utils/strings";
 import { SelectItem } from "./select-item";
 import { type CommonProps, SelectContext, type SelectItemType, sizes } from "./select-shared";
+
+type MultiSelectLabels = Partial<Strings["multiSelect"]>;
 
 const searchSizes = {
     sm: { wrapper: "py-1", root: "px-3 py-2 gap-2 *:data-icon:size-4", text: "text-sm" },
@@ -51,20 +54,23 @@ interface MultiSelectFooterProps {
     onReset?: () => void;
     /** Handler that is called when the select all button is clicked. */
     onSelectAll?: () => void;
+    /** Overrides the button texts (`strings.multiSelect.reset` / `.selectAll`). */
+    labels?: MultiSelectLabels;
     /** Additional class name. */
     className?: string;
 }
 
-const MultiSelectFooter = ({ size = "sm", onReset, onSelectAll, className }: MultiSelectFooterProps) => {
+const MultiSelectFooter = ({ size = "sm", onReset, onSelectAll, labels: labelsProp, className }: MultiSelectFooterProps) => {
     const btnSize = footerButtonSize[size];
+    const labels = { ...strings.multiSelect, ...labelsProp };
 
     return (
         <div className={cx("flex items-center justify-between border-t border-secondary p-3", className)}>
             <Button size={btnSize} color="secondary" onClick={onReset}>
-                Reset
+                {labels.reset}
             </Button>
             <Button size={btnSize} color="secondary" onClick={onSelectAll}>
-                Select all
+                {labels.selectAll}
             </Button>
         </div>
     );
@@ -73,24 +79,27 @@ const MultiSelectFooter = ({ size = "sm", onReset, onSelectAll, className }: Mul
 interface MultiSelectEmptyStateProps {
     /**
      * The title to display.
-     * @default "No results found"
+     * @default "Ingen treff" (`strings.multiSelect.noResults`)
      */
     title?: string;
     /**
      * The description to display.
-     * @default "Please try a different search term."
+     * @default "Prøv et annet søkeord." (`strings.multiSelect.noResultsDescription`)
      */
     description?: string;
     /** Handler that is called when the clear search button is clicked. */
     onClearSearch?: () => void;
+    /** The clear search button's text. */
+    clearSearchLabel?: string;
     /** Additional class name. */
     className?: string;
 }
 
 const MultiSelectEmptyState = ({
-    title = "No results found",
-    description = "Please try a different search term.",
+    title = strings.multiSelect.noResults,
+    description = strings.multiSelect.noResultsDescription,
     onClearSearch,
+    clearSearchLabel = strings.multiSelect.clearSearch,
     className,
 }: MultiSelectEmptyStateProps) => (
     <div className={cx("flex flex-col items-center gap-3 px-4 py-4", className)}>
@@ -103,7 +112,7 @@ const MultiSelectEmptyState = ({
         </div>
         {onClearSearch && (
             <Button size="sm" color="link-color" onClick={onClearSearch}>
-                Clear search
+                {clearSearchLabel}
             </Button>
         )}
     </div>
@@ -152,6 +161,8 @@ interface MultiSelectProps extends RefAttributes<HTMLDivElement>, CommonProps {
     selectedCountFormatter?: (count: number) => ReactNode;
     /** Supporting text displayed next to the selected count in the trigger. */
     supportingText?: ReactNode;
+    /** Overrides the built-in Norwegian texts (`strings.multiSelect` in `utils/strings`): footer, search, count, empty state. */
+    labels?: MultiSelectLabels;
 }
 
 const MultiSelectRoot = ({
@@ -164,7 +175,7 @@ const MultiSelectRoot = ({
     isDisabled,
     isRequired,
     isInvalid,
-    placeholder = "Select",
+    placeholder: placeholderProp,
     label,
     hint,
     tooltip,
@@ -179,7 +190,10 @@ const MultiSelectRoot = ({
     emptyStateDescription,
     selectedCountFormatter,
     supportingText,
+    labels: labelsProp,
 }: MultiSelectProps) => {
+    const labels = { ...strings.multiSelect, ...labelsProp };
+    const placeholder = placeholderProp ?? labels.placeholder;
     const { contains } = useFilter({ sensitivity: "base" });
     const [searchValue, setSearchValue] = useState("");
 
@@ -266,7 +280,7 @@ const MultiSelectRoot = ({
                             {hasSelection ? (
                                 <span className={cx("flex items-center", sizes[size].textContainer)}>
                                     <span className={cx("font-medium text-primary", sizes[size].text)}>
-                                        {selectedCountFormatter ? selectedCountFormatter(selectedCount) : `${selectedCount} selected`}
+                                        {selectedCountFormatter ? selectedCountFormatter(selectedCount) : labels.selectedCount(selectedCount)}
                                     </span>
                                     {supportingText && <span className={cx("text-tertiary", sizes[size].text)}>{supportingText}</span>}
                                 </span>
@@ -298,11 +312,11 @@ const MultiSelectRoot = ({
                             <AriaAutocomplete filter={contains} inputValue={searchValue} onInputChange={setSearchValue}>
                                 {showSearch && (
                                     <div className={cx("border-b border-secondary", searchSizes[size].wrapper)}>
-                                        <AriaSearchField aria-label="Search" value={searchValue} onChange={setSearchValue} autoFocus>
+                                        <AriaSearchField aria-label={labels.search} value={searchValue} onChange={setSearchValue} autoFocus>
                                             <div className={cx("flex items-center", searchSizes[size].root)}>
                                                 <Search data-icon aria-hidden="true" className="shrink-0 text-fg-quaternary" />
                                                 <AriaInput
-                                                    placeholder="Search"
+                                                    placeholder={labels.search}
                                                     className={cx(
                                                         "w-full appearance-none bg-transparent text-primary caret-alpha-black/90 outline-hidden placeholder:text-placeholder",
                                                         searchSizes[size].text,
@@ -314,15 +328,16 @@ const MultiSelectRoot = ({
                                 )}
 
                                 <AriaListBox
-                                    aria-label={label || "Options"}
+                                    aria-label={label || labels.options}
                                     items={items}
                                     selectionMode="multiple"
                                     selectedKeys={currentKeys}
                                     onSelectionChange={setSelection}
                                     renderEmptyState={() => (
                                         <MultiSelectEmptyState
-                                            title={emptyStateTitle}
-                                            description={emptyStateDescription}
+                                            title={emptyStateTitle ?? labels.noResults}
+                                            description={emptyStateDescription ?? labels.noResultsDescription}
+                                            clearSearchLabel={labels.clearSearch}
                                             onClearSearch={searchValue ? handleClearSearch : undefined}
                                         />
                                     )}
@@ -332,7 +347,7 @@ const MultiSelectRoot = ({
                                 </AriaListBox>
                             </AriaAutocomplete>
 
-                            {showFooter && <MultiSelectFooter size={size} onReset={handleReset} onSelectAll={handleSelectAll} />}
+                            {showFooter && <MultiSelectFooter size={size} onReset={handleReset} onSelectAll={handleSelectAll} labels={labels} />}
                         </AriaDialog>
                     </AriaPopover>
                 </AriaDialogTrigger>

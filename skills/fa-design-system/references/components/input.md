@@ -83,7 +83,7 @@ React Aria field; they wire up through React Aria slots.
 ## Accessibility
 
 - The hint is linked as the field's description, or as its error message when `isInvalid`.
-- The password show/hide button has a fixed English `aria-label`.
+- The password show/hide button is named "Vis eller skjul passord" (`strings.input.togglePassword`).
 
 ## Example
 

@@ -55,6 +55,7 @@ import { Alert, type AlertColor } from "fa-design-system/components/application/
 | `icon`        | icon component, overrides the color's icon                                  |                                                |
 | `onClose`     | `() => void`; shows the close button                                        |                                                |
 | `role`        | `alert` (assertive) · `status` (polite)                                     | `alert` for `error` / `warning`, else `status` |
+| `closeLabel`  | the close button's name                                                     | `"Lukk"`                                       |
 | `className`   | layout                                                                      |                                                |
 
 ## Notes
@@ -68,8 +69,7 @@ import { Alert, type AlertColor } from "fa-design-system/components/application/
 - `error` and `warning` are `role="alert"` (assertive); the other colors are `role="status"`
   (polite). Override with `role`. Render an alert when the condition is known; don't mount a page
   full of them on load.
-- The close button's accessible name is the English "Dismiss" (fixed in code); if that matters for
-  the page, report it rather than hiding the button.
+- The close button is named "Lukk" (`strings.close`); `closeLabel` overrides it.
 
 ## Example
 

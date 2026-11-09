@@ -5,6 +5,7 @@ import { Alert as AlertIcon, Info, Success } from "fa-icons";
 import { CloseButton } from "@/components/base/buttons/close-button";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 /*
  * Figma: "Alert" — Color (Gray, Brand, Error, Warning, Success) × Size (Floating, Full-width),
@@ -38,6 +39,11 @@ export interface AlertProps {
     /** Shows the close button (Figma "X close button") and is called when it's pressed. */
     onClose?: () => void;
     /**
+     * The close button's accessible name.
+     * @default "Lukk" (`strings.close`)
+     */
+    closeLabel?: string;
+    /**
      * How it's announced: `alert` interrupts (assertive), `status` waits for a pause (polite).
      * @default "alert" for `error` and `warning`, "status" otherwise
      */
@@ -47,11 +53,22 @@ export interface AlertProps {
 }
 
 /** An in-page message: a card (`floating`) or a banner across the top of the page (`full-width`). */
-export const Alert = ({ color = "gray", variant = "floating", title, description, actions, icon, onClose, role, className }: AlertProps) => {
+export const Alert = ({
+    color = "gray",
+    variant = "floating",
+    title,
+    description,
+    actions,
+    icon,
+    onClose,
+    closeLabel = strings.close,
+    role,
+    className,
+}: AlertProps) => {
     const Icon = icon ?? defaultIcons[color];
     const ariaRole = role ?? (color === "error" || color === "warning" ? "alert" : "status");
     const featuredIcon = <FeaturedIcon icon={Icon} color={color} theme="light" size="sm" />;
-    const closeButton = onClose && <CloseButton size="sm" slot={null} onPress={onClose} label="Dismiss" className="absolute top-2 right-2" />;
+    const closeButton = onClose && <CloseButton size="sm" slot={null} onPress={onClose} label={closeLabel} className="absolute top-2 right-2" />;
 
     if (variant === "full-width") {
         return (
@@ -68,7 +85,13 @@ export const Alert = ({ color = "gray", variant = "floating", title, description
                         <div className="flex items-center gap-2">
                             {actions && <div className="flex w-full flex-col-reverse gap-3 *:w-full md:w-auto md:flex-row md:*:w-auto">{actions}</div>}
                             {onClose && (
-                                <CloseButton size="sm" slot={null} onPress={onClose} label="Dismiss" className="max-md:absolute max-md:top-2 max-md:right-2" />
+                                <CloseButton
+                                    size="sm"
+                                    slot={null}
+                                    onPress={onClose}
+                                    label={closeLabel}
+                                    className="max-md:absolute max-md:top-2 max-md:right-2"
+                                />
                             )}
                         </div>
                     )}

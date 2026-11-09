@@ -17,6 +17,7 @@ import { SelectContext, type SelectItemType, sizes } from "@/components/base/sel
 import { TagCloseX } from "@/components/base/tags/base-components/tag-close-x";
 import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 import { SelectItem } from "./select-item";
 
 interface TagSelectValueProps extends AriaGroupProps {
@@ -86,7 +87,7 @@ export const TagSelectBase = ({
     onItemInserted,
     valueFormatter,
     shortcut,
-    placeholder = "Search",
+    placeholder = strings.select.searchPlaceholder,
     icon,
     // Omit name to avoid conflicts with the `Select` component
     name: _name,

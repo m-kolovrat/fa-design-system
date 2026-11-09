@@ -10,6 +10,7 @@ import { DatePicker as AriaDatePicker, Dialog as AriaDialog, Group as AriaGroup,
 import { Button, type ButtonProps } from "@/components/base/buttons/button";
 import { Label } from "@/components/base/input/label";
 import { cx } from "@/utils/cx";
+import { type DatePickerLabels, mergeDatePickerLabels } from "@/utils/strings";
 import { Calendar } from "./calendar";
 
 const defaultHighlightedDates = [today(getLocalTimeZone())];
@@ -17,6 +18,8 @@ const defaultHighlightedDates = [today(getLocalTimeZone())];
 export interface DatePickerProps extends AriaDatePickerProps<DateValue> {
     /** Visible label above the trigger; it also names the picker. */
     label?: string;
+    /** Overrides the built-in Norwegian texts (`strings.datePicker` in `utils/strings`): buttons, presets, empty text, name. */
+    labels?: DatePickerLabels;
     /** Called with the committed date when Apply is clicked, after `onChange`. The popover closes after it. */
     onApply?: (value: DateValue | null) => void;
     /** Called when Cancel is clicked; the selection reverts to the committed date and the popover closes. */
@@ -44,6 +47,7 @@ export interface DatePickerProps extends AriaDatePickerProps<DateValue> {
 /** A button that opens a calendar popover with Cancel / Apply, for picking one date. */
 export const DatePicker = ({
     label,
+    labels: labelsProp,
     value: valueProp,
     defaultValue,
     onChange,
@@ -55,6 +59,7 @@ export const DatePicker = ({
     className,
     ...props
 }: DatePickerProps) => {
+    const labels = mergeDatePickerLabels(labelsProp);
     const formatter = useDateFormatter({
         month: "short",
         day: "numeric",
@@ -66,11 +71,11 @@ export const DatePicker = ({
     const [draft, setDraft] = useState<DateValue | null | undefined>(undefined);
     const pickerValue = draft === undefined ? value : draft;
 
-    const formattedDate = value ? formatter.format(value.toDate(getLocalTimeZone())) : "Select date";
+    const formattedDate = value ? formatter.format(value.toDate(getLocalTimeZone())) : labels.empty;
 
     return (
         <AriaDatePicker
-            aria-label={label ? undefined : "Date picker"}
+            aria-label={label ? undefined : labels.date}
             shouldCloseOnSelect={false}
             {...props}
             value={pickerValue}
@@ -100,7 +105,7 @@ export const DatePicker = ({
                     )
                 }
             >
-                <AriaDialog aria-label="Date picker" className="rounded-2xl bg-primary shadow-xl ring ring-secondary_alt">
+                <AriaDialog aria-label={label ?? labels.date} className="rounded-2xl bg-primary shadow-xl ring ring-secondary_alt">
                     {({ close }) => (
                         <>
                             <div className="flex px-6 py-5">
@@ -115,7 +120,7 @@ export const DatePicker = ({
                                         close();
                                     }}
                                 >
-                                    Cancel
+                                    {labels.cancel}
                                 </Button>
                                 <Button
                                     size="md"
@@ -126,7 +131,7 @@ export const DatePicker = ({
                                         close();
                                     }}
                                 >
-                                    Apply
+                                    {labels.apply}
                                 </Button>
                             </div>
                         </>

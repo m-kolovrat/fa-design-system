@@ -4,6 +4,7 @@ import type { RefAttributes } from "react";
 import { Close } from "fa-icons";
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 interface TagCloseXProps extends AriaButtonProps, RefAttributes<HTMLButtonElement> {
     size?: "sm" | "md" | "lg";
@@ -20,7 +21,7 @@ export const TagCloseX = ({ size = "md", className, ...otherProps }: TagCloseXPr
     return (
         <AriaButton
             slot="remove"
-            aria-label="Remove this tag"
+            aria-label={strings.removeTag}
             className={cx(
                 "flex cursor-pointer rounded-[3px] text-fg-quaternary outline-transparent transition hover:bg-primary_hover hover:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring disabled:cursor-not-allowed",
                 styles[size].root,

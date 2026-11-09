@@ -3,6 +3,7 @@
 import { Close as CloseIcon } from "fa-icons";
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 const sizes = {
     sm: { root: "size-9", icon: "size-5" },
@@ -20,7 +21,10 @@ export interface CloseButtonProps extends AriaButtonProps {
     theme?: "light" | "dark";
     /** The size variant: `sm` 36px, `md` 40px, `lg` 44px */
     size?: "sm" | "md" | "lg";
-    /** The accessible name. Defaults to English "Close", so pass "Lukk" */
+    /**
+     * The accessible name.
+     * @default "Lukk" (`strings.close`)
+     */
     label?: string;
     /**
      * The React Aria slot the button fills. Defaults to `"close"` so it
@@ -38,7 +42,7 @@ export const CloseButton = ({ label, className, size = "sm", theme = "light", sl
         <AriaButton
             {...otherProps}
             slot={slot}
-            aria-label={label || "Close"}
+            aria-label={label || strings.close}
             className={(state) =>
                 cx(
                     "flex cursor-pointer items-center justify-center rounded-full p-2 transition focus:outline-hidden",

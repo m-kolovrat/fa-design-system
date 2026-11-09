@@ -9,6 +9,7 @@ import type {
 import { Dialog as AriaDialog, DialogTrigger as AriaDialogTrigger, Modal as AriaModal, ModalOverlay as AriaModalOverlay } from "react-aria-components";
 import { CloseButton } from "@/components/base/buttons/close-button";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 interface ModalOverlayProps extends AriaModalOverlayProps, RefAttributes<HTMLDivElement> {}
 
@@ -85,7 +86,7 @@ const Menu = ({ children, dialogClassName, "aria-label": ariaLabel, "aria-labell
                 {(state) => (
                     <Dialog
                         aria-labelledby={ariaLabelledBy}
-                        aria-label={ariaLabelledBy ? undefined : (ariaLabel ?? "Slideout menu")}
+                        aria-label={ariaLabelledBy ? undefined : (ariaLabel ?? strings.slideoutMenu)}
                         className={dialogClassName}
                     >
                         {({ close }) => {

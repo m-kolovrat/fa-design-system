@@ -25,8 +25,8 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
   are linked to the hidden input through the root's ids.
 - **pin-slots-match** MUST Render exactly `maxLength` slots with `index` 0 … n−1. Because a missing
   slot hides a typed digit, and `maxLength` (default 4) sets how many digits are accepted.
-- **pin-label** MUST Always render `PinInput.Label`. Because it replaces the group's built-in
-  English name ("Enter your pin").
+- **pin-label** MUST Always render `PinInput.Label`. Because it names the code ("Engangskode"); the
+  group's fallback name is only "Skriv inn koden".
 - **pin-digits** SHOULD Pass `pattern={REGEXP_ONLY_DIGITS}` for numeric codes and
   `autoComplete="one-time-code"` so phones offer the SMS code.
 - **pin-states** MUST Set states on the root with `isDisabled` and `isInvalid`. Because the root

@@ -21,6 +21,7 @@ import {
     Separator as AriaSeparator,
 } from "react-aria-components";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 import { Avatar } from "../avatar/avatar";
 import { CheckboxBase } from "../checkbox/checkbox";
 import { RadioButtonBase } from "../radio-buttons/radio-buttons";
@@ -198,7 +199,7 @@ const DropdownDotsButton = (props: AriaButtonProps & RefAttributes<HTMLButtonEle
     return (
         <AriaButton
             {...props}
-            aria-label={props["aria-label"] ?? (props["aria-labelledby"] ? undefined : "Open menu")}
+            aria-label={props["aria-label"] ?? (props["aria-labelledby"] ? undefined : strings.openMenu)}
             className={(state) =>
                 cx(
                     "cursor-pointer rounded-sm text-fg-quaternary outline-focus-ring transition",

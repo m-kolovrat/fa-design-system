@@ -68,7 +68,7 @@ import { FeaturedIcon } from "fa-design-system/components/foundations/featured-i
 
 - Focus is trapped while open and returns to the trigger. Escape and an overlay click close it;
   set `isDismissable={false}` only when an answer is required.
-- The close X is labelled "Close" (English default of `CloseButton`).
+- The close X is named "Lukk" (`CloseButton`'s default).
 - Featured icons are decorative; the title carries the meaning.
 
 ## Example

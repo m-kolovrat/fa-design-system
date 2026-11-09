@@ -2,6 +2,7 @@
 
 import { useId } from "react";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 const styles = {
     sm: {
@@ -125,7 +126,7 @@ export const LoadingIndicator = ({ type = "line-simple", size = "sm", label, "ar
     return (
         <div
             role="status"
-            aria-label={label ? undefined : (ariaLabel ?? "Loading")}
+            aria-label={label ? undefined : (ariaLabel ?? strings.loading)}
             className={cx("flex flex-col items-center justify-center", styles[size].root)}
         >
             {renderSpinner()}

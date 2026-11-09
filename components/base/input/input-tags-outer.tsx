@@ -7,6 +7,7 @@ import { InputBase } from "@/components/base/input/input";
 import { Label } from "@/components/base/input/label";
 import { Tag, TagGroup, TagList } from "@/components/base/tags/tags";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 interface TagEntry {
     id: string;
@@ -204,7 +205,7 @@ export const InputTagsOuter = ({
             </div>
 
             {entries.length > 0 && (
-                <TagGroup label={label || "Tags"} size={size === "lg" ? "md" : size} onRemove={handleRemove}>
+                <TagGroup label={label || strings.input.tags} size={size === "lg" ? "md" : size} onRemove={handleRemove}>
                     <TagList className="flex flex-wrap gap-1.5 focus:outline-hidden" items={entries}>
                         {(item) => (
                             <Tag id={item.id} isDisabled={isDisabled}>

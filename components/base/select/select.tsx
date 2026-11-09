@@ -10,6 +10,7 @@ import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 import { cx } from "@/utils/cx";
 import { isReactComponent } from "@/utils/is-react-component";
+import { strings } from "@/utils/strings";
 import { ComboBox } from "./combobox";
 import { Popover } from "./popover";
 import { SelectItem } from "./select-item";
@@ -122,7 +123,7 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placehold
 };
 
 const SelectComponent = ({
-    placeholder = "Select",
+    placeholder = strings.select.placeholder,
     icon,
     size = "md",
     children,

@@ -7,6 +7,7 @@ import type { BreadcrumbsProps as AriaBreadcrumbsProps, LinkProps as AriaLinkPro
 import { Breadcrumb as AriaBreadcrumb, Breadcrumbs as AriaBreadcrumbs, Button as AriaButton, Link as AriaLink } from "react-aria-components";
 import { cx, sortCx } from "@/utils/cx";
 import { isReactComponent } from "@/utils/is-react-component";
+import { type Strings, strings } from "@/utils/strings";
 
 type BreadcrumbType = "text" | "text-line" | "button";
 type BreadcrumbDivider = "chevron" | "slash";
@@ -103,16 +104,12 @@ const BreadcrumbItem = ({ icon: Icon, children, className, ...props }: Breadcrum
 };
 
 /** Collapsed-items placeholder. Pressing it reveals the hidden breadcrumbs. */
-const BreadcrumbEllipsis = ({ onPress }: { onPress: () => void }) => {
+const BreadcrumbEllipsis = ({ onPress, label }: { onPress: () => void; label: string }) => {
     const { type } = useContext(BreadcrumbsContext);
 
     return (
         <AriaBreadcrumb className={cx(styles.common.item, styles.types[type].item)}>
-            <AriaButton
-                aria-label="Show all breadcrumbs"
-                onPress={onPress}
-                className={cx(styles.common.link, styles.types[type].shape, styles.types[type].link)}
-            >
+            <AriaButton aria-label={label} onPress={onPress} className={cx(styles.common.link, styles.types[type].shape, styles.types[type].link)}>
                 ...
             </AriaButton>
             <Divider />
@@ -134,22 +131,29 @@ export interface BreadcrumbsProps extends Omit<AriaBreadcrumbsProps<object>, "ch
     children: ReactNode;
     /** Classes on the wrapping `nav` (layout). */
     className?: string;
+    /** Overrides the built-in Norwegian texts (`strings.breadcrumbs` in `utils/strings`): the `nav` name and the "…" button. */
+    labels?: Partial<Strings["breadcrumbs"]>;
 }
 
 /** A trail of links from the home page to the current page. */
-const BreadcrumbsRoot = ({ type = "text", divider = "chevron", maxVisibleItems, children, className, ...props }: BreadcrumbsProps) => {
+const BreadcrumbsRoot = ({ type = "text", divider = "chevron", maxVisibleItems, children, className, labels: labelsProp, ...props }: BreadcrumbsProps) => {
+    const labels = { ...strings.breadcrumbs, ...labelsProp };
     const [isExpanded, setIsExpanded] = useState(false);
 
     const items = Children.toArray(children).filter(isValidElement) as ReactElement[];
     const shouldCollapse = !isExpanded && maxVisibleItems !== undefined && maxVisibleItems >= 2 && items.length > maxVisibleItems;
 
     const visibleItems = shouldCollapse
-        ? [...items.slice(0, maxVisibleItems - 1), <BreadcrumbEllipsis key="ellipsis" onPress={() => setIsExpanded(true)} />, items[items.length - 1]]
+        ? [
+              ...items.slice(0, maxVisibleItems - 1),
+              <BreadcrumbEllipsis key="ellipsis" label={labels.showAll} onPress={() => setIsExpanded(true)} />,
+              items[items.length - 1],
+          ]
         : items;
 
     return (
         <BreadcrumbsContext.Provider value={{ type, divider }}>
-            <nav aria-label="Breadcrumbs" className={cx(styles.types[type].root, className)}>
+            <nav aria-label={labels.navigation} className={cx(styles.types[type].root, className)}>
                 <AriaBreadcrumbs {...props} className={cx(styles.common.list, styles.types[type].list)}>
                     {visibleItems}
                 </AriaBreadcrumbs>

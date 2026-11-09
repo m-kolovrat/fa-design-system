@@ -6,6 +6,7 @@ import { Button } from "@/components/base/buttons/button";
 import { InputBase } from "@/components/base/input/input";
 import { InputGroup } from "@/components/base/input/input-group";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 export interface InputFileProps {
     /**
@@ -39,17 +40,17 @@ export interface InputFileProps {
     className?: string;
     /**
      * The text of the upload button.
-     * @default "Upload"
+     * @default "Last opp" (`strings.input.fileButton`)
      */
     buttonText?: string;
 }
 
-/** One compact field with a file button. Defaults to English texts and size `sm`: pass `buttonText`, `placeholder` and `size`. */
+/** One compact field with a file button. Defaults to size `sm`; the texts default to Norwegian (`strings.input`). */
 export const InputFile = ({
     size = "sm",
     label,
     hint,
-    placeholder = "Choose a file",
+    placeholder = strings.input.filePlaceholder,
     isDisabled,
     isInvalid,
     isRequired,
@@ -59,7 +60,7 @@ export const InputFile = ({
     allowsMultiple,
     onChange,
     className,
-    buttonText = "Upload",
+    buttonText = strings.input.fileButton,
 }: InputFileProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [fileNames, setFileNames] = useState("");
