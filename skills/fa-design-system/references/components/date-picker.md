@@ -34,9 +34,9 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
   trigger text is hard-coded English: "Select date" on `DatePicker`, "Select dates" (placeholder
   color) on `DateRangePicker`. A range with only one end set shows "Select date" for the missing
   end.
-- **date-picker-apply** MUST Treat `onChange` as a draft when the Avbryt / Bruk footer matters:
-  it fires on every click in the calendar, and Cancel doesn't undo it. Keep the committed value
-  separately and commit it in `onApply`, restore it in `onCancel`.
+- **date-picker-commit** SHOULD Load data in `onChange` (or `onApply`). Because clicks in the
+  calendar and presets are a draft: `onChange` fires once, when Apply commits, and Cancel, Escape
+  or a click outside drop the draft.
 - **date-picker-locale** MUST Render inside a React Aria `I18nProvider` with `locale="nb-NO"`
   (imported as `AriaI18nProvider`) if the app doesn't already set it. Because month names,
   weekday order and the trigger text follow the locale.
@@ -46,16 +46,17 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 
 ## Props
 
-| Prop                     | Values                                          | Default |
-| :----------------------- | :---------------------------------------------- | :------ |
-| `size`                   | `sm` · `md` · `lg` · `xl` (Button sizes)        | `sm`    |
-| `value` / `defaultValue` | `DateValue` (range: `{ start, end }`)           |         |
-| `onChange`               | fires on each selection in the calendar         |         |
-| `onApply` / `onCancel`   | footer buttons; the popover closes after either |         |
-| `minValue` / `maxValue`  | `DateValue`                                     |         |
-| `isDateUnavailable`      | `(date) => boolean`                             |         |
-| `isDisabled`             | boolean                                         |         |
-| `highlightedDates`       | `DateValue[]`: a dot under each date            | today   |
+| Prop                     | Values                                                                               | Default |
+| :----------------------- | :----------------------------------------------------------------------------------- | :------ |
+| `size`                   | `sm` · `md` · `lg` · `xl` (Button sizes)                                             | `sm`    |
+| `value` / `defaultValue` | `DateValue` (range: `{ start, end }`)                                                |         |
+| `label`                  | string: visible label above the trigger                                              |         |
+| `onChange`               | fires when Apply commits a new value                                                 |         |
+| `onApply` / `onCancel`   | footer buttons (`onApply` gets the committed value); the popover closes after either |         |
+| `minValue` / `maxValue`  | `DateValue`                                                                          |         |
+| `isDateUnavailable`      | `(date) => boolean`                                                                  |         |
+| `isDisabled`             | boolean                                                                              |         |
+| `highlightedDates`       | `DateValue[]`: a dot under each date                                                 | today   |
 
 Plus React Aria `DatePicker` / `DateRangePicker` props. Both pickers pass `highlightedDates` on to
 their calendar; today always gets a dot as well. The picker's calendar takes no other options (no
@@ -95,18 +96,10 @@ Standalone calendars:
 ## Example
 
 ```tsx
-const [committed, setCommitted] = useState<DateValue>(today(getLocalTimeZone()));
-const [draft, setDraft] = useState<DateValue>(committed);
+const [reportDate, setReportDate] = useState<DateValue>(today(getLocalTimeZone()));
 
 <AriaI18nProvider locale="nb-NO">
-    <DatePicker
-        aria-label="Velg rapportdato"
-        maxValue={today(getLocalTimeZone())}
-        value={draft}
-        onChange={(date) => date && setDraft(date)}
-        onApply={() => setCommitted(draft)}
-        onCancel={() => setDraft(committed)}
-    />
+    <DatePicker label="Rapportdato" maxValue={today(getLocalTimeZone())} value={reportDate} onChange={(date) => date && setReportDate(date)} />
 </AriaI18nProvider>;
 ```
 

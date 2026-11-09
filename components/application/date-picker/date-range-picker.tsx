@@ -5,10 +5,11 @@ import { endOfMonth, endOfWeek, getLocalTimeZone, startOfMonth, startOfWeek, tod
 import { useControlledState } from "@react-stately/utils";
 import { Calendar as CalendarIcon } from "fa-icons";
 import { useDateFormatter } from "react-aria";
-import type { DateRangePickerProps as AriaDateRangePickerProps, DateValue } from "react-aria-components";
+import type { DateRangePickerProps as AriaDateRangePickerProps, DateRange, DateValue } from "react-aria-components";
 import { DateRangePicker as AriaDateRangePicker, Dialog as AriaDialog, Group as AriaGroup, Popover as AriaPopover, useLocale } from "react-aria-components";
 import { Button, type ButtonProps } from "@/components/base/buttons/button";
 import { InputDateBase } from "@/components/base/input/input-date";
+import { Label } from "@/components/base/input/label";
 import { cx } from "@/utils/cx";
 import { RangeCalendar, RangePresetButton } from "./range-calendar";
 
@@ -17,17 +18,19 @@ const now = today(getLocalTimeZone());
 const defaultHighlightedDates = [today(getLocalTimeZone())];
 
 export interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue> {
+    /** Visible label above the trigger; it also names the picker. */
+    label?: string;
     /** The size of the trigger button (Button sizes). */
     size?: ButtonProps["size"];
-    /** The function to call when the apply button is clicked. The popover closes after it. */
-    onApply?: () => void;
-    /** The function to call when the cancel button is clicked. The popover closes after it. */
+    /** Called with the committed range when Apply is clicked, after `onChange`. The popover closes after it. */
+    onApply?: (value: DateRange | null) => void;
+    /** Called when Cancel is clicked; the selection reverts to the committed range and the popover closes. */
     onCancel?: () => void;
     /** The selected range, `{ start, end }` (controlled). */
     value?: AriaDateRangePickerProps<DateValue>["value"];
     /** The range selected at first (uncontrolled). */
     defaultValue?: AriaDateRangePickerProps<DateValue>["defaultValue"];
-    /** Called on each selection in the calendar or a preset, before Apply. */
+    /** Called with the new range when Apply commits it. Clicks in the calendar and presets are a draft until then. */
     onChange?: AriaDateRangePickerProps<DateValue>["onChange"];
     /** The earliest date that can be picked. */
     minValue?: AriaDateRangePickerProps<DateValue>["minValue"];
@@ -43,13 +46,16 @@ export interface DateRangePickerProps extends AriaDateRangePickerProps<DateValue
 
 /** A button that opens a two-month range calendar with presets (today, this week, last month, …) and Cancel / Apply. */
 export const DateRangePicker = ({
+    label,
     value: valueProp,
     defaultValue,
     onChange,
     onApply,
     onCancel,
+    onOpenChange,
     size = "sm",
     highlightedDates = defaultHighlightedDates,
+    className,
     ...props
 }: DateRangePickerProps) => {
     const { locale } = useLocale();
@@ -58,7 +64,11 @@ export const DateRangePicker = ({
         day: "numeric",
         year: "numeric",
     });
+    // `value` is the committed range; `draft` holds the calendar's selection while the popover is
+    // open (undefined when closed), so Cancel, Escape or a click outside drop it.
     const [value, setValue] = useControlledState(valueProp, defaultValue || null, onChange);
+    const [draft, setDraft] = useState<DateRange | null | undefined>(undefined);
+    const pickerValue = draft === undefined ? value : draft;
     const [focusedValue, setFocusedValue] = useState<DateValue | null>(null);
 
     const formattedStartDate = value?.start ? formatter.format(value.start.toDate(getLocalTimeZone())) : "Select date";
@@ -104,7 +114,19 @@ export const DateRangePicker = ({
     );
 
     return (
-        <AriaDateRangePicker aria-label="Date range picker" shouldCloseOnSelect={false} {...props} value={value} onChange={setValue}>
+        <AriaDateRangePicker
+            aria-label={label ? undefined : "Date range picker"}
+            shouldCloseOnSelect={false}
+            {...props}
+            value={pickerValue}
+            onChange={setDraft}
+            onOpenChange={(isOpen) => {
+                if (!isOpen) setDraft(undefined);
+                onOpenChange?.(isOpen);
+            }}
+            className={(state) => cx(label && "flex flex-col items-start gap-1.5", typeof className === "function" ? className(state) : className)}
+        >
+            {label && <Label>{label}</Label>}
             <AriaGroup>
                 <Button size={size} color="secondary" iconLeading={CalendarIcon}>
                     {!value ? <span className="text-placeholder">Select dates</span> : `${formattedStartDate} – ${formattedEndDate}`}
@@ -132,7 +154,7 @@ export const DateRangePicker = ({
                                         key={preset.label}
                                         value={preset.value}
                                         onClick={() => {
-                                            setValue(preset.value);
+                                            setDraft(preset.value);
                                             setFocusedValue(preset.value.start);
                                         }}
                                     >
@@ -172,7 +194,8 @@ export const DateRangePicker = ({
                                             size="sm"
                                             color="primary"
                                             onClick={() => {
-                                                onApply?.();
+                                                setValue(pickerValue);
+                                                onApply?.(pickerValue);
                                                 close();
                                             }}
                                         >
