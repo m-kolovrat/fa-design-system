@@ -37,7 +37,8 @@ import { RatingStars, StarIcon, getStarProgress } from "fa-design-system/compone
   wreath and text white, using the `_on-brand` text tokens), and the default `theme="dark"` on
   light backgrounds. Because the name refers to the content color, not the background.
 - **rating-no-recolor** NEVER Recolor stars with `starClassName`; use it only for size (`size-4`).
-  Because the star yellow and empty-star fill are fixed to match Figma's star icon.
+  Because the star yellow (`utility-warning-400`, the same as Figma in light mode) and the
+  empty-star fill are fixed to match Figma's star icon.
 
 ## Props
 
