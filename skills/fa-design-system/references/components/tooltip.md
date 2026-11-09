@@ -32,9 +32,6 @@ import { Tooltip, TooltipTrigger } from "fa-design-system/components/base/toolti
 - **tooltip-trigger-label** MUST Give an icon-only `TooltipTrigger` an `aria-label` (usually the
   same text as `title`). Because the tooltip is only a description (`aria-describedby`); the button
   itself has no name.
-- **tooltip-trigger-focus** MUST Show focus on a `TooltipTrigger`: it ships with `outline-hidden`,
-  so add `focus-visible:text-fg-quaternary_hover` (the library's pattern) or the focus-ring classes.
-  Because keyboard users otherwise can't see where they are.
 - **tooltip-not-essential** NEVER Put information that's needed to complete a task only in a
   tooltip. Because touch screens and many screen-reader users never see it.
 - **tooltip-short** SHOULD Keep `title` to a few words and `description` to one sentence; the
@@ -56,7 +53,9 @@ import { Tooltip, TooltipTrigger } from "fa-design-system/components/base/toolti
 | `trigger`                                             | `"focus"` to open on focus only                                                                             |         |
 | `isDisabled`, `isOpen`, `defaultOpen`, `onOpenChange` | React Aria trigger state                                                                                    |         |
 
-`TooltipTrigger`: React Aria `Button` props (`onPress`, `aria-label`, `className`).
+`TooltipTrigger`: React Aria `Button` props (`onPress`, `aria-label`, `className`). It is unstyled
+apart from the standard focus ring; add colors such as `text-fg-quaternary` and
+`hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover` for a help icon.
 
 ## Notes
 

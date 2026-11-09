@@ -131,14 +131,22 @@ export const Tooltip = ({
 export interface TooltipTriggerProps extends AriaButtonProps {
     /** Called when the trigger is pressed */
     onPress?: AriaButtonProps["onPress"];
-    /** Layout classes; the button is unstyled (`h-max w-max`) */
+    /** Layout and color classes; the button is unstyled (`h-max w-max`) apart from the focus ring */
     className?: AriaButtonProps["className"];
 }
 
-/** An unstyled button that opens a `Tooltip` around non-button content (an icon, a value). Give it an `aria-label`. */
+/** An unstyled button with the focus ring that opens a `Tooltip` around non-button content (an icon, a value). Give it an `aria-label`. */
 export const TooltipTrigger = ({ children, className, ...buttonProps }: TooltipTriggerProps) => {
     return (
-        <AriaButton {...buttonProps} className={(values) => cx("h-max w-max outline-hidden", typeof className === "function" ? className(values) : className)}>
+        <AriaButton
+            {...buttonProps}
+            className={(values) =>
+                cx(
+                    "h-max w-max rounded-xs outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2",
+                    typeof className === "function" ? className(values) : className,
+                )
+            }
+        >
             {children}
         </AriaButton>
     );

@@ -146,9 +146,8 @@ export const InputBase = ({
                 <Tooltip title={tooltip} placement="top">
                     <TooltipTrigger
                         aria-label={tooltip}
-                        // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
                         className={cx(
-                            "absolute cursor-pointer text-fg-quaternary outline-focus-ring transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid",
+                            "absolute cursor-pointer text-fg-quaternary outline-focus-ring transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover",
                             sizes[inputSize].iconTrailing,
                             context?.tooltipClassName,
                             tooltipClassName,
