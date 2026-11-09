@@ -22,7 +22,7 @@ const meta = {
             </div>
         ),
     ],
-    args: { hint: "PDF, PNG or JPG (max. 10 MB)", accept: ".pdf,image/*", allowsMultiple: true, isDisabled: false },
+    args: { hint: "PDF, PNG eller JPG, maks 10 MB", accept: ".pdf,image/*", allowsMultiple: true, isDisabled: false },
     argTypes: {
         // Controls only: types, defaults and descriptions come from docgen.
         onDropFiles: { control: false },

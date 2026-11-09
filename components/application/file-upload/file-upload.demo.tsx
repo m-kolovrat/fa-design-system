@@ -60,12 +60,7 @@ export const ImagesOnlyDemo = () => {
 
     return (
         <FileUpload.Root>
-            <FileUpload.DropZone
-                accept="image/*"
-                hint="Please upload PNG or JPEG images only."
-                onDropFiles={handleDropFiles}
-                onDropUnacceptedFiles={handleDropUnacceptedFiles}
-            />
+            <FileUpload.DropZone accept="image/*" hint="Bare PNG eller JPG." onDropFiles={handleDropFiles} onDropUnacceptedFiles={handleDropUnacceptedFiles} />
 
             <FileUpload.List>
                 {uploadedFiles.map((file) => (
@@ -128,7 +123,7 @@ export const MaxSizeLimitDemo = () => {
         <FileUpload.Root>
             <FileUpload.DropZone
                 maxSize={MAX_SIZE}
-                hint={`Upload files to add to this project (max. ${getReadableFileSize(MAX_SIZE)}).`}
+                hint={`Maks ${getReadableFileSize(MAX_SIZE)} per fil.`}
                 onDropFiles={handleDropFiles}
                 onSizeLimitExceed={handleMaxSizeExceed}
             />
@@ -151,7 +146,7 @@ export const MaxSizeLimitDemo = () => {
 export const DisabledDemo = () => {
     return (
         <FileUpload.Root>
-            <FileUpload.DropZone isDisabled />
+            <FileUpload.DropZone isDisabled hint="PDF, PNG eller JPG, maks 10 MB" />
         </FileUpload.Root>
     );
 };
@@ -219,7 +214,7 @@ export const FileUploadProgressBar = (props: { isDisabled?: boolean }) => {
 
     return (
         <FileUpload.Root>
-            <FileUpload.DropZone isDisabled={props.isDisabled} onDropFiles={handleDropFiles} />
+            <FileUpload.DropZone isDisabled={props.isDisabled} hint="PDF, PNG eller JPG, maks 10 MB" onDropFiles={handleDropFiles} />
 
             <FileUpload.List>
                 {uploadedFiles.map((file) => (
@@ -274,7 +269,7 @@ export const FileUploadProgressFill = (props: { isDisabled?: boolean }) => {
 
     return (
         <FileUpload.Root>
-            <FileUpload.DropZone isDisabled={props.isDisabled} onDropFiles={handleDropFiles} />
+            <FileUpload.DropZone isDisabled={props.isDisabled} hint="PDF, PNG eller JPG, maks 10 MB" onDropFiles={handleDropFiles} />
 
             <FileUpload.List>
                 {uploadedFiles.map((file) => (
