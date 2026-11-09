@@ -29,9 +29,8 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
   English name ("Enter your pin").
 - **pin-digits** SHOULD Pass `pattern={REGEXP_ONLY_DIGITS}` for numeric codes and
   `autoComplete="one-time-code"` so phones offer the SMS code.
-- **pin-states** MUST Set states on the root with `disabled` and `invalid` (not `isDisabled` /
-  `isInvalid`), and pass `isInvalid` to `PinInput.Description` for the error text. Because the
-  root drives the digit boxes, and the description doesn't turn red on its own.
+- **pin-states** MUST Set states on the root with `isDisabled` and `isInvalid`. Because the root
+  drives the digit boxes, the hidden input's `aria-invalid` and the description's error color.
 - **pin-six-digits** SHOULD Split a 6-digit code 3 + 3 with `PinInput.Separator`.
 - **pin-size** SHOULD Use `xxxs` / `xxs` / `xs` inside forms next to other inputs, and `sm` / `md` /
   `lg` on a dedicated verification screen.
@@ -43,12 +42,12 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 | Part                   | Props                                                                                                                                                                         | Default |
 | :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
 | `PinInput` (root)      | `size`: `xxxs` (36px) · `xxs` (40px) · `xs` (44px) · `sm` (64px) · `md` (80px) · `lg` (96px)                                                                                  | `md`    |
-|                        | `disabled`, `invalid`: boolean                                                                                                                                                |         |
+|                        | `isDisabled`, `isInvalid`: boolean (`disabled` / `invalid` still work but are deprecated)                                                                                     |         |
 | `PinInput.Group`       | `maxLength` (default `4`), `pattern`, `value`, `onChange(value: string)`, `onComplete`, `autoFocus`, `autoComplete`, `inputMode`                                              |         |
 |                        | `width` (the hidden input's `size` attribute), `inputClassName` (classes on the hidden input), `containerClassName` (classes on the row of boxes, merged with the size class) |         |
 | `PinInput.Slot`        | `index` (required)                                                                                                                                                            |         |
 | `PinInput.Label`       | `Label` props (`isRequired`, `tooltip`)                                                                                                                                       |         |
-| `PinInput.Description` | `HintText` props (`isInvalid`, `className` merges with the size class)                                                                                                        |         |
+| `PinInput.Description` | `HintText` props (`isInvalid` follows the root unless passed; `className` merges with the size class)                                                                         |         |
 | `PinInput.Separator`   | none                                                                                                                                                                          |         |
 
 ## Notes
@@ -60,15 +59,15 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 ## Accessibility
 
 - It's one real input under the boxes, so screen readers, paste and autofill work as usual.
-- Each box has an English `aria-label` ("Enter digit 1 of 6"); the label you render is still the
-  field's name.
+- The digit boxes are hidden from assistive tech (they only draw the input); the label you render
+  is the field's name and the description is linked to it.
 
 ## Example
 
 ```tsx
 const [code, setCode] = useState("");
 
-<PinInput size="sm" invalid={codeError}>
+<PinInput size="sm" isInvalid={codeError}>
     <PinInput.Label>Engangskode</PinInput.Label>
     <PinInput.Group maxLength={6} pattern={REGEXP_ONLY_DIGITS} autoComplete="one-time-code" value={code} onChange={setCode} onComplete={verifyCode}>
         <PinInput.Slot index={0} />
@@ -79,9 +78,7 @@ const [code, setCode] = useState("");
         <PinInput.Slot index={4} />
         <PinInput.Slot index={5} />
     </PinInput.Group>
-    <PinInput.Description isInvalid={codeError}>
-        {codeError ? "Koden er feil eller utløpt. Be om en ny kode." : "Vi har sendt en kode på SMS til 912 34 567."}
-    </PinInput.Description>
+    <PinInput.Description>{codeError ? "Koden er feil eller utløpt. Be om en ny kode." : "Vi har sendt en kode på SMS til 912 34 567."}</PinInput.Description>
 </PinInput>;
 ```
 

@@ -1,7 +1,7 @@
 "use client";
 
 import type { Key, KeyboardEvent, ReactNode } from "react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 import { Help, Info } from "fa-icons";
 import { Group as AriaGroup, Input as AriaInput } from "react-aria-components";
 import { HintText } from "@/components/base/input/hint-text";
@@ -84,6 +84,9 @@ export const InputTags = ({
     className,
     hideRequiredIndicator,
 }: InputTagsProps) => {
+    const id = useId();
+    const inputId = `input-tags-${id}`;
+    const hintId = `input-tags-hint-${id}`;
     const isControlled = value !== undefined;
     const idCounter = useRef(0);
     const nextId = () => idCounter.current++;
@@ -240,7 +243,11 @@ export const InputTags = ({
 
     return (
         <div className={cx("flex flex-col gap-1.5", className)}>
-            {label && <Label isRequired={hideRequiredIndicator ? false : isRequired}>{label}</Label>}
+            {label && (
+                <Label htmlFor={inputId} isRequired={hideRequiredIndicator ? false : isRequired}>
+                    {label}
+                </Label>
+            )}
 
             <AriaGroup
                 isDisabled={isDisabled}
@@ -280,6 +287,10 @@ export const InputTags = ({
                             <div className="relative flex min-w-[20%] flex-1 flex-row items-center">
                                 <AriaInput
                                     ref={inputRef}
+                                    id={inputId}
+                                    aria-describedby={hint ? hintId : undefined}
+                                    aria-invalid={isInvalid || undefined}
+                                    aria-required={isRequired || undefined}
                                     type="text"
                                     value={inputValue}
                                     disabled={isDisabled}
@@ -294,8 +305,9 @@ export const InputTags = ({
                         {tooltip && (
                             <Tooltip title={tooltip} placement="top">
                                 <TooltipTrigger
+                                    aria-label={tooltip}
                                     className={cx(
-                                        "absolute cursor-pointer text-fg-quaternary transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover",
+                                        "absolute cursor-pointer text-fg-quaternary transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover",
                                         sizes[size].iconTrailing,
                                     )}
                                 >
@@ -305,6 +317,7 @@ export const InputTags = ({
                         )}
 
                         <Info
+                            aria-hidden="true"
                             className={cx(
                                 "pointer-events-none absolute hidden size-4 text-fg-error-secondary group-invalid/input:block",
                                 sizes[size].iconTrailing,
@@ -315,7 +328,7 @@ export const InputTags = ({
             </AriaGroup>
 
             {hint && (
-                <HintText isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                <HintText id={hintId} isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
                     {hint}
                 </HintText>
             )}

@@ -41,7 +41,7 @@ export interface ComboBoxProps extends Omit<AriaComboBoxProps<SelectItemType>, "
     isRequired?: ComboBoxAriaProps["isRequired"];
     /** Whether the field is disabled */
     isDisabled?: ComboBoxAriaProps["isDisabled"];
-    /** Whether the field is invalid: the `hint` turns red */
+    /** Whether the field is invalid: red ring on the field, and the `hint` turns red */
     isInvalid?: ComboBoxAriaProps["isInvalid"];
 }
 
@@ -73,7 +73,9 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
                 cx(
                     "relative flex w-full items-center gap-2 rounded-md bg-primary shadow-xs ring-1 ring-primary outline-hidden transition-shadow ring-inset",
                     isDisabled && "cursor-not-allowed opacity-50",
-                    isFocusWithin && "ring-2 ring-brand",
+                    // Invalid: the ComboBox root carries `data-invalid`
+                    "in-data-invalid:ring-error_subtle",
+                    isFocusWithin && "ring-2 ring-brand in-data-invalid:ring-error",
 
                     // Icon styles
                     "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary",

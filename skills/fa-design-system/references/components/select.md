@@ -32,14 +32,13 @@ import { TagSelect } from "fa-design-system/components/base/select/tag-select";
   Because the defaults are English ("Select", "Search").
 - **select-multiple** MUST Use `MultiSelect` or `TagSelect` for several values, never
   `selectionMode="multiple"` on `Select`. Because `Select`'s trigger only shows the first value.
-- **multiselect-controlled** MUST Control `MultiSelect` (`selectedKeys` + `onSelectionChange`), pass
-  `selectedCountFormatter` (`(n) => n + " valgt"`), and either wire `onReset` / `onSelectAll` or set
-  `showFooter={false}`. Because the count only works when controlled, and the footer buttons do
-  nothing on their own.
+- **multiselect-state** SHOULD Read `MultiSelect`'s choice through `onSelectionChange`, controlled
+  (`selectedKeys`) or not (`defaultSelectedKeys`). The trigger count and the footer's Reset / Select
+  all work either way; `onReset` / `onSelectAll` are only extra callbacks.
 - **tagselect-list-data** MUST Hold `TagSelect`'s selection in `useListData` from
   `react-stately` and pass it as `selectedItems`.
-- **select-errors** MUST Show errors with `isInvalid` + `hint`. Note `Select`'s trigger has no red
-  ring; the hint carries the error.
+- **select-errors** MUST Show errors with `isInvalid` + `hint`. The trigger gets the red ring and
+  the hint the error text.
 
 ## Props
 
@@ -84,9 +83,11 @@ and `supportingText` fills the rest and is cut with an ellipsis instead of wrapp
 
 - Type-ahead, arrow keys and Escape come from React Aria; the label is linked for `Select`,
   `Select.ComboBox` and `TagSelect`.
-- `MultiSelect`'s visible label isn't linked to its trigger; keep the label visible and make the
-  placeholder say what is being chosen.
-- `NativeSelect`: pass `aria-label` when there is no `label` (e.g. inside an `InputGroup`).
+- `MultiSelect`'s label names its trigger together with the current count, and the hint is its
+  description.
+- `NativeSelect`: `label` is linked with `htmlFor` and `hint` as the description; pass
+  `aria-label` when there is no `label` (e.g. inside an `InputGroup`). Options with `disabled` can't
+  be picked.
 
 ## Example
 

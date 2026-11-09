@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode, RefAttributes } from "react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 import { ChevronDown, Search } from "fa-icons";
 import { useFilter } from "react-aria";
 import type { Selection } from "react-aria-components";
@@ -130,9 +130,9 @@ interface MultiSelectProps extends RefAttributes<HTMLDivElement>, CommonProps {
     popoverClassName?: string;
     /** Additional class name for the root element. */
     className?: string;
-    /** Handler that is called when the reset button is clicked. */
+    /** Called after the reset button clears the selection (it calls `onSelectionChange` with an empty set first). */
     onReset?: () => void;
-    /** Handler that is called when the select all button is clicked. */
+    /** Called after the select all button selects every item (it calls `onSelectionChange` first). */
     onSelectAll?: () => void;
     /**
      * Whether to show the footer with reset and select all buttons.
@@ -192,7 +192,35 @@ const MultiSelectRoot = ({
         setPopoverWidth(rect.width + "px");
     }, []);
 
-    const selectedCount = selectedKeys instanceof Set ? selectedKeys.size : selectedKeys === "all" ? (items?.length ?? 0) : 0;
+    const id = useId();
+    const labelId = `multi-select-label-${id}`;
+    const valueId = `multi-select-value-${id}`;
+    const hintId = `multi-select-hint-${id}`;
+
+    // Uncontrolled use keeps its own selection, so the trigger count and the footer work either way.
+    const [uncontrolledKeys, setUncontrolledKeys] = useState<Selection>(defaultSelectedKeys ?? new Set());
+    const isControlled = selectedKeys !== undefined;
+    const currentKeys = isControlled ? selectedKeys : uncontrolledKeys;
+
+    const setSelection = useCallback(
+        (keys: Selection) => {
+            if (!isControlled) setUncontrolledKeys(keys);
+            onSelectionChange?.(keys);
+        },
+        [isControlled, onSelectionChange],
+    );
+
+    const handleReset = useCallback(() => {
+        setSelection(new Set());
+        onReset?.();
+    }, [setSelection, onReset]);
+
+    const handleSelectAll = useCallback(() => {
+        setSelection(items ? new Set(items.filter((item) => !item.isDisabled).map((item) => item.id)) : "all");
+        onSelectAll?.();
+    }, [setSelection, items, onSelectAll]);
+
+    const selectedCount = currentKeys === "all" ? (items?.length ?? 0) : currentKeys.size;
     const hasSelection = selectedCount > 0;
 
     const handleClearSearch = useCallback(() => {
@@ -203,7 +231,7 @@ const MultiSelectRoot = ({
         <SelectContext.Provider value={{ size }}>
             <div className={cx("flex flex-col gap-1.5", className)}>
                 {label && (
-                    <Label isRequired={hideRequiredIndicator ? false : isRequired} isInvalid={isInvalid} tooltip={tooltip}>
+                    <Label id={labelId} isRequired={hideRequiredIndicator ? false : isRequired} isInvalid={isInvalid} tooltip={tooltip}>
                         {label}
                     </Label>
                 )}
@@ -213,15 +241,22 @@ const MultiSelectRoot = ({
                         ref={triggerRef}
                         isDisabled={isDisabled}
                         onClick={onResize}
+                        aria-labelledby={label ? `${labelId} ${valueId}` : undefined}
+                        aria-describedby={hint ? hintId : undefined}
+                        aria-invalid={isInvalid || undefined}
+                        aria-required={isRequired || undefined}
                         className={(state) =>
                             cx(
                                 "relative flex w-full cursor-pointer items-center rounded-md bg-primary shadow-xs ring-1 ring-primary outline-hidden transition ring-inset",
                                 (state.isFocusVisible || state.isPressed) && "ring-2 ring-brand",
+                                isInvalid && "ring-error_subtle",
+                                isInvalid && (state.isFocusVisible || state.isPressed) && "ring-2 ring-error",
                                 state.isDisabled && "cursor-not-allowed opacity-50",
                             )
                         }
                     >
                         <span
+                            id={valueId}
                             className={cx(
                                 "flex w-full items-center truncate text-left",
                                 sizes[size].root,
@@ -282,9 +317,8 @@ const MultiSelectRoot = ({
                                     aria-label={label || "Options"}
                                     items={items}
                                     selectionMode="multiple"
-                                    selectedKeys={selectedKeys}
-                                    defaultSelectedKeys={defaultSelectedKeys}
-                                    onSelectionChange={onSelectionChange}
+                                    selectedKeys={currentKeys}
+                                    onSelectionChange={setSelection}
                                     renderEmptyState={() => (
                                         <MultiSelectEmptyState
                                             title={emptyStateTitle}
@@ -298,13 +332,13 @@ const MultiSelectRoot = ({
                                 </AriaListBox>
                             </AriaAutocomplete>
 
-                            {showFooter && <MultiSelectFooter size={size} onReset={onReset} onSelectAll={onSelectAll} />}
+                            {showFooter && <MultiSelectFooter size={size} onReset={handleReset} onSelectAll={handleSelectAll} />}
                         </AriaDialog>
                     </AriaPopover>
                 </AriaDialogTrigger>
 
                 {hint && (
-                    <HintText isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                    <HintText id={hintId} isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
                         {hint}
                     </HintText>
                 )}

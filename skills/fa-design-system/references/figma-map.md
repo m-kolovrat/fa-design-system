@@ -222,7 +222,7 @@ icon); the other badge exports take only `color="gray"`.
 | `Size=xxxs/xxs/xs/sm/md/lg`   | `size` on `PinInput`, same names                                 |
 | `Digits=4/6`                  | `<PinInput.Group maxLength={4}>` with that many `PinInput.Slot`s |
 | `Label` / `Hint text`         | `PinInput.Label` / `PinInput.Description`                        |
-| disabled / invalid            | `disabled` / `invalid` on `PinInput` (not `isDisabled`)          |
+| disabled / invalid            | `isDisabled` / `isInvalid` on `PinInput`                         |
 
 | Figma                | Code                                                             |
 | -------------------- | ---------------------------------------------------------------- |

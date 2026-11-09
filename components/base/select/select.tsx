@@ -45,7 +45,7 @@ export interface SelectProps extends Omit<AriaSelectProps<SelectItemType>, "chil
     isRequired?: SelectAriaProps["isRequired"];
     /** Whether the select is disabled */
     isDisabled?: SelectAriaProps["isDisabled"];
-    /** Whether the select is invalid: the `hint` turns red */
+    /** Whether the select is invalid: red ring on the trigger, and the `hint` turns red */
     isInvalid?: SelectAriaProps["isInvalid"];
 }
 
@@ -54,18 +54,21 @@ interface SelectValueProps {
     size: "sm" | "md" | "lg";
     isFocused: boolean;
     isDisabled: boolean;
+    isInvalid: boolean;
     placeholder?: string;
     ref?: Ref<HTMLButtonElement>;
     icon?: FC | ReactNode;
 }
 
-const SelectValue = ({ isOpen, isFocused, isDisabled, size, placeholder, icon, ref }: SelectValueProps) => {
+const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placeholder, icon, ref }: SelectValueProps) => {
     return (
         <AriaButton
             ref={ref}
             className={cx(
                 "relative flex w-full cursor-pointer items-center rounded-md bg-primary shadow-xs ring-1 ring-primary outline-hidden transition ring-inset",
                 (isFocused || isOpen) && "ring-2 ring-brand",
+                isInvalid && "ring-error_subtle",
+                isInvalid && (isFocused || isOpen) && "ring-2 ring-error",
                 isDisabled && "cursor-not-allowed opacity-50",
             )}
         >

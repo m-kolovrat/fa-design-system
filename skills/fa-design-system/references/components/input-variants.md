@@ -64,8 +64,8 @@ groups the rest in fours ("1234 5678 9012 3456"), for showing a stored card numb
 
 - Date segments are spinbuttons: arrow keys change each part, typing fills it.
 - `InputNumber` steppers are labelled by React Aria and follow `minValue` / `maxValue`.
-- Known gap: `InputTags` and `InputTagsOuter` show the `label` but don't link it to the text
-  field. Keep the label visible and say what to type in `placeholder`.
+- `InputTags` and `InputTagsOuter` link `label` to the text field and `hint` as its description;
+  `InputTagsOuter` keeps the hint below the tags once there are some.
 
 ## Example
 
