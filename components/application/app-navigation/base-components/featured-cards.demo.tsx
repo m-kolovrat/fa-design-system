@@ -37,7 +37,7 @@ export const FeaturedCardProgressBar = ({
             </div>
 
             <div className="mt-4 flex">
-                <ProgressBar value={progress} />
+                <ProgressBar aria-label="Profilen er fullført" value={progress} />
             </div>
 
             <div className="mt-4 flex gap-3">
@@ -66,7 +66,7 @@ export const FeaturedCardProgressCircle = ({
     return (
         <div className={cx("relative flex flex-col rounded-xl bg-secondary p-4", className)}>
             <div className="w-16">
-                <ProgressBarCircle value={progress} size="xxs" />
+                <ProgressBarCircle aria-label="Profilen er fullført" value={progress} size="xxs" />
             </div>
 
             <div className="absolute top-1 right-1">

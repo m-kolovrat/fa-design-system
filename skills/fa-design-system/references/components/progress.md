@@ -24,9 +24,9 @@ import { CircleProgressBar } from "fa-design-system/components/base/progress-ind
 
 ## Rules
 
-- **progress-visible-label** MUST Put a visible text label right before the bar or inside the
-  circle (`label`) that says what is measured. Because the components render `role="progressbar"`
-  without an accessible name and take no `aria-label`.
+- **progress-name** MUST Name every bar and circle: `aria-label` ("Sparemål: ny bil"), or
+  `aria-labelledby` with the id of the visible text before a bar; circles use `label` when they
+  show one. Because a nameless progress bar is announced as just a number.
 - **progress-value-format** SHOULD Format the shown value Norwegian style with `valueFormatter`
   (`"72 %"`, `"3 av 5"`, `"1 250 kr av 5 000 kr"`). Because the default is `"72%"` with no space.
 - **progress-text-position** SHOULD Use `labelPosition="right"` in lists and cards, `"bottom"` when
@@ -42,26 +42,27 @@ import { CircleProgressBar } from "fa-design-system/components/base/progress-ind
 
 `ProgressBar`
 
-| Prop                | Values                                                                    | Default         |
-| :------------------ | :------------------------------------------------------------------------ | :-------------- |
-| `value`             | number (required)                                                         |                 |
-| `min` / `max`       | number                                                                    | `0` / `100`     |
-| `labelPosition`     | `right` · `bottom` · `top-floating` · `bottom-floating` (none = bar only) |                 |
-| `valueFormatter`    | `(value, percentage) => string \| number`                                 | rounded `"NN%"` |
-| `className`         | classes on the track (width)                                              |                 |
-| `progressClassName` | classes on the fill (see **progress-no-recolor**)                         |                 |
+| Prop                             | Values                                                                    | Default         |
+| :------------------------------- | :------------------------------------------------------------------------ | :-------------- |
+| `value`                          | number (required)                                                         |                 |
+| `min` / `max`                    | number                                                                    | `0` / `100`     |
+| `labelPosition`                  | `right` · `bottom` · `top-floating` · `bottom-floating` (none = bar only) |                 |
+| `valueFormatter`                 | `(value, percentage) => string \| number`; also the announced value       | rounded `"NN%"` |
+| `aria-label` / `aria-labelledby` | the bar's accessible name                                                 |                 |
+| `className`                      | classes on the track (width)                                              |                 |
+| `progressClassName`              | classes on the fill (see **progress-no-recolor**)                         |                 |
 
 `valueFormatter` gets the unrounded percentage. `ProgressBarBase` is the bare bar (same props
-without `labelPosition`, no text; `valueFormatter` is ignored).
+without `labelPosition`, no text; `valueFormatter` only sets the announced value).
 
 `ProgressBarCircle` / `ProgressBarHalfCircle`: `value` (required), `min` / `max` (`0` / `100`),
 `valueFormatter` (gets the percentage already rounded), `label`
 (text above the value; below the ring at `xxs`), `size` (required) `xxs` (64px) · `xs` (160) · `sm`
-(200) · `md` (240) · `lg` (280). The half circle is the same width and half the height. No
-`className`: size the ring with `size` only.
+(200) · `md` (240) · `lg` (280), and `aria-label` (defaults to `label`). The half circle is the
+same width and half the height. No `className`: size the ring with `size` only.
 
-`CircleProgressBar` (`simple-circle`): `value` (required) and `min` / `max` (`0` / `100`). The
-percent is rounded, like the other circles. No `label` or `valueFormatter`.
+`CircleProgressBar` (`simple-circle`): `value` (required), `min` / `max` (`0` / `100`) and
+`aria-label`. The percent is rounded, like the other circles. No `label` or `valueFormatter`.
 
 ## Notes
 
@@ -70,7 +71,8 @@ percent is rounded, like the other circles. No `label` or `valueFormatter`.
 
 ## Accessibility
 
-- `aria-valuenow`, `aria-valuemin` and `aria-valuemax` are set from the props.
+- `aria-valuenow`, `aria-valuemin` and `aria-valuemax` are set from the props, and
+  `aria-valuetext` from `valueFormatter` (circles: the shown value). The ring SVGs are hidden.
 - For a value that updates live (an upload), announce completion in text (`notify()` or a status
   line), not only by the bar reaching 100 %.
 
@@ -80,8 +82,9 @@ percent is rounded, like the other circles. No `label` or `valueFormatter`.
 const nok = (v: number) => `${formatNumber(v, { decimals: 0 })} kr`; // formatNumber: fa-design-system/utils/format-number
 
 <div className="flex flex-col gap-2">
-    <p className="text-sm font-medium text-secondary">Sparemål: ny bil</p>
+    <p id="sparemal" className="text-sm font-medium text-secondary">Sparemål: ny bil</p>
     <ProgressBar
+        aria-labelledby="sparemal"
         value={182_500}
         max={250_000}
         labelPosition="right"
