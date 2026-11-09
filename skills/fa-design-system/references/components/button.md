@@ -38,8 +38,8 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 - **button-on-press** MUST Use `onPress`, not `onClick`. `Button` takes React Aria `Button` props
   (`onPress`, `type`, `form`, …), or `Link` props when `href` is set. Because `onPress` handles
   touch, keyboard and pointer alike.
-- **button-close-label** MUST Pass `label="Lukk"` to `CloseButton`. Because its accessible name
-  otherwise defaults to English "Close".
+- **button-close-label** SHOULD Pass `label` to `CloseButton` only when "Lukk" (the default) isn't
+  specific enough ("Lukk varsel"). Because the label is its only name.
 - **button-verb-label** SHOULD Say what pressing it does ("Last ned rapport", "Start abonnement"),
   capitalizing only the first word as Norwegian does. Avoid vague labels like "OK" or "Klikk her".
 
@@ -77,7 +77,7 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 | :------ | :------------------------------------------------------------------------------------------------- | :-------- |
 | `size`  | `sm` (36px) · `md` (40px) · `lg` (44px)                                                            | `sm`      |
 | `theme` | `light` · `dark` (on dark or image backgrounds)                                                    | `light`   |
-| `label` | string: the accessible name                                                                        | `"Close"` |
+| `label` | string: the accessible name                                                                        | `"Lukk"`  |
 | `slot`  | string or `null` (`"close"` closes a parent `Dialog` / `Modal` without a handler; `null` opts out) | `"close"` |
 
 `SocialButton`:

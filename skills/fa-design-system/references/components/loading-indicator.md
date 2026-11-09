@@ -24,9 +24,9 @@ import { LoadingIndicator } from "fa-design-system/components/application/loadin
 
 ## Rules
 
-- **loading-announce** MUST Wrap the indicator in an element with `role="status"` and give it a
-  `label` (or an `sr-only` text), and set `aria-busy="true"` on the region that is loading. Because
-  the component renders a bare SVG with no role or name; screen readers get nothing.
+- **loading-announce** MUST Give it a `label` (or `aria-label` when nothing should show), and set
+  `aria-busy="true"` on the region that is loading. Because the indicator is a `role="status"`
+  named by them; without either it falls back to a generic name.
 - **loading-label-text** SHOULD Write the label in Norwegian and say what loads ("Henter kurser …",
   "Laster artikler …"), not "Loading...".
 - **loading-one-at-a-time** SHOULD Show one spinner per region, centered in the space the content
@@ -34,18 +34,18 @@ import { LoadingIndicator } from "fa-design-system/components/application/loadin
 - **loading-delay** SHOULD Show the spinner only if loading takes longer than about 300 ms.
   Because a flash of spinner on fast loads reads as flicker.
 - **loading-type** SHOULD Use the default `line-simple` across a product; `line-spinner` and
-  `dot-circle` only where a Figma frame shows them. Use only one `dot-circle` per page (its SVG
-  gradient ids are fixed, so two on a page share one definition).
+  `dot-circle` only where a Figma frame shows them.
 - **loading-size** SHOULD Use `sm` (32px) in cards and panels, `md` (48px) for a page section,
   `lg` / `xl` (56 / 64px) for a full-page load.
 
 ## Props
 
-| Prop    | Values                                             | Default       |
-| :------ | :------------------------------------------------- | :------------ |
-| `type`  | `line-simple` · `line-spinner` · `dot-circle`      | `line-simple` |
-| `size`  | `sm` · `md` · `lg` · `xl`                          | `sm`          |
-| `label` | string, shown under the spinner (`text-secondary`) |               |
+| Prop         | Values                                                            | Default       |
+| :----------- | :---------------------------------------------------------------- | :------------ |
+| `type`       | `line-simple` · `line-spinner` · `dot-circle`                     | `line-simple` |
+| `size`       | `sm` · `md` · `lg` · `xl`                                         | `sm`          |
+| `label`      | string, shown under the spinner (`text-secondary`); also its name |               |
+| `aria-label` | string, the name when there is no `label`                         |               |
 
 ## Notes
 
@@ -65,7 +65,7 @@ import { LoadingIndicator } from "fa-design-system/components/application/loadin
         Kurser i dag
     </h2>
     {isLoading ? (
-        <div role="status" className="flex min-h-48 items-center justify-center">
+        <div className="flex min-h-48 items-center justify-center">
             <LoadingIndicator size="sm" label="Henter kurser fra Oslo Børs …" />
         </div>
     ) : (

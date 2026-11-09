@@ -79,8 +79,8 @@ Without it `notify()` shows nothing. It places toasts top right, 24px in (8px on
 
 ## Accessibility
 
-- The card has `role="status"` (polite). The close button is named "Dismiss" (English, fixed in
-  code).
+- The card has `role="status"` (polite). The close button is named "Lukk"; `closeLabel` overrides
+  it.
 
 ## Example
 

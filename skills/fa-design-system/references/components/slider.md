@@ -20,11 +20,11 @@ import { Slider } from "fa-design-system/components/base/slider/slider";
 
 ## Rules
 
-- **slider-name** MUST Pass `aria-label`, and show a visible label as text above the slider.
-  Because `Slider` has no `label` prop (it renders an empty React Aria label).
-- **slider-formatter** MUST Pass `labelFormatter` whenever the value isn't a 0–100 percentage.
-  Because the default output divides the value by 100 and formats it as a percent, so
-  `formatOptions` alone shows wrong numbers.
+- **slider-name** MUST Pass `label` (shown above the track), or `aria-label` when the name is
+  already visible nearby. Because a slider without a name is announced as just a number.
+- **slider-format** MUST Pass `formatOptions` whenever the value isn't a percentage (kroner,
+  steps). Because the default shows the value itself as a whole percent (`60` → "60 %"), and
+  `formatOptions` also drives the announced value.
 - **slider-show-value** SHOULD Show the value with `labelPosition="bottom"` or `"top-floating"`
   when the number matters to the decision. The default `"default"` hides it.
 - **slider-bounds** MUST Set `minValue`, `maxValue` and `step` to the real domain (defaults 0, 100
@@ -34,16 +34,17 @@ import { Slider } from "fa-design-system/components/base/slider/slider";
 
 ## Props
 
-| Prop                       | Values                                         | Default     |
-| :------------------------- | :--------------------------------------------- | :---------- |
-| `value` / `defaultValue`   | number, or `[min, max]` for a range            |             |
-| `minValue` / `maxValue`    | number                                         | `0` / `100` |
-| `step`                     | number                                         | `1`         |
-| `labelPosition`            | `default` (hidden) · `bottom` · `top-floating` | `default`   |
-| `labelFormatter`           | `(value: number) => string`                    |             |
-| `formatOptions`            | `Intl.NumberFormatOptions`                     | percent     |
-| `onChange` / `onChangeEnd` | `(value: number \| number[]) => void`          |             |
-| `isDisabled`               | boolean                                        |             |
+| Prop                       | Values                                          | Default                      |
+| :------------------------- | :---------------------------------------------- | :--------------------------- |
+| `label`                    | string (visible label above the track)          |                              |
+| `value` / `defaultValue`   | number, or `[min, max]` for a range             |                              |
+| `minValue` / `maxValue`    | number                                          | `0` / `100`                  |
+| `step`                     | number                                          | `1`                          |
+| `labelPosition`            | `default` (hidden) · `bottom` · `top-floating`  | `default`                    |
+| `labelFormatter`           | `(value: number) => string` (visible text only) |                              |
+| `formatOptions`            | `Intl.NumberFormatOptions`                      | the value as a whole percent |
+| `onChange` / `onChangeEnd` | `(value: number \| number[]) => void`           |                              |
+| `isDisabled`               | boolean                                         |                              |
 
 Plus React Aria `Slider` props.
 
@@ -63,22 +64,19 @@ Plus React Aria `Slider` props.
 ```tsx
 const formatNok = (value: number) => `${formatNumber(value, { decimals: 0 })} kr`; // formatNumber: fa-design-system/utils/format-number
 
-<div className="flex flex-col gap-3">
-    <p className="text-sm font-medium text-secondary">Kurs</p>
-    <Slider
-        aria-label="Kurs"
-        minValue={0}
-        maxValue={500}
-        step={5}
-        defaultValue={[120, 340]}
-        labelPosition="bottom"
-        formatOptions={{ style: "currency", currency: "NOK", maximumFractionDigits: 0 }}
-        labelFormatter={formatNok}
-        onChangeEnd={(range) => filterByPrice(range as number[])}
-    />
-</div>
+<Slider
+    label="Kurs"
+    minValue={0}
+    maxValue={500}
+    step={5}
+    defaultValue={[120, 340]}
+    labelPosition="bottom"
+    formatOptions={{ style: "currency", currency: "NOK", maximumFractionDigits: 0 }}
+    labelFormatter={formatNok}
+    onChangeEnd={(range) => filterByPrice(range as number[])}
+/>
 
-<Slider aria-label="Aksjeandel" defaultValue={60} labelPosition="top-floating" />
+<Slider label="Aksjeandel" defaultValue={60} labelPosition="top-floating" />
 ```
 
 ## See also

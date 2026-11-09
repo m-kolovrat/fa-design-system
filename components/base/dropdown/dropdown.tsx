@@ -21,6 +21,7 @@ import {
     Separator as AriaSeparator,
 } from "react-aria-components";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 import { Avatar } from "../avatar/avatar";
 import { CheckboxBase } from "../checkbox/checkbox";
 import { RadioButtonBase } from "../radio-buttons/radio-buttons";
@@ -193,12 +194,12 @@ const DropdownSeparator = (props: AriaSeparatorProps) => {
     return <AriaSeparator {...props} className={cx("my-1 h-px w-full bg-border-secondary", props.className)} />;
 };
 
-/** A "⋮" trigger button with the accessible name "Open menu". */
+/** A "⋮" trigger button. Name it with `aria-label` ("Flere valg for DNB"); it defaults to a generic name. */
 const DropdownDotsButton = (props: AriaButtonProps & RefAttributes<HTMLButtonElement>) => {
     return (
         <AriaButton
             {...props}
-            aria-label="Open menu"
+            aria-label={props["aria-label"] ?? (props["aria-labelledby"] ? undefined : strings.openMenu)}
             className={(state) =>
                 cx(
                     "cursor-pointer rounded-sm text-fg-quaternary outline-focus-ring transition",
@@ -208,7 +209,7 @@ const DropdownDotsButton = (props: AriaButtonProps & RefAttributes<HTMLButtonEle
                 )
             }
         >
-            <DotsVertical className="size-5 transition-inherit-all" />
+            <DotsVertical aria-hidden="true" className="size-5 transition-inherit-all" />
         </AriaButton>
     );
 };

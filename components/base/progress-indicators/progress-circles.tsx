@@ -15,6 +15,8 @@ export interface ProgressCircleProps {
     label?: string;
     /** Formats the value text; gets the raw value and the percentage. Defaults to a rounded "NN%" */
     valueFormatter?: (value: number, valueInPercentage: number) => string | number;
+    /** The accessible name. Defaults to `label`; pass it when there is no `label`. */
+    "aria-label"?: string;
 }
 
 const sizes = sortCx({
@@ -56,8 +58,9 @@ const sizes = sortCx({
 });
 
 /** A ring that fills with the progress, with the value in the middle. */
-export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valueFormatter }: ProgressCircleProps) => {
+export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valueFormatter, "aria-label": ariaLabel }: ProgressCircleProps) => {
     const percentage = Math.round(((value - min) * 100) / (max - min));
+    const valueText = valueFormatter ? valueFormatter(value, percentage) : `${percentage}%`;
 
     const sizeConfig = sizes[size];
 
@@ -75,8 +78,16 @@ export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valu
 
     return (
         <div className="flex flex-col items-center gap-0.5">
-            <div role="progressbar" aria-valuenow={value} aria-valuemin={min} aria-valuemax={max} className="relative flex w-max items-center justify-center">
-                <svg className="-rotate-90" width={width} height={height} viewBox={viewBox}>
+            <div
+                role="progressbar"
+                aria-label={ariaLabel ?? label}
+                aria-valuetext={String(valueText)}
+                aria-valuenow={value}
+                aria-valuemin={min}
+                aria-valuemax={max}
+                className="relative flex w-max items-center justify-center"
+            >
+                <svg aria-hidden="true" className="-rotate-90" width={width} height={height} viewBox={viewBox}>
                     {/* Background circle */}
                     <circle
                         className="stroke-bg-quaternary"
@@ -107,10 +118,10 @@ export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valu
                 {label && size !== "xxs" ? (
                     <div className="absolute text-center">
                         <div className={labelClass}>{label}</div>
-                        <div className={valueClass}>{valueFormatter ? valueFormatter(value, percentage) : `${percentage}%`}</div>
+                        <div className={valueClass}>{valueText}</div>
                     </div>
                 ) : (
-                    <span className={clx(textPosition, valueClass)}>{valueFormatter ? valueFormatter(value, percentage) : `${percentage}%`}</span>
+                    <span className={clx(textPosition, valueClass)}>{valueText}</span>
                 )}
             </div>
 
@@ -120,8 +131,9 @@ export const ProgressBarCircle = ({ value, min = 0, max = 100, size, label, valu
 };
 
 /** A half ring (gauge) that fills with the progress, with the value below the arc. */
-export const ProgressBarHalfCircle = ({ value, min = 0, max = 100, size, label, valueFormatter }: ProgressCircleProps) => {
+export const ProgressBarHalfCircle = ({ value, min = 0, max = 100, size, label, valueFormatter, "aria-label": ariaLabel }: ProgressCircleProps) => {
     const percentage = Math.round(((value - min) * 100) / (max - min));
+    const valueText = valueFormatter ? valueFormatter(value, percentage) : `${percentage}%`;
 
     const sizeConfig = sizes[size];
 
@@ -137,8 +149,16 @@ export const ProgressBarHalfCircle = ({ value, min = 0, max = 100, size, label, 
 
     return (
         <div className="flex flex-col items-center gap-0.5">
-            <div role="progressbar" aria-valuenow={value} aria-valuemin={min} aria-valuemax={max} className="relative flex w-max items-center justify-center">
-                <svg width={width} height={height} viewBox={viewBox}>
+            <div
+                role="progressbar"
+                aria-label={ariaLabel ?? label}
+                aria-valuetext={String(valueText)}
+                aria-valuenow={value}
+                aria-valuemin={min}
+                aria-valuemax={max}
+                className="relative flex w-max items-center justify-center"
+            >
+                <svg aria-hidden="true" width={width} height={height} viewBox={viewBox}>
                     {/* Background half-circle */}
                     <circle
                         className="stroke-bg-quaternary"
@@ -171,10 +191,10 @@ export const ProgressBarHalfCircle = ({ value, min = 0, max = 100, size, label, 
                 {label && size !== "xxs" ? (
                     <div className={halfCircleTextPosition}>
                         <div className={labelClass}>{label}</div>
-                        <div className={valueClass}>{valueFormatter ? valueFormatter(value, percentage) : `${percentage}%`}</div>
+                        <div className={valueClass}>{valueText}</div>
                     </div>
                 ) : (
-                    <span className={clx(halfCircleTextPosition, valueClass)}>{valueFormatter ? valueFormatter(value, percentage) : `${percentage}%`}</span>
+                    <span className={clx(halfCircleTextPosition, valueClass)}>{valueText}</span>
                 )}
             </div>
 

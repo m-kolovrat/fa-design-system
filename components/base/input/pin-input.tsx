@@ -6,6 +6,7 @@ import { OTPInput, OTPInputContext } from "input-otp";
 import { HintText } from "@/components/base/input/hint-text";
 import { Label as LabelBase } from "@/components/base/input/label";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 type PinInputSize = "xxxs" | "xxs" | "xs" | "sm" | "md" | "lg";
 
@@ -37,14 +38,20 @@ export interface PinInputProps extends ComponentPropsWithRef<"div"> {
     /** The digit box height: `xxxs` 36px, `xxs` 40, `xs` 44, `sm` 64, `md` 80, `lg` 96 */
     size?: PinInputSize;
     /** Disables every box (Figma's disabled tokens, not `opacity-50`) */
+    isDisabled?: boolean;
+    /** Shows the boxes in the error style and marks the input invalid */
+    isInvalid?: boolean;
+    /** @deprecated Use `isDisabled`. */
     disabled?: boolean;
-    /** Shows the boxes in the error style */
+    /** @deprecated Use `isInvalid`. */
     invalid?: boolean;
 }
 
 /** A code of a few digits in separate boxes (verification code, PIN), built from `PinInput.Group` and `PinInput.Slot`. */
-const PinInput = ({ className, size = "md", disabled = false, invalid = false, ...props }: PinInputProps) => {
+const PinInput = ({ className, size = "md", isDisabled, isInvalid, disabled: disabledProp, invalid: invalidProp, ...props }: PinInputProps) => {
     const id = useId();
+    const disabled = isDisabled ?? disabledProp ?? false;
+    const invalid = isInvalid ?? invalidProp ?? false;
 
     return (
         <PinInputContext.Provider value={{ size, disabled, id, invalid }}>
@@ -92,11 +99,13 @@ export type PinInputGroupProps = DistributiveOmit<OTPInputProps, "maxLength"> & 
     width?: number;
     /** Classes on the hidden input */
     inputClassName?: string;
+    /** The name when there is no `PinInput.Label`. Defaults to "Skriv inn koden" (`strings.pinInput`). */
+    "aria-label"?: string;
 };
 
 /** Holds the slots and the hidden input; takes the value, length and pattern. */
-const Group = ({ inputClassName, containerClassName, width, maxLength = 4, ...props }: PinInputGroupProps) => {
-    const { id, size, disabled } = usePinInputContext();
+const Group = ({ inputClassName, containerClassName, width, maxLength = 4, "aria-label": ariaLabel = strings.pinInput, ...props }: PinInputGroupProps) => {
+    const { id, size, disabled, invalid } = usePinInputContext();
 
     return (
         <OTPInput
@@ -104,8 +113,9 @@ const Group = ({ inputClassName, containerClassName, width, maxLength = 4, ...pr
             size={width}
             maxLength={maxLength}
             disabled={disabled}
+            aria-invalid={invalid || undefined}
             id={"pin-input-" + id}
-            aria-label="Enter your pin"
+            aria-label={ariaLabel}
             aria-labelledby={"pin-input-label-" + id}
             aria-describedby={"pin-input-description-" + id}
             containerClassName={cx("flex flex-row", styles[size].group, containerClassName)}
@@ -132,8 +142,8 @@ const Slot = ({
     return (
         <div
             {...props}
-            aria-invalid={invalid}
-            aria-label={"Enter digit " + (index + 1) + " of " + slots.length}
+            // The hidden input is what assistive tech reads; the boxes only draw it.
+            aria-hidden="true"
             className={cx(
                 "relative flex items-center justify-center rounded-xl bg-primary text-center text-placeholder_subtle ring-1 ring-primary transition-[box-shadow,background-color] ring-inset",
                 styles[size].slot,
@@ -172,11 +182,18 @@ const Label = (props: ComponentPropsWithRef<typeof LabelBase>) => {
 };
 Label.displayName = "Label";
 
-/** The hint below the boxes (`HintText` props), linked as the description. */
+/** The hint below the boxes (`HintText` props), linked as the description; red when the root is `isInvalid`. */
 const Description = (props: ComponentPropsWithRef<typeof HintText>) => {
-    const { id, size } = usePinInputContext();
+    const { id, size, invalid } = usePinInputContext();
 
-    return <HintText {...props} id={"pin-input-description-" + id} role="description" className={cx(size === "xxxs" && "text-xs", props.className)} />;
+    return (
+        <HintText
+            {...props}
+            isInvalid={props.isInvalid ?? invalid}
+            id={"pin-input-description-" + id}
+            className={cx(size === "xxxs" && "text-xs", props.className)}
+        />
+    );
 };
 Description.displayName = "Description";
 

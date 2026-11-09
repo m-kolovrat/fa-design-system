@@ -117,7 +117,7 @@ const styles = sortCx({
     },
 });
 
-interface FeaturedIconProps {
+interface FeaturedIconBaseProps {
     ref?: Ref<HTMLDivElement>;
     /** Extra content drawn inside the box, after the icon. */
     children?: ReactNode;
@@ -127,11 +127,23 @@ interface FeaturedIconProps {
     icon?: FC<{ className?: string }> | ReactNode;
     /** The size of the box: sm 32px, md 40px, lg 48px, xl 56px. */
     size?: "sm" | "md" | "lg" | "xl";
-    /** The tone of the message. `modern` and `modern-neue` are gray only. */
-    color: "brand" | "gray" | "success" | "warning" | "error";
-    /** The look: `light`, `gradient` and `outline` are round; `dark`, `modern` and `modern-neue` are rounded squares. */
-    theme?: "light" | "gradient" | "dark" | "outline" | "modern" | "modern-neue";
 }
+
+// `modern` and `modern-neue` are gray only in Figma (and `modern-neue` has no other colors here),
+// so the type allows only `color="gray"` with them.
+type FeaturedIconProps = FeaturedIconBaseProps &
+    (
+        | {
+              /** The tone of the message. `modern` and `modern-neue` are gray only. */
+              color: "brand" | "gray" | "success" | "warning" | "error";
+              /** The look: `light`, `gradient` and `outline` are round; `dark`, `modern` and `modern-neue` are rounded squares. */
+              theme?: "light" | "gradient" | "dark" | "outline";
+          }
+        | {
+              color: "gray";
+              theme: "modern" | "modern-neue";
+          }
+    );
 
 /** An icon on a tinted circle or tile that marks the topic or tone of a block. Decorative. */
 export const FeaturedIcon = (props: FeaturedIconProps) => {

@@ -1,13 +1,8 @@
 "use client";
 
 import type { SliderProps as AriaSliderProps } from "react-aria-components";
-import {
-    Label as AriaLabel,
-    Slider as AriaSlider,
-    SliderOutput as AriaSliderOutput,
-    SliderThumb as AriaSliderThumb,
-    SliderTrack as AriaSliderTrack,
-} from "react-aria-components";
+import { Slider as AriaSlider, SliderOutput as AriaSliderOutput, SliderThumb as AriaSliderThumb, SliderTrack as AriaSliderTrack } from "react-aria-components";
+import { Label } from "@/components/base/input/label";
 import { cx, sortCx } from "@/utils/cx";
 
 const styles = sortCx({
@@ -18,6 +13,8 @@ const styles = sortCx({
 });
 
 export interface SliderProps extends AriaSliderProps {
+    /** Visible label above the track; it also names the slider. Without it, pass `aria-label`. */
+    label?: string;
     /** Where the value shows: `default` (hidden), `bottom` (below the thumb), `top-floating` (a bubble above) */
     labelPosition?: keyof typeof styles;
     /** Formats the value text; overrides `formatOptions` */
@@ -41,7 +38,7 @@ export interface SliderProps extends AriaSliderProps {
      * @default 1
      */
     step?: AriaSliderProps["step"];
-    /** `Intl.NumberFormatOptions` for the value text. Defaults to a whole percent */
+    /** `Intl.NumberFormatOptions` for the value text and the announced value. Defaults to the value as a whole percent (`60` → "60 %") */
     formatOptions?: AriaSliderProps["formatOptions"];
     /** Called while the value changes */
     onChange?: AriaSliderProps["onChange"];
@@ -52,16 +49,28 @@ export interface SliderProps extends AriaSliderProps {
 }
 
 /** Picks a number, or a range with two thumbs, by dragging along a track. */
-export const Slider = ({ labelPosition = "default", minValue = 0, maxValue = 100, labelFormatter, formatOptions, ...rest }: SliderProps) => {
-    // Format thumb value as percentage by default.
+export const Slider = ({ label, labelPosition = "default", minValue = 0, maxValue = 100, labelFormatter, formatOptions, className, ...rest }: SliderProps) => {
+    // The value itself is the percent (60 → "60 %"), so the default never rescales it.
     const defaultFormatOptions: Intl.NumberFormatOptions = {
-        style: "percent",
+        style: "unit",
+        unit: "percent",
         maximumFractionDigits: 0,
     };
 
     return (
-        <AriaSlider {...rest} {...{ minValue, maxValue }} formatOptions={formatOptions ?? defaultFormatOptions}>
-            <AriaLabel />
+        <AriaSlider
+            {...rest}
+            {...{ minValue, maxValue }}
+            formatOptions={formatOptions ?? defaultFormatOptions}
+            className={(state) =>
+                cx(
+                    "flex flex-col",
+                    label && labelPosition === "top-floating" ? "gap-11" : "gap-3",
+                    typeof className === "function" ? className(state) : className,
+                )
+            }
+        >
+            {label && <Label>{label}</Label>}
             <AriaSliderTrack className="relative h-6 w-full">
                 {({ state: { values, getThumbValue, getThumbPercent, getFormattedValue } }) => {
                     const left = values.length === 1 ? 0 : getThumbPercent(0);
@@ -91,7 +100,7 @@ export const Slider = ({ labelPosition = "default", minValue = 0, maxValue = 100
                                         }
                                     >
                                         <AriaSliderOutput className={cx("whitespace-nowrap", styles[labelPosition])}>
-                                            {labelFormatter ? labelFormatter(getThumbValue(index)) : getFormattedValue(getThumbValue(index) / 100)}
+                                            {labelFormatter ? labelFormatter(getThumbValue(index)) : getFormattedValue(getThumbValue(index))}
                                         </AriaSliderOutput>
                                     </AriaSliderThumb>
                                 );

@@ -43,8 +43,8 @@ import { getInitials } from "fa-design-system/components/base/avatar/utils";
   it is required, and `xs` / `2xl` don't exist there.
 - **avatar-label-group-border** SHOULD Leave `border` alone on `AvatarLabelGroup`; it always draws
   it, so the avatar keeps its ring next to the text.
-- **avatar-add-title** MUST Pass `title` to `AvatarAddButton` ("Legg til deltaker"). Because it
-  is the tooltip and the accessible name, and the default is English "Add user".
+- **avatar-add-title** SHOULD Pass `title` to `AvatarAddButton` when "Legg til bruker" (the default)
+  doesn't say what is added ("Legg til deltaker"). Because it is the tooltip and the accessible name.
 - **avatar-focusable** SHOULD Set `focusable` when the avatar is the only content of a link or button
   (wrapper with the `group` class). Because the focus ring is drawn on the avatar through
   `group-focus-visible`.
@@ -77,7 +77,7 @@ import { getInitials } from "fa-design-system/components/base/avatar/utils";
 `initials`, `placeholderIcon`, `placeholder`, `status`, `verified`, `badge`, `className`.
 
 `AvatarAddButton`: `size` (required) `xs` · `sm` · `md`, `title` (tooltip and accessible name;
-default is English "Add user", so always pass one), plus React Aria `Button` props (`onPress`).
+default "Legg til bruker"), plus React Aria `Button` props (`onPress`).
 
 ## Accessibility
 

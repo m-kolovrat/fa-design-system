@@ -45,8 +45,9 @@ import { Badge, BadgeIcon, BadgeWithButton, BadgeWithDot, BadgeWithFlag, BadgeWi
 - **badge-flag** MUST Pass `flag` to `BadgeWithFlag`. Because it otherwise shows the Australian
   flag (`"australia-aud"`).
 - **badge-short** SHOULD Keep the text to one to three words; badges never wrap (`whitespace-nowrap`).
-- **badge-group-static** SHOULD Wrap `BadgeGroup` in a link (`<a>` or a router `Link`) when it should
-  navigate. Because it renders a `div` with a pointer cursor and hover fill but no link or button.
+- **badge-group-action** SHOULD Pass `href` (navigate) or `onPress` (act) when `BadgeGroup` should
+  do something, never wrap it in a link. Because only then does it render a link or button with the
+  hover fill, pointer and focus ring; without either it is static text.
 
 ## Props
 
@@ -64,7 +65,8 @@ Per variant: `BadgeWithIcon` `iconLeading` / `iconTrailing` (one of them); `Badg
 `BadgeGroup`: `addonText` (required), `children` (the message), `color` `brand` · `gray` ·
 `error` · `warning` · `success` (default `brand`), `theme` `light` · `modern` (default `light`),
 `size` `md` · `lg` (default `md`), `align` `leading` · `trailing` (where the addon sits, default
-`leading`), `iconTrailing` (default `ArrowRight`).
+`leading`), `iconTrailing` (default `ArrowRight`), `href` (renders a link), `onPress` (renders a
+button when there is no `href`), `className`.
 
 ## Accessibility
 

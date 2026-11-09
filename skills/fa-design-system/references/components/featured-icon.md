@@ -28,8 +28,7 @@ import { FeaturedIcon } from "fa-design-system/components/foundations/featured-i
   destructive or failed, `warning` attention, `brand` neutral-positive, `gray` neutral. Because the
   same color means the same thing in modals, alerts and states.
 - **featured-icon-modern-gray** MUST Use `theme="modern"` and `theme="modern-neue"` only with
-  `color="gray"`. Because `modern-neue` has no icon or ring color for the other colors (it renders
-  broken), and `modern` is specified gray-only in Figma and the stories.
+  `color="gray"`. Because both are gray-only in Figma; the type rejects any other color with them.
 - **featured-icon-light-default** SHOULD Use `theme="light"` (the library's default for modals,
   alerts and states). Use `modern` (gray) for neutral UI tiles such as upload and radio cards, as
   the library does. `gradient`, `dark` and `outline` only when the Figma frame shows them.

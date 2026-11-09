@@ -246,9 +246,8 @@ const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadP
                             <Tooltip title={tooltip} placement="top">
                                 <TooltipTrigger
                                     aria-label={tooltip}
-                                    // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
                                     className={cx(
-                                        "cursor-pointer text-fg-quaternary outline-focus-ring hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid",
+                                        "cursor-pointer text-fg-quaternary outline-focus-ring hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover",
                                         isHovered && "text-fg-quaternary_hover",
                                     )}
                                 >
@@ -296,7 +295,7 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
             {...props}
             className={(state) =>
                 cx(
-                    "relative outline-focus-ring transition-colors after:pointer-events-none hover:bg-secondary focus-visible:outline-2 focus-visible:-outline-offset-2",
+                    "relative outline-focus-ring transition after:pointer-events-none hover:bg-secondary focus-visible:outline-2 focus-visible:-outline-offset-2",
                     size === "sm" ? "h-14" : "h-18",
                     highlightSelectedRow && "selected:bg-secondary",
 

@@ -62,8 +62,7 @@ export const Label = ({ isInvalid, isRequired, tooltip, tooltipDescription, tool
                         // field is disabled.
                         isDisabled={false}
                         aria-label={tooltipLabel ?? tooltip}
-                        // `focus-visible:outline-solid` overrides the `outline-hidden` that `TooltipTrigger` sets by default.
-                        className="cursor-pointer text-fg-quaternary outline-focus-ring transition hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid"
+                        className="cursor-pointer text-fg-quaternary outline-focus-ring transition hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover"
                     >
                         <Help className="size-4" />
                     </TooltipTrigger>

@@ -206,6 +206,10 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
     plausible value and say in your reply that it needs replacing. Because Finansavisen content is
     long Norwegian headlines, company names and figures; short English placeholders hide wrapping
     and number alignment problems.
+    The components' own texts (close buttons, pagination, date picker buttons, empty states,
+    accessible names) are already Norwegian, from `fa-design-system/utils/strings`; override one
+    per use with the component's prop (`labels`, `closeLabel`, `label`, `aria-label`), never by
+    editing the library.
 16. **fa-plain-copy** SHOULD State what happens, as the live copy does ("Lag din egen watchlist –
     helt gratis"); no marketing filler ("sømløst", "lynrask", invented urgency) and no emoji in copy
     or buttons. Provisional: the forum's category markers (🏥 Helse) are the one existing emoji;

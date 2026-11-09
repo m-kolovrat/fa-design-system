@@ -20,7 +20,7 @@ export const FourDigitsDemo = () => {
 
 export const DisabledDemo = () => {
     return (
-        <PinInput disabled>
+        <PinInput isDisabled>
             <PinInput.Label>Secure code</PinInput.Label>
             <PinInput.Group maxLength={4} pattern={REGEXP_ONLY_DIGITS}>
                 <PinInput.Slot index={0} />

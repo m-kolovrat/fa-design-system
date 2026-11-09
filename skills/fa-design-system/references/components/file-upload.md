@@ -26,8 +26,8 @@ import { FileTrigger } from "fa-design-system/components/base/file-upload-trigge
 - **file-upload-you-upload** MUST Do the upload yourself in `onDropFiles` and keep each file's
   `progress` (0–100) and `failed` in state. Because the drop zone only validates and hands over
   files; the list items only display what you pass.
-- **file-upload-hint** MUST Pass a Norwegian `hint` naming the allowed types and size ("PDF eller
-  JPG, maks 10 MB"). Because the default is an English sample ("SVG, PNG, JPG or GIF …").
+- **file-upload-hint** MUST Pass a `hint` naming the allowed types and size ("PDF eller JPG, maks
+  10 MB"). Because without it the drop zone says nothing about what it accepts.
 - **file-upload-validate** MUST Set `accept` and `maxSize` (bytes), and handle
   `onDropUnacceptedFiles` and `onSizeLimitExceed` with a visible message (a `notify()` toast or
   the hint). Because rejected files are otherwise dropped silently.
@@ -38,22 +38,23 @@ import { FileTrigger } from "fa-design-system/components/base/file-upload-trigge
 
 `FileUpload.DropZone`:
 
-| Prop                    | Values                                                                                       | Default                                 |
-| :---------------------- | :------------------------------------------------------------------------------------------- | :-------------------------------------- |
-| `accept`                | string (`".pdf,image/*"`)                                                                    | any type                                |
-| `allowsMultiple`        | boolean; `false` keeps only the first dropped file                                           | `true`                                  |
-| `maxSize`               | number, bytes                                                                                |                                         |
-| `hint`                  | string; turns red when a rejected file reaches `onDropUnacceptedFiles` / `onSizeLimitExceed` | "SVG, PNG, JPG or GIF (max. 800x400px)" |
-| `isDisabled`            | boolean                                                                                      |                                         |
-| `onDropFiles`           | `(files: FileList) => void`                                                                  |                                         |
-| `onDropUnacceptedFiles` | `(files: FileList) => void`                                                                  |                                         |
-| `onSizeLimitExceed`     | `(files: FileList) => void`                                                                  |                                         |
-| `className`             | string                                                                                       |                                         |
+| Prop                    | Values                                                                                       | Default       |
+| :---------------------- | :------------------------------------------------------------------------------------------- | :------------ |
+| `accept`                | string (`".pdf,image/*"`)                                                                    | any type      |
+| `allowsMultiple`        | boolean; `false` keeps only the first dropped file                                           | `true`        |
+| `maxSize`               | number, bytes                                                                                |               |
+| `hint`                  | string; turns red when a rejected file reaches `onDropUnacceptedFiles` / `onSizeLimitExceed` | none (hidden) |
+| `labels`                | overrides `strings.fileUpload` (`upload`, `uploadMobile`, `dragAndDrop`)                     |               |
+| `isDisabled`            | boolean                                                                                      |               |
+| `onDropFiles`           | `(files: FileList) => void`                                                                  |               |
+| `onDropUnacceptedFiles` | `(files: FileList) => void`                                                                  |               |
+| `onSizeLimitExceed`     | `(files: FileList) => void`                                                                  |               |
+| `className`             | string                                                                                       |               |
 
 List items (`ListItemProgressBar` / `ListItemProgressFill`): `name`, `size` (bytes) and `progress`
 (0–100, `100` shows as complete) are required; `failed`, `type` (file type for the icon, default
 `empty`), `fileIconVariant` (default `default` on `ListItemProgressBar`, `solid` on
-`ListItemProgressFill`), `onDelete`, `onRetry`, `className`. `getReadableFileSize(bytes)` formats a
+`ListItemProgressFill`), `onDelete`, `onRetry`, `labels` (overrides `strings.fileUpload`), `className`. `getReadableFileSize(bytes)` formats a
 size, rounded down ("2 MB").
 
 `FileTrigger`: `acceptedFileTypes` (string[]), `allowsMultiple`, `acceptDirectory`,
@@ -72,9 +73,9 @@ it to Figma, or accept it as code-only.
 ## Accessibility
 
 - The drop zone has a real file input behind its link button, so it works without drag and drop.
-- Known gap: "Click to upload" ("… and attach files" on mobile), "or drag and drop",
-  "Uploading...", "Complete", "Failed", "Upload failed, please try again", "Try again" and the
-  "Delete" tooltip are hard-coded English.
+- The built-in texts are Norwegian (`strings.fileUpload`): "Klikk for å laste opp" / "eller dra og
+  slipp", "Laster opp …", "Fullført", "Mislyktes", "Prøv igjen", "Slett". The drop zone and list
+  items take `labels` to override them. Each item's progress bar is named by the file name.
 - Announce finished or failed uploads (a `notify()` toast); the progress bar alone is silent.
 
 ## Example

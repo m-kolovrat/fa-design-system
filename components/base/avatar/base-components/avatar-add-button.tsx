@@ -4,6 +4,7 @@ import { Plus } from "fa-icons";
 import type { ButtonProps as AriaButtonProps } from "react-aria-components";
 import { Tooltip as AriaTooltip, TooltipTrigger as AriaTooltipTrigger } from "@/components/base/tooltip/tooltip";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 const sizes = {
     xs: { root: "size-6", icon: "size-4" },
@@ -14,13 +15,16 @@ const sizes = {
 export interface AvatarAddButtonProps extends AriaButtonProps {
     /** The size variant (required), matching the avatars next to it */
     size: "xs" | "sm" | "md";
-    /** The tooltip and accessible name. Defaults to English "Add user", so always pass one */
+    /**
+     * The tooltip and accessible name.
+     * @default "Legg til bruker" (`strings.addUser`)
+     */
     title?: string;
     className?: string;
 }
 
 /** The "+" button at the end of a row of avatars, with a tooltip. */
-export const AvatarAddButton = ({ size, className, title = "Add user", ...props }: AvatarAddButtonProps) => (
+export const AvatarAddButton = ({ size, className, title = strings.addUser, ...props }: AvatarAddButtonProps) => (
     <AriaTooltip title={title}>
         <AriaTooltipTrigger
             {...props}

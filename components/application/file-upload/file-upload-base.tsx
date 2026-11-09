@@ -11,6 +11,7 @@ import { ButtonUtility } from "@/components/base/buttons/button-utility";
 import { ProgressBar } from "@/components/base/progress-indicators/progress-indicators";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 import { cx } from "@/utils/cx";
+import { type Strings, strings } from "@/utils/strings";
 
 /**
  * Returns a human-readable file size.
@@ -30,11 +31,10 @@ export const getReadableFileSize = (bytes: number) => {
 export interface FileUploadDropZoneProps {
     /** The class name of the drop zone. */
     className?: string;
-    /**
-     * A hint text explaining what files can be dropped. Falls back to an English sample
-     * ("SVG, PNG, JPG or GIF (max. 800x400px)"), so always pass one.
-     */
+    /** What files can be dropped ("PDF eller JPG, maks 10 MB"). Hidden when omitted. */
     hint?: string;
+    /** Overrides the built-in Norwegian texts (`strings.fileUpload` in `utils/strings`). */
+    labels?: Partial<Strings["fileUpload"]>;
     /**
      * Disables dropping or uploading files.
      */
@@ -73,6 +73,7 @@ export interface FileUploadDropZoneProps {
 export const FileUploadDropZone = ({
     className,
     hint,
+    labels: labelsProp,
     isDisabled,
     accept,
     allowsMultiple = true,
@@ -81,6 +82,7 @@ export const FileUploadDropZone = ({
     onDropUnacceptedFiles,
     onSizeLimitExceed,
 }: FileUploadDropZoneProps) => {
+    const labels = { ...strings.fileUpload, ...labelsProp };
     const id = useId();
     const inputRef = useRef<HTMLInputElement>(null);
     const [isInvalid, setIsInvalid] = useState(false);
@@ -225,12 +227,13 @@ export const FileUploadDropZone = ({
                     />
                     <label htmlFor={id} className="flex cursor-pointer">
                         <Button color="link-color" size="md" isDisabled={isDisabled} onClick={() => inputRef.current?.click()}>
-                            Click to upload <span className="md:hidden">and attach files</span>
+                            <span className="max-md:hidden">{labels.upload}</span>
+                            <span className="md:hidden">{labels.uploadMobile}</span>
                         </Button>
                     </label>
-                    <span className="text-sm max-md:hidden">or drag and drop</span>
+                    <span className="text-sm max-md:hidden">{labels.dragAndDrop}</span>
                 </div>
-                <p className={cx("text-xs transition", isInvalid && "text-error-primary")}>{hint || "SVG, PNG, JPG or GIF (max. 800x400px)"}</p>
+                {hint && <p className={cx("text-xs transition", isInvalid && "text-error-primary")}>{hint}</p>}
             </div>
         </div>
     );
@@ -255,11 +258,25 @@ export interface FileListItemProps {
     onDelete?: () => void;
     /** The function to call when the file upload is retried. */
     onRetry?: () => void;
+    /** Overrides the built-in Norwegian texts (`strings.fileUpload` in `utils/strings`). */
+    labels?: Partial<Strings["fileUpload"]>;
 }
 
 /** `FileUpload.ListItemProgressBar`: an uploading file with a progress bar under its name. */
-export const FileListItemProgressBar = ({ name, size, progress, failed, type, fileIconVariant, onDelete, onRetry, className }: FileListItemProps) => {
+export const FileListItemProgressBar = ({
+    name,
+    size,
+    progress,
+    failed,
+    type,
+    fileIconVariant,
+    onDelete,
+    onRetry,
+    className,
+    labels: labelsProp,
+}: FileListItemProps) => {
     const isComplete = progress === 100;
+    const labels = { ...strings.fileUpload, ...labelsProp };
 
     return (
         <motion.li
@@ -285,29 +302,29 @@ export const FileListItemProgressBar = ({ name, size, progress, failed, type, fi
 
                             <div className="flex items-center gap-1">
                                 {isComplete && <Success className="size-4 text-fg-success-primary" />}
-                                {isComplete && <p className="text-sm font-medium text-success-primary">Complete</p>}
+                                {isComplete && <p className="text-sm font-medium text-success-primary">{labels.complete}</p>}
 
                                 {!isComplete && !failed && <Upload className="size-4 text-fg-quaternary" />}
-                                {!isComplete && !failed && <p className="text-sm font-medium text-quaternary">Uploading...</p>}
+                                {!isComplete && !failed && <p className="text-sm font-medium text-quaternary">{labels.uploading}</p>}
 
                                 {failed && <CloseCircle className="size-4 text-fg-error-primary" />}
-                                {failed && <p className="text-sm font-medium text-error-primary">Failed</p>}
+                                {failed && <p className="text-sm font-medium text-error-primary">{labels.failed}</p>}
                             </div>
                         </div>
                     </div>
 
-                    <ButtonUtility color="tertiary" tooltip="Delete" icon={Trash} size="xs" className="-mt-2 -mr-2 self-start" onClick={onDelete} />
+                    <ButtonUtility color="tertiary" tooltip={labels.delete} icon={Trash} size="xs" className="-mt-2 -mr-2 self-start" onClick={onDelete} />
                 </div>
 
                 {!failed && (
                     <div className="mt-1 w-full">
-                        <ProgressBar labelPosition="right" max={100} min={0} value={progress} />
+                        <ProgressBar aria-label={name} labelPosition="right" max={100} min={0} value={progress} />
                     </div>
                 )}
 
                 {failed && (
                     <Button color="link-destructive" size="sm" onClick={onRetry} className="mt-1.5">
-                        Try again
+                        {labels.tryAgain}
                     </Button>
                 )}
             </div>
@@ -316,8 +333,20 @@ export const FileListItemProgressBar = ({ name, size, progress, failed, type, fi
 };
 
 /** `FileUpload.ListItemProgressFill`: an uploading file whose row fills as it progresses. */
-export const FileListItemProgressFill = ({ name, size, progress, failed, type, fileIconVariant, onDelete, onRetry, className }: FileListItemProps) => {
+export const FileListItemProgressFill = ({
+    name,
+    size,
+    progress,
+    failed,
+    type,
+    fileIconVariant,
+    onDelete,
+    onRetry,
+    className,
+    labels: labelsProp,
+}: FileListItemProps) => {
     const isComplete = progress === 100;
+    const labels = { ...strings.fileUpload, ...labelsProp };
 
     return (
         <motion.li layout="position" className={cx("relative flex gap-3 overflow-hidden rounded-xl bg-primary p-4", className)}>
@@ -342,7 +371,7 @@ export const FileListItemProgressFill = ({ name, size, progress, failed, type, f
                         <p className="truncate text-sm font-medium text-secondary">{name}</p>
 
                         <div className="mt-0.5 flex items-center gap-2">
-                            <p className="text-sm text-tertiary">{failed ? "Upload failed, please try again" : getReadableFileSize(size)}</p>
+                            <p className="text-sm text-tertiary">{failed ? labels.failedRetry : getReadableFileSize(size)}</p>
 
                             {!failed && (
                                 <>
@@ -360,12 +389,12 @@ export const FileListItemProgressFill = ({ name, size, progress, failed, type, f
 
                     {failed && (
                         <Button color="link-destructive" size="sm" onClick={onRetry} className="mt-1.5">
-                            Try again
+                            {labels.tryAgain}
                         </Button>
                     )}
                 </div>
 
-                <ButtonUtility color="tertiary" tooltip="Delete" icon={Trash} size="xs" className="-mt-2 -mr-2 self-start" onClick={onDelete} />
+                <ButtonUtility color="tertiary" tooltip={labels.delete} icon={Trash} size="xs" className="-mt-2 -mr-2 self-start" onClick={onDelete} />
             </div>
         </motion.li>
     );

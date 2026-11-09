@@ -8,6 +8,7 @@ import { CloseButton } from "@/components/base/buttons/close-button";
 import { ProgressBar } from "@/components/base/progress-indicators/progress-indicators";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 /*
  * Figma: "Notification" — Type Primary icon, Gray icon, Error icon, Warning icon, Success icon, No icon,
@@ -51,6 +52,11 @@ export interface NotificationProps {
     progress?: number;
     /** Shows the close button (Figma "X close button") and is called when it's pressed. */
     onClose?: () => void;
+    /**
+     * The close button's accessible name.
+     * @default "Lukk" (`strings.close`)
+     */
+    closeLabel?: string;
     /** Layout classes only. */
     className?: string;
 }
@@ -67,6 +73,7 @@ export const Notification = ({
     imageSrc,
     progress = 0,
     onClose,
+    closeLabel = strings.close,
     className,
 }: NotificationProps) => {
     const Icon = icon ?? defaultIcons[type];
@@ -84,7 +91,7 @@ export const Notification = ({
     );
 
     const actionRow = actions && <div className="flex items-center gap-3">{actions}</div>;
-    const closeButton = onClose && <CloseButton size="sm" slot={null} onPress={onClose} label="Dismiss" className="absolute top-2 right-2" />;
+    const closeButton = onClose && <CloseButton size="sm" slot={null} onPress={onClose} label={closeLabel} className="absolute top-2 right-2" />;
 
     if (type === "image") {
         return (

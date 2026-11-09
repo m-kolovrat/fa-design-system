@@ -63,9 +63,8 @@ Plus React Aria `MenuItem` props (`id`, `onAction`, `href`, `textValue`). `Dropd
 ## Accessibility
 
 - Arrow keys move through items, typing jumps to an item, Escape closes and returns focus.
-- `Dropdown.DotsButton` has a fixed English `aria-label` ("Open menu") that can't be overridden;
-  when the label matters, use `<ButtonUtility icon={DotsVertical} color="tertiary"
-aria-label="Flere valg" />` as the trigger instead.
+- Give `Dropdown.DotsButton` an `aria-label` that says whose menu it is ("Flere valg for DNB") when
+  there are several on a page; it falls back to a generic name.
 - Give items text; an icon alone is not a name.
 
 ## Example

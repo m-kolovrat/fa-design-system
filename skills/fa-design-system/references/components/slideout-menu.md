@@ -29,30 +29,30 @@ import { SlideoutMenu } from "fa-design-system/components/application/slideout-m
   the panel's padding.
 - **slideout-trigger** MUST Wrap the opening button and the menu in `SlideoutMenu.Trigger`, or
   control it with `isOpen` / `onOpenChange`. Because focus returns to the trigger on close.
-- **slideout-heading** MUST Put a real heading (`<h2 className="text-lg font-semibold text-primary">`)
-  first in `SlideoutMenu.Header`. Because the dialog's accessible name is fixed to the English
-  "Slideout menu" and can't be changed through props; the heading is what tells people where
-  they are.
+- **slideout-heading** MUST Put a real heading (`<h2 id="…" className="text-lg font-semibold
+text-primary">`) first in `SlideoutMenu.Header` and pass its id as `aria-labelledby` on
+  `SlideoutMenu` (or pass `aria-label`). Because the dialog is named by them; without either it falls
+  back to a generic name.
 - **slideout-close** SHOULD Pass `onClose={close}` to `SlideoutMenu.Header` (as the story does), and
   close from footer buttons with the same `close`. Because the header's X already closes through the
   dialog's `close` slot; `onClose` is where extra work on close goes. Don't add a second X.
-- **slideout-content-role** SHOULD Pass `role="region"` (or `role={undefined}`) and an `aria-label`
-  to `SlideoutMenu.Content` when the page already has a `<main>`. Because `Content` defaults to
-  `role="main"`, which would add a second main landmark.
 - **slideout-no-restyle** NEVER Pass `className` to `SlideoutMenu` to change the panel. Because it is
   applied to both the overlay and the panel; the width is fixed at `max-w-100`.
 
 ## Props
 
-| Prop                     | Values                           | Default |
-| :----------------------- | :------------------------------- | :------ |
-| `children`               | nodes, or `({ close }) => nodes` |         |
-| `isOpen`, `onOpenChange` | controlled state                 |         |
-| `isDismissable`          | boolean (overlay click closes)   | `false` |
-| `dialogClassName`        | classes on the inner dialog      |         |
+| Prop                     | Values                            | Default |
+| :----------------------- | :-------------------------------- | :------ |
+| `children`               | nodes, or `({ close }) => nodes`  |         |
+| `isOpen`, `onOpenChange` | controlled state                  |         |
+| `isDismissable`          | boolean (overlay click closes)    | `false` |
+| `dialogClassName`        | classes on the inner dialog       |         |
+| `aria-labelledby`        | id of the heading that names it   |         |
+| `aria-label`             | the name when there is no heading |         |
 
-`SlideoutMenu.Header`: `onClose`, plus `<header>` props. `SlideoutMenu.Content`: `<div>` props
-(`role` defaults to `"main"`). `SlideoutMenu.Footer`: `<footer>` props, with a top divider.
+`SlideoutMenu.Header`: `onClose`, plus `<header>` props. `SlideoutMenu.Content`: `<div>` props (no
+role). `SlideoutMenu.Footer`: `<footer>` props, with a top divider. The overlay sits at `z-50`, above
+sticky headers.
 
 ## Notes
 
@@ -64,8 +64,8 @@ import { SlideoutMenu } from "fa-design-system/components/application/slideout-m
 ## Accessibility
 
 - Focus is trapped in the panel and returns to the trigger on close; Escape closes it.
-- The header close button is labelled "Close" and the dialog "Slideout menu" (English defaults in
-  code).
+- The header close button is named "Lukk"; the dialog falls back to "Sidepanel" without
+  `aria-labelledby` / `aria-label`.
 - Pass `isDismissable` so a click on the dimmed page closes the panel, as people expect.
 
 ## Example
@@ -75,14 +75,16 @@ import { SlideoutMenu } from "fa-design-system/components/application/slideout-m
     <Button color="secondary" iconLeading={Filter}>
         Filtrer
     </Button>
-    <SlideoutMenu isDismissable>
+    <SlideoutMenu isDismissable aria-labelledby="filtrer-tittel">
         {({ close }) => (
             <>
                 <SlideoutMenu.Header onClose={close}>
-                    <h2 className="text-lg font-semibold text-primary">Filtrer aksjer</h2>
+                    <h2 id="filtrer-tittel" className="text-lg font-semibold text-primary">
+                        Filtrer aksjer
+                    </h2>
                     <p className="text-sm text-tertiary">Oslo Børs og Euronext Growth</p>
                 </SlideoutMenu.Header>
-                <SlideoutMenu.Content role="region" aria-label="Filtre">
+                <SlideoutMenu.Content>
                     <Input label="Minste markedsverdi" placeholder="500 000 000 kr" />
                     <Checkbox label="Bare aksjer med utbytte" />
                 </SlideoutMenu.Content>

@@ -28,24 +28,23 @@ import { TagSelect } from "fa-design-system/components/base/select/tag-select";
   the trigger shows the selected item's label; JSX children leave it blank.
 - **select-value-api** SHOULD Control `Select` / `Select.ComboBox` with `value` + `onChange` (a
   `AriaKey`). `selectedKey` / `onSelectionChange` still work but are deprecated in React Aria.
-- **select-placeholder** MUST Pass a Norwegian `placeholder` ("Velg fylke", "Søk etter selskap").
-  Because the defaults are English ("Select", "Search").
+- **select-placeholder** SHOULD Pass a `placeholder` that says what is chosen ("Velg fylke", "Søk
+  etter selskap"). Because the defaults are only "Velg" / "Søk".
 - **select-multiple** MUST Use `MultiSelect` or `TagSelect` for several values, never
   `selectionMode="multiple"` on `Select`. Because `Select`'s trigger only shows the first value.
-- **multiselect-controlled** MUST Control `MultiSelect` (`selectedKeys` + `onSelectionChange`), pass
-  `selectedCountFormatter` (`(n) => n + " valgt"`), and either wire `onReset` / `onSelectAll` or set
-  `showFooter={false}`. Because the count only works when controlled, and the footer buttons do
-  nothing on their own.
+- **multiselect-state** SHOULD Read `MultiSelect`'s choice through `onSelectionChange`, controlled
+  (`selectedKeys`) or not (`defaultSelectedKeys`). The trigger count and the footer's Reset / Select
+  all work either way; `onReset` / `onSelectAll` are only extra callbacks.
 - **tagselect-list-data** MUST Hold `TagSelect`'s selection in `useListData` from
   `react-stately` and pass it as `selectedItems`.
-- **select-errors** MUST Show errors with `isInvalid` + `hint`. Note `Select`'s trigger has no red
-  ring; the hint carries the error.
+- **select-errors** MUST Show errors with `isInvalid` + `hint`. The trigger gets the red ring and
+  the hint the error text.
 
 ## Props
 
 Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 36px · `md` 40px ·
 `lg` 44px; default `md`, `TagSelect` `sm`), `label`, `hint` (string), `tooltip`, `placeholder`
-(default "Select"; "Search" for `Select.ComboBox` and `TagSelect`), `items` (`SelectItemType[]`),
+(default "Velg"; "Søk" for `Select.ComboBox` and `TagSelect`), `items` (`SelectItemType[]`),
 `isRequired`, `hideRequiredIndicator` (not on `TagSelect`), `isDisabled`, `isInvalid`,
 `popoverClassName`, children as `(item) => <Select.Item …/>`.
 
@@ -54,8 +53,10 @@ Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 3
   `shortcutClassName` (classes on the shortcut hint), `onInputChange`, `value` / `onChange`.
 - `MultiSelect`: `selectedKeys` / `defaultSelectedKeys` (`AriaSelection`, i.e. `Selection` from `react-aria-components`), `onSelectionChange`,
   `showSearch` (`true`), `showFooter` (`true`), `onReset`, `onSelectAll`, `selectedCountFormatter`,
-  `supportingText`, `emptyStateTitle` (default "No results found"), `emptyStateDescription`
-  (default "Please try a different search term."), `className` (root). Items: `MultiSelect.Item`.
+  `supportingText`, `emptyStateTitle` (default "Ingen treff"), `emptyStateDescription` (default
+  "Prøv et annet søkeord."), `labels` (overrides `strings.multiSelect`: `placeholder`, `search`,
+  `selectedCount` ("3 valgt"), `reset`, `selectAll`, …), `className` (root). Items:
+  `MultiSelect.Item`.
 - `TagSelect`: `selectedItems` (`ListData`, required), `onItemInserted`, `onItemCleared`,
   `valueFormatter`, `icon`, `shortcut` (off by default), `shortcutClassName`. Items:
   `TagSelect.Item`.
@@ -65,12 +66,12 @@ Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 3
 `MultiSelect` statics, rendered by `MultiSelect` itself and exported for composing your own popover:
 
 - `MultiSelect.Footer`: `onReset`, `onSelectAll`, `size` (`sm` · `md` · `lg`, default `sm`; every
-  size renders `sm` buttons), `className`. Its button labels "Reset" and "Select all" are fixed
-  English with no prop; use `showFooter={false}` when that isn't acceptable.
-- `MultiSelect.EmptyState`: `title` (default "No results found"), `description` (default "Please
-  try a different search term."), `onClearSearch` (shows a "Clear search" link button, fixed
-  English, only when passed), `className`. Inside `MultiSelect`, set the texts through
-  `emptyStateTitle` / `emptyStateDescription`.
+  size renders `sm` buttons), `labels` (`reset`, `selectAll`: "Nullstill", "Velg alle"),
+  `className`.
+- `MultiSelect.EmptyState`: `title` (default "Ingen treff"), `description` (default "Prøv et annet
+  søkeord."), `onClearSearch` (shows a "Tøm søket" link button, only when passed),
+  `clearSearchLabel`, `className`. Inside `MultiSelect`, set the texts through `emptyStateTitle` /
+  `emptyStateDescription` or `labels`.
 
 `SelectItemType` / item props: `id`, `label`, `supportingText`, `icon`, `avatarUrl`,
 `isDisabled`; items also take `selectionIndicator` (`checkmark` · `checkbox` · `none`, default
@@ -84,9 +85,11 @@ and `supportingText` fills the rest and is cut with an ellipsis instead of wrapp
 
 - Type-ahead, arrow keys and Escape come from React Aria; the label is linked for `Select`,
   `Select.ComboBox` and `TagSelect`.
-- `MultiSelect`'s visible label isn't linked to its trigger; keep the label visible and make the
-  placeholder say what is being chosen.
-- `NativeSelect`: pass `aria-label` when there is no `label` (e.g. inside an `InputGroup`).
+- `MultiSelect`'s label names its trigger together with the current count, and the hint is its
+  description.
+- `NativeSelect`: `label` is linked with `htmlFor` and `hint` as the description; pass
+  `aria-label` when there is no `label` (e.g. inside an `InputGroup`). Options with `disabled` can't
+  be picked.
 
 ## Example
 

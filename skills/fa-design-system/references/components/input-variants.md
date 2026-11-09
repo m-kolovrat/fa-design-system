@@ -35,8 +35,8 @@ import { InputTagsOuter } from "fa-design-system/components/base/input/input-tag
   the label. Because the field then parses and shows `1 234,50 kr` in the reader's locale.
 - **variants-number-bounds** SHOULD Set `minValue`, `maxValue` and `step` (e.g. `minValue={1}` for
   antall aksjer). Because steppers and keyboard arrows respect them.
-- **variants-file-norwegian** MUST Pass `buttonText` and `placeholder` to `InputFile` ("Last opp",
-  "Velg en fil"). Because the defaults are English ("Upload", "Choose a file").
+- **variants-file-text** SHOULD Pass `placeholder` to `InputFile` when "Velg en fil" (the default)
+  can say more ("Velg kontoutskrift"). The button says "Last opp" (`buttonText`).
 - **variants-file-size** SHOULD Set `size` on `InputFile` to match the other fields in the form.
   Because its default is `sm`, while the other inputs default to `md`.
 - **variants-tags-validate** SHOULD Use `validate`, `maxTags` and `allowDuplicates` to keep tag
@@ -64,8 +64,8 @@ groups the rest in fours ("1234 5678 9012 3456"), for showing a stored card numb
 
 - Date segments are spinbuttons: arrow keys change each part, typing fills it.
 - `InputNumber` steppers are labelled by React Aria and follow `minValue` / `maxValue`.
-- Known gap: `InputTags` and `InputTagsOuter` show the `label` but don't link it to the text
-  field. Keep the label visible and say what to type in `placeholder`.
+- `InputTags` and `InputTagsOuter` link `label` to the text field and `hint` as its description;
+  `InputTagsOuter` keeps the hint below the tags once there are some.
 
 ## Example
 

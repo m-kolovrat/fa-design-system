@@ -8,10 +8,12 @@ import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 import { cx } from "@/utils/cx";
 
-// Creates a data URL for an SVG resize handle with a given color.
-const getResizeHandleBg = (color: string) => {
-    return `url(data:image/svg+xml;base64,${btoa(`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 2L2 10" stroke="${color}" stroke-linecap="round"/><path d="M11 7L7 11" stroke="${color}" stroke-linecap="round"/></svg>`)})`;
-};
+// The resize handle's two diagonal strokes, drawn with gradients so they take the
+// `border-primary` token and switch with the theme. Each gradient fills a square whose
+// anti-diagonal is one stroke: (2,2)–(10,10) and (7,7)–(11,11) on an 18-unit grid.
+const resizeStroke =
+    "linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--color-border-primary) calc(50% - 0.5px), var(--color-border-primary) calc(50% + 0.5px), transparent calc(50% + 0.5px))";
+const resizeHandleBg = `${resizeStroke}, ${resizeStroke}`;
 
 export interface TextAreaBaseProps extends AriaTextAreaProps {
     /** Ref to the `<textarea>` */
@@ -25,12 +27,7 @@ export const TextAreaBase = ({ className, size = "md", ...props }: TextAreaBaseP
     return (
         <AriaTextArea
             {...props}
-            style={
-                {
-                    "--resize-handle-bg": getResizeHandleBg("#D5D7DA"),
-                    "--resize-handle-bg-dark": getResizeHandleBg("#373A41"),
-                } as React.CSSProperties
-            }
+            style={{ "--resize-handle-bg": resizeHandleBg } as React.CSSProperties}
             className={(state) =>
                 cx(
                     "w-full scroll-py-3 rounded-md bg-primary text-primary ring-1 ring-primary transition ring-inset placeholder:text-placeholder autofill:rounded-md autofill:text-primary focus:outline-hidden",
@@ -39,7 +36,7 @@ export const TextAreaBase = ({ className, size = "md", ...props }: TextAreaBaseP
                     size === "md" && "px-3.5 py-3 text-md",
 
                     // Resize handle
-                    "[&::-webkit-resizer]:bg-(image:--resize-handle-bg) [&::-webkit-resizer]:bg-contain dark:[&::-webkit-resizer]:bg-(image:--resize-handle-bg-dark)",
+                    "[&::-webkit-resizer]:bg-(image:--resize-handle-bg) [&::-webkit-resizer]:[background-size:44.44%_44.44%,22.22%_22.22%] [&::-webkit-resizer]:[background-position:20%_20%,50%_50%] [&::-webkit-resizer]:bg-no-repeat",
 
                     state.isFocused && !state.isDisabled && "ring-2 ring-brand",
                     state.isDisabled && "cursor-not-allowed opacity-50",

@@ -200,7 +200,6 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
     const [investorKeys, setInvestorKeys] = useState<AriaSelection>(new Set());
     const [period, setPeriod] = useState<Period | null>("1D");
     const [range, setRange] = useState<Range>(rangeFor("1D"));
-    const [draft, setDraft] = useState<Range>(range);
     const [sort, setSort] = useState<AriaSortDescriptor>({ column: "value", direction: "descending" });
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(100);
@@ -208,7 +207,6 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
 
     const applyRange = (next: Range, nextPeriod: Period | null) => {
         setRange(next);
-        setDraft(next);
         setPeriod(nextPeriod);
         setPage(1);
     };
@@ -419,10 +417,8 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                                 aria-label="Velg periode"
                                                 size="sm"
                                                 maxValue={maxDate}
-                                                value={draft}
-                                                onChange={(value) => value && setDraft(value as Range)}
-                                                onApply={() => applyRange(draft, null)}
-                                                onCancel={() => setDraft(range)}
+                                                value={range}
+                                                onChange={(value) => value && applyRange(value as Range, null)}
                                             />
                                             <Button
                                                 color="secondary"

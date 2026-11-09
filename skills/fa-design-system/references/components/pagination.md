@@ -24,7 +24,7 @@ import { PaginationLine } from "fa-design-system/components/application/paginati
 | `PaginationPageDefault`       | Under a page-level list (article archive, search results). Link-gray prev/next.                    |
 | `PaginationPageMinimalCenter` | The same, with outlined prev/next buttons.                                                         |
 | `PaginationCardDefault`       | The bottom row inside a card or `Table`: prev / numbers / next.                                    |
-| `PaginationCardMinimal`       | Card bottom without page numbers: "Page X of Y" + page-size select. `align` left · center · right. |
+| `PaginationCardMinimal`       | Card bottom without page numbers: "Side X av Y" + page-size select. `align` left · center · right. |
 | `PaginationButtonGroup`       | Card bottom as one segmented `ButtonGroup`. `align` left · center · right.                         |
 | `PaginationCardAdvanced`      | Data tables: page input, rows per page, first / last. `align` space-between · center.              |
 | `PaginationDot`               | Position in a carousel or onboarding steps (few pages).                                            |
@@ -59,13 +59,13 @@ import { PaginationLine } from "fa-design-system/components/application/paginati
 ## Props
 
 `PaginationPageDefault`, `PaginationPageMinimalCenter`, `PaginationCardDefault`:
-`page` (default 1), `total` (default 10), `onPageChange`, `siblingCount` (default 1), `className`
-(ignored by `PaginationCardDefault`).
+`page` (default 1), `total` (default 10), `onPageChange`, `siblingCount` (default 1), `labels`
+(overrides `strings.pagination`), `className` (ignored by `PaginationCardDefault`).
 
 `PaginationButtonGroup`: the same plus `align` `left` · `center` · `right` (default `left`).
 
 `PaginationCardMinimal`: `page`, `total`, `pageSize` (default 10), `onPageChange`,
-`onPageSizeChange`, `align` `left` · `center` · `right` (default `left`), `className`.
+`onPageSizeChange`, `align` `left` · `center` · `right` (default `left`), `labels`, `className`.
 
 `PaginationCardAdvanced`: the same as Card minimal, with `align` `space-between` · `center`
 (default `space-between`).
@@ -79,13 +79,11 @@ import { PaginationLine } from "fa-design-system/components/application/paginati
 - The current page has `aria-current="page"` and each page number is labelled "Page 3". Prev/next
   disable at the ends, and page changes stay within 1..total (the advanced page input ignores
   anything that isn't a number).
-- Built-in labels and visible text are English ("Previous", "Next", "Page 3 of 10", "Rows per page",
-  "Go to previous page") with no prop to translate them; tell the person when a Norwegian page
-  needs them.
-- Prev/next arrows get the English `aria-label` "Previous Page" / "Next Page" from code (it also
-  replaces the visible "Previous" / "Next" as the name). No exported variant lets you change it.
-- `PaginationCardAdvanced`'s icon-only first/last buttons get the English `aria-label` "First Page" /
-  "Last Page" from code, matching prev/next.
+- Built-in texts are Norwegian (`strings.pagination` in `utils/strings`): "Forrige" / "Neste",
+  "Side 3 av 10", "Rader per side", and the names "Sidenavigasjon", "Forrige side" / "Neste side",
+  "Første side" / "Siste side", "Side 4". Every variant takes `labels` to override any of them.
+- Prev/next arrows are named "Forrige side" / "Neste side" (the name replaces the visible "Forrige" /
+  "Neste").
 
 ## Example
 

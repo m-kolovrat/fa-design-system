@@ -1,12 +1,13 @@
 "use client";
 
 import type { Key, KeyboardEvent, ReactNode } from "react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 import { HintText } from "@/components/base/input/hint-text";
 import { InputBase } from "@/components/base/input/input";
 import { Label } from "@/components/base/input/label";
 import { Tag, TagGroup, TagList } from "@/components/base/tags/tags";
 import { cx } from "@/utils/cx";
+import { strings } from "@/utils/strings";
 
 interface TagEntry {
     id: string;
@@ -82,6 +83,9 @@ export const InputTagsOuter = ({
     className,
     hideRequiredIndicator,
 }: InputTagsOuterProps) => {
+    const id = useId();
+    const inputId = `input-tags-outer-${id}`;
+    const hintId = `input-tags-outer-hint-${id}`;
     const isControlled = value !== undefined;
     const idCounter = useRef(0);
     const nextId = () => `tag-${idCounter.current++}`;
@@ -178,9 +182,17 @@ export const InputTagsOuter = ({
     return (
         <div className={cx("flex flex-col", size === "sm" ? "gap-1.5" : "gap-2", className)}>
             <div className="flex flex-col gap-1.5">
-                {label && <Label isRequired={hideRequiredIndicator ? false : isRequired}>{label}</Label>}
+                {label && (
+                    <Label htmlFor={inputId} isRequired={hideRequiredIndicator ? false : isRequired}>
+                        {label}
+                    </Label>
+                )}
 
                 <InputBase
+                    id={inputId}
+                    aria-describedby={hint ? hintId : undefined}
+                    aria-invalid={isInvalid || undefined}
+                    aria-required={isRequired || undefined}
                     size={size}
                     tooltip={tooltip}
                     placeholder={placeholder}
@@ -193,7 +205,7 @@ export const InputTagsOuter = ({
             </div>
 
             {entries.length > 0 && (
-                <TagGroup label={label || "Tags"} size={size === "lg" ? "md" : size} onRemove={handleRemove}>
+                <TagGroup label={label || strings.input.tags} size={size === "lg" ? "md" : size} onRemove={handleRemove}>
                     <TagList className="flex flex-wrap gap-1.5 focus:outline-hidden" items={entries}>
                         {(item) => (
                             <Tag id={item.id} isDisabled={isDisabled}>
@@ -204,8 +216,8 @@ export const InputTagsOuter = ({
                 </TagGroup>
             )}
 
-            {hint && tags.length === 0 && (
-                <HintText isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+            {hint && (
+                <HintText id={hintId} isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
                     {hint}
                 </HintText>
             )}

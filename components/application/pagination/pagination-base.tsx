@@ -2,6 +2,9 @@
 
 import type { CSSProperties, FC, HTMLAttributes, ReactNode } from "react";
 import React, { cloneElement, createContext, isValidElement, useCallback, useContext, useEffect, useState } from "react";
+import { type Strings, strings } from "@/utils/strings";
+
+export type PaginationLabels = Strings["pagination"];
 
 type PaginationPage = {
     /** The type of the pagination item. */
@@ -28,6 +31,8 @@ interface PaginationContextType {
     total: number;
     /** The function to call when the page changes. */
     onPageChange: (page: number) => void;
+    /** The built-in texts, `strings.pagination` merged with the root's `labels`. */
+    labels: PaginationLabels;
 }
 
 const PaginationContext = createContext<PaginationContextType | undefined>(undefined);
@@ -49,9 +54,12 @@ export interface PaginationRootProps {
     className?: string;
     /** Callback function that's called when the page changes with the new page number. */
     onPageChange?: (page: number) => void;
+    /** Overrides the built-in Norwegian texts (`strings.pagination` in `utils/strings`), e.g. `{ previous: "Tilbake" }`. */
+    labels?: Partial<PaginationLabels>;
 }
 
-const PaginationRoot = ({ total, siblingCount = 1, page, onPageChange, children, style, className }: PaginationRootProps) => {
+const PaginationRoot = ({ total, siblingCount = 1, page, onPageChange, children, style, className, labels: labelsProp }: PaginationRootProps) => {
+    const labels = { ...strings.pagination, ...labelsProp };
     const [pages, setPages] = useState<PaginationItemType[]>([]);
 
     const createPaginationItems = useCallback((): PaginationItemType[] => {
@@ -169,11 +177,12 @@ const PaginationRoot = ({ total, siblingCount = 1, page, onPageChange, children,
         currentPage: page,
         total,
         onPageChange: onPageChangeHandler,
+        labels,
     };
 
     return (
         <PaginationContext.Provider value={paginationContextValue}>
-            <nav aria-label="Pagination Navigation" style={style} className={className}>
+            <nav aria-label={labels.navigation} style={style} className={className}>
                 {children}
             </nav>
         </PaginationContext.Provider>
@@ -218,7 +227,7 @@ const Trigger: FC<TriggerProps> = ({ children, style, className, asChild = false
         throw new Error("Pagination components must be used within a Pagination.Root");
     }
 
-    const { currentPage, total, onPageChange } = context;
+    const { currentPage, total, onPageChange, labels } = context;
 
     const isDisabled = direction === "prev" ? currentPage <= 1 : currentPage >= total;
 
@@ -231,7 +240,7 @@ const Trigger: FC<TriggerProps> = ({ children, style, className, asChild = false
 
     const computedClassName = typeof className === "function" ? className({ isDisabled }) : className;
 
-    const defaultAriaLabel = direction === "prev" ? "Previous Page" : "Next Page";
+    const defaultAriaLabel = direction === "prev" ? labels.previousPage : labels.nextPage;
 
     // If the children is a render prop, we need to pass the isDisabled and onClick to the render prop.
     if (typeof children === "function") {
@@ -292,7 +301,7 @@ const PaginationItem = ({ value, isCurrent, children, style, className, ariaLabe
         throw new Error("Pagination components must be used within a <Pagination.Root />");
     }
 
-    const { onPageChange } = context;
+    const { onPageChange, labels } = context;
 
     const isSelected = isCurrent;
 
@@ -311,7 +320,7 @@ const PaginationItem = ({ value, isCurrent, children, style, className, ariaLabe
                     onClick: handleClick,
                     value,
                     "aria-current": isCurrent ? "page" : undefined,
-                    "aria-label": ariaLabel || `Page ${value}`,
+                    "aria-label": ariaLabel || labels.page(value),
                 })}
             </>
         );
@@ -322,7 +331,7 @@ const PaginationItem = ({ value, isCurrent, children, style, className, ariaLabe
         return cloneElement(children, {
             onClick: handleClick,
             "aria-current": isCurrent ? "page" : undefined,
-            "aria-label": ariaLabel || `Page ${value}`,
+            "aria-label": ariaLabel || labels.page(value),
             style: { ...(children.props as HTMLAttributes<HTMLElement>).style, ...style },
             className: [computedClassName, (children.props as HTMLAttributes<HTMLElement>).className].filter(Boolean).join(" ") || undefined,
         } as HTMLAttributes<HTMLElement>);
@@ -334,8 +343,7 @@ const PaginationItem = ({ value, isCurrent, children, style, className, ariaLabe
             style={style}
             className={computedClassName}
             aria-current={isCurrent ? "page" : undefined}
-            aria-label={ariaLabel || `Page ${value}`}
-            role="listitem"
+            aria-label={ariaLabel || labels.page(value)}
         >
             {children}
         </button>

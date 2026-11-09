@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/base/buttons/button";
 import { InputDateBase } from "@/components/base/input/input-date";
 import { cx } from "@/utils/cx";
+import { type DatePickerLabels, mergeDatePickerLabels } from "@/utils/strings";
 import { CalendarCell } from "./cell";
 
 export const CalendarContextProvider = ({ children }: PropsWithChildren) => {
@@ -42,10 +43,13 @@ export interface CalendarProps extends AriaCalendarProps<DateValue> {
      * If not provided, a default layout will be rendered with a date input and a today button.
      */
     children?: ReactNode;
+    /** Overrides the "I dag" button and the date input's name (`strings.datePicker.today` / `.dateInput`). */
+    labels?: DatePickerLabels;
 }
 
 /** A one-month calendar, for inline use or inside a custom picker. */
-export const Calendar = ({ highlightedDates, className, children, ...props }: CalendarProps) => {
+export const Calendar = ({ highlightedDates, className, children, labels: labelsProp, ...props }: CalendarProps) => {
+    const labels = mergeDatePickerLabels(labelsProp);
     const context = useSlottedContext(AriaCalendarContext);
 
     const ContextWrapper = context ? Fragment : CalendarContextProvider;
@@ -63,7 +67,7 @@ export const Calendar = ({ highlightedDates, className, children, ...props }: Ca
 
                         {children || (
                             <div className="flex gap-3">
-                                <InputDateBase aria-label="Date" size="sm" className="flex-1" />
+                                <InputDateBase aria-label={labels.dateInput} size="sm" className="flex-1" />
                                 <Button
                                     slot={null}
                                     size="sm"
@@ -73,7 +77,7 @@ export const Calendar = ({ highlightedDates, className, children, ...props }: Ca
                                         state.setFocusedDate(today(getLocalTimeZone()));
                                     }}
                                 >
-                                    Today
+                                    {labels.today}
                                 </Button>
                             </div>
                         )}
