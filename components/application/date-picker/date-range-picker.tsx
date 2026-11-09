@@ -96,7 +96,7 @@ export const DateRangePicker = ({
                 label: labels.presets.lastMonth,
                 value: {
                     start: startOfMonth(now).subtract({ months: 1 }),
-                    end: endOfMonth(now).subtract({ months: 1 }),
+                    end: endOfMonth(now.subtract({ months: 1 })),
                 },
             },
             thisYear: { label: labels.presets.thisYear, value: { start: startOfMonth(now.set({ month: 1 })), end: endOfMonth(now.set({ month: 12 })) } },
