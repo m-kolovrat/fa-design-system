@@ -3,6 +3,7 @@
 import type { FC, ReactNode } from "react";
 import { isValidElement } from "react";
 import { ArrowRight } from "fa-icons";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps, Link as AriaLink } from "react-aria-components";
 import { cx, sortCx } from "@/utils/cx";
 import { isReactComponent } from "@/utils/is-react-component";
 
@@ -123,11 +124,15 @@ export interface BadgeGroupProps {
     align?: Align;
     /** The icon after the message: a component or element */
     iconTrailing?: FC<{ className?: string }> | ReactNode;
+    /** Makes the whole group a link to this URL, with hover and focus states. */
+    href?: string;
+    /** Makes the whole group a button (when there is no `href`), with hover and focus states. */
+    onPress?: AriaButtonProps["onPress"];
     /** Layout classes only */
     className?: string;
 }
 
-/** A message with a small badge (the addon) inside, for announcements ("Nyhet · Les om …"). Not a link: wrap it in one to navigate. */
+/** A message with a small badge (the addon) inside, for announcements ("Nyhet · Les om …"). A link with `href`, a button with `onPress`, otherwise static. */
 export const BadgeGroup = ({
     children,
     addonText,
@@ -137,18 +142,43 @@ export const BadgeGroup = ({
     align = "leading",
     className,
     iconTrailing: IconTrailing = ArrowRight,
+    href,
+    onPress,
 }: BadgeGroupProps) => {
     const colors = colorClasses[theme][color];
     const sizes = getSizeClasses(theme, !!children, !!IconTrailing)[align][size];
+    const isInteractive = Boolean(href || onPress);
+    // Hover fills only belong on a group that does something.
+    const withoutHover = (classes?: string) => (isInteractive ? classes : classes?.replace(/(^|\s)hover:\S+/g, ""));
 
-    const rootClasses = cx("inline-flex w-max cursor-pointer items-center transition", baseClasses[theme].root, sizes.root, colors.root, className);
+    const rootClasses = cx(
+        "inline-flex w-max items-center transition",
+        isInteractive && "cursor-pointer outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2",
+        withoutHover(baseClasses[theme].root),
+        sizes.root,
+        withoutHover(colors.root),
+        className,
+    );
     const addonClasses = cx("inline-flex items-center", baseClasses[theme].addon, sizes.addon, colors.addon);
     const dotClasses = cx("inline-block size-2 shrink-0 rounded-full", sizes.dot, colors.dot);
     const iconClasses = cx(baseClasses[theme].icon, sizes.icon, colors.icon);
 
+    const wrap = (content: ReactNode) =>
+        href ? (
+            <AriaLink href={href} className={rootClasses}>
+                {content}
+            </AriaLink>
+        ) : onPress ? (
+            <AriaButton onPress={onPress} className={rootClasses}>
+                {content}
+            </AriaButton>
+        ) : (
+            <div className={rootClasses}>{content}</div>
+        );
+
     if (align === "trailing") {
-        return (
-            <div className={rootClasses}>
+        return wrap(
+            <>
                 {theme === "modern" && <span className={dotClasses} />}
 
                 {children}
@@ -157,15 +187,15 @@ export const BadgeGroup = ({
                     {addonText}
 
                     {/* Trailing icon */}
-                    {isReactComponent(IconTrailing) && <IconTrailing className={iconClasses} />}
+                    {isReactComponent(IconTrailing) && <IconTrailing aria-hidden="true" className={iconClasses} />}
                     {isValidElement(IconTrailing) && IconTrailing}
                 </span>
-            </div>
+            </>,
         );
     }
 
-    return (
-        <div className={rootClasses}>
+    return wrap(
+        <>
             <span className={addonClasses}>
                 {theme === "modern" && <span className={dotClasses} />}
                 {addonText}
@@ -174,8 +204,8 @@ export const BadgeGroup = ({
             {children}
 
             {/* Trailing icon */}
-            {isReactComponent(IconTrailing) && <IconTrailing className={iconClasses} />}
+            {isReactComponent(IconTrailing) && <IconTrailing aria-hidden="true" className={iconClasses} />}
             {isValidElement(IconTrailing) && IconTrailing}
-        </div>
+        </>,
     );
 };

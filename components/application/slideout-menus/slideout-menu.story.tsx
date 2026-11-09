@@ -57,11 +57,13 @@ export const Default: Story = {
     render: ({ children: _children, ...args }) => (
         <SlideoutMenu.Trigger>
             <Button color="secondary">Open slideout</Button>
-            <SlideoutMenu {...args}>
+            <SlideoutMenu aria-labelledby="slideout-title" {...args}>
                 {({ close }) => (
                     <>
                         <SlideoutMenu.Header onClose={close}>
-                            <h2 className="text-lg font-semibold text-primary">Panel title</h2>
+                            <h2 id="slideout-title" className="text-lg font-semibold text-primary">
+                                Panel title
+                            </h2>
                             <p className="text-sm text-tertiary">A right-hand slideout built from the SlideoutMenu primitive.</p>
                         </SlideoutMenu.Header>
                         <SlideoutMenu.Content>

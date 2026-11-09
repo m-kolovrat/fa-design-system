@@ -18,7 +18,7 @@ export const ModalOverlay = (props: ModalOverlayProps) => {
             {...props}
             className={(state) =>
                 cx(
-                    "fixed inset-0 flex min-h-dvh w-full items-center justify-end bg-overlay/70 pl-6 outline-hidden md:pl-10",
+                    "fixed inset-0 z-50 flex min-h-dvh w-full items-center justify-end bg-overlay/70 pl-6 outline-hidden md:pl-10",
                     state.isEntering && "duration-slower ease-drawer animate-in fade-in",
                     state.isExiting && "duration-slow ease-drawer animate-out fade-out",
                     typeof props.className === "function" ? props.className(state) : props.className,
@@ -51,7 +51,6 @@ interface DialogProps extends AriaDialogProps, RefAttributes<HTMLElement> {}
 export const Dialog = (props: DialogProps) => (
     <AriaDialog
         role="dialog"
-        aria-label="Slideout menu"
         {...props}
         className={cx(
             "relative flex size-full flex-col items-start gap-6 overflow-y-auto bg-primary ring-1 ring-secondary_alt outline-hidden",
@@ -72,15 +71,23 @@ export interface SlideoutMenuProps extends Omit<AriaModalOverlayProps, "children
     isOpen?: boolean;
     /** Called when the panel opens or closes (controlled use, with `isOpen`). */
     onOpenChange?: (isOpen: boolean) => void;
+    /** The id of the panel's heading, which names the dialog. Preferred over `aria-label`. */
+    "aria-labelledby"?: string;
+    /** The dialog's accessible name when there is no heading to point at. */
+    "aria-label"?: string;
 }
 
 /** A panel that slides in from the right over the page. */
-const Menu = ({ children, dialogClassName, ...props }: SlideoutMenuProps) => {
+const Menu = ({ children, dialogClassName, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...props }: SlideoutMenuProps) => {
     return (
         <ModalOverlay {...props}>
             <Modal className={(state) => cx(typeof props.className === "function" ? props.className(state) : props.className)}>
                 {(state) => (
-                    <Dialog className={dialogClassName}>
+                    <Dialog
+                        aria-labelledby={ariaLabelledBy}
+                        aria-label={ariaLabelledBy ? undefined : (ariaLabel ?? "Slideout menu")}
+                        className={dialogClassName}
+                    >
                         {({ close }) => {
                             return typeof children === "function" ? children({ ...state, close }) : children;
                         }}
@@ -92,9 +99,9 @@ const Menu = ({ children, dialogClassName, ...props }: SlideoutMenuProps) => {
 };
 Menu.displayName = "SlideoutMenu";
 
-/** `SlideoutMenu.Content`: the scrolling middle. `role` defaults to `"main"`. */
-const Content = ({ role = "main", ...props }: ComponentPropsWithRef<"div">) => {
-    return <div role={role} {...props} className={cx("flex size-full flex-col gap-6 overflow-y-auto overscroll-auto px-4 md:px-6", props.className)} />;
+/** `SlideoutMenu.Content`: the scrolling middle. A plain `div`; the dialog is already the landmark. */
+const Content = (props: ComponentPropsWithRef<"div">) => {
+    return <div {...props} className={cx("flex size-full flex-col gap-6 overflow-y-auto overscroll-auto px-4 md:px-6", props.className)} />;
 };
 Content.displayName = "SlideoutContent";
 

@@ -36,8 +36,8 @@ import { Alert, type AlertColor } from "fa-design-system/components/application/
   `size="md"` with `secondary` + `primary`. Because those are the Figma pairs.
 - **alert-close** SHOULD Pass `onClose` only when the alert can really go away, and remove it from
   state in the handler. Because the alert has no internal open state; the × only calls `onClose`.
-- **alert-sparingly** SHOULD Show at most one alert per region. Because every alert has
-  `role="alert"` and is read out as soon as it appears; several at once compete.
+- **alert-sparingly** SHOULD Show at most one alert per region. Because `error` and `warning`
+  alerts have `role="alert"` and interrupt as soon as they appear; several at once compete.
 - **alert-icon-override** SHOULD Keep the default icon (`Info`, `Alert`, `Success`); pass `icon` only
   for a more specific one from `fa-icons` (`Clock` for delays, `Lock` for access).
 - **alert-no-restyle** NEVER Tint the card with `className` (`bg-error-primary`). Because Figma's
@@ -45,16 +45,17 @@ import { Alert, type AlertColor } from "fa-design-system/components/application/
 
 ## Props
 
-| Prop          | Values                                                                      | Default    |
-| :------------ | :-------------------------------------------------------------------------- | :--------- |
-| `title`       | ReactNode (required)                                                        |            |
-| `description` | ReactNode                                                                   |            |
-| `color`       | `gray` · `brand` · `error` · `warning` · `success`                          | `gray`     |
-| `variant`     | `floating` (card) · `full-width` (banner, bottom border, `max-w-container`) | `floating` |
-| `actions`     | ReactNode (buttons)                                                         |            |
-| `icon`        | icon component, overrides the color's icon                                  |            |
-| `onClose`     | `() => void`; shows the close button                                        |            |
-| `className`   | layout                                                                      |            |
+| Prop          | Values                                                                      | Default                                        |
+| :------------ | :-------------------------------------------------------------------------- | :--------------------------------------------- |
+| `title`       | ReactNode (required)                                                        |                                                |
+| `description` | ReactNode                                                                   |                                                |
+| `color`       | `gray` · `brand` · `error` · `warning` · `success`                          | `gray`                                         |
+| `variant`     | `floating` (card) · `full-width` (banner, bottom border, `max-w-container`) | `floating`                                     |
+| `actions`     | ReactNode (buttons)                                                         |                                                |
+| `icon`        | icon component, overrides the color's icon                                  |                                                |
+| `onClose`     | `() => void`; shows the close button                                        |                                                |
+| `role`        | `alert` (assertive) · `status` (polite)                                     | `alert` for `error` / `warning`, else `status` |
+| `className`   | layout                                                                      |                                                |
 
 ## Notes
 
@@ -64,8 +65,9 @@ import { Alert, type AlertColor } from "fa-design-system/components/application/
 
 ## Accessibility
 
-- `role="alert"` (assertive). Render an alert when the condition is known; don't mount a page full
-  of them on load.
+- `error` and `warning` are `role="alert"` (assertive); the other colors are `role="status"`
+  (polite). Override with `role`. Render an alert when the condition is known; don't mount a page
+  full of them on load.
 - The close button's accessible name is the English "Dismiss" (fixed in code); if that matters for
   the page, report it rather than hiding the button.
 

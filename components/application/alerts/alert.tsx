@@ -37,19 +37,25 @@ export interface AlertProps {
     icon?: FC<{ className?: string }>;
     /** Shows the close button (Figma "X close button") and is called when it's pressed. */
     onClose?: () => void;
+    /**
+     * How it's announced: `alert` interrupts (assertive), `status` waits for a pause (polite).
+     * @default "alert" for `error` and `warning`, "status" otherwise
+     */
+    role?: "alert" | "status";
     /** Layout classes only (`mb-6`); never a fill. */
     className?: string;
 }
 
 /** An in-page message: a card (`floating`) or a banner across the top of the page (`full-width`). */
-export const Alert = ({ color = "gray", variant = "floating", title, description, actions, icon, onClose, className }: AlertProps) => {
+export const Alert = ({ color = "gray", variant = "floating", title, description, actions, icon, onClose, role, className }: AlertProps) => {
     const Icon = icon ?? defaultIcons[color];
+    const ariaRole = role ?? (color === "error" || color === "warning" ? "alert" : "status");
     const featuredIcon = <FeaturedIcon icon={Icon} color={color} theme="light" size="sm" />;
     const closeButton = onClose && <CloseButton size="sm" slot={null} onPress={onClose} label="Dismiss" className="absolute top-2 right-2" />;
 
     if (variant === "full-width") {
         return (
-            <div role="alert" className={cx("relative border-b border-primary bg-primary", className)}>
+            <div role={ariaRole} className={cx("relative border-b border-primary bg-primary", className)}>
                 <div className="relative mx-auto flex max-w-container flex-col gap-4 p-4 md:flex-row md:items-center md:gap-3 md:px-8 md:py-3">
                     <div className="flex min-w-0 flex-1 items-center gap-4">
                         <div className="max-md:hidden">{featuredIcon}</div>
@@ -73,7 +79,7 @@ export const Alert = ({ color = "gray", variant = "floating", title, description
 
     return (
         <div
-            role="alert"
+            role={ariaRole}
             className={cx("relative flex flex-col gap-4 rounded-xl bg-primary_alt p-4 shadow-xs ring-1 ring-primary ring-inset sm:flex-row", className)}
         >
             {featuredIcon}
