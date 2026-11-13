@@ -40,7 +40,7 @@ const WiderDecorator = (Story: FC) => (
 /** Single interactive input — pick the leading icon (any Fa icon, or "None") and other props in the Controls panel. */
 export const Playground: StoryObj<typeof Input> = {
     args: {
-        size: "md",
+        size: "sm",
         label: "Email",
         placeholder: "kari.nordmann@finansavisen.no",
         hint: "This is a hint text to help user.",

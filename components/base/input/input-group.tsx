@@ -58,7 +58,7 @@ export interface InputGroupProps extends TextFieldProps {
 }
 
 /** An input with a prefix inside the box, or addons (`InputGroup.Prefix`, a `NativeSelect`, a `Button`) joined to it. */
-export const InputGroup = ({ size = "md", prefix, leadingAddon, trailingAddon, label, hint, hideRequiredIndicator, children, ...props }: InputGroupProps) => {
+export const InputGroup = ({ size = "sm", prefix, leadingAddon, trailingAddon, label, hint, hideRequiredIndicator, children, ...props }: InputGroupProps) => {
     const hasLeading = !!leadingAddon;
     const hasTrailing = !!trailingAddon;
 

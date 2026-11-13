@@ -29,13 +29,14 @@ import { TextArea } from "fa-design-system/components/base/textarea/textarea";
   `hint` ("124 av 500 tegn").
 - **textarea-errors** MUST Show errors with `isInvalid` + `hint`. Because the ring and hint color
   follow `isInvalid`.
-- **textarea-size** SHOULD Use the default `md`; use `sm` only next to `sm` inputs in a dense form.
+- **textarea-size** SHOULD Leave `size` unset: the default is `sm`, like every field (rule
+  **fa-field-size**). Use `md` only when the person asks for it or the design shows it.
 
 ## Props
 
 | Prop                                    | Values                                          | Default |
 | :-------------------------------------- | :---------------------------------------------- | :------ |
-| `size`                                  | `sm` · `md`                                     | `md`    |
+| `size`                                  | `sm` · `md`                                     | `sm`    |
 | `label`                                 | string                                          |         |
 | `hint`                                  | ReactNode                                       |         |
 | `tooltip`                               | string: help icon after the label               |         |
@@ -51,8 +52,8 @@ Plus React Aria `TextField` props: `value`, `defaultValue`, `onChange(value: str
 
 ## Figma parity
 
-Figma has one Textarea size; code has `sm` and `md` (`docs/figma-parity.md` §4). Suggested action:
-add a size to Figma, or drop one in code. Until that's decided, prefer `md`.
+Figma has one Textarea size, which is code's `md`; code also has `sm` and defaults to it, like the
+other fields (`docs/figma-parity.md` §4). Suggested action: add an sm Textarea to Figma.
 
 ## Accessibility
 

@@ -689,7 +689,7 @@ const NewsCard = () => {
                 className={cx(cardBody, "flex flex-1 flex-col gap-4")}
             >
                 <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Filtrer nyheter">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Filtrer nyheter">
                         {newsFilters.map((f) => (
                             <Tabs.Item key={f.id} id={f.id} label={f.label} />
                         ))}
@@ -756,7 +756,7 @@ const FinancialsCard = () => {
         <Card id="card-financials" className="lg:col-span-2">
             <CardHeader titleId="card-financials" title="Resultat og omsetning" />
             <Tabs selectedKey={view} onSelectionChange={(key) => setView(key as "annual" | "quarterly")} className={cx(cardBody, "flex flex-col gap-4")}>
-                <Tabs.List type="button-minimal" size="sm" aria-label="Periode">
+                <Tabs.List type="button-gray" size="sm" aria-label="Periode">
                     <Tabs.Item id="annual" label="Årlig" />
                     <Tabs.Item id="quarterly" label="Kvartalsvis" />
                 </Tabs.List>

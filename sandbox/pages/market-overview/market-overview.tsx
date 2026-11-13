@@ -597,7 +597,7 @@ const NewsCard = ({ className }: { className?: string }) => {
                 className={cx(cardBody, "flex flex-1 flex-col gap-4")}
             >
                 <div className="-mx-4 overflow-x-auto px-4 md:-mx-6 md:px-6">
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Filtrer børsnytt">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Filtrer børsnytt">
                         {newsCategories.map((c) => (
                             <Tabs.Item key={c.id} id={c.id} label={c.label} />
                         ))}
@@ -946,7 +946,7 @@ const ReportsCard = ({ className }: { className?: string }) => {
             <CardHeader titleId="card-reports" title="Kvartals- og årsrapporter" />
             <div className={cardBody}>
                 <Tabs>
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Rapporter">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Rapporter">
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                     </Tabs.List>
@@ -989,7 +989,7 @@ const EarningsCallsCard = ({ className }: { className?: string }) => {
             <CardHeader titleId="card-calls" title="Resultatpresentasjoner" />
             <div className={cardBody}>
                 <Tabs>
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Resultatpresentasjoner">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Resultatpresentasjoner">
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                         <Tabs.Item id="live" label="Live" />
@@ -1039,7 +1039,7 @@ const PresentationsCard = ({ className }: { className?: string }) => {
             <CardHeader titleId="card-presentations" title="Kvartalspresentasjoner" />
             <div className={cardBody}>
                 <Tabs>
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Kvartalspresentasjoner">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Kvartalspresentasjoner">
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                     </Tabs.List>

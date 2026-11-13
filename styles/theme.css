@@ -473,7 +473,7 @@
     --color-bg-primary-solid: var(--color-gray-950);
     --color-bg-error-solid_hover: var(--color-error-600); /* synced to Figma bg-error-solid_hover (was error-700) */
     --color-bg-secondary_subtle: var(--color-gray-25);
-    --color-bg-active: var(--color-gray-50);
+    --color-bg-active: var(--color-gray-100); /* synced to Figma bg-active (was gray-50) */
 
     /* DISABLED COLORS — Figma binds these to the Gray ramp. */
     --color-fg-disabled: var(--color-gray-400); /* Figma fg-disabled → Gray/400 */

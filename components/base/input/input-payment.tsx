@@ -95,7 +95,7 @@ export const PaymentInput = ({
     value,
     defaultValue,
     maxLength = 19,
-    size = "md",
+    size = "sm",
     placeholder,
     label,
     hint,

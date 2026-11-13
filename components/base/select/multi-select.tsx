@@ -168,7 +168,7 @@ interface MultiSelectProps extends RefAttributes<HTMLDivElement>, CommonProps {
 const MultiSelectRoot = ({
     items,
     children,
-    size = "md",
+    size = "sm",
     selectedKeys,
     defaultSelectedKeys,
     onSelectionChange,

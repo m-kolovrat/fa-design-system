@@ -88,7 +88,9 @@ export const SelectItem = ({
                 <div
                     className={cx(
                         "flex cursor-pointer items-center rounded-sm outline-hidden select-none",
-                        (state.isFocused || state.isHovered || (state.isSelected && selectionIndicator !== "checkbox")) && "bg-primary_hover",
+                        // Figma: selected bg-active, hover bg-primary_hover (selected or not), so hover comes last.
+                        state.isSelected && selectionIndicator !== "checkbox" && "bg-active",
+                        (state.isFocused || state.isHovered) && "bg-primary_hover",
                         state.isDisabled && "cursor-not-allowed opacity-50",
                         state.isFocusVisible && "ring-2 ring-focus-ring ring-inset",
 

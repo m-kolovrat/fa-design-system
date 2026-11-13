@@ -134,7 +134,7 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
 export const ComboBox = ({
     placeholder = strings.select.searchPlaceholder,
     shortcut = true,
-    size = "md",
+    size = "sm",
     children,
     items,
     shortcutClassName,

@@ -35,7 +35,7 @@ const styles = {
 };
 
 /** The browser's own `<select>`, styled like the other fields; also the addon inside an `InputGroup`. */
-export const NativeSelect = ({ label, hint, options, className, selectClassName, size = "md", ...props }: NativeSelectProps) => {
+export const NativeSelect = ({ label, hint, options, className, selectClassName, size = "sm", ...props }: NativeSelectProps) => {
     const id = useId();
     const selectId = props.id ?? `select-native-${id}`;
     const hintId = `select-native-hint-${id}`;

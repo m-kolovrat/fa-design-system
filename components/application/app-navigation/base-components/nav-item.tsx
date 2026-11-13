@@ -8,7 +8,7 @@ import { cx, sortCx } from "@/utils/cx";
 
 const styles = sortCx({
     root: "group relative flex max-h-9 w-full cursor-pointer items-center rounded-sm bg-primary outline-focus-ring transition select-none hover:bg-primary_hover focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2",
-    rootSelected: "bg-secondary hover:bg-secondary_hover",
+    rootSelected: "bg-active hover:bg-secondary_hover",
 });
 
 interface NavItemBaseProps {

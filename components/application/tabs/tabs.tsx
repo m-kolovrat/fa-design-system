@@ -30,9 +30,10 @@ const getTabStyles = ({ isFocusVisible, isSelected, isHovered }: AriaTabRenderPr
     ),
     "button-gray": cx(
         "outline-focus-ring *:data-icon:text-fg-quaternary",
+        // Figma: current bg-active, hover bg-primary_hover (current or not), so hover comes last.
+        isSelected && "bg-active text-secondary *:data-icon:text-fg-secondary_hover",
         isHovered && "bg-primary_hover text-secondary *:data-icon:text-fg-secondary_hover",
         isFocusVisible && "outline-2 -outline-offset-2",
-        isSelected && "bg-primary_hover text-secondary *:data-icon:text-fg-secondary_hover",
     ),
     "button-border": cx(
         "outline-focus-ring *:data-icon:text-fg-quaternary",

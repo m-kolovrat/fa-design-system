@@ -29,7 +29,7 @@ export interface InputDateBaseProps extends Omit<AriaDateInputProps, "children">
     tooltip?: string;
     /**
      * Input size: `sm` 36px, `md` 40px, `lg` 44px.
-     * @default md
+     * @default sm
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text. */
@@ -56,7 +56,7 @@ export const InputDateBase = ({
     tooltip,
     shortcut,
     groupRef,
-    size = "md",
+    size = "sm",
     isInvalid,
     isDisabled,
     icon: Icon,
@@ -229,7 +229,7 @@ export interface InputDateProps
 
 /** A typed date in segments (dd.mm.åååå with a Norwegian locale); React Aria `DateField`. */
 export const InputDate = ({
-    size = "md",
+    size = "sm",
     placeholder,
     icon: Icon,
     label,

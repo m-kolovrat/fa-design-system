@@ -115,7 +115,7 @@ const restrictedSyntax = [
     "error",
 
     /**
-     * fa-aria-prefix (rule 19): everything from `react-aria-components` is imported as `X as AriaX`,
+     * fa-aria-prefix (rule 20): everything from `react-aria-components` is imported as `X as AriaX`,
      * types included. Limit: a namespace import (`import * as RAC`) isn't checked.
      */
     {
@@ -161,7 +161,7 @@ const restrictedSyntax = [
     },
 
     /**
-     * fa-real-content (rule 15): Finansavisen content, never Lorem ipsum, "John Doe" or
+     * fa-real-content (rule 16): Finansavisen content, never Lorem ipsum, "John Doe" or
      * "Company Inc."; and real hrefs, never `#`.
      * Limit: only the canonical placeholder strings are recognized; `$1,234.56` and English
      * headlines are left to review.
