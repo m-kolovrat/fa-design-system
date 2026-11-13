@@ -40,10 +40,14 @@ import { TagSelect } from "fa-design-system/components/base/select/tag-select";
 - **select-errors** MUST Show errors with `isInvalid` + `hint`. The trigger gets the red ring and
   the hint the error text.
 
+- **select-size** SHOULD Leave `size` unset; the default is `sm` for every select, and the menu
+  items (Figma's \_Select menu item) follow it (rule **fa-field-size**). Use `md` or `lg` only when
+  the person asks for it or the design shows it.
+
 ## Props
 
 Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 36px · `md` 40px ·
-`lg` 44px; default `md`, `TagSelect` `sm`), `label`, `hint` (string), `tooltip`, `placeholder`
+`lg` 44px; default `sm`), `label`, `hint` (string), `tooltip`, `placeholder`
 (default "Velg"; "Søk" for `Select.ComboBox` and `TagSelect`), `items` (`SelectItemType[]`),
 `isRequired`, `hideRequiredIndicator` (not on `TagSelect`), `isDisabled`, `isInvalid`,
 `popoverClassName`, children as `(item) => <Select.Item …/>`.

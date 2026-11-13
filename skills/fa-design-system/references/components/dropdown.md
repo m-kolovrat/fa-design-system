@@ -31,6 +31,9 @@ import { SubmenuTrigger as AriaSubmenuTrigger } from "react-aria-components";
 - **dropdown-trigger** MUST Use a library trigger: `Button` (usually `color="secondary"` with
   `iconTrailing={ChevronDown}`) or `Dropdown.DotsButton`. Because the trigger must be a React Aria
   pressable to open the menu.
+- **dropdown-trigger-size** SHOULD Give a `Button` trigger `size="sm"`, the same height as the
+  fields (rule **fa-field-size**). Use a larger size only when the person asks for it or the design
+  shows it. The menu itself has one size.
 - **dropdown-actions** MUST Handle actions with `onAction` on the item or the menu (`href` for
   links), not `onClick`. Because `onAction` also fires for keyboard selection.
 - **dropdown-destructive-confirm** SHOULD Open a `PromptModal` to confirm a destructive item

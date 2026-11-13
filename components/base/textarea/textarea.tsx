@@ -23,7 +23,7 @@ export interface TextAreaBaseProps extends AriaTextAreaProps {
 }
 
 /** The `<textarea>` alone, for composing a custom React Aria field. */
-export const TextAreaBase = ({ className, size = "md", ...props }: TextAreaBaseProps) => {
+export const TextAreaBase = ({ className, size = "sm", ...props }: TextAreaBaseProps) => {
     return (
         <AriaTextArea
             {...props}
@@ -109,7 +109,7 @@ export const TextArea = ({
     className,
     rows,
     cols,
-    size = "md",
+    size = "sm",
     ...props
 }: TextAreaProps) => {
     return (

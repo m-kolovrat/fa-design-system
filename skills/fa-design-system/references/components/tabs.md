@@ -44,9 +44,11 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
 - **tabs-type-by-place** MUST Pick the type by where the tabs sit, always `size="sm"`: near the top
   of the page, switching the whole content below (instrument sub-pages, Bjellesauer views):
   horizontal `type="underline"`; inside a card, for anything that switches what the card shows
-  (views, source filters, Årlig / Kvartalsvis): `type="button-minimal"`, in the card body under the
-  `CardHeader`. `button-minimal` hugs its tabs; add `fullWidth` only when Figma's Full width=True
-  is wanted. Because the same job then looks the same on every page.
+  (views, source filters, Årlig / Kvartalsvis): `type="button-gray"`, in the card body under the
+  `CardHeader`. `button-gray` hugs its tabs; add `fullWidth` only when Figma's Full width=True
+  is wanted. Because the same job then looks the same on every page. (`button-gray` states: the
+  selected tab is `bg-active`, hover is `bg-primary_hover` whether selected or not, and keyboard
+  focus adds a 2px inset `outline-focus-ring`.)
 - **tabs-as-links** Tabs can optionally be page navigation. The default is tabs that switch
   panels on one page; make them link tabs only when each tab has its own URL (the sub-pages of an
   instrument or of Bjellesauer). Then give each `Tabs.Item` an `href`, set `selectedKey` on `Tabs`

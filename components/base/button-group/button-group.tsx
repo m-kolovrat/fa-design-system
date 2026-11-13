@@ -19,8 +19,8 @@ export const styles = sortCx({
             // Disabled styles — Figma: no fading; bg-disabled_subtle fill (current or not), text-disabled text,
             // fg-disabled_subtle icons/dots, border unchanged.
             "disabled:cursor-not-allowed disabled:bg-disabled_subtle disabled:text-disabled disabled:selected:bg-disabled_subtle disabled:[&>svg]:text-fg-disabled_subtle",
-            // Selected styles
-            "selected:bg-primary_hover selected:text-secondary_hover",
+            // Selected styles — Figma: current bg-active, current + hover bg-primary_hover.
+            "selected:bg-active selected:text-secondary_hover selected:enabled:hover:bg-primary_hover",
         ].join(" "),
         // Figma: fg-quaternary icons, fg-quaternary_hover on hover and when selected (same rule as Button).
         icon: "pointer-events-none text-fg-quaternary transition-inherit-all group-hover/button-group:text-fg-quaternary_hover group-selected/button-group:text-fg-quaternary_hover",

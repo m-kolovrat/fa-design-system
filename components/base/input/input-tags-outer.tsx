@@ -23,7 +23,7 @@ export interface InputTagsOuterProps {
     tooltip?: string;
     /**
      * Input size variant.
-     * @default md
+     * @default sm
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text for the input field. */
@@ -64,7 +64,7 @@ export interface InputTagsOuterProps {
 
 /** Like `InputTags`, with the tags listed below the field. */
 export const InputTagsOuter = ({
-    size = "md",
+    size = "sm",
     label,
     hint,
     tooltip,

@@ -192,14 +192,19 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
     label. Errors go through `isInvalid` + `hint`. Because screen readers name a field by its label;
     without one it's announced only as "edit text".
     - Correct: `<Input label="E-post" placeholder="navn@firma.no" isInvalid hint="Ugyldig e-post" />`
-14. **fa-focus-visible** MUST Keep every interactive element keyboard-reachable with the focus ring
+14. **fa-field-size** SHOULD Leave `size` unset on fields: `Input` and the input variants, `Select`,
+    `Select.ComboBox`, `MultiSelect`, `TagSelect`, `NativeSelect` and `TextArea` all default to `sm`
+    (36px), and their menu items follow the field. A `Dropdown` trigger is a `Button size="sm"`. Use
+    `md` or `lg` only when the person you're building for asks for it or the design shows it.
+    Because one field height keeps forms, filter bars and card toolbars aligned.
+15. **fa-focus-visible** MUST Keep every interactive element keyboard-reachable with the focus ring
     (`outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2`). Never
     `outline-none` without that replacement. Because the ring is the only sign of which element a
     keyboard user is on.
 
 ### Content
 
-15. **fa-real-content** MUST Write content the way Finansavisen would: Norwegian headlines and
+16. **fa-real-content** MUST Write content the way Finansavisen would: Norwegian headlines and
     labels, Oslo Børs companies and tickers, NOK with Norwegian formatting (`1.234,50 kr`,
     `+2,4%`), dates near today. Never Lorem ipsum, "John Doe", "Company Inc." or `$1,234.56`. When
     the screen depends on a real number you don't have (a share price, a subscription price), use a
@@ -210,26 +215,26 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
     accessible names) are already Norwegian, from `fa-design-system/utils/strings`; override one
     per use with the component's prop (`labels`, `closeLabel`, `label`, `aria-label`), never by
     editing the library.
-16. **fa-plain-copy** SHOULD State what happens, as the live copy does ("Lag din egen watchlist –
+17. **fa-plain-copy** SHOULD State what happens, as the live copy does ("Lag din egen watchlist –
     helt gratis"); no marketing filler ("sømløst", "lynrask", invented urgency) and no emoji in copy
     or buttons. Provisional: the forum's category markers (🏥 Helse) are the one existing emoji;
     don't extend them.
-17. **fa-local-images** NEVER Load sample avatars or logos from another site. In an app, use
+18. **fa-local-images** NEVER Load sample avatars or logos from another site. In an app, use
     `initials` on `Avatar` until real photos exist; in the library's stories and demos, the
     placeholder portraits in `public/images/avatars/`. Because an outside image can disappear or
     change, and it ships someone else's content.
 
 ### Layout and files
 
-18. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
+19. **fa-layout** SHOULD Build pages from the surface levels, card grid and text pairings in
     [references/page-patterns.md](references/page-patterns.md), which owns the layout rules.
     Flexible for now; report where a design differs.
-19. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix,
+20. **fa-aria-prefix** MUST Import anything from `react-aria-components` with an `Aria` prefix,
     types included. Because it keeps library components and the primitives they wrap apart.
     - Correct: `import { Button as AriaButton } from "react-aria-components";`,
       `import type { SortDescriptor as AriaSortDescriptor } from "react-aria-components";`
     - Wrong: `import type { Key, SortDescriptor } from "react-aria-components";`
-20. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
+21. **fa-kebab-files** MUST Name every new file in kebab-case (`stock-table.tsx`).
 
 ## Choosing between similar components
 
@@ -241,7 +246,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
 - **Select vs ComboBox vs MultiSelect vs TagSelect vs NativeSelect:** one choice from a short list,
   one choice with search, several choices, several shown as tags, the browser's own select.
 - **Tabs vs ButtonGroup:** inside a card, anything that changes what the card shows (a view, a
-  source filter, Årlig / Kvartalsvis) is `Tabs` with `type="button-minimal"` `size="sm"`.
+  source filter, Årlig / Kvartalsvis) is `Tabs` with `type="button-gray"` `size="sm"`.
   `ButtonGroup` is for segmented choices outside cards (a market, a currency, Liste / Kort for a
   whole page). Chart periods use `PeriodSelector`, not either of them.
 - **Toggle vs Checkbox:** `Toggle` applies at once. `Checkbox` is part of a form that is submitted.

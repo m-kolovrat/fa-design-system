@@ -125,7 +125,7 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placehold
 const SelectComponent = ({
     placeholder = strings.select.placeholder,
     icon,
-    size = "md",
+    size = "sm",
     children,
     items,
     label,

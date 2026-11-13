@@ -21,7 +21,7 @@ export interface InputBaseProps extends Omit<AriaInputProps, "size"> {
     isRequired?: boolean;
     /**
      * Input size: `sm` 36px, `md` 40px, `lg` 44px.
-     * @default md
+     * @default sm
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text. */
@@ -50,7 +50,7 @@ export const InputBase = ({
     tooltip,
     shortcut,
     groupRef,
-    size = "md",
+    size = "sm",
     isInvalid,
     isDisabled,
     isRequired,
@@ -213,7 +213,7 @@ const TextFieldContext = createContext<TextFieldContextProps>({});
 
 export interface TextFieldProps extends AriaTextFieldProps, TextFieldContextProps {}
 
-export const TextField = ({ className, size = "md", inputClassName, wrapperClassName, iconClassName, tooltipClassName, ...props }: TextFieldProps) => {
+export const TextField = ({ className, size = "sm", inputClassName, wrapperClassName, iconClassName, tooltipClassName, ...props }: TextFieldProps) => {
     return (
         <TextFieldContext.Provider value={{ inputClassName, wrapperClassName, iconClassName, tooltipClassName, size }}>
             <AriaTextField
@@ -280,7 +280,7 @@ export interface InputProps
 
 /** A single-line text field with label, hint, optional leading icon, tooltip and shortcut. */
 export const Input = ({
-    size = "md",
+    size = "sm",
     placeholder,
     icon: Icon,
     label,

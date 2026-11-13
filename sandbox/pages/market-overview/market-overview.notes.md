@@ -25,7 +25,7 @@ Shell: "Market overview" from `page-patterns.md`: `SiteHeader`, `main` at `max-w
 | 13  | Most shorted            | `Table`; explanation in `CardHeader description` and `Table.Head tooltip`                                            |
 | 14  | All-time highs / lows   | Two `Table` cards                                                                                                    |
 | 15  | Second ad slot          | Same as 12                                                                                                           |
-| 16  | Reports                 | `Tabs type="button-minimal"`, company rows with a download `Button`                                                  |
+| 16  | Reports                 | `Tabs type="button-gray"`, company rows with a download `Button`                                                     |
 | 17  | Earnings calls          | `Tabs`, company rows, `BadgeWithDot` "Live", `EmptyState` for an empty tab                                           |
 | 18  | Quarterly presentations | `Tabs`, company rows with a play `Button`, `EmptyState` on "Kommende"                                                |
 | 19  | Sectors                 | `Table` with controlled sorting (% descending)                                                                       |

@@ -42,11 +42,14 @@ import { Label } from "fa-design-system/components/base/input/label";
 - **input-shortcut** SHOULD Use `shortcut` only on a search field that really has the shortcut
   bound; it's hidden below `md`.
 
+- **input-size** SHOULD Leave `size` unset; the default is `sm` (rule **fa-field-size**). Use `md`
+  or `lg` only when the person asks for it or the design shows it.
+
 ## Props
 
 | Prop                                                                      | Values                                                                        | Default |
 | :------------------------------------------------------------------------ | :---------------------------------------------------------------------------- | :------ |
-| `size`                                                                    | `sm` (36px) · `md` (40px) · `lg` (44px)                                       | `md`    |
+| `size`                                                                    | `sm` (36px) · `md` (40px) · `lg` (44px)                                       | `sm`    |
 | `label`                                                                   | string                                                                        |         |
 | `hint`                                                                    | ReactNode, shown below; red when invalid                                      |         |
 | `placeholder`                                                             | string                                                                        |         |

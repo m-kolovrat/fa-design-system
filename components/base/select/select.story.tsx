@@ -50,7 +50,7 @@ const PLAYGROUND_ITEMS = [
 /** Single interactive select — pick the leading icon (any Fa icon, or "None") and other props in the Controls panel. */
 export const Playground: StoryObj<typeof Select> = {
     args: {
-        size: "md",
+        size: "sm",
         label: "Team member",
         placeholder: "Select team member",
         hint: "This is a hint text to help user.",

@@ -97,7 +97,7 @@ export const CardWithTabs = () => (
         />
         <div className={cardBody}>
             <Tabs>
-                <Tabs.List type="button-minimal" size="sm" aria-label="Handler">
+                <Tabs.List type="button-gray" size="sm" aria-label="Handler">
                     <Tabs.Item id="kjop" label="Kjøp" />
                     <Tabs.Item id="salg" label="Salg" />
                 </Tabs.List>
@@ -114,7 +114,7 @@ export const CardWithTabs = () => (
 
 const DetailTabs = () => (
     <Tabs>
-        <Tabs.List type="button-minimal" size="sm" aria-label="Visning">
+        <Tabs.List type="button-gray" size="sm" aria-label="Visning">
             <Tabs.Item id="details" label="Mine detaljer" />
             <Tabs.Item id="profile" label="Profil" />
         </Tabs.List>

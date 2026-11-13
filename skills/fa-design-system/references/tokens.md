@@ -62,27 +62,27 @@ filled dark version, `_alt` a twin that swaps to another token in dark mode.
 
 ## Background Color
 
-| Name                                           | Use                                                         |
-| :--------------------------------------------- | :---------------------------------------------------------- |
-| `bg-primary` (+ `_alt`, `_hover`)              | White; `_alt` is the card; `_hover` menu item hover         |
-| `bg-primary-solid`                             | Dark fill: tooltips, emphasis card                          |
-| `bg-secondary` (+ `_alt`, `_hover`, `_subtle`) | Gray surface, row hover; `_alt` is the page                 |
-| `bg-secondary-solid`                           | Dark gray fill (gray FeaturedIcon)                          |
-| `bg-tertiary`                                  | Inset inside a card, toggle track                           |
-| `bg-quaternary`                                | Slider and progress tracks, chart grid                      |
-| `bg-active`                                    | Selected menu item or table row                             |
-| `bg-overlay`                                   | Modal scrim (owned by the component)                        |
-| `bg-brand-primary` (+ `_alt`)                  | Light brand tint; `_alt` selected chip, active tab          |
-| `bg-brand-secondary`                           | Brand FeaturedIcon, brand badge                             |
-| `bg-brand-solid` (+ `_hover`)                  | Primary button, toggle on, emphasis card                    |
-| `bg-brand-section` (+ `_subtle`)               | Full-width brand band (newsletter, subscribe CTA)           |
-| `bg-error-primary` / `-secondary`              | Error alert and badge fill / error FeaturedIcon             |
-| `bg-error-solid` (+ `_hover`)                  | Destructive button, negative metric                         |
-| `bg-warning-primary` / `-secondary`            | Warning alert and badge fill / FeaturedIcon                 |
-| `bg-warning-solid`                             | Solid warning fill                                          |
-| `bg-success-primary` / `-secondary`            | Success alert and badge fill / FeaturedIcon                 |
-| `bg-success-solid`                             | Solid success fill, positive metric                         |
-| `bg-disabled` (+ `_subtle`)                    | Disabled Button; `_subtle` ButtonGroup, RadioCard, PinInput |
+| Name                                           | Use                                                                                                                                                       |
+| :--------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bg-primary` (+ `_alt`, `_hover`)              | White; `_alt` is the card; `_hover` the hover of menu items, gray tabs and button group segments, current or not                                          |
+| `bg-primary-solid`                             | Dark fill: tooltips, emphasis card                                                                                                                        |
+| `bg-secondary` (+ `_alt`, `_hover`, `_subtle`) | Gray surface, row hover; `_alt` is the page                                                                                                               |
+| `bg-secondary-solid`                           | Dark gray fill (gray FeaturedIcon)                                                                                                                        |
+| `bg-tertiary`                                  | Inset inside a card, toggle track                                                                                                                         |
+| `bg-quaternary`                                | Slider and progress tracks, chart grid                                                                                                                    |
+| `bg-active`                                    | Current or selected item, owned by the component: nav item, button group segment, gray tab, select menu item, date preset, calendar range strip and today |
+| `bg-overlay`                                   | Modal scrim (owned by the component)                                                                                                                      |
+| `bg-brand-primary` (+ `_alt`)                  | Light brand tint; `_alt` selected chip, active tab                                                                                                        |
+| `bg-brand-secondary`                           | Brand FeaturedIcon, brand badge                                                                                                                           |
+| `bg-brand-solid` (+ `_hover`)                  | Primary button, toggle on, emphasis card                                                                                                                  |
+| `bg-brand-section` (+ `_subtle`)               | Full-width brand band (newsletter, subscribe CTA)                                                                                                         |
+| `bg-error-primary` / `-secondary`              | Error alert and badge fill / error FeaturedIcon                                                                                                           |
+| `bg-error-solid` (+ `_hover`)                  | Destructive button, negative metric                                                                                                                       |
+| `bg-warning-primary` / `-secondary`            | Warning alert and badge fill / FeaturedIcon                                                                                                               |
+| `bg-warning-solid`                             | Solid warning fill                                                                                                                                        |
+| `bg-success-primary` / `-secondary`            | Success alert and badge fill / FeaturedIcon                                                                                                               |
+| `bg-success-solid`                             | Solid success fill, positive metric                                                                                                                       |
+| `bg-disabled` (+ `_subtle`)                    | Disabled Button; `_subtle` ButtonGroup, RadioCard, PinInput                                                                                               |
 
 ## Focus ring
 

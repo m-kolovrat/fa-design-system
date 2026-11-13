@@ -703,7 +703,7 @@ const HoldingsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpen
             />
             <Tabs selectedKey={viewId} onSelectionChange={(key) => setViewId(String(key))} className="max-md:hidden">
                 <div className="px-4 pt-5 pb-4 md:px-6">
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Visning">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Visning">
                         <Tabs.Item id="pris" label="Pris" />
                         <Tabs.Item id="beholdning" label="Beholdning" />
                         <Tabs.Item id="historikk" label="Historikk" />
@@ -795,7 +795,7 @@ const NewsCard = ({ watchlist }: { watchlist: Watchlist }) => {
             <Tabs selectedKey={sourceId} onSelectionChange={(key) => setSourceId(String(key))} className={cx(cardBody, "flex flex-1 flex-col")}>
                 {/* Source as minimal tabs; categories as a Dropdown chip (page-patterns) */}
                 <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Kilde" className="shrink-0">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Kilde" className="shrink-0">
                         {sourceFilters.map((f) => (
                             <Tabs.Item key={f.id} id={f.id} label={f.label} />
                         ))}
@@ -1003,7 +1003,7 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
             <CardHeader titleId="card-transactions" title="Historiske transaksjoner" />
             <Tabs selectedKey={tab} onSelectionChange={setTab}>
                 <div className="px-4 pt-5 pb-4 md:px-6">
-                    <Tabs.List type="button-minimal" size="sm" aria-label="Transaksjonstype">
+                    <Tabs.List type="button-gray" size="sm" aria-label="Transaksjonstype">
                         <Tabs.Item id="handler" label="Handler" />
                         <Tabs.Item id="kontanter" label="Kontanter" />
                         <Tabs.Item id="utbytte" label="Utbytte" />

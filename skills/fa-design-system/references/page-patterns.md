@@ -101,8 +101,9 @@ Rules:
   inside the article are insets.
 - **layout-emphasis-rare** SHOULD Use at most one or two emphasis cards per view.
 - **layout-states** SHOULD Keep the components' own hover and selected fills: a table row hovers
-  `bg-secondary` (what `Table.Row` renders); a selected row or chip `bg-active` or
-  `bg-brand-primary_alt`. Because a second hover token per page is an untracked restyle.
+  `bg-secondary` (what `Table.Row` renders); a current or selected item keeps its component's fill
+  (`bg-active` for nav items, button group segments, gray tabs and menu items;
+  `bg-brand-primary_alt` for brand tabs and the current page). Because a second hover token per page is an untracked restyle.
 
 Open (decide with the design owner): the live inset is `#F8F9F9`; `bg-tertiary` is `#F5F5F5`.
 
@@ -219,7 +220,7 @@ plain page content.
   credit ("Levert av Finwire") goes in the card body, not the header.
 - Inside the card, group with an inset, not a second bordered card (`layout-one-card-level`, "Surfaces").
 - Anything that switches what the card shows (view, source, period of a table or bar chart): tabs
-  in the body, `type="button-minimal"` `size="sm"`; they hug their content. Never a `ButtonGroup`
+  in the body, `type="button-gray"` `size="sm"`; they hug their content. Never a `ButtonGroup`
   inside a card.
 
 ### Data table
@@ -361,7 +362,7 @@ const Change = ({ percent, value }: { percent: number; value?: number }) => (
 
 A row of pill toggles above a feed or table ("Alle", "FA", "TDN", "Børsmeldinger", "Min
 watchlist"). Inside a card they switch the card's content, so they are tabs: `Tabs.List
-type="button-minimal" size="sm"` with one `Tabs.Panel` around the list. Dropdown chips ("Kategorier",
+type="button-gray" size="sm"` with one `Tabs.Panel` around the list. Dropdown chips ("Kategorier",
 "Marked 4") are a `Dropdown` with a `Button color="secondary" size="sm"` trigger and a `Badge` for the
 count. Country chips add `<Flag name="norway-nok" />` (check the flag name in `fa-icons`).
 

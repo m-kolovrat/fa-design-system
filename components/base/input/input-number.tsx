@@ -34,7 +34,7 @@ const styles = {
 export interface InputNumberBaseProps extends AriaNumberFieldProps {
     /**
      * Input size: `sm` 36px, `md` 40px, `lg` 44px.
-     * @default md
+     * @default sm
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text. */
@@ -54,7 +54,7 @@ export interface InputNumberBaseProps extends AriaNumberFieldProps {
 export const InputNumberBase = ({
     ref,
     groupRef,
-    size = "md",
+    size = "sm",
     isInvalid,
     isDisabled,
     placeholder,
@@ -172,7 +172,7 @@ export interface InputNumberProps extends InputNumberBaseProps, Pick<AriaDateFie
 
 /** A number with stepper buttons and locale formatting; React Aria `NumberField`. */
 export const InputNumber = ({
-    size = "md",
+    size = "sm",
     placeholder,
     label,
     hint,

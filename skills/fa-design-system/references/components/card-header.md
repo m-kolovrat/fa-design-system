@@ -62,7 +62,7 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 - The card is the level-2 surface from [page-patterns.md](../page-patterns.md#surfaces), plus `overflow-hidden` so the
   divider meets the border: `overflow-hidden rounded-2xl border border-secondary bg-primary_alt`.
 - Anything that switches the card's content (a view, a source filter, Årlig / Kvartalsvis) is tabs
-  in the body, `type="button-minimal"` `size="sm"`, hugging their content (rule
+  in the body, `type="button-gray"` `size="sm"`, hugging their content (rule
   `tabs-type-by-place` in [tabs](tabs.md)); never a `ButtonGroup`.
 
 ## Accessibility

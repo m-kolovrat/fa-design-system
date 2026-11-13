@@ -18,7 +18,7 @@ import { ButtonGroup, ButtonGroupItem } from "fa-design-system/components/base/b
 
 - The options swap whole panels of different content: `Tabs`.
 - The options change what a card shows (a view, a source filter): `Tabs` with
-  `type="button-minimal"` (see [tabs](tabs.md)).
+  `type="button-gray"` (see [tabs](tabs.md)).
 - The buttons start actions (Lagre, Del, Slett) rather than choose a state: separate `Button`s.
 - More than about six options, or long labels: `Select`.
 - Chart periods (1D, 1M, 1Y): [period selector](period-selector.md).

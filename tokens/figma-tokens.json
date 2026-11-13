@@ -252,7 +252,7 @@
             "bg-secondary-solid": ["gray-light/600", "gray-dark/600"],
             "bg-tertiary": ["gray-light/100", "gray-dark/800"],
             "bg-quaternary": ["gray-light/200", "gray-dark/700"],
-            "bg-active": ["gray-light/50", "gray-dark/800"],
+            "bg-active": ["gray-light/100", "gray-dark/800"],
             "bg-disabled": ["gray-light/100", "gray-dark/800"],
             "bg-disabled_subtle": ["gray-light/50", "gray-dark/900"],
             "bg-overlay": ["gray-light/950", "gray-dark/800"],

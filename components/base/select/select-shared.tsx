@@ -27,7 +27,7 @@ export interface CommonProps {
     tooltip?: string;
     /**
      * The size of the component.
-     * @default "md"
+     * @default "sm"
      */
     size?: "sm" | "md" | "lg";
     /** Placeholder text when no value is selected. */
@@ -48,4 +48,4 @@ export const sizes = {
     lg: { root: "py-2.5 px-3.5 gap-2 *:data-icon:size-5", withIcon: "", text: "text-md", textContainer: "gap-x-1.5", shortcut: "pr-3" },
 };
 
-export const SelectContext = createContext<{ size: "sm" | "md" | "lg" }>({ size: "md" });
+export const SelectContext = createContext<{ size: "sm" | "md" | "lg" }>({ size: "sm" });
