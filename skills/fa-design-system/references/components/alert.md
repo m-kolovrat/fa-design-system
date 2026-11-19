@@ -61,8 +61,8 @@ import { Alert, type AlertColor } from "fa-design-system/components/application/
 ## Notes
 
 - The full-width banner hides its icon below `md` and stacks the actions full width.
-- The banner's content is `max-w-container` (1280 px) inside the component, so on a 1376 px page
-  (`page-patterns.md`, Page width) it is narrower than the content below it. Known; don't pad it by hand.
+- The banner's content is `max-w-container` (1280 px) inside the component, so it is wider than
+  the 980 px page column below it (`page-patterns.md`, Page width). Known; don't pad it by hand.
 
 ## Accessibility
 
