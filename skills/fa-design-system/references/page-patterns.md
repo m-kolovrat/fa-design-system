@@ -9,23 +9,34 @@ Patterns marked **no component yet** have no library component or Figma main com
 stand-in from library parts as shown, and say in your reply that it has no Figma component yet.
 Don't turn a stand-in into a new shared component on your own.
 
-> **Decided:** cards have a border, three page widths, and a 16 px gutter on mobile (the MUST rules
-> below). **Everything else is flexible:** it describes what the pages do today. Follow it by
-> default, but when a design or an existing page does something else, follow the design and say so
-> in your reply (see "Redesigning an existing page" in `SKILL.md`).
+> **Decided, never overridden by a page:** one 980 px content column, the page gutter, and the
+> desktop ad slots. They're a contract with the ad setup, so a design that breaks them is reported,
+> not followed. Only the design owner changes them (the front page's own layout is their call).
+>
+> **Decided, can be overridden:** the four card layouts and the page shells. Follow them by default.
+> A frame the person gives you, or the person's own instruction, may do something else; then follow
+> it and list it under **Clashes** in your reply's Patterns section (see "Redesigning an existing
+> page" in `SKILL.md`). Never override them on your own judgement.
+>
+> **Also decided:** cards have a border. **Everything else is flexible:** it describes what the
+> pages do today. Follow it by default, but when a design or an existing page does something else,
+> follow the design and say so in your reply.
 
 ## The frame every page sits in
 
 ```tsx
 <div className="min-h-dvh bg-secondary_alt">
     <SiteHeader brand="fa" className="sticky top-0 z-30" tickerItems={ticker} user={user} onSearchPress={openSearch} />
-    <main className="mx-auto w-full max-w-[1376px] px-4 py-6 md:px-8">{/* page content */}</main>
+    <main className="mx-auto w-full max-w-[1028px] p-4 md:p-6">{/* page content, at most 980 px */}</main>
     <SiteFooter brand="fa" />
 </div>
 ```
 
-- The page background and the cards follow the surface levels in "Surfaces" below; `main` takes
-  one of the three widths in "Page width".
+`max-w-[1028px]` is the 980 px column plus the 24 px gutter on each side. A page that shows ads
+uses the frame in "Ads (desktop)" instead, which adds the ad slots around the same column.
+
+- The page background and the cards follow the surface levels in "Surfaces" below; the content
+  column is 980 px ("Page width").
 - Navigation, shortcuts, the Meny panel and the footer content are the publication's defaults
   (`siteContent[brand]`, see [site-header](components/site-header.md)); don't pass them unless the
   page has its own. To mark the current section, map over `siteContent[brand].navigation`.
@@ -35,22 +46,125 @@ Don't turn a stand-in into a new shared component on your own.
 
 ## Page width
 
-The main content has one of three widths on desktop, centered. Below the width it's full width with
-the gutter (`px-4 md:px-8`).
+- **layout-page-width** MUST Keep the page content in one centered column at most 980 px wide, on
+  every page type except the front page (market and instrument pages, feeds, articles, logged-in
+  pages; the front page keeps its own layout for now, see "Page shells"). The
+  980 px is the outer width: the cards, their borders and their padding all fit inside it. Never
+  widen the content into the margins; on desktop they belong to the skyscraper ads ("Ads
+  (desktop)"). Below 980 px plus the gutter, the column is full width with the gutter. Because
+  the ad layout is built around a 980 px column. Decided by the design owner (2026-11-19). 980 has
+  no token yet, hence the arbitrary value.
+- **layout-mobile-gutter** MUST Keep 16 px around the content on mobile, top and bottom included
+  (`p-4`); from `md`, 24 px all round (`md:p-6`), the same as the space around the ad slots. Cards
+  keep their radius and border at every width; they don't run edge to edge. Decided by the design
+  owner.
 
-| Width   | Class             | Proposed for                                                         |
-| :------ | :---------------- | :------------------------------------------------------------------- |
-| 1376 px | `max-w-[1376px]`  | Front page and card-grid pages (Børs, Rapporter, instrument, Aksjer) |
-| 1280 px | `max-w-container` | Logged-in app pages (MittFA, Watchlist, investor profile)            |
-| 980 px  | `max-w-[980px]`   | One-column pages: feeds, Forum, Siste nytt, articles                 |
+The site header and footer keep their own, wider inner width; only the page content is 980 px.
 
-Ads may sit in the side rails beside a 980 px page; leave that space empty rather than widening the
-content. The page-to-width mapping is proposed; follow the design when it says otherwise. 1376 and
-980 have no token yet, hence the arbitrary values.
+## Ads (desktop)
 
-- **layout-mobile-gutter** MUST Keep a 16 px gutter on mobile (`px-4`), 32 px from `md`
-  (`md:px-8`). Cards keep their radius and border at every width; they don't run edge to edge.
-  Decided by the design owner.
+Every Finansavisen, Kapital and Motor page carries ads in fixed places. The design system doesn't
+ship ad components: the app's ad script fills the slots. A page built with the system only
+**reserves the space** for each slot, and a demo or prototype **simulates** the ad in it (see
+"Simulating an ad"). Each size below is the largest creative in that slot; a smaller creative is
+centered in the same box, so the page never moves.
+
+These rules are for desktop (from `lg`). Tablet and mobile sizes are pending: until they're
+decided, leave ad slots out below `lg` and say so in your reply.
+
+- **ads-confirm-skyscrapers** SHOULD Check whether the page shows the skyscrapers before you build
+  it: ask the person when you aren't sure (the front page, a page or design that has none, a page
+  with a layout of its own), and say in your plan which way you went. When nobody says otherwise,
+  follow these rules: they're the default. Because not every page has been checked against the ad
+  layout yet.
+
+| Slot        | Largest creative | Where                                                      | Space reserved                                 |
+| :---------- | :--------------- | :--------------------------------------------------------- | :--------------------------------------------- |
+| Top banner  | 980 × 300        | Above the content, full column width, on every page type   | Always 300 px high, 24 px above and below      |
+| Skyscrapers | 300 × 600 each   | Left and right margins, outside the content column; sticky | The margins stay empty; scaled down, or hidden |
+| Superboard  | 980 × 600        | Between sections, for example between two rows of cards    | 600 px high, 24 px above and below             |
+
+### The frame with ads
+
+```tsx
+const showRails = "hidden min-[1344px]:flex"; // skyscrapers from 1344 px
+
+<div className="min-h-dvh bg-secondary_alt">
+    <SiteHeader brand="fa" className="sticky top-0 z-30" tickerItems={ticker} user={user} onSearchPress={openSearch} />
+    <div className="mx-auto w-full max-w-[1028px] p-4 min-[1344px]:grid min-[1344px]:max-w-none min-[1344px]:grid-cols-[1fr_980px_1fr] min-[1344px]:gap-x-6 min-[1344px]:px-2 md:p-6">
+        <div className="flex min-w-0 flex-col gap-6 min-[1344px]:col-start-2 min-[1344px]:row-start-1">
+            <AdPlaceholder name="Top banner" size="980×300" className="h-75 w-full max-lg:hidden" />
+            <main className="flex flex-col gap-4">{/* rows of cards; a superboard (`my-2`) sits between two rows */}</main>
+        </div>
+        <aside aria-label="Annonse" className={cx(showRails, "col-start-1 row-start-1 justify-end")}>
+            <AdPlaceholder name="Skyscraper" size="300×600" className="sticky aspect-[1/2] w-full max-w-75 self-start" style={{ top: headerHeight + 24 }} />
+        </aside>
+        <aside aria-label="Annonse" className={cx(showRails, "col-start-3 row-start-1 justify-start")}>
+            <AdPlaceholder name="Skyscraper" size="300×600" className="sticky aspect-[1/2] w-full max-w-75 self-start" style={{ top: headerHeight + 24 }} />
+        </aside>
+    </div>
+    <SiteFooter brand="fa" />
+</div>;
+```
+
+The content comes first in the markup and the rails after it, placed into the margins by the grid,
+so a screen reader reaches the page before the ads. From 1344 px the grid is 8 px window edge,
+rail, 24 px gap, the 980 px column, 24 px gap, rail, 8 px window edge; each skyscraper fills its
+rail up to 300 px wide and keeps its 1:2 shape.
+
+### Rules
+
+- **ads-top-banner** MUST Reserve the top banner on every page type: a box the full width of the
+  column (980 px) and always 300 px high (`h-75`), the first thing in the column, with 24 px above
+  it (the page's top padding) and 24 px below it (the column's `gap-6`). Never collapse it when a
+  smaller banner or no banner runs. Because the content must not jump when the ad loads or
+  changes.
+- **ads-skyscrapers** MUST Put the skyscrapers in the margins, outside the content column: 24 px
+  from the column and at least 8 px from the window edge. They're sticky: their top lines up with
+  the top of the top banner, and while the reader scrolls they stay 24 px under the sticky
+  `SiteHeader` (`top` = the header's height + 24 px; measure the header, it differs by brand and
+  breakpoint). Because they follow the reader down the page.
+- **ads-skyscraper-scaling** MUST Scale the skyscrapers with the window, keeping the 1:2 shape:
+  300 × 600 at full size (from about 1650 px: 980 + 2 × (24 + 300 + 8) = 1644), down to 50 %,
+  150 × 300, at 1344 px (980 + 2 × (24 + 150 + 8)). Below 1344 px there's no room: hide them, and the
+  page uses the normal gutter. Because the column never gives up width to an ad.
+- **ads-empty-margins** MUST Keep the margins beside the column empty: no content, sticky widget or
+  decoration, at any width. Because they belong to the skyscrapers even where none runs.
+- **ads-superboard** MUST Reserve a superboard as a full-column box (980 px wide, `w-full`), 600 px
+  high (`h-150`), between two sections or two rows of cards, with 24 px above and below it. Cards
+  are 16 px apart (`gap-4`), so the slot adds `my-2`: 16 + 8 = 24 px on each side. Because the ad
+  spec asks for 24 px around the slot.
+- **ads-reserve-only** MUST Reserve the space and stop there: no ad markup, scripts or iframes of
+  your own, and no card style (border, radius, shadow) on a slot. The app's developers fill the
+  slots in their own way. Because the ad script controls the creative and its loading.
+
+Not covered yet: the **in-article** slot (580 × 400, inserted by the ad script between paragraphs)
+and the **parallax** slot (full-bleed, breaks out of the text column). Their article rules are
+pending; leave them out and don't reserve space for them.
+
+### Simulating an ad
+
+In a demo, story, sandbox page or prototype, show each reserved slot as a dark gray box that names
+the slot and its largest size, in white:
+
+```tsx
+/** Stands in for an ad: fills the slot it's given and names it. The app's ad script replaces it. */
+const AdPlaceholder = ({ name, size, className, style }: { name: string; size: string; className?: string; style?: React.CSSProperties }) => (
+    <div
+        style={style}
+        className={cx("flex flex-col items-center justify-center gap-1 bg-secondary-solid p-2 text-center text-sm font-semibold text-white", className)}
+    >
+        <span>{name}</span>
+        <span>{size}</span>
+    </div>
+);
+```
+
+- `bg-secondary-solid` with `text-white` reads the same in both themes. The box is square-cornered
+  and has no border, because it stands for the creative, not a card.
+- Name the slot as in the table ("Top banner", "Skyscraper", "Superboard") and give its largest
+  size, even where the box is drawn smaller (a scaled skyscraper still says "300×600").
+- A top banner or superboard outside a skyscraper rail goes in an `aside aria-label="Annonse"` too.
 
 ## Surfaces
 
@@ -105,71 +219,99 @@ Rules:
   (`bg-active` for nav items, button group segments, gray tabs and menu items;
   `bg-brand-primary_alt` for brand tabs and the current page). Because a second hover token per page is an untracked restyle.
 
-Open (decide with the design owner): the live inset is `#F8F9F9`; `bg-tertiary` is `#F5F5F5`.
+Open (decide with the design owner):
+
+- The live inset is `#F8F9F9`; `bg-tertiary` is `#F5F5F5`.
+- A header band across the full window runs into the skyscraper margins (`ads-empty-margins`).
+  Until it's decided, build it inside the 980 px column and report it.
 
 ## Arranging cards
 
-**Gap:** 24 px between cards and between rows, everywhere: `gap-6`.
+**Gap:** 16 px between cards, in columns and in rows, everywhere: `gap-4`. Decided by the design
+owner (2026-11-19). Ad slots get 24 px around them instead (see "Ads (desktop)").
 
-### Page shells
+### Card layouts
 
-Each page type uses one of the three arrangements below.
+These layouts and the page shells below can be overridden by a frame or the person's instruction,
+never by your own judgement; report each override (see the note at the top of this page).
 
-| Page type                                      | Layout                                                                                    | Below `lg`                           |
-| :--------------------------------------------- | :---------------------------------------------------------------------------------------- | :----------------------------------- |
-| Front page                                     | Main and sidebar: teaser stream ⅔, widget cards ⅓                                         | One column, sidebar under the stream |
-| Market overview (Børs, Rapporter)              | Card grid, mostly ⅓ and ½ cards                                                           | Two columns from `md`, then one      |
-| Instrument profile                             | Header band (name, price, chart, key figures, underline tabs), then the card grid         | Two columns from `md`, then one      |
-| Investor profile                               | Header band (avatar, name, key figures), then stacked full-width table cards              | Stacked                              |
-| Feed or discussion (Siste nytt, Forum, MittFA) | Main and sidebar, or one main card                                                        | One column                           |
-| Data table (Aksjer, Bjellesauer)               | One card with filters on top and the `Table`                                              | Two-column rows; tap opens a sheet   |
-| Article                                        | White reading page; header and image wider than the body text; embedded widgets as insets | One column with `px-4`               |
+Inside the 980 px column, cards sit in rows, and every row is one of four layouts. The rows stack
+with the same 16 px gap (`flex flex-col gap-4`). Widths are at the full 980 px column; below it
+they shrink in proportion.
 
-### Card grid (market and profile pages)
-
-A 6-column grid. A card spans 2 (⅓), 3 (½), 4 (⅔) or 6 (full) columns:
+| Layout       | Cards in the row                  | Widths at 980 px | Below `lg`                    |
+| :----------- | :-------------------------------- | :--------------- | :---------------------------- |
+| One column   | One card, full width              | 980              | The same                      |
+| Two column   | Two cards, equal                  | 482 + 482        | Two from `md`, one below `md` |
+| Three column | Three cards, equal; use sparingly | 316 + 316 + 316  | One column                    |
+| Sidebar      | Content on the left, sidebar      | 648 + 316        | One column, sidebar under it  |
 
 ```tsx
 const card = "rounded-2xl border border-secondary bg-primary_alt p-4 md:p-5";
 
-<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
-    <section className={cx(card, "md:col-span-2 lg:col-span-4")}>{/* Siste nytt, ⅔ */}</section>
-    <section className={cx(card, "lg:col-span-2")}>{/* Konsensus, ⅓ */}</section>
-    <section className={cx(card, "lg:col-span-2")}>{/* Resultat og omsetning */}</section>
-    <section className={cx(card, "lg:col-span-2")}>{/* Ordredybde */}</section>
-    <section className={cx(card, "lg:col-span-2")}>{/* Nøkkeltall */}</section>
-    <section className={cx(card, "lg:col-span-3")}>{/* Anbefalinger, ½ */}</section>
-    <section className={cx(card, "lg:col-span-3")}>{/* Tekniske indikatorer */}</section>
+<div className="flex flex-col gap-4">
+    {/* One column */}
+    <section className={card}>{/* Aksjer */}</section>
+
+    {/* Two column */}
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <section className={card}>{/* Anbefalinger */}</section>
+        <section className={card}>{/* Tekniske indikatorer */}</section>
+    </div>
+
+    {/* Three column, sparingly */}
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <section className={card}>{/* Vinnere */}</section>
+        <section className={card}>{/* Tapere */}</section>
+        <section className={card}>{/* Mest omsatt */}</section>
+    </div>
+
+    {/* Sidebar: 648 + 316 */}
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="flex flex-col gap-4 lg:col-span-2">{/* content cards */}</div>
+        <aside className="flex flex-col gap-4">{/* sidebar cards */}</aside>
+    </div>
 </div>;
 ```
 
-- **layout-full-rows** SHOULD Fill each row: ⅓+⅓+⅓, ½+½, ⅔+⅓, ⅓+⅔ or full. Don't leave a hole at the
-  end of a row.
+- **layout-card-rows** MUST Build every row from one of the four layouts: one column, two column,
+  three column or sidebar. No other splits (no ¼ cards, no ⅔ + ⅓ outside the sidebar layout, no
+  sidebar on the left), and no hole at the end of a row. Decided by the design owner (2026-11-19).
+  Because the four layouts are the 980 px column's grid.
+- **layout-three-column-sparingly** SHOULD Use the three-column layout sparingly: at most one or
+  two such rows on a page, for short cards of the same kind (Vinnere, Tapere, Mest omsatt). A 316 px
+  card fits a short list or a few key figures, not a wide table. Because three narrow cards side by
+  side are hard to read.
+- **layout-sidebar-context** SHOULD Keep only context in the sidebar (the instrument, quick links,
+  related news), never the primary content. The content comes first in the markup, so below `lg`
+  the sidebar falls under it. A sidebar column may hold several cards, stacked with `gap-4`.
 - **layout-equal-height** SHOULD Let cards in a row stretch to the same height (the grid default).
   When a card has more content than the row allows, show a limited number of rows and a "Vis mer"
   link instead of growing taller.
-- Responsive: one column below `md`, two columns from `md` (every card takes half, full-width cards
-  stay full), six columns from `lg`.
 
-### Main and sidebar (reading and discussion pages)
+### Page shells
 
-Forum thread, MittFA, the front page: main content ⅔, sidebar ⅓.
+Each page type and the card layouts it uses. When a frame or the person lays a page out
+differently, follow them and report it, as for the card layouts.
 
-```tsx
-<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-    <div className="flex flex-col gap-6 lg:col-span-2">{/* main cards */}</div>
-    <aside className="flex flex-col gap-6">{/* sidebar cards */}</aside>
-</div>
-```
+| Page type                                      | Layout                                                                                    | Below `lg`                         |
+| :--------------------------------------------- | :---------------------------------------------------------------------------------------- | :--------------------------------- |
+| Front page                                     | Its own layout for now, see below                                                         | One column, sidebar under stream   |
+| Market overview (Børs, Rapporter)              | Rows of two-column and one-column cards; sidebar rows; a three-column row now and then    | As each layout says                |
+| Instrument profile                             | Header band (name, price, chart, key figures, underline tabs), then rows of cards         | As each layout says                |
+| Investor profile                               | Header band (avatar, name, key figures), then one-column table cards                      | Stacked                            |
+| Feed or discussion (Siste nytt, Forum, MittFA) | Sidebar layout, or one main card                                                          | One column                         |
+| Data table (Aksjer, Bjellesauer)               | One column: one card with filters on top and the `Table`                                  | Two-column rows; tap opens a sheet |
+| Article                                        | White reading page; header and image wider than the body text; embedded widgets as insets | One column with `p-4`              |
 
-- **layout-sidebar-context** SHOULD Keep only context in the sidebar (the instrument, quick links,
-  related news), never the primary content. Main comes first in the markup, so below `lg` the
-  sidebar falls under it.
+**Front page:** keeps today's layout until it's redesigned: `max-w-[1376px]`, a teaser stream ⅔
+and widget cards ⅓ (`grid grid-cols-1 gap-4 lg:grid-cols-3`, the stream `lg:col-span-2`), with the
+same gutter. It isn't held to `layout-page-width` or `layout-card-rows`. Next to 1376 px the
+skyscrapers only fit from about 2040 px, so ask whether the front page shows ads
+(`ads-confirm-skyscrapers`).
 
-### Stacked
-
-Data pages and some profiles (an investor in Bjellesauer): full-width cards one under the other,
-`flex flex-col gap-6`, usually under a header band.
+**Article:** the article rules are on hold until article work starts; build articles as described
+here and in "Article body".
 
 ## Pairing two pieces of text
 

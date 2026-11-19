@@ -48,7 +48,9 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 ## Steps
 
 1. **Plan before you write code.** Read [references/page-patterns.md](references/page-patterns.md):
-   pick the page shell, lay the page out with its surfaces, grid and text pairings, then write the
+   pick the page shell, lay the page out in the 980 px column with its surfaces, grid and text
+   pairings, build each row from the four card layouts, check whether the page shows the
+   skyscrapers and reserve the desktop ad slots ("Ads (desktop)"), then write the
    plan into your reply: each section of the page, top to bottom, and the component (from the
    [index](#component-index)) or stand-in (from [Coverage gaps](#coverage-gaps)) that covers it.
    For a Figma frame, map each layer with [references/figma-map.md](references/figma-map.md). For
@@ -68,8 +70,10 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 
 The page-level rules (layout, surfaces, text pairings, page patterns) are still being settled, so
 they're flexible: when the page or its design does something else, follow it rather than forcing
-the rule. But always report it. Before handing over a redesign, add a short **Patterns** section to
-your reply with:
+the rule. But always report it. The exceptions are the 980 px column, the page gutter and the
+desktop ad slots: `page-patterns.md` marks them as never overridden by a page, so report a design
+that breaks them instead of following it. Before handing over a redesign, add a short
+**Patterns** section to your reply with:
 
 - **New patterns:** anything on the page that none of the reference files describe (a layout, a
   card arrangement, a text pairing, a recurring element), with where it appears.
