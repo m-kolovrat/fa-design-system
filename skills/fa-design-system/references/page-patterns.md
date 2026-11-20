@@ -69,8 +69,7 @@ ship ad components: the app's ad script fills the slots. A page built with the s
 "Simulating an ad"). Each size below is the largest creative in that slot; a smaller creative is
 centered in the same box, so the page never moves.
 
-These rules are for desktop (from `lg`). Tablet and mobile sizes are pending: until they're
-decided, leave ad slots out below `lg` and say so in your reply.
+These rules are for desktop (from `lg`). Below `lg`, ads follow "Ads (mobile and tablet)".
 
 - **ads-confirm-skyscrapers** SHOULD Check whether the page shows the skyscrapers before you build
   it: ask the person when you aren't sure (the front page, a page or design that has none, a page
@@ -138,9 +137,9 @@ rail up to 300 px wide and keeps its 1:2 shape.
   your own, and no card style (border, radius, shadow) on a slot. The app's developers fill the
   slots in their own way. Because the ad script controls the creative and its loading.
 
-Not covered yet: the **in-article** slot (580 × 400, inserted by the ad script between paragraphs)
-and the **parallax** slot (full-bleed, breaks out of the text column). Their article rules are
-pending; leave them out and don't reserve space for them.
+Not covered yet on desktop: the **in-article** slot (580 × 400, inserted by the ad script between
+paragraphs) and the **parallax** slot (full-bleed, breaks out of the text column). Their article
+rules are pending; leave them out and don't reserve space for them.
 
 ### Simulating an ad
 
@@ -149,13 +148,13 @@ the slot and its largest size, in white:
 
 ```tsx
 /** Stands in for an ad: fills the slot it's given and names it. The app's ad script replaces it. */
-const AdPlaceholder = ({ name, size, className, style }: { name: string; size: string; className?: string; style?: React.CSSProperties }) => (
+const AdPlaceholder = ({ name, size, className, style }: { name: string; size?: string; className?: string; style?: React.CSSProperties }) => (
     <div
         style={style}
         className={cx("flex flex-col items-center justify-center gap-1 bg-secondary-solid p-2 text-center text-sm font-semibold text-white", className)}
     >
         <span>{name}</span>
-        <span>{size}</span>
+        {size && <span>{size}</span>}
     </div>
 );
 ```
@@ -163,8 +162,56 @@ const AdPlaceholder = ({ name, size, className, style }: { name: string; size: s
 - `bg-secondary-solid` with `text-white` reads the same in both themes. The box is square-cornered
   and has no border, because it stands for the creative, not a card.
 - Name the slot as in the table ("Top banner", "Skyscraper", "Superboard") and give its largest
-  size, even where the box is drawn smaller (a scaled skyscraper still says "300×600").
+  size, even where the box is drawn smaller (a scaled skyscraper still says "300×600"). A mobile
+  ad is named "Annonse", with no size (see "Ads (mobile and tablet)").
 - A top banner or superboard outside a skyscraper rail goes in an `aside aria-label="Annonse"` too.
+- Hide the desktop slots below `lg` (`max-lg:hidden`): the top banner and superboards are desktop
+  only, and the skyscrapers already hide below 1344 px.
+
+## Ads (mobile and tablet)
+
+Provisional: taken from the live sites, not from an ad spec. Sizes will come later; until then,
+these rules say where ads go and what a page must not get in the way of. They apply below `lg`
+(tablet follows mobile until it has rules of its own).
+
+On mobile there is no top banner and no skyscrapers. Ads come **between pieces of content**: between
+rows of cards, between feed items or forum posts, and between paragraphs in an article (the
+in-article slot, whose article rules are still pending). The ad script inserts each slot, sizes it
+once an ad has loaded and adds its own spacing. On the live site it often sits in a light gray band
+that runs to the screen edges, with a parallax ad that breaks out of the gutter. Neither is built
+by the page.
+
+- **ads-mobile-between** SHOULD Leave room for ads only between pieces of content: never inside a
+  card, between a card's header and its body, or inside a list or table. Because the ad script
+  inserts between whole items.
+- **ads-mobile-clean-breaks** SHOULD Keep each row, feed item, post or paragraph its own element,
+  as siblings in the same container. Don't wrap a whole feed or thread in one card or one element
+  with no breaks. Because the script needs a gap between two siblings to insert into.
+- **ads-mobile-no-reserve** SHOULD Reserve no height or padding for a mobile ad. Because the slot
+  takes height only when an ad loads; reserved space would stay empty when none runs.
+- **ads-mobile-full-bleed** SHOULD Let the content column overflow sideways: no `overflow-hidden`
+  or `overflow-x-hidden` on `main` or the content column. Because a mobile ad, a parallax ad
+  especially, runs past the 16 px gutter to the screen edges, and a clipping wrapper cuts it off.
+
+### Simulating a mobile ad
+
+A real page reserves nothing, but a prototype can show where ads will land: put a full-bleed
+`AdPlaceholder` named "Annonse" between two rows, mobile only. One or two on a page are enough to
+show the rhythm; follow the design where it shows them.
+
+```tsx
+<main className="flex flex-col gap-4">
+    {/* a row of cards */}
+    <aside aria-label="Annonse" className="-mx-4 md:-mx-6 lg:hidden">
+        <AdPlaceholder name="Annonse" className="h-62.5" />
+    </aside>
+    {/* the next row */}
+</main>
+```
+
+- `-mx-4 md:-mx-6` cancels the page gutter, so the box runs to the screen edges like the live ad
+  band. The 250 px height is only for the prototype.
+- Prototypes only. In an app, leave the gap and let the ad script fill it.
 
 ## Surfaces
 
