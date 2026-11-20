@@ -50,9 +50,10 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 1. **Plan before you write code.** Read [references/page-patterns.md](references/page-patterns.md):
    pick the page shell, lay the page out in the 980 px column with its surfaces, grid and text
    pairings, build each row from the four card layouts, check whether the page shows the
-   skyscrapers and reserve the desktop ad slots ("Ads (desktop)"), then write the
-   plan into your reply: each section of the page, top to bottom, and the component (from the
-   [index](#component-index)) or stand-in (from [Coverage gaps](#coverage-gaps)) that covers it.
+   skyscrapers, reserve the desktop ad slots ("Ads (desktop)") and leave clean breaks for mobile ads
+   ("Ads (mobile and tablet)"), then write the plan into your reply: each section of the page, top
+   to bottom, and the component (from the [index](#component-index)) or stand-in (from [Coverage
+   gaps](#coverage-gaps)) that covers it.
    For a Figma frame, map each layer with [references/figma-map.md](references/figma-map.md). For
    a reference product, name what each of its parts becomes here; take its structure, not its
    look. Anything with no match goes into the plan as "not in the system" before you build it.
