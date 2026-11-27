@@ -4,13 +4,15 @@ import { cx, sortCx } from "@/utils/cx";
 
 export const styles = sortCx({
     common: {
-        // Figma Card header: 20px top and bottom; 16px sides on mobile, 24px from md (Breakpoint = Mobile / Desktop).
+        // One header for every card, table cards included (merged with `TableCard.Header` on 2026-11-27, which now
+        // renders this component). 20px top and bottom; 16px sides on mobile, 24px from md.
         // Actions are centred on the text block (title row, and the supporting text when there is one).
         root: "flex items-center gap-4 px-4 py-5 md:px-6",
         divider: "border-b border-secondary",
         text: "flex min-w-0 flex-1 flex-col gap-0.5",
         titleRow: "flex min-w-0 flex-wrap items-center gap-2",
-        title: "text-lg font-semibold text-primary",
+        // Text md/Semibold and a gray modern badge: the look of Figma's Table card header.
+        title: "text-md font-semibold text-primary",
         // Figma "Supporting text": Text sm/Regular, text-tertiary, one line.
         description: "truncate text-sm text-tertiary",
         // Figma "Actions": sm (36px) Buttons, 12px apart.
@@ -21,7 +23,7 @@ export const styles = sortCx({
 export interface CardHeaderProps {
     /** The card's title (Figma "Title"). */
     title: ReactNode;
-    /** Shown next to the title (Figma "Badge"). A string renders a small brand `Badge`; pass an element for anything else. */
+    /** Shown next to the title (Figma "Badge"). A string renders a small gray modern `Badge`; pass an element for anything else. */
     badge?: ReactNode;
     /** One line under the title (Figma "Supporting text"), cut off with an ellipsis when it doesn't fit. */
     description?: ReactNode;
@@ -54,7 +56,7 @@ export const CardHeader = ({ title, badge, description, actions, divider = true,
                         {title}
                     </Heading>
                     {typeof badge === "string" ? (
-                        <Badge type="pill-color" color="brand" size="sm">
+                        <Badge type="modern" color="gray" size="sm">
                             {badge}
                         </Badge>
                     ) : (

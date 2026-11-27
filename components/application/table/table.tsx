@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithRef, HTMLAttributes, ReactNode, Ref, TdHTMLAttributes, ThHTMLAttributes } from "react";
-import { createContext, isValidElement, useContext } from "react";
+import { createContext, useContext } from "react";
 import { ArrowDown, ChevronUpDown, Copy, Help, Pen, Trash } from "fa-icons";
 import type {
     CellProps as AriaCellProps,
@@ -21,7 +21,7 @@ import {
     TableHeader as AriaTableHeader,
     useTableOptions,
 } from "react-aria-components";
-import { Badge } from "@/components/base/badges/badges";
+import { CardHeader } from "@/components/application/card-header/card-header";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { Tooltip, TooltipTrigger } from "@/components/base/tooltip/tooltip";
@@ -52,7 +52,7 @@ const TableContext = createContext<{ size?: "sm" | "md" }>({});
 
 export interface TableCardRootProps extends HTMLAttributes<HTMLDivElement> {
     /**
-     * Row height and padding for the table inside: `md` 72px rows, `sm` 56px.
+     * Row height and padding for the table inside: `md` 72px rows, `sm` 64px.
      * @default md
      */
     size?: "sm" | "md";
@@ -62,7 +62,8 @@ export interface TableCardRootProps extends HTMLAttributes<HTMLDivElement> {
 const TableCardRoot = ({ children, className, size, ...props }: TableCardRootProps) => {
     return (
         <TableContext.Provider value={{ size }}>
-            <div {...props} className={cx("overflow-hidden rounded-xl bg-primary shadow-xs ring-1 ring-secondary", className)}>
+            {/* The card surface every card has (page-patterns "Surfaces"): 16px radius, border, no shadow. */}
+            <div {...props} className={cx("overflow-hidden rounded-2xl border border-secondary bg-primary_alt", className)}>
                 {children}
             </div>
         </TableContext.Provider>
@@ -82,35 +83,28 @@ export interface TableCardHeaderProps {
     className?: string;
 }
 
-/** `TableCard.Header`: title, badge, description and trailing content above the table. */
+/**
+ * `TableCard.Header`: the card header above a table. It is `CardHeader` (one header for every card since 2026-11-27),
+ * with the table card's own layout: the padding follows the table's `size`, and below `md` the trailing content
+ * drops under the title.
+ */
 const TableCardHeader = ({ title, badge, description, contentTrailing, className }: TableCardHeaderProps) => {
     const { size = "md" } = useContext(TableContext);
 
     return (
-        <div
+        <CardHeader
+            title={title}
+            badge={badge}
+            description={description}
+            actions={contentTrailing}
+            // `relative` and the unwrapped trailing slot keep what table cards relied on before the merge: trailing
+            // content may position itself absolutely in the header (the demos' dots menu) without leaving a gap.
             className={cx(
-                "relative flex flex-col items-start gap-4 border-b border-secondary bg-primary px-4 md:flex-row",
-                size === "sm" ? "py-4 md:px-5" : "py-5 md:px-6",
+                "relative max-md:flex-col max-md:items-start md:items-start [&>div:nth-child(2)]:contents",
+                size === "sm" && "py-4 md:px-5",
                 className,
             )}
-        >
-            <div className="flex flex-1 flex-col gap-0.5">
-                <div className="flex items-center gap-2">
-                    <h2 className="text-md font-semibold text-primary">{title}</h2>
-                    {badge ? (
-                        isValidElement(badge) ? (
-                            badge
-                        ) : (
-                            <Badge color="gray" size="sm" type="modern">
-                                {badge}
-                            </Badge>
-                        )
-                    ) : null}
-                </div>
-                {description && <p className="text-sm text-tertiary">{description}</p>}
-            </div>
-            {contentTrailing}
-        </div>
+        />
     );
 };
 
@@ -215,13 +209,16 @@ export interface TableHeadProps extends AriaColumnProps, Omit<ThHTMLAttributes<H
 /** `Table.Head`: one column heading. */
 const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadProps) => {
     const { selectionBehavior } = useTableOptions();
+    const { size = "md" } = useContext(TableContext);
 
     return (
         <AriaColumn
             {...props}
             className={(state) =>
                 cx(
-                    "relative p-0 px-6 py-2 outline-hidden focus-visible:z-1 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-bg-primary focus-visible:ring-inset",
+                    // Figma Table header cell: 20px side padding at sm, 24px at md, the same as the cells below.
+                    size === "sm" ? "px-5" : "px-6",
+                    "relative py-2 outline-hidden focus-visible:z-1 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-bg-primary focus-visible:ring-inset",
                     selectionBehavior === "toggle" && "nth-2:pl-3",
                     state.allowsSorting && "cursor-pointer",
                     typeof className === "function" ? className(state) : className,
@@ -296,7 +293,8 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
             className={(state) =>
                 cx(
                     "relative outline-focus-ring transition after:pointer-events-none hover:bg-secondary focus-visible:outline-2 focus-visible:-outline-offset-2",
-                    size === "sm" ? "h-14" : "h-18",
+                    // Figma Table cell: 64px rows at sm, 72px at md.
+                    size === "sm" ? "h-16" : "h-18",
                     highlightSelectedRow && "selected:bg-secondary",
 
                     // Row border—using an "after" pseudo-element to avoid the border taking up space.

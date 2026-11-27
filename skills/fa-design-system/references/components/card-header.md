@@ -2,7 +2,7 @@
 
 The header of a card: a title with an optional badge and one line of supporting text, and up to
 three actions on the right, centred on the text. Every card that has a title uses it, whether it holds a widget, a list or plain page
-content. Figma: "Card header (draft)" on the "Test" page.
+content. Figma: Card header, on the Tables page (the one header for content cards and table cards).
 
 ```ts
 import { CardHeader } from "fa-design-system/components/application/card-header/card-header";
@@ -15,8 +15,9 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 
 ## Use something else when
 
-- A table card: `TableCard.Header` (Figma Table card header; see [table](table.md)). The two stay
-  separate.
+- A table card: `TableCard.Header` (see [table](table.md)). It is this component with the table
+  card's layout (padding follows the table's `size`; below `md` the trailing content drops under
+  the title), so both look the same: one header for every card since 2026-11-27.
 - A modal: `ModalHeader` (see [modal](modal.md)).
 - The page's own title: an `h1` above the cards, not a card.
 
@@ -24,7 +25,8 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 
 - **card-header-always** MUST Give every titled card a `CardHeader`; never build a card title row from
   a `div`, an icon tile and a `ButtonUtility`. Because one header keeps every card on every page the
-  same, and the tinted icon tile is not part of it.
+  same, and the tinted icon tile is not part of it. Decided by the design owner (2026-11-27): no
+  icon before a card title, whatever the brief shows.
 - **card-header-actions** MUST Put up to three actions in `actions`, as sm icon-only `Button`s
   (`size="sm"`, 36px, `iconLeading`, `aria-label`) in any hierarchy (`primary`, `secondary`,
   `tertiary`), or a labelled sm `Button` or `Dropdown` when the action needs words. Never
@@ -49,7 +51,7 @@ import { CardHeader } from "fa-design-system/components/application/card-header/
 | Prop           | Values                                      | Default |
 | :------------- | :------------------------------------------ | :------ |
 | `title`        | ReactNode (required)                        |         |
-| `badge`        | string (brand pill `Badge`) or an element   |         |
+| `badge`        | string (gray modern `Badge`) or an element  |         |
 | `description`  | ReactNode: one line, cut with an ellipsis   |         |
 | `actions`      | ReactNode: up to three buttons              |         |
 | `divider`      | boolean: a `border-secondary` line under it | `true`  |
