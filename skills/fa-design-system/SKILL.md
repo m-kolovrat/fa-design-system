@@ -125,7 +125,7 @@ specific one; follow it.
     - Wrong: `<Button className="bg-success-solid">Kjøp</Button>`, `<Badge className="bg-blue-100 text-blue-700">Ny</Badge>`
 3. **fa-state-props** MUST Express states with the component's props (`isDisabled`, `isLoading`,
    `isInvalid`, `isSelected`), never with classes. Because each component maps states to the Figma
-   tokens (Button and ButtonGroup use the disabled tokens, inputs use `opacity-50`).
+   tokens (the grey disabled tokens, not fading).
     - Wrong: `<Button className="pointer-events-none opacity-50">`
 4. **fa-overlays-mounted** MUST Open `Modal`, `PromptModal` and `SlideoutMenu` through their
    `.Trigger` or with `isOpen` / `onOpenChange`, and keep them rendered; never wrap them in

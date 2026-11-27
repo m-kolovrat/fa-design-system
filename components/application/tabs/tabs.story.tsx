@@ -101,3 +101,18 @@ ButtonMinimalHorizontalFullWidth.storyName = "Button minimal horizontal full wid
 
 export const ButtonMinimalVertical = () => <Demos.ButtonMinimalVertical />;
 ButtonMinimalVertical.storyName = "Button minimal vertical";
+
+const disabledTabs = [
+    { id: "oversikt", label: "Oversikt" },
+    { id: "nokkeltall", label: "Nøkkeltall" },
+    { id: "innsidehandel", label: "Innsidehandel", isDisabled: true },
+];
+
+/** A disabled tab (`isDisabled` on the item, or `disabledKeys` on `Tabs`): dimmed and skipped by the keyboard. */
+export const Disabled = () => (
+    <Tabs defaultSelectedKey="oversikt" className="w-max">
+        <Tabs.List type="button-gray" aria-label="Aksjeinformasjon" items={disabledTabs}>
+            {(tab) => <Tabs.Item {...tab} />}
+        </Tabs.List>
+    </Tabs>
+);

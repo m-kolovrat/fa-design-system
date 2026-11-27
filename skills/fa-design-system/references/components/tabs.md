@@ -89,8 +89,8 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
 | `fullWidth`        | boolean (tabs share the width)                         |                |
 | `items`            | array; render with `{(tab) => <Tabs.Item {...tab} />}` |                |
 
-`Tabs.Item`: `id`, `label` (or `children`), `icon`, `badge` (number or string), `isDisabled`,
-`href`. `Tabs.Panel`: `id`, `children`, plus React Aria `TabPanel` props.
+`Tabs.Item`: `id`, `label` (or `children`), `icon`, `badge` (number or string), `isDisabled`
+(label and icon in `fg-disabled`, like a disabled `Button`; also through `disabledKeys`), `href`. `Tabs.Panel`: `id`, `children`, plus React Aria `TabPanel` props.
 
 ## Accessibility
 

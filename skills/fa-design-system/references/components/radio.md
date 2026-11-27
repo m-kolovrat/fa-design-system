@@ -74,7 +74,7 @@ import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radi
 ## Accessibility
 
 - Arrow keys move the selection within a group; Tab enters and leaves it.
-- Disabled `RadioButton`s use `opacity-50`; disabled cards use `bg-disabled_subtle` and
+- Disabled `RadioButton`s use the disabled tokens (`bg-disabled_subtle`, `ring-disabled`, a `fg-disabled_subtle` dot); disabled cards use `bg-disabled_subtle` and
   `ring-disabled`, as in Figma.
 
 ## Example

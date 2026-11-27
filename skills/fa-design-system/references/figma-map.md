@@ -76,16 +76,16 @@ Read every table the same way:
 
 ## Card header
 
-| Figma                             | Code                                                                                                                  |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Card header (draft on "Test")     | `CardHeader`, `fa-design-system/components/application/card-header/card-header`                                       |
-| `Title` / `Badge`                 | `title` / `badge`                                                                                                     |
-| `Supporting text` / `Description` | `description` (leave it out when Supporting text is off)                                                              |
-| `Action 1` … `Action 3`           | the buttons passed in `actions` (sm icon-only `Button`s; `Hierarchy` → `color`)                                       |
-| `Divider`                         | `divider`                                                                                                             |
-| `Actions=False`                   | leave `actions` out                                                                                                   |
-| Card footer (draft on "Test")     | `CardFooter`, `fa-design-system/components/application/card-footer/card-footer`; the Link button's label → `children` |
-| `Breakpoint=Mobile` / `Desktop`   | nothing: 16px sides below `md`, 24px from `md`                                                                        |
+| Figma                           | Code                                                                                                                  |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Card header (on "Tables")       | `CardHeader`, `fa-design-system/components/application/card-header/card-header`; in a table card `TableCard.Header`   |
+| `Text` / `Badge`                | `title` / `badge`                                                                                                     |
+| `Supporting text`               | `description` (leave it out when Supporting text is off)                                                              |
+| `Actions`                       | the buttons passed in `actions` (content cards: sm icon-only `Button`s; table cards: `contentTrailing`)               |
+| `Divider`                       | `divider`                                                                                                             |
+| `Actions=False`                 | leave `actions` out                                                                                                   |
+| Card footer (draft on "Test")   | `CardFooter`, `fa-design-system/components/application/card-footer/card-footer`; the Link button's label → `children` |
+| `Breakpoint=Mobile` / `Desktop` | nothing: 16px sides below `md`, 24px from `md`                                                                        |
 
 ## Period selector
 
@@ -169,6 +169,7 @@ icon); the other badge exports take only `color="gray"`.
 | `Indeterminate=True` | `isIndeterminate`                                                                                 |
 | `Size=sm/md`         | `size`, same names (radios: on `RadioGroup`)                                                      |
 | `Text=True`          | `label`                                                                                           |
+| `State=Error`        | `isInvalid` (unchecked checkbox only)                                                             |
 
 | Figma                        | Code                                                                           |
 | ---------------------------- | ------------------------------------------------------------------------------ |
@@ -399,6 +400,7 @@ icon); the other badge exports take only `color="gray"`.
 | Slider                            | `Slider`, `fa-design-system/components/base/slider/slider`                                         |
 | `Label=False/Bottom/Top floating` | `labelPosition="default"` / `"bottom"` / `"top-floating"`                                          |
 | `Left control` / `Right control`  | `defaultValue={[25, 75]}` (two thumbs) or `value`                                                  |
+| `State=Disabled` (slider)         | `isDisabled`                                                                                       |
 
 ## States
 
@@ -422,7 +424,7 @@ icon); the other badge exports take only `color="gray"`.
 | `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                                                                            |
 | Table cell                             | `Table.Cell`: `Lead text` / `Supporting text` / the avatar or icon → `leadText` / `supportingText` / `leading`; other types composed inside                 |
 | Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                                                                                   |
-| Table card header                      | `TableCard.Header` (`title`, `badge`, `description`, `contentTrailing`), see Mismatches; for content cards see Card header                                  |
+| Card header (in a table card)          | `TableCard.Header` (`title`, `badge`, `description`, `contentTrailing`), which renders `CardHeader`; see Mismatches                                         |
 
 ## Tabs, tags, tooltips
 
@@ -436,7 +438,7 @@ icon); the other badge exports take only `color="gray"`.
 | `Type=Line` (vertical)                                       | `type="line"`                                                                                          |
 | `Size=sm/md`                                                 | `size` on `Tabs.List`, same names                                                                      |
 | `Full width=True`                                            | `fullWidth`                                                                                            |
-| \_Tab button base                                            | `Tabs.Item`; `Current` is the selected key, `Badge` → `badge`                                          |
+| \_Tab button base                                            | `Tabs.Item`; `Current` is the selected key, `Badge` → `badge`, `State=Disabled` → `isDisabled`         |
 
 | Figma                      | Code                                                                              |
 | -------------------------- | --------------------------------------------------------------------------------- |
@@ -447,6 +449,7 @@ icon); the other badge exports take only `color="gray"`.
 | `Action=X close`           | `onClose`                                                                         |
 | `Action=Count`             | `count={4}`                                                                       |
 | `Checkbox=True`            | `selectionMode="multiple"` (or `"single"`) on `TagGroup`                          |
+| `State=Disabled`           | `isDisabled` on `Tag`                                                             |
 
 | Figma                  | Code                                                                                                                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -523,7 +526,7 @@ Figma options with no code value, and code values Figma lacks. Don't map them yo
   `className="bg-primary"` on `Table.Header` (rule **table-no-restyle** in [table](components/table.md)).
 - Table cell lead action `Type=Radio/Toggle`: only checkbox selection
   (`components/application/table/table.tsx:151`).
-- Table card header `Avatar=True` and the dropdown icon: `TableCard.Header` has neither
+- Card header `Avatar=True` and the dropdown icon: `TableCard.Header` has neither
   (`components/application/table/table.tsx:72`).
 - Header `Buy=False`: "Kjøp" always renders
   (`components/application/site-header/site-header.tsx:226`).

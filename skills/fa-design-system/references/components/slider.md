@@ -23,7 +23,7 @@ import { Slider } from "fa-design-system/components/base/slider/slider";
 - **slider-name** MUST Pass `label` (shown above the track), or `aria-label` when the name is
   already visible nearby. Because a slider without a name is announced as just a number.
 - **slider-format** MUST Pass `formatOptions` whenever the value isn't a percentage (kroner,
-  steps). Because the default shows the value itself as a whole percent (`60` → "60 %"), and
+  steps). Because the default shows the value itself as a whole percent (`60` → "60%"), and
   `formatOptions` also drives the announced value.
 - **slider-show-value** SHOULD Show the value with `labelPosition="bottom"` or `"top-floating"`
   when the number matters to the decision. The default `"default"` hides it.
@@ -44,7 +44,7 @@ import { Slider } from "fa-design-system/components/base/slider/slider";
 | `labelFormatter`           | `(value: number) => string` (visible text only) |                              |
 | `formatOptions`            | `Intl.NumberFormatOptions`                      | the value as a whole percent |
 | `onChange` / `onChangeEnd` | `(value: number \| number[]) => void`           |                              |
-| `isDisabled`               | boolean                                         |                              |
+| `isDisabled`               | boolean (disabled tokens)                       |                              |
 
 Plus React Aria `Slider` props.
 

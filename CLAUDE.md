@@ -134,20 +134,34 @@ use `motion`; for utility animations `tailwindcss-animate`.
 
 ### Disabled states
 
-Most components use `disabled:cursor-not-allowed disabled:opacity-50`. **Exceptions** match Figma
-exactly with the neutral disabled tokens from `theme.css`:
+Disabled is drawn with the neutral disabled tokens from `theme.css`, the way Figma draws it; nothing
+fades with `opacity-50` (decided 2026-11-27, after an audit found Figma used the tokens in every
+component and code in almost none). Take the tokens from the component's Figma `State=Disabled`
+variant, layer by layer, and add `cursor-not-allowed`:
 
-- `Button`: disabled text and icon `fg-disabled`; primary, secondary and destructive get the
+- **Fields** (`Input` and its variants, `TextArea`, `Select`, `Select.ComboBox`, `MultiSelect`,
+  `TagSelect`, `NativeSelect`): `bg-disabled_subtle` fill, `ring-disabled` border, `text-disabled`
+  value, `fg-disabled` leading icon, no shadow. Label, hint and trailing icon are unchanged.
+  `InputNumber`'s steppers keep 50% opacity, as in Figma.
+- **`Checkbox`, `RadioButton`, tag checkbox:** `bg-disabled_subtle` fill and `ring-disabled` border,
+  checked or not, with the check or dot in `fg-disabled_subtle`. `RadioCard` and `PinInput` digit
+  boxes use the same fill and border.
+- **`Toggle`:** `bg-disabled` track (on or off) and a `toggle-button-fg_disabled` knob.
+- **`Button`:** text and icon `fg-disabled`; primary, secondary and destructive get the
   `bg-disabled_subtle` fill, secondary also a `border-disabled_subtle`. No disabled shadows. Text
-  and icon greying is in `common.root`, fill and border in each color variant.
-- `ButtonUtility`: `fg-disabled` icon; secondary keeps its `bg-primary` fill with a `border-disabled_subtle`
-  border.
-- `ButtonGroup`: `bg-disabled_subtle` fill, `text-disabled` text, `fg-disabled_subtle` icons and
+  and icon greying is in `common.root`, fill and border in each color variant. `ButtonUtility`:
+  `fg-disabled` icon; secondary keeps its `bg-primary` fill with a `border-disabled_subtle` border.
+- **`Tabs.Item`:** `fg-disabled` label and icon, like a disabled `Button`; the badge is unchanged.
+- **`ButtonGroup`:** `bg-disabled_subtle` fill, `text-disabled` text, `fg-disabled_subtle` icons and
   dots, border unchanged.
-- `RadioCard`: `bg-disabled_subtle` fill and `ring-disabled` border.
-- `PinInput` digit boxes: the same fill and border with `fg-disabled_subtle` digits.
+- **Menu items** (`Dropdown.Item`, `Select.Item`): `text-disabled` label and supporting text,
+  `fg-disabled` icon.
+- **`Tag` and `Slider`** have no token design in Figma yet. `Tag` follows `ButtonGroup`
+  (`bg-disabled_subtle`, `text-disabled`); `Slider` greys its filled range (`fg-disabled_subtle`),
+  thumb border and value. Logged in `docs/figma-parity.md`.
 
-When converting another component to Figma-accurate disabled states, reuse these tokens.
+`text-disabled` and `text-quaternary` are the same grey, so a label that is `text-quaternary` when
+enabled needs `fg-disabled` instead (as tabs do).
 
 ### Icons
 

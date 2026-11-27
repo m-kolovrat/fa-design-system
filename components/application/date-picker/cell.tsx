@@ -98,7 +98,7 @@ export const CalendarCell = ({ date, isHighlighted, showOutOfRangeDates = false,
                                 className={cx(
                                     "absolute bottom-1 left-1/2 size-1.25 -translate-x-1/2 rounded-full",
                                     markedAsSelected ? "bg-fg-white" : "bg-fg-brand-primary",
-                                    isDisabled && "opacity-50",
+                                    isDisabled && "bg-fg-disabled",
                                 )}
                             />
                         )}

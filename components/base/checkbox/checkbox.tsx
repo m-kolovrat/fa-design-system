@@ -17,18 +17,22 @@ export interface CheckboxBaseProps {
     isDisabled?: boolean;
     /** Draws the dash */
     isIndeterminate?: boolean;
+    /** Draws the error ring on an unchecked box */
+    isInvalid?: boolean;
 }
 
 /** The visual box only, for use inside other components (menus, cards); never a form control on its own. */
-export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminate, size = "sm", isFocusVisible = false }: CheckboxBaseProps) => {
+export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminate, isInvalid, size = "sm", isFocusVisible = false }: CheckboxBaseProps) => {
     return (
         <div
             className={cx(
                 "relative flex size-4 shrink-0 cursor-pointer appearance-none items-center justify-center rounded bg-primary ring-1 ring-primary ring-inset",
                 size === "md" && "size-5 rounded-sm",
+                // The error ring Input and Select use; a checked box keeps its brand fill.
+                isInvalid && "ring-error_subtle",
                 (isSelected || isIndeterminate) && "bg-brand-solid ring-brand-solid",
-                isDisabled && "cursor-not-allowed opacity-50",
-                isDisabled && !(isSelected || isIndeterminate) && "bg-tertiary",
+                // Figma _Checkbox base State=Disabled: bg-disabled_subtle, border-disabled, check in fg-disabled_subtle.
+                isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled",
                 isFocusVisible && "outline-2 outline-offset-2 outline-focus-ring",
                 className,
             )}
@@ -39,6 +43,7 @@ export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminat
                 fill="none"
                 className={cx(
                     "pointer-events-none absolute h-3 w-2.5 text-fg-white opacity-0 transition-inherit-all",
+                    isDisabled && "text-fg-disabled_subtle",
                     size === "md" && "size-3.5",
                     isIndeterminate && "opacity-100",
                 )}
@@ -52,6 +57,7 @@ export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminat
                 fill="none"
                 className={cx(
                     "pointer-events-none absolute size-3 text-fg-white opacity-0 transition-inherit-all",
+                    isDisabled && "text-fg-disabled_subtle",
                     size === "md" && "size-3.5",
                     isSelected && !isIndeterminate && "opacity-100",
                 )}
@@ -80,11 +86,11 @@ export interface CheckboxProps extends AriaCheckboxProps {
     onChange?: AriaCheckboxProps["onChange"];
     /** Shows a dash: for a parent whose children are partly selected */
     isIndeterminate?: AriaCheckboxProps["isIndeterminate"];
-    /** Disables the checkbox (`opacity-50`) */
+    /** Disables the checkbox (Figma's disabled tokens) */
     isDisabled?: AriaCheckboxProps["isDisabled"];
     /** Marks it required for form validation */
     isRequired?: AriaCheckboxProps["isRequired"];
-    /** Marks it invalid; explain why in text near it */
+    /** Marks it invalid: an error ring on the unchecked box and a red `hint`. Say why in the `hint` */
     isInvalid?: AriaCheckboxProps["isInvalid"];
     /** Shows the state but can't be changed */
     isReadOnly?: AriaCheckboxProps["isReadOnly"];
@@ -123,13 +129,14 @@ export const Checkbox = ({ label, hint, size = "sm", className, ...ariaCheckboxP
                 )
             }
         >
-            {({ isSelected, isIndeterminate, isDisabled, isFocusVisible }) => (
+            {({ isSelected, isIndeterminate, isDisabled, isInvalid, isFocusVisible }) => (
                 <>
                     <CheckboxBase
                         size={size}
                         isSelected={isSelected}
                         isIndeterminate={isIndeterminate}
                         isDisabled={isDisabled}
+                        isInvalid={isInvalid}
                         isFocusVisible={isFocusVisible}
                         className={label || hint ? "mt-0.5" : ""}
                     />
@@ -137,7 +144,10 @@ export const Checkbox = ({ label, hint, size = "sm", className, ...ariaCheckboxP
                         <div className={cx("inline-flex flex-col", sizes[size].textWrapper)}>
                             {label && <p className={cx("text-secondary select-none", sizes[size].label)}>{label}</p>}
                             {hint && (
-                                <span className={cx("text-tertiary", sizes[size].hint)} onClick={(event) => event.stopPropagation()}>
+                                <span
+                                    className={cx("text-tertiary", isInvalid && "text-error-primary", sizes[size].hint)}
+                                    onClick={(event) => event.stopPropagation()}
+                                >
                                     {hint}
                                 </span>
                             )}

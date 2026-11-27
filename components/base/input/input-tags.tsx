@@ -256,7 +256,7 @@ export const InputTags = ({
                 className={({ isFocusWithin, isDisabled, isInvalid }) =>
                     cx(
                         "group/input relative flex w-full items-center rounded-md bg-primary ring-1 ring-primary outline-hidden transition ring-inset",
-                        isDisabled && "cursor-not-allowed opacity-50",
+                        isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled",
                         isFocusWithin && !isDisabled && "ring-2 ring-brand",
                         isInvalid && !isFocusWithin && "ring-error_subtle",
                         isInvalid && isFocusWithin && "ring-2 ring-error",

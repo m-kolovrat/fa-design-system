@@ -55,11 +55,13 @@ export const ToggleBase = ({ className, isHovered, isDisabled, isFocusVisible, i
                 "cursor-pointer rounded-full bg-tertiary ring-[0.5px] ring-secondary outline-focus-ring transition ring-inset",
                 isSelected && "bg-brand-solid",
                 isSelected && isHovered && "bg-brand-solid_hover",
-                isDisabled && "cursor-not-allowed opacity-50",
+                // Figma _Toggle base State=Disabled: bg-disabled track (on or off), toggle-button-fg_disabled knob.
+                isDisabled && "cursor-not-allowed bg-disabled",
                 isFocusVisible && "outline-2 outline-offset-2",
 
                 slim && "ring-1",
                 slim && isSelected && "ring-transparent",
+                slim && isDisabled && "ring-disabled_subtle",
                 classes.root,
                 className,
             )}
@@ -72,8 +74,10 @@ export const ToggleBase = ({ className, isHovered, isDisabled, isFocusVisible, i
 
                     slim && "shadow-xs",
                     slim && "border border-toggle-border",
-                    slim && isSelected && "border-toggle-slim-border_pressed",
-                    slim && isSelected && isHovered && "border-toggle-slim-border_pressed-hover",
+                    slim && isSelected && !isDisabled && "border-toggle-slim-border_pressed",
+                    slim && isSelected && isHovered && !isDisabled && "border-toggle-slim-border_pressed-hover",
+
+                    isDisabled && "bg-toggle-button-fg_disabled",
 
                     classes.switch,
                 )}
@@ -112,7 +116,7 @@ export interface ToggleProps extends AriaSwitchProps {
     defaultSelected?: AriaSwitchProps["defaultSelected"];
     /** Called with the new state */
     onChange?: AriaSwitchProps["onChange"];
-    /** Disables the toggle (`opacity-50`) */
+    /** Disables the toggle (Figma's disabled tokens) */
     isDisabled?: AriaSwitchProps["isDisabled"];
     /** Shows the state but can't be changed */
     isReadOnly?: AriaSwitchProps["isReadOnly"];

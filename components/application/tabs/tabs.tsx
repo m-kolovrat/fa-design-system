@@ -208,6 +208,8 @@ export const Tab = ({ label, children, badge, icon: Icon, className, ...otherPro
                     sizes[size].base,
                     sizes[size][type],
                     getTabStyles(prop)[type],
+                    // Figma _Tab button base State=Disabled: label and icon in fg-disabled, as a disabled Button; no fading.
+                    prop.isDisabled && "cursor-not-allowed text-fg-disabled *:data-icon:text-fg-disabled",
                     typeof className === "function" ? className(prop) : className,
                 )
             }

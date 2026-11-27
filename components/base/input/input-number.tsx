@@ -81,8 +81,9 @@ export const InputNumberBase = ({
                     isFocusWithin && !isDisabled && "outline-2 -outline-offset-2 outline-brand",
 
                     // Disabled state styles
-                    isDisabled && "cursor-not-allowed opacity-50 in-data-input-wrapper:opacity-100",
-                    "group-disabled:cursor-not-allowed group-disabled:opacity-50 in-data-input-wrapper:group-disabled:opacity-100",
+                    // Figma Input number State=Disabled: bg-disabled_subtle, border-disabled, text-disabled; the steppers keep 50% opacity.
+                    isDisabled && "cursor-not-allowed bg-disabled_subtle outline-(--color-border-disabled)",
+                    "group-disabled:cursor-not-allowed group-disabled:bg-disabled_subtle group-disabled:outline-(--color-border-disabled)",
 
                     // Invalid state styles
                     isInvalid && "outline-error_subtle",
@@ -107,7 +108,7 @@ export const InputNumberBase = ({
                 ref={ref}
                 placeholder={placeholder}
                 className={cx(
-                    "m-0 w-full bg-transparent text-primary ring-0 outline-hidden placeholder:text-placeholder autofill:rounded-md autofill:text-primary disabled:cursor-not-allowed",
+                    "m-0 w-full bg-transparent text-primary ring-0 outline-hidden placeholder:text-placeholder autofill:rounded-md autofill:text-primary disabled:cursor-not-allowed disabled:text-disabled",
                     orientation === "horizontal" && "text-center",
                     styles[inputSize],
                     context?.inputClassName,

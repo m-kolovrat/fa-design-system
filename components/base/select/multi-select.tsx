@@ -265,7 +265,7 @@ const MultiSelectRoot = ({
                                 (state.isFocusVisible || state.isPressed) && "ring-2 ring-brand",
                                 isInvalid && "ring-error_subtle",
                                 isInvalid && (state.isFocusVisible || state.isPressed) && "ring-2 ring-error",
-                                state.isDisabled && "cursor-not-allowed opacity-50",
+                                state.isDisabled && "cursor-not-allowed bg-disabled_subtle shadow-none ring-disabled [&_span]:text-disabled",
                             )
                         }
                     >

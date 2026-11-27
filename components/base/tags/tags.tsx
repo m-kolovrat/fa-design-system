@@ -189,7 +189,8 @@ export const Tag = ({
                     // With checkbox
                     context.selectionMode !== "none" && styles[context.size].root.withCheckbox,
                     // Disabled
-                    isDisabled && "cursor-not-allowed",
+                    // No Figma token design yet: follows the disabled ButtonGroup item (bg-disabled_subtle fill, text-disabled, border unchanged).
+                    state.isDisabled && "cursor-not-allowed bg-disabled_subtle text-disabled",
 
                     typeof className === "function" ? className(state) : className,
                 )
