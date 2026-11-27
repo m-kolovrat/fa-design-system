@@ -27,6 +27,10 @@ npm run sandbox:build    # static sandbox Storybook in ./sandbox-static
 
 ```
 sandbox/
+├── components/<name>/       # one component or part tried on its own (a header, a card, a variant idea)
+│   ├── <name>.tsx
+│   ├── <name>.story.tsx     # title "Components/<name>"
+│   └── <name>.notes.md      # what it's for, what it was built from, anything not in the system
 ├── pages/<page>/            # one page built from a prompt
 │   ├── <page>.tsx           # the page
 │   ├── <page>.story.tsx     # Desktop and Mobile stories, title "Pages/<page>"
@@ -55,6 +59,16 @@ Figma frame or a live page to follow, and which model should build it.
 
 What a page finds goes to the design system the usual way: designed in Figma, then built in the library. Sandbox
 code is never moved into `components/`.
+
+## Trying a component or a part
+
+When the task is one component or a part of a page, build only that, in `components/<name>/`. The
+page rules (shell, 980 px column, ad slots, card grid) don't apply; tokens, library components and
+accessibility do. This folder isn't linted (`sandbox:check` runs the design-system preset on
+`pages/` only), so a variant the library doesn't have yet can be tried here through `className`:
+say so in the notes, with what a real variant would need. What works goes to the library the usual
+way (designed in Figma or built in `components/` and logged in `docs/figma-parity.md`); the sandbox
+file is never copied across.
 
 ## Experiment runs
 

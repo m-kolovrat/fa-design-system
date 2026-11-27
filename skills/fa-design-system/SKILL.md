@@ -47,7 +47,12 @@ System". One library serves three publications: Finansavisen (`fa`), Kapital (`k
 
 ## Steps
 
-1. **Plan before you write code.** Read [references/page-patterns.md](references/page-patterns.md):
+1. **Plan before you write code.** First decide what you were asked for. **A page or a screen:**
+   everything in this step applies. **One component or a part of a page** (a header, a card, a
+   form, a table, a variant to try): skip `page-patterns.md` and its shells, column and ad slots,
+   name the components you will use, and go to step 2; every other rule still applies. Build only
+   what was asked: don't wrap a single component in a page.
+   For a page, read [references/page-patterns.md](references/page-patterns.md):
    pick the page shell, lay the page out in the 980 px column with its surfaces, grid and text
    pairings, build each row from the four card layouts, check whether the page shows the
    skyscrapers, reserve the desktop ad slots ("Ads (desktop)") and leave clean breaks for mobile ads
