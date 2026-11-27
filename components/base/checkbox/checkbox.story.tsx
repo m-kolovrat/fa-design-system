@@ -83,6 +83,9 @@ export const States: Story = {
             <Labeled label="Disabled checked">
                 <Checkbox {...args} isDisabled defaultSelected />
             </Labeled>
+            <Labeled label="Invalid">
+                <Checkbox {...args} isInvalid />
+            </Labeled>
         </div>
     ),
 };

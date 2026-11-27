@@ -30,3 +30,6 @@ TopFloating.storyName = "Top floating";
 
 export const SingleThumb = () => <Sliders.SingleThumb />;
 SingleThumb.storyName = "Single thumb";
+
+/** A disabled slider: dimmed, and the thumb can't be dragged. */
+export const Disabled = () => <Slider aria-label="Andel aksjer" defaultValue={60} labelPosition="bottom" isDisabled />;

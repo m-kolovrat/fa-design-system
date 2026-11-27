@@ -112,3 +112,16 @@ export const WithAvatar: Story = {
     name: "With avatar",
     args: { variant: "avatar" },
 };
+
+/** A disabled tag: dimmed, and it can't be selected or removed. */
+export const Disabled = () => (
+    <TagGroup label="Sektorer" size="md">
+        <TagList className="flex flex-wrap gap-2">
+            <Tag id="energi">Energi</Tag>
+            <Tag id="finans">Finans</Tag>
+            <Tag id="shipping" isDisabled>
+                Shipping
+            </Tag>
+        </TagList>
+    </TagGroup>
+);

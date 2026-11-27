@@ -377,7 +377,7 @@ export const TagSelectTagsValue = ({
             className={({ isFocusWithin, isDisabled }) =>
                 cx(
                     "relative flex w-full items-center rounded-md bg-primary shadow-xs ring-1 ring-primary outline-hidden transition ring-inset",
-                    isDisabled && "cursor-not-allowed opacity-50",
+                    isDisabled && "cursor-not-allowed bg-disabled_subtle shadow-none ring-disabled [&_input]:text-disabled",
                     isFocusWithin && "ring-2 ring-brand",
 
                     // Icon styles

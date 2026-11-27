@@ -36,13 +36,20 @@ export const RadioButtonBase = ({ className, isFocusVisible, isSelected, isDisab
                 "flex size-4 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full bg-primary ring-1 ring-primary ring-inset",
                 size === "md" && "size-5",
                 isSelected && "bg-brand-solid ring-brand-solid",
-                isDisabled && "cursor-not-allowed opacity-50",
-                isDisabled && !isSelected && "bg-tertiary",
+                // Figma _Checkbox base Type=Radio State=Disabled: bg-disabled_subtle, border-disabled, dot in fg-disabled_subtle.
+                isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled",
                 isFocusVisible && "outline-2 outline-offset-2 outline-focus-ring",
                 className,
             )}
         >
-            <div className={cx("size-1.5 rounded-full bg-fg-white opacity-0 transition-inherit-all", size === "md" && "size-2", isSelected && "opacity-100")} />
+            <div
+                className={cx(
+                    "size-1.5 rounded-full bg-fg-white opacity-0 transition-inherit-all",
+                    size === "md" && "size-2",
+                    isSelected && "opacity-100",
+                    isDisabled && "bg-fg-disabled_subtle",
+                )}
+            />
         </div>
     );
 };
@@ -59,7 +66,7 @@ export interface RadioButtonProps extends AriaRadioProps {
     ref?: Ref<HTMLLabelElement>;
     /** The value the group reports when this option is chosen (required) */
     value: AriaRadioProps["value"];
-    /** Disables this option (`opacity-50`) */
+    /** Disables this option (Figma's disabled tokens) */
     isDisabled?: AriaRadioProps["isDisabled"];
 }
 

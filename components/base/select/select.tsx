@@ -70,7 +70,8 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placehold
                 (isFocused || isOpen) && "ring-2 ring-brand",
                 isInvalid && "ring-error_subtle",
                 isInvalid && (isFocused || isOpen) && "ring-2 ring-error",
-                isDisabled && "cursor-not-allowed opacity-50",
+                // Figma Select State=Disabled: bg-disabled_subtle, border-disabled, text-disabled value.
+                isDisabled && "cursor-not-allowed bg-disabled_subtle shadow-none ring-disabled [&_p]:text-disabled",
             )}
         >
             <AriaSelectValue<SelectItemType>

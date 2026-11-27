@@ -207,11 +207,12 @@ export const FileUploadDropZone = ({
             className={cx(
                 "relative flex flex-col items-center gap-3 rounded-xl bg-primary px-6 py-4 text-tertiary ring-1 ring-secondary transition ring-inset",
                 isDraggingOver && "ring-2 ring-brand",
-                isDisabled && "cursor-not-allowed bg-secondary",
+                // Figma _File upload base State=Disabled: bg-disabled_subtle, border-disabled_subtle; the icon is unchanged.
+                isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled_subtle",
                 className,
             )}
         >
-            <FeaturedIcon icon={Upload} color="gray" theme="modern" size="md" className={cx(isDisabled && "opacity-50")} />
+            <FeaturedIcon icon={Upload} color="gray" theme="modern" size="md" />
 
             <div className="flex flex-col gap-1 text-center">
                 <div className="flex justify-center gap-1 text-center">

@@ -19,8 +19,7 @@ export const TagCheckbox = ({ className, isFocused, isSelected, isDisabled, size
                 size === "md" && "size-4",
                 size === "lg" && "size-4.5",
                 isSelected && "bg-brand-solid ring-brand-solid",
-                isDisabled && "cursor-not-allowed opacity-50",
-                isDisabled && !isSelected && "bg-tertiary",
+                isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled",
                 isFocused && "outline-2 outline-offset-2 outline-focus-ring",
                 className,
             )}
@@ -31,6 +30,7 @@ export const TagCheckbox = ({ className, isFocused, isSelected, isDisabled, size
                 fill="none"
                 className={cx(
                     "pointer-events-none absolute text-fg-white opacity-0 transition-inherit-all",
+                    isDisabled && "text-fg-disabled_subtle",
                     size === "sm" && "size-2.5",
                     size === "md" && "size-3",
                     size === "lg" && "size-3.5",

@@ -106,8 +106,9 @@ export const InputBase = ({
                     isFocusWithin && !isDisabled && "ring-2 ring-brand",
 
                     // Disabled state styles
-                    isDisabled && "cursor-not-allowed opacity-50",
-                    "group-disabled:cursor-not-allowed group-disabled:opacity-50",
+                    // Figma Input field State=Disabled: bg-disabled_subtle fill, border-disabled, text-disabled value, fg-disabled leading icon.
+                    isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled",
+                    "group-disabled:cursor-not-allowed group-disabled:bg-disabled_subtle group-disabled:ring-disabled",
 
                     // Invalid state styles
                     isInvalid && "ring-error_subtle",
@@ -124,7 +125,14 @@ export const InputBase = ({
         >
             {/* Leading icon and Payment icon */}
             {Icon && (
-                <Icon className={cx("pointer-events-none absolute text-fg-quaternary", sizes[inputSize].iconLeading, context?.iconClassName, iconClassName)} />
+                <Icon
+                    className={cx(
+                        "pointer-events-none absolute text-fg-quaternary group-data-disabled/input:text-fg-disabled",
+                        sizes[inputSize].iconLeading,
+                        context?.iconClassName,
+                        iconClassName,
+                    )}
+                />
             )}
 
             {/* Input field */}
@@ -135,7 +143,7 @@ export const InputBase = ({
                 type={type === "password" && isPasswordVisible ? "text" : type}
                 placeholder={placeholder}
                 className={cx(
-                    "m-0 w-full bg-transparent text-primary ring-0 outline-hidden placeholder:text-placeholder autofill:rounded-md autofill:text-primary disabled:cursor-not-allowed",
+                    "m-0 w-full bg-transparent text-primary ring-0 outline-hidden placeholder:text-placeholder autofill:rounded-md autofill:text-primary disabled:cursor-not-allowed disabled:text-disabled",
                     sizes[inputSize].root,
                     context?.inputClassName,
                     inputClassName,
@@ -257,7 +265,7 @@ export interface InputProps
     isRequired?: AriaTextFieldProps["isRequired"];
     /** Whether the input is invalid: red border, and the `hint` turns red */
     isInvalid?: AriaTextFieldProps["isInvalid"];
-    /** Whether the input is disabled (`opacity-50`) */
+    /** Whether the input is disabled (Figma's disabled tokens) */
     isDisabled?: AriaTextFieldProps["isDisabled"];
     /** Whether the value can be selected but not changed */
     isReadOnly?: AriaTextFieldProps["isReadOnly"];

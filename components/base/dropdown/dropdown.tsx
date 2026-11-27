@@ -51,7 +51,7 @@ export interface DropdownItemProps extends AriaMenuItemProps {
     href?: AriaMenuItemProps["href"];
     /** The text for type-to-select when the label isn't plain text */
     textValue?: AriaMenuItemProps["textValue"];
-    /** Disables the item (`opacity-50`) */
+    /** Disables the item (Figma's disabled tokens) */
     isDisabled?: AriaMenuItemProps["isDisabled"];
 }
 
@@ -93,7 +93,7 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
             className={(state) =>
                 cx(
                     "group block cursor-pointer px-1.5 py-px outline-hidden",
-                    state.isDisabled && "cursor-not-allowed opacity-50",
+                    state.isDisabled && "cursor-not-allowed",
                     typeof props.className === "function" ? props.className(state) : props.className,
                 )
             }
@@ -116,13 +116,22 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
                         </div>
                     )}
 
-                    {Icon && <Icon aria-hidden="true" className="mr-2 size-4 shrink-0 text-fg-quaternary" />}
+                    {Icon && <Icon aria-hidden="true" className={cx("mr-2 size-4 shrink-0 text-fg-quaternary", state.isDisabled && "text-fg-disabled")} />}
 
-                    <span className={cx("grow truncate text-sm font-semibold text-secondary", state.isFocused && "text-secondary_hover")}>
+                    <span
+                        className={cx(
+                            "grow truncate text-sm font-semibold text-secondary",
+                            state.isFocused && "text-secondary_hover",
+                            // Figma _Dropdown list item State=Disabled: text-disabled label and shortcut, fg-disabled icon.
+                            state.isDisabled && "text-disabled",
+                        )}
+                    >
                         {label || (typeof children === "function" ? children(state) : children)}
                     </span>
 
-                    {addon && <span className="ml-1 shrink-0 pr-1 text-xs font-medium text-quaternary">{addon}</span>}
+                    {addon && (
+                        <span className={cx("ml-1 shrink-0 pr-1 text-xs font-medium text-quaternary", state.isDisabled && "text-disabled")}>{addon}</span>
+                    )}
 
                     {state.selectionMode !== "none" && (avatarUrl || Icon) && <SelectionIndicator {...state} className="ml-1" />}
 

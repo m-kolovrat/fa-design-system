@@ -39,7 +39,7 @@ export const TextAreaBase = ({ className, size = "sm", ...props }: TextAreaBaseP
                     "[&::-webkit-resizer]:bg-(image:--resize-handle-bg) [&::-webkit-resizer]:[background-size:44.44%_44.44%,22.22%_22.22%] [&::-webkit-resizer]:[background-position:20%_20%,50%_50%] [&::-webkit-resizer]:bg-no-repeat",
 
                     state.isFocused && !state.isDisabled && "ring-2 ring-brand",
-                    state.isDisabled && "cursor-not-allowed opacity-50",
+                    state.isDisabled && "cursor-not-allowed bg-disabled_subtle text-disabled ring-disabled",
                     state.isInvalid && "ring-error_subtle",
                     state.isInvalid && state.isFocused && "ring-2 ring-error",
 

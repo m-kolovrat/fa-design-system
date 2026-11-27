@@ -47,7 +47,7 @@ color="link-gray" size="sm"` "Fjern alle" after the group.
 | `onRemove`                                                   | `(keys: Set<Key>) => void`         |         |
 
 `Tag`: `id`, `children` (string), `count` (number badge), `dot` (boolean) with `dotClassName` for
-its color (`text-fg-*`), `avatarSrc`, `avatarContrastBorder` (default `true`), `isDisabled`,
+its color (`text-fg-*`), `avatarSrc`, `avatarContrastBorder` (default `true`), `isDisabled` (disabled tokens),
 `onClose(id)`. `TagList` (React Aria `TagList`) holds the tags.
 
 ## Notes

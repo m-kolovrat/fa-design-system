@@ -31,8 +31,8 @@ import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
 - **checkbox-hint** SHOULD Use `hint` for one line of explanation under the label; links in the
   hint stay clickable without toggling the box.
 - **checkbox-required-terms** SHOULD For a required consent, set `isRequired`, and when it's not
-  checked on submit set `isInvalid` and explain why in text near it. Because the checkbox has no
-  red error style of its own.
+  checked on submit set `isInvalid` and say why in the `hint`. Because `isInvalid` draws the error
+  ring on the unchecked box and turns the hint red, but the reason still has to be in words.
 - **checkbox-base-visual** NEVER Use `CheckboxBase` as a form control. It is the visual box only,
   for use inside other components (menus, cards) that handle selection themselves.
 - **checkbox-size** SHOULD Use `sm` in forms next to `sm`/`md` inputs; `md` for stand-alone
@@ -40,21 +40,22 @@ import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
 
 ## Props
 
-| Prop                                    | Values                            | Default |
-| :-------------------------------------- | :-------------------------------- | :------ |
-| `size`                                  | `sm` (16px box) · `md` (20px box) | `sm`    |
-| `label`                                 | ReactNode                         |         |
-| `hint`                                  | ReactNode, below the label        |         |
-| `isSelected` / `defaultSelected`        | boolean                           |         |
-| `onChange`                              | `(isSelected: boolean) => void`   |         |
-| `isIndeterminate`                       | boolean                           |         |
-| `isDisabled`                            | boolean (`opacity-50`)            |         |
-| `isRequired`, `isInvalid`, `isReadOnly` | boolean                           |         |
-| `name`, `value`                         | string, for form data             |         |
-| `className`                             | layout only                       |         |
+| Prop                             | Values                            | Default |
+| :------------------------------- | :-------------------------------- | :------ |
+| `size`                           | `sm` (16px box) · `md` (20px box) | `sm`    |
+| `label`                          | ReactNode                         |         |
+| `hint`                           | ReactNode, below the label        |         |
+| `isSelected` / `defaultSelected` | boolean                           |         |
+| `onChange`                       | `(isSelected: boolean) => void`   |         |
+| `isIndeterminate`                | boolean                           |         |
+| `isDisabled`                     | boolean (disabled tokens)         |         |
+| `isInvalid`                      | boolean (error ring, red `hint`)  |         |
+| `isRequired`, `isReadOnly`       | boolean                           |         |
+| `name`, `value`                  | string, for form data             |         |
+| `className`                      | layout only                       |         |
 
 Plus React Aria `Checkbox` props. `CheckboxBase` (the box alone): `size`, `isSelected`,
-`isIndeterminate`, `isDisabled`, `isFocusVisible`, `className`.
+`isIndeterminate`, `isDisabled`, `isInvalid`, `isFocusVisible`, `className`.
 
 ## Accessibility
 

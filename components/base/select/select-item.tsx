@@ -91,11 +91,13 @@ export const SelectItem = ({
                         // Figma: selected bg-active, hover bg-primary_hover (selected or not), so hover comes last.
                         state.isSelected && selectionIndicator !== "checkbox" && "bg-active",
                         (state.isFocused || state.isHovered) && "bg-primary_hover",
-                        state.isDisabled && "cursor-not-allowed opacity-50",
+                        state.isDisabled && "cursor-not-allowed",
                         state.isFocusVisible && "ring-2 ring-focus-ring ring-inset",
 
                         // Icon styles
                         "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary",
+                        // Figma _Select menu item State=Disabled: text-disabled label and supporting text, fg-disabled icon.
+                        state.isDisabled && "*:data-icon:text-fg-disabled",
 
                         sizes[size].root,
                     )}
@@ -115,12 +117,22 @@ export const SelectItem = ({
                     {/* Figma _Select menu item: one line. The label keeps its width (cut only if it alone is too long);
                         the supporting text takes the rest and is cut with an ellipsis instead of wrapping. */}
                     <div className={cx("flex w-full min-w-0 flex-1", sizes[size].textContainer)}>
-                        <AriaText slot="label" className={cx("max-w-full shrink-0 truncate font-medium whitespace-nowrap text-primary", sizes[size].text)}>
+                        <AriaText
+                            slot="label"
+                            className={cx(
+                                "max-w-full shrink-0 truncate font-medium whitespace-nowrap text-primary",
+                                state.isDisabled && "text-disabled",
+                                sizes[size].text,
+                            )}
+                        >
                             {label || (typeof children === "function" ? children(state) : children)}
                         </AriaText>
 
                         {supportingText && (
-                            <AriaText slot="description" className={cx("min-w-0 truncate whitespace-nowrap text-tertiary", sizes[size].text)}>
+                            <AriaText
+                                slot="description"
+                                className={cx("min-w-0 truncate whitespace-nowrap text-tertiary", state.isDisabled && "text-disabled", sizes[size].text)}
+                            >
                                 {supportingText}
                             </AriaText>
                         )}

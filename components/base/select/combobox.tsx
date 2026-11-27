@@ -73,7 +73,7 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
             className={({ isFocusWithin, isDisabled }) =>
                 cx(
                     "relative flex w-full items-center gap-2 rounded-md bg-primary shadow-xs ring-1 ring-primary outline-hidden transition-shadow ring-inset",
-                    isDisabled && "cursor-not-allowed opacity-50",
+                    isDisabled && "cursor-not-allowed bg-disabled_subtle shadow-none ring-disabled [&_input]:text-disabled [&_p]:text-disabled",
                     // Invalid: the ComboBox root carries `data-invalid`
                     "in-data-invalid:ring-error_subtle",
                     isFocusWithin && "ring-2 ring-brand in-data-invalid:ring-error",

@@ -46,7 +46,7 @@ import { Toggle } from "fa-design-system/components/base/toggle/toggle";
 | `hint`                           | ReactNode                             |         |
 | `isSelected` / `defaultSelected` | boolean                               |         |
 | `onChange`                       | `(isSelected: boolean) => void`       |         |
-| `isDisabled`, `isReadOnly`       | boolean (disabled is `opacity-50`)    |         |
+| `isDisabled`, `isReadOnly`       | boolean (disabled tokens)             |         |
 | `name`, `value`                  | string, for form data                 |         |
 
 Plus React Aria `Switch` props. `ToggleBase` (the switch alone): `size`, `slim`, `isSelected`,

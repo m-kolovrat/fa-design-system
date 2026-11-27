@@ -106,8 +106,8 @@ export const InputDateBase = ({
                     isFocusWithin && !isDisabled && "ring-2 ring-brand",
 
                     // Disabled state styles
-                    isDisabled && "cursor-not-allowed opacity-50 in-data-input-wrapper:opacity-100",
-                    "group-disabled:cursor-not-allowed group-disabled:opacity-50 in-data-input-wrapper:group-disabled:opacity-100",
+                    isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled",
+                    "group-disabled:cursor-not-allowed group-disabled:bg-disabled_subtle group-disabled:ring-disabled",
 
                     // Invalid state styles
                     isInvalid && "ring-error_subtle",
@@ -124,7 +124,14 @@ export const InputDateBase = ({
         >
             {/* Leading icon and Payment icon */}
             {Icon && (
-                <Icon className={cx("pointer-events-none absolute text-fg-quaternary", sizes[inputSize].iconLeading, context?.iconClassName, iconClassName)} />
+                <Icon
+                    className={cx(
+                        "pointer-events-none absolute text-fg-quaternary group-data-disabled/input:text-fg-disabled",
+                        sizes[inputSize].iconLeading,
+                        context?.iconClassName,
+                        iconClassName,
+                    )}
+                />
             )}
 
             {/* Input field */}
@@ -133,7 +140,7 @@ export const InputDateBase = ({
                     <AriaDateSegment
                         segment={segment}
                         className={cx(
-                            "rounded px-0.5 text-primary tabular-nums caret-transparent focus:bg-brand-solid focus:font-medium focus:text-white focus:outline-hidden",
+                            "rounded px-0.5 text-primary tabular-nums caret-transparent group-data-disabled/input:text-disabled focus:bg-brand-solid focus:font-medium focus:text-white focus:outline-hidden",
                             // The placeholder segment.
                             segment.isPlaceholder && "text-placeholder uppercase",
                             // The separator "/" segment.
