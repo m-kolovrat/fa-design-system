@@ -60,10 +60,10 @@ export const SidebarNavigationSimple = ({
                 <FaLargeLogo className="h-6 w-auto text-fg-primary" />
 
                 {/* Mobile search input */}
-                <Input size="md" aria-label="Search" placeholder="Search" icon={Search} className="md:hidden" />
+                <Input aria-label="Search" placeholder="Search" icon={Search} className="md:hidden" />
 
                 {/* Desktop search input */}
-                <Input shortcut size="sm" aria-label="Search" placeholder="Search" icon={Search} className="max-md:hidden" />
+                <Input shortcut aria-label="Search" placeholder="Search" icon={Search} className="max-md:hidden" />
             </div>
 
             <NavList activeUrl={activeUrl} items={items} />

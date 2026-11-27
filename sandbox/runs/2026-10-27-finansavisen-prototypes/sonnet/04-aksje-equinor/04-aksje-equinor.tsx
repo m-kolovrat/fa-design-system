@@ -685,7 +685,7 @@ export const AksjeEquinor = () => {
                             className="lg:col-span-3"
                             slot={<span className="text-xs text-tertiary">Topp 5 nivåer</span>}
                         >
-                            <Table aria-label="Ordredybde for Equinor" size="sm">
+                            <Table aria-label="Ordredybde for Equinor">
                                 <Table.Header>
                                     <Table.Head id="bidVol" label="Kjøp, antall" isRowHeader />
                                     <Table.Head id="bid" label="Kjøp" className="text-right" />
@@ -715,7 +715,7 @@ export const AksjeEquinor = () => {
                                 </Button>
                             }
                         >
-                            <Table aria-label="Siste anbefalinger for Equinor" size="sm">
+                            <Table aria-label="Siste anbefalinger for Equinor">
                                 <Table.Header>
                                     <Table.Head id="broker" label="Megler" isRowHeader />
                                     <Table.Head id="rec" label="Anbefaling" />
@@ -768,7 +768,7 @@ export const AksjeEquinor = () => {
                                     Nøytral
                                 </Badge>
                             </div>
-                            <Table aria-label="Tekniske signaler for Equinor" size="sm">
+                            <Table aria-label="Tekniske signaler for Equinor">
                                 <Table.Header>
                                     <Table.Head id="name" label="Indikator" isRowHeader />
                                     <Table.Head id="value" label="Verdi" className="text-right" />
@@ -809,7 +809,7 @@ export const AksjeEquinor = () => {
                         </WidgetCard>
 
                         <WidgetCard title="Siste handler" className="lg:col-span-2" slot={<span className="text-xs text-tertiary">14:12</span>}>
-                            <Table aria-label="Siste handler i Equinor" size="sm">
+                            <Table aria-label="Siste handler i Equinor">
                                 <Table.Header>
                                     <Table.Head id="time" label="Tid" isRowHeader />
                                     <Table.Head id="price" label="Kurs" className="text-right" />
@@ -828,7 +828,7 @@ export const AksjeEquinor = () => {
                         </WidgetCard>
 
                         <WidgetCard title="Utbytte" className="lg:col-span-2" slot={<span className="text-xs text-tertiary">NOK per aksje</span>}>
-                            <Table aria-label="Utbytte fra Equinor" size="sm">
+                            <Table aria-label="Utbytte fra Equinor">
                                 <Table.Header>
                                     <Table.Head id="date" label="Dato" isRowHeader />
                                     <Table.Head id="kind" label="Type" />

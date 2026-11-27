@@ -18,25 +18,16 @@ import { HintText } from "./hint-text";
 import { Label } from "./label";
 
 const NumberFieldContext = createContext<{
-    size?: "sm" | "md" | "lg";
     wrapperClassName?: string;
     iconClassName?: string;
     tooltipClassName?: string;
     inputClassName?: string;
 }>({});
 
-const styles = {
-    sm: "px-3 py-2 text-sm",
-    md: "px-3 py-2 text-md",
-    lg: "px-3.5 py-2.5 text-md",
-};
+// One size (Figma Input number, 2026-11-27): 36px, Text sm.
+const inputStyles = "px-3 py-2 text-sm max-md:text-md/5";
 
 export interface InputNumberBaseProps extends AriaNumberFieldProps {
-    /**
-     * Input size: `sm` 36px, `md` 40px, `lg` 44px.
-     * @default sm
-     */
-    size?: "sm" | "md" | "lg";
     /** Placeholder text. */
     placeholder?: string;
     /** Class name for the input. */
@@ -54,7 +45,6 @@ export interface InputNumberBaseProps extends AriaNumberFieldProps {
 export const InputNumberBase = ({
     ref,
     groupRef,
-    size = "sm",
     isInvalid,
     isDisabled,
     placeholder,
@@ -67,8 +57,6 @@ export const InputNumberBase = ({
 }: Omit<InputNumberBaseProps, "label" | "hint">) => {
     // If the input is inside a `TextFieldContext`, use its context to simplify applying styles
     const context = useContext(NumberFieldContext);
-
-    const inputSize = context?.size || size;
 
     return (
         <AriaGroup
@@ -99,7 +87,7 @@ export const InputNumberBase = ({
             }
         >
             {orientation === "horizontal" && (
-                <Button size={size} iconLeading={Minus} slot="decrement" color="tertiary" className="static h-full rounded-r-none" />
+                <Button size="sm" iconLeading={Minus} slot="decrement" color="tertiary" className="static h-full rounded-r-none" />
             )}
 
             {/* Input field */}
@@ -110,29 +98,27 @@ export const InputNumberBase = ({
                 className={cx(
                     "m-0 w-full bg-transparent text-primary ring-0 outline-hidden placeholder:text-placeholder autofill:rounded-md autofill:text-primary disabled:cursor-not-allowed disabled:text-disabled",
                     orientation === "horizontal" && "text-center",
-                    styles[inputSize],
+                    inputStyles,
                     context?.inputClassName,
                     inputClassName,
                 )}
             />
 
-            {orientation === "horizontal" && (
-                <Button size={size} iconLeading={Plus} slot="increment" color="tertiary" className="static h-full rounded-l-none" />
-            )}
+            {orientation === "horizontal" && <Button size="sm" iconLeading={Plus} slot="increment" color="tertiary" className="static h-full rounded-l-none" />}
 
             {orientation === "vertical" && (
-                <div className={cx("flex w-7 shrink-0 flex-col border-l border-primary", size === "lg" && "w-7.5")}>
+                <div className={cx("flex w-7 shrink-0 flex-col border-l border-primary")}>
                     <AriaButton
                         slot="increment"
                         className="flex flex-1 cursor-pointer items-center justify-center text-fg-quaternary outline-brand transition hover:bg-primary_hover hover:text-fg-quaternary_hover disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <ChevronUp className={cx("size-3", size === "lg" && "size-3.5")} />
+                        <ChevronUp className="size-3" />
                     </AriaButton>
                     <AriaButton
                         slot="decrement"
                         className="flex flex-1 cursor-pointer items-center justify-center border-t border-primary text-fg-quaternary outline-brand transition hover:bg-primary_hover hover:text-fg-quaternary_hover disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <ChevronDown className={cx("size-3", size === "lg" && "size-3.5")} />
+                        <ChevronDown className="size-3" />
                     </AriaButton>
                 </div>
             )}
@@ -173,7 +159,6 @@ export interface InputNumberProps extends InputNumberBaseProps, Pick<AriaDateFie
 
 /** A number with stepper buttons and locale formatting; React Aria `NumberField`. */
 export const InputNumber = ({
-    size = "sm",
     placeholder,
     label,
     hint,
@@ -205,7 +190,6 @@ export const InputNumber = ({
                         {...{
                             ref,
                             groupRef,
-                            size,
                             placeholder,
                             inputClassName,
                             wrapperClassName,
@@ -214,7 +198,7 @@ export const InputNumber = ({
                     />
 
                     {hint && (
-                        <HintText isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                        <HintText isInvalid={isInvalid} className="text-xs">
                             {hint}
                         </HintText>
                     )}

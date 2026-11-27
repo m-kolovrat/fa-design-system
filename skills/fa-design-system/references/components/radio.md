@@ -30,8 +30,6 @@ import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radi
   group with `value` / `defaultValue` / `onChange(value: string)` on the group, not on items.
 - **radio-default** SHOULD Preselect the most common or safest option with `defaultValue`.
   Because a radio group can't be cleared once chosen.
-- **radio-size-on-group** MUST Set `size` on the group (`RadioGroup` / `RadioCardGroup`), not on
-  items. Because items read it from the group.
 - **radio-card-type** SHOULD Use one `type` for all cards in a group. `type="checkbox"` only
   changes the look; the group is still single-select.
 - **radio-card-actions** SHOULD Put secondary actions on payment cards in `actions` (link
@@ -39,13 +37,13 @@ import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radi
 
 ## Props
 
-`RadioGroup`: `size` (`sm` · `md`, default `sm`), `value`, `defaultValue`, `onChange`, `name`,
+`RadioGroup`: `value`, `defaultValue`, `onChange`, `name`,
 `isDisabled`, `isRequired`, `isInvalid`, `aria-label`, `orientation`.
 
-`RadioButton`: `value` (required), `label`, `hint`, `isDisabled`, `size` (the group's `size` wins).
+`RadioButton`: `value` (required), `label`, `hint`, `isDisabled`.
 `RadioButtonBase` is the circle alone.
 
-`RadioCardGroup`: `size` (`sm` · `md`, default `sm`) plus the same React Aria `RadioGroup` props.
+`RadioCardGroup`: the same React Aria `RadioGroup` props.
 
 `RadioCard`:
 
@@ -85,7 +83,7 @@ import { RadioCard, RadioCardGroup } from "fa-design-system/components/base/radi
     <RadioButton value="paper" label="Papiravis levert på døren" hint="Mandag til lørdag før kl. 07.00." />
 </RadioGroup>
 
-<RadioCardGroup aria-label="Abonnement" size="md" defaultValue="digital">
+<RadioCardGroup aria-label="Abonnement" defaultValue="digital">
     <RadioCard type="card" value="digital" icon={News} title="Digital" price="349 kr" period="per måned" />
     <RadioCard type="card" value="weekend" icon={Notebook} title="Digital + helg" price="449 kr" period="per måned" />
     <RadioCard type="card" value="full" icon={BookOpen} title="Komplett" price="599 kr" period="per måned" />

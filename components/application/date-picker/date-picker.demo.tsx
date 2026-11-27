@@ -124,7 +124,7 @@ export const DateTimePickerDemo = () => {
                                         <div className="flex flex-wrap gap-3 md:hidden">
                                             <div className="flex flex-1 gap-3">
                                                 <DateField aria-label="Date" granularity="day" className="flex-1">
-                                                    <InputDateBase size="sm" className="flex-1" />
+                                                    <InputDateBase className="flex-1" />
                                                 </DateField>
                                                 <Button slot={null} size="sm" color="secondary" onClick={handleTodayClick}>
                                                     Today
@@ -132,7 +132,6 @@ export const DateTimePickerDemo = () => {
                                             </div>
                                             <Select
                                                 aria-label="Time"
-                                                size="sm"
                                                 placeholder="Time"
                                                 icon={Clock}
                                                 items={TIME_SLOTS}
@@ -175,7 +174,7 @@ export const DateTimePickerDemo = () => {
                             <div className="flex gap-3 border-t border-secondary p-4">
                                 <div className="mr-auto hidden gap-3 md:flex">
                                     <DateField aria-label="Date" granularity="day" className="flex-1">
-                                        <InputDateBase size="sm" />
+                                        <InputDateBase />
                                     </DateField>
                                     <Button size="sm" color="secondary" onClick={handleTodayClick}>
                                         Today
@@ -276,9 +275,9 @@ export const RangeCalendarCardDemo = () => {
                     />
                     <div className="flex justify-between gap-3 border-t border-secondary p-4">
                         <div className="hidden items-center gap-2 md:flex">
-                            <InputDateBase slot="start" size="sm" />
+                            <InputDateBase slot="start" />
                             <div className="text-md text-quaternary">–</div>
-                            <InputDateBase slot="end" size="sm" />
+                            <InputDateBase slot="end" />
                         </div>
                         <div className="grid w-full grid-cols-2 gap-3 md:flex md:w-auto">
                             <Button size="sm" color="secondary">

@@ -35,26 +35,23 @@ import { Checkbox } from "fa-design-system/components/base/checkbox/checkbox";
   ring on the unchecked box and turns the hint red, but the reason still has to be in words.
 - **checkbox-base-visual** NEVER Use `CheckboxBase` as a form control. It is the visual box only,
   for use inside other components (menus, cards) that handle selection themselves.
-- **checkbox-size** SHOULD Use `sm` in forms next to `sm`/`md` inputs; `md` for stand-alone
-  consent blocks.
 
 ## Props
 
-| Prop                             | Values                            | Default |
-| :------------------------------- | :-------------------------------- | :------ |
-| `size`                           | `sm` (16px box) · `md` (20px box) | `sm`    |
-| `label`                          | ReactNode                         |         |
-| `hint`                           | ReactNode, below the label        |         |
-| `isSelected` / `defaultSelected` | boolean                           |         |
-| `onChange`                       | `(isSelected: boolean) => void`   |         |
-| `isIndeterminate`                | boolean                           |         |
-| `isDisabled`                     | boolean (disabled tokens)         |         |
-| `isInvalid`                      | boolean (error ring, red `hint`)  |         |
-| `isRequired`, `isReadOnly`       | boolean                           |         |
-| `name`, `value`                  | string, for form data             |         |
-| `className`                      | layout only                       |         |
+| Prop                             | Values                           | Default |
+| :------------------------------- | :------------------------------- | :------ |
+| `label`                          | ReactNode                        |         |
+| `hint`                           | ReactNode, below the label       |         |
+| `isSelected` / `defaultSelected` | boolean                          |         |
+| `onChange`                       | `(isSelected: boolean) => void`  |         |
+| `isIndeterminate`                | boolean                          |         |
+| `isDisabled`                     | boolean (disabled tokens)        |         |
+| `isInvalid`                      | boolean (error ring, red `hint`) |         |
+| `isRequired`, `isReadOnly`       | boolean                          |         |
+| `name`, `value`                  | string, for form data            |         |
+| `className`                      | layout only                      |         |
 
-Plus React Aria `Checkbox` props. `CheckboxBase` (the box alone): `size`, `isSelected`,
+Plus React Aria `Checkbox` props. `CheckboxBase` (the box alone): `isSelected`,
 `isIndeterminate`, `isDisabled`, `isInvalid`, `isFocusVisible`, `className`.
 
 ## Accessibility

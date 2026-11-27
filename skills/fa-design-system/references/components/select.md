@@ -40,14 +40,10 @@ import { TagSelect } from "fa-design-system/components/base/select/tag-select";
 - **select-errors** MUST Show errors with `isInvalid` + `hint`. The trigger gets the red ring and
   the hint the error text.
 
-- **select-size** SHOULD Leave `size` unset; the default is `sm` for every select, and the menu
-  items (Figma's \_Select menu item) follow it (rule **fa-field-size**). Use `md` or `lg` only when
-  the person asks for it or the design shows it.
-
 ## Props
 
-Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 36px · `md` 40px ·
-`lg` 44px; default `sm`), `label`, `hint` (string), `tooltip`, `placeholder`
+Every select is 36px, with one size of menu item (rule **fa-field-size**). Shared (`Select`,
+`Select.ComboBox`, `MultiSelect`, `TagSelect`): `label`, `hint` (string), `tooltip`, `placeholder`
 (default "Velg"; "Søk" for `Select.ComboBox` and `TagSelect`), `items` (`SelectItemType[]`),
 `isRequired`, `hideRequiredIndicator` (not on `TagSelect`), `isDisabled`, `isInvalid`,
 `popoverClassName`, children as `(item) => <Select.Item …/>`.
@@ -64,13 +60,12 @@ Shared (`Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`): `size` (`sm` 3
 - `TagSelect`: `selectedItems` (`ListData`, required), `onItemInserted`, `onItemCleared`,
   `valueFormatter`, `icon`, `shortcut` (off by default), `shortcutClassName`. Items:
   `TagSelect.Item`.
-- `NativeSelect`: `options` (`{ label, value, disabled? }[]`, required), `label`, `hint`, `size`,
+- `NativeSelect`: `options` (`{ label, value, disabled? }[]`, required), `label`, `hint`,
   `selectClassName` (classes on the `<select>` itself), plus `<select>` props.
 
 `MultiSelect` statics, rendered by `MultiSelect` itself and exported for composing your own popover:
 
-- `MultiSelect.Footer`: `onReset`, `onSelectAll`, `size` (`sm` · `md` · `lg`, default `sm`; every
-  size renders `sm` buttons), `labels` (`reset`, `selectAll`: "Nullstill", "Velg alle"),
+- `MultiSelect.Footer`: `onReset`, `onSelectAll` (`sm` buttons), `labels` (`reset`, `selectAll`: "Nullstill", "Velg alle"),
   `className`.
 - `MultiSelect.EmptyState`: `title` (default "Ingen treff"), `description` (default "Prøv et annet
   søkeord."), `onClearSearch` (shows a "Tøm søket" link button, only when passed),

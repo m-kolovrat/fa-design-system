@@ -182,7 +182,7 @@ export const SiteMenuPanel = ({ content, id, className }: { content: SiteMenuCon
                 </div>
 
                 <form role="search" action={content.searchAction ?? "/sok"} className="mt-auto flex items-center gap-2 border-t border-secondary pt-4">
-                    <Input name="q" size="md" icon={Search} placeholder="Søk etter artikler" aria-label="Søk etter artikler" className="flex-1" />
+                    <Input name="q" icon={Search} placeholder="Søk etter artikler" aria-label="Søk etter artikler" className="flex-1" />
                     <Button type="submit" size="md" color="primary">
                         Søk
                     </Button>

@@ -1,7 +1,6 @@
 "use client";
 
 import type { ComponentPropsWithRef, HTMLAttributes, ReactNode, Ref, TdHTMLAttributes, ThHTMLAttributes } from "react";
-import { createContext, useContext } from "react";
 import { ArrowDown, ChevronUpDown, Copy, Help, Pen, Trash } from "fa-icons";
 import type {
     CellProps as AriaCellProps,
@@ -47,26 +46,16 @@ export const TableRowActionsDropdown = () => (
     </Dropdown.Root>
 );
 
-/** `size` is undefined when no `TableCard.Root` or `Table` above has set one; consumers fall back to "md". */
-const TableContext = createContext<{ size?: "sm" | "md" }>({});
-
-export interface TableCardRootProps extends HTMLAttributes<HTMLDivElement> {
-    /**
-     * Row height and padding for the table inside: `md` 72px rows, `sm` 64px.
-     * @default md
-     */
-    size?: "sm" | "md";
-}
+export type TableCardRootProps = HTMLAttributes<HTMLDivElement>;
 
 /** `TableCard.Root`: the card around a table, its header and its pagination. */
-const TableCardRoot = ({ children, className, size, ...props }: TableCardRootProps) => {
+const TableCardRoot = ({ children, className, ...props }: TableCardRootProps) => {
     return (
-        <TableContext.Provider value={{ size }}>
-            {/* The card surface every card has (page-patterns "Surfaces"): 16px radius, border, no shadow. */}
-            <div {...props} className={cx("overflow-hidden rounded-2xl border border-secondary bg-primary_alt", className)}>
-                {children}
-            </div>
-        </TableContext.Provider>
+        // The card surface every card has (page-patterns "Surfaces"): 16px radius, border, no shadow.
+        // `data-table-card` lets pagination inside line up with the table's 20px cell sides.
+        <div {...props} data-table-card className={cx("overflow-hidden rounded-2xl border border-secondary bg-primary_alt", className)}>
+            {children}
+        </div>
     );
 };
 
@@ -85,12 +74,10 @@ export interface TableCardHeaderProps {
 
 /**
  * `TableCard.Header`: the card header above a table. It is `CardHeader` (one header for every card since 2026-11-27),
- * with the table card's own layout: the padding follows the table's `size`, and below `md` the trailing content
- * drops under the title.
+ * with the table card's own layout: 16px top and bottom and 20px sides from `md` (level with the table's cells),
+ * and below `md` the trailing content drops under the title.
  */
 const TableCardHeader = ({ title, badge, description, contentTrailing, className }: TableCardHeaderProps) => {
-    const { size = "md" } = useContext(TableContext);
-
     return (
         <CardHeader
             title={title}
@@ -99,18 +86,12 @@ const TableCardHeader = ({ title, badge, description, contentTrailing, className
             actions={contentTrailing}
             // `relative` and the unwrapped trailing slot keep what table cards relied on before the merge: trailing
             // content may position itself absolutely in the header (the demos' dots menu) without leaving a gap.
-            className={cx(
-                "relative max-md:flex-col max-md:items-start md:items-start [&>div:nth-child(2)]:contents",
-                size === "sm" && "py-4 md:px-5",
-                className,
-            )}
+            className={cx("relative max-md:flex-col max-md:items-start md:items-start [&>div:nth-child(2)]:contents", "py-4 md:px-5", className)}
         />
     );
 };
 
 export interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithRef<"table">, "className" | "slot" | "style"> {
-    /** Row height and padding when the table is not inside a `TableCard.Root` (which sets it there). */
-    size?: "sm" | "md";
     /** Names the table for screen readers (required unless `aria-labelledby` is set). */
     "aria-label"?: AriaTableProps["aria-label"];
     /** `single` or `multiple` adds a checkbox column for row selection. */
@@ -128,15 +109,11 @@ export interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithR
 }
 
 /** A data table: `Table.Header` with `Table.Head`s, and `Table.Body` with `Table.Row`s of `Table.Cell`s. */
-const TableRoot = ({ className, size, ...props }: TableRootProps) => {
-    const context = useContext(TableContext);
-
+const TableRoot = ({ className, ...props }: TableRootProps) => {
     return (
-        <TableContext.Provider value={{ size: context.size ?? size ?? "md" }}>
-            <div className="overflow-x-auto">
-                <AriaTable className={(state) => cx("w-full overflow-x-hidden", typeof className === "function" ? className(state) : className)} {...props} />
-            </div>
-        </TableContext.Provider>
+        <div className="overflow-x-auto">
+            <AriaTable className={(state) => cx("w-full overflow-x-hidden", typeof className === "function" ? className(state) : className)} {...props} />
+        </div>
     );
 };
 TableRoot.displayName = "Table";
@@ -148,26 +125,20 @@ export interface TableHeaderProps<T extends object>
      * @default true
      */
     bordered?: boolean;
-    /** Overrides the size from the table or card. */
-    size?: "sm" | "md";
     /** The columns as data; render each with a `Table.Head` as children. */
     columns?: AriaTableHeaderProps<T>["columns"];
 }
 
 /** `Table.Header`: the header row. */
-const TableHeader = <T extends object>({ columns, children, bordered = true, className, size: sizeProp, ...props }: TableHeaderProps<T>) => {
-    const context = useContext(TableContext);
+const TableHeader = <T extends object>({ columns, children, bordered = true, className, ...props }: TableHeaderProps<T>) => {
     const { selectionBehavior, selectionMode } = useTableOptions();
-
-    const size = sizeProp ?? context.size ?? "md";
 
     return (
         <AriaTableHeader
             {...props}
             className={(state) =>
                 cx(
-                    "relative bg-secondary",
-                    size === "sm" ? "h-9" : "h-11",
+                    "relative h-9 bg-secondary",
 
                     // Row border—using an "after" pseudo-element to avoid the border taking up space.
                     bordered &&
@@ -178,10 +149,10 @@ const TableHeader = <T extends object>({ columns, children, bordered = true, cla
             }
         >
             {selectionBehavior === "toggle" && (
-                <AriaColumn className={cx("relative py-2 pr-0 pl-4", size === "sm" ? "w-9 md:pl-5" : "w-11 md:pl-6")}>
+                <AriaColumn className="relative w-9 py-2 pr-0 pl-4 md:pl-5">
                     {selectionMode === "multiple" && (
                         <div className="flex items-start">
-                            <Checkbox slot="selection" size="md" />
+                            <Checkbox slot="selection" />
                         </div>
                     )}
                 </AriaColumn>
@@ -209,16 +180,14 @@ export interface TableHeadProps extends AriaColumnProps, Omit<ThHTMLAttributes<H
 /** `Table.Head`: one column heading. */
 const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadProps) => {
     const { selectionBehavior } = useTableOptions();
-    const { size = "md" } = useContext(TableContext);
 
     return (
         <AriaColumn
             {...props}
             className={(state) =>
                 cx(
-                    // Figma Table header cell: 20px side padding at sm, 24px at md, the same as the cells below.
-                    size === "sm" ? "px-5" : "px-6",
-                    "relative py-2 outline-hidden focus-visible:z-1 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-bg-primary focus-visible:ring-inset",
+                    // Figma Table header cell: 20px side padding, the same as the cells below.
+                    "relative px-5 py-2 outline-hidden focus-visible:z-1 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-bg-primary focus-visible:ring-inset",
                     selectionBehavior === "toggle" && "nth-2:pl-3",
                     state.allowsSorting && "cursor-pointer",
                     typeof className === "function" ? className(state) : className,
@@ -276,16 +245,11 @@ export interface TableRowProps<T extends object>
      * @default true
      */
     highlightSelectedRow?: boolean;
-    /** Overrides the size from the table or card. */
-    size?: "sm" | "md";
 }
 
 /** `Table.Row`: one row of cells. */
-const TableRow = <T extends object>({ columns, children, className, highlightSelectedRow = true, size: sizeProp, ...props }: TableRowProps<T>) => {
-    const context = useContext(TableContext);
+const TableRow = <T extends object>({ columns, children, className, highlightSelectedRow = true, ...props }: TableRowProps<T>) => {
     const { selectionBehavior } = useTableOptions();
-
-    const size = sizeProp ?? context.size ?? "md";
 
     return (
         <AriaRow
@@ -293,8 +257,8 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
             className={(state) =>
                 cx(
                     "relative outline-focus-ring transition after:pointer-events-none hover:bg-secondary focus-visible:outline-2 focus-visible:-outline-offset-2",
-                    // Figma Table cell: 64px rows at sm, 72px at md.
-                    size === "sm" ? "h-16" : "h-18",
+                    // Figma Table cell: 64px rows.
+                    "h-16",
                     highlightSelectedRow && "selected:bg-secondary",
 
                     // Row border—using an "after" pseudo-element to avoid the border taking up space.
@@ -305,9 +269,9 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
             }
         >
             {selectionBehavior === "toggle" && (
-                <AriaCell className={cx("relative py-2 pr-0 pl-4", size === "sm" ? "md:pl-5" : "md:pl-6")}>
+                <AriaCell className="relative py-2 pr-0 pl-4 md:pl-5">
                     <div className="flex items-end">
-                        <Checkbox slot="selection" size="md" />
+                        <Checkbox slot="selection" />
                     </div>
                 </AriaCell>
             )}
@@ -320,15 +284,13 @@ TableRow.displayName = "TableRow";
 
 export interface TableCellProps extends AriaCellProps, Omit<TdHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
     ref?: Ref<HTMLTableCellElement>;
-    /** Overrides the size from the table or card. */
-    size?: "sm" | "md";
     /** The main line (Figma "Lead text"): `text-sm text-primary`, regular. */
     leadText?: ReactNode;
     /** A second line under the lead text (Figma "Supporting text"): `text-sm text-tertiary`. */
     supportingText?: ReactNode;
     /**
-     * A visual before the text (Figma `Type=Avatar`, `File type icon`, `Payment method`): an `Avatar` the size of
-     * the cell (`sm` in an sm table, `md` in an md one), a file-type icon or a payment icon.
+     * A visual before the text (Figma `Type=Avatar`, `File type icon`, `Payment method`): an `Avatar` (`sm`), a
+     * file-type icon or a payment icon.
      */
     leading?: ReactNode;
 }
@@ -337,11 +299,8 @@ export interface TableCellProps extends AriaCellProps, Omit<TdHTMLAttributes<HTM
  * `Table.Cell`: `text-sm text-primary` by default. Give it `leadText`, `supportingText` and `leading` for the Figma
  * text and avatar cells; put anything else (a `Badge`, a change value, `ButtonUtility`) in `children`.
  */
-const TableCell = ({ className, children, size: sizeProp, leadText, supportingText, leading, ...props }: TableCellProps) => {
-    const context = useContext(TableContext);
+const TableCell = ({ className, children, leadText, supportingText, leading, ...props }: TableCellProps) => {
     const { selectionBehavior } = useTableOptions();
-
-    const size = sizeProp ?? context.size ?? "md";
 
     return (
         <AriaCell
@@ -349,8 +308,7 @@ const TableCell = ({ className, children, size: sizeProp, leadText, supportingTe
             className={(state) =>
                 cx(
                     "relative text-sm text-primary outline-focus-ring focus-visible:z-1 focus-visible:outline-2 focus-visible:-outline-offset-2",
-                    size === "sm" && "px-5 py-3",
-                    size === "md" && "px-6 py-4",
+                    "px-5 py-3",
 
                     selectionBehavior === "toggle" && "nth-2:pl-3",
 

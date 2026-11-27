@@ -69,7 +69,6 @@ const NavGroups = ({ groups, dividerClassName, hoverClassName, activeClassName }
 );
 
 interface HeaderSearchProps {
-    size: "sm" | "md";
     search: { wrapper: string; input: string; icon: string; ai: string };
     className?: string;
 }
@@ -78,10 +77,9 @@ interface HeaderSearchProps {
  * Header search (Figma: _Header search): the library Input with the brand override from
  * `siteBrands`, plus the AI star for Investorchat on the right. The star is decorative.
  */
-const HeaderSearch = ({ size, search, className }: HeaderSearchProps) => (
+const HeaderSearch = ({ search, className }: HeaderSearchProps) => (
     <div className={cx("group/search relative", className)}>
         <Input
-            size={size}
             icon={Search}
             placeholder="Søk på ticker eller spør Investorchat"
             aria-label="Søk på ticker eller spør Investorchat"
@@ -89,10 +87,7 @@ const HeaderSearch = ({ size, search, className }: HeaderSearchProps) => (
             inputClassName={cx("pr-9", search.input)}
             iconClassName={search.icon}
         />
-        <Ai
-            aria-hidden="true"
-            className={cx("pointer-events-none absolute top-1/2 right-3 -translate-y-1/2", size === "sm" ? "size-4" : "size-5", search.ai)}
-        />
+        <Ai aria-hidden="true" className={cx("pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2", search.ai)} />
     </div>
 );
 
@@ -217,8 +212,8 @@ export const SiteHeader = ({
                         </AriaLink>
                     </div>
 
-                    <HeaderSearch size="sm" search={theme.search} className="hidden flex-2 md:block lg:hidden" />
-                    <HeaderSearch size="md" search={theme.search} className="hidden w-126 lg:block" />
+                    <HeaderSearch search={theme.search} className="hidden flex-2 md:block lg:hidden" />
+                    <HeaderSearch search={theme.search} className="hidden w-126 lg:block" />
 
                     <div className="flex flex-1 items-center justify-end gap-3 lg:gap-2">
                         <div className="flex items-center gap-2">

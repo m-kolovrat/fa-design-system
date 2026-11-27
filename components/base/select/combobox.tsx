@@ -8,7 +8,7 @@ import { ComboBox as AriaComboBox, Group as AriaGroup, Input as AriaInput, ListB
 import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 import { Popover } from "@/components/base/select/popover";
-import { type CommonProps, SelectContext, type SelectItemType, sizes } from "@/components/base/select/select-shared";
+import { type CommonProps, type SelectItemType, styles } from "@/components/base/select/select-shared";
 import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { cx } from "@/utils/cx";
 import { isReactComponent } from "@/utils/is-react-component";
@@ -47,7 +47,6 @@ export interface ComboBoxProps extends Omit<AriaComboBoxProps<SelectItemType>, "
 }
 
 interface ComboBoxValueProps extends AriaGroupProps {
-    size: "sm" | "md" | "lg";
     shortcut: boolean;
     placeholder?: string;
     shortcutClassName?: string;
@@ -57,7 +56,7 @@ interface ComboBoxValueProps extends AriaGroupProps {
     ref?: Ref<HTMLDivElement>;
 }
 
-const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: IconProp, ref, ...otherProps }: ComboBoxValueProps) => {
+const ComboBoxValue = ({ shortcut, placeholder, shortcutClassName, icon: IconProp, ref, ...otherProps }: ComboBoxValueProps) => {
     const state = useContext(ComboBoxStateContext);
 
     const value = state?.selectedItem?.value || null;
@@ -81,7 +80,7 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
                     // Icon styles
                     "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary",
 
-                    sizes[size].root,
+                    styles.root,
                 )
             }
         >
@@ -95,9 +94,9 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
 
             <div className="relative flex w-full items-center">
                 {inputValue && (
-                    <span className={cx("absolute top-1/2 z-0 inline-flex w-full -translate-y-1/2 truncate", sizes[size].textContainer)} aria-hidden="true">
-                        <p className={cx("font-medium text-primary", sizes[size].text)}>{first}</p>
-                        {last && <p className={cx("-ml-0.75 text-tertiary", sizes[size].text)}>{last}</p>}
+                    <span className={cx("absolute top-1/2 z-0 inline-flex w-full -translate-y-1/2 truncate", styles.textContainer)} aria-hidden="true">
+                        <p className={cx("font-medium text-primary", styles.text)}>{first}</p>
+                        {last && <p className={cx("-ml-0.75 text-tertiary", styles.text)}>{last}</p>}
                     </span>
                 )}
 
@@ -105,7 +104,7 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
                     placeholder={placeholder}
                     className={cx(
                         "z-10 w-full appearance-none bg-transparent text-transparent caret-alpha-black/90 placeholder:text-placeholder focus:outline-hidden disabled:cursor-not-allowed",
-                        sizes[size].text,
+                        styles.text,
                     )}
                 />
             </div>
@@ -114,7 +113,7 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
                 <div
                     className={cx(
                         "absolute inset-y-0.5 right-0.5 z-10 hidden items-center rounded-r-[inherit] bg-linear-to-r from-transparent to-bg-primary to-40% pl-8 md:flex",
-                        sizes[size].shortcut,
+                        styles.shortcut,
                         shortcutClassName,
                     )}
                 >
@@ -134,7 +133,6 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
 export const ComboBox = ({
     placeholder = strings.select.searchPlaceholder,
     shortcut = true,
-    size = "sm",
     children,
     items,
     shortcutClassName,
@@ -161,7 +159,7 @@ export const ComboBox = ({
     });
 
     return (
-        <SelectContext.Provider value={{ size }}>
+        <>
             <AriaComboBox menuTrigger="focus" {...otherProps}>
                 {(state) => (
                     <div className="flex flex-col gap-1.5">
@@ -177,27 +175,26 @@ export const ComboBox = ({
                             shortcut={shortcut}
                             shortcutClassName={shortcutClassName}
                             icon={icon}
-                            size={size}
                             // This is a workaround to correctly calculating the trigger width
                             // while using ResizeObserver wasn't 100% reliable.
                             onFocus={onResize}
                             onPointerEnter={onResize}
                         />
 
-                        <Popover size={size} triggerRef={placeholderRef} style={{ width: popoverWidth }} className={otherProps.popoverClassName}>
+                        <Popover triggerRef={placeholderRef} style={{ width: popoverWidth }} className={otherProps.popoverClassName}>
                             <AriaListBox items={items} className="size-full outline-hidden">
                                 {children}
                             </AriaListBox>
                         </Popover>
 
                         {otherProps.hint && (
-                            <HintText isInvalid={state.isInvalid} className={cx(size === "sm" && "text-xs")}>
+                            <HintText isInvalid={state.isInvalid} className="text-xs">
                                 {otherProps.hint}
                             </HintText>
                         )}
                     </div>
                 )}
             </AriaComboBox>
-        </SelectContext.Provider>
+        </>
     );
 };

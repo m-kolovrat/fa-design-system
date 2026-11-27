@@ -51,7 +51,6 @@ export const ButtonBrandVerticalDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -73,7 +72,6 @@ export const ButtonGrayHorizontalDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -95,7 +93,6 @@ export const ButtonGrayVerticalDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -117,7 +114,6 @@ export const UnderlineDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -139,7 +135,6 @@ export const LineDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -161,7 +156,6 @@ export const ButtonBorderHorizontalDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -183,7 +177,6 @@ export const ButtonBorderVerticalDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -205,7 +198,6 @@ export const ButtonMinimalHorizontalDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -227,7 +219,6 @@ export const ButtonMinimalVerticalDemo = () => {
     return (
         <>
             <NativeSelect
-                size="sm"
                 aria-label="Tabs"
                 value={selectedTabIndex as string}
                 onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -248,9 +239,7 @@ const GenericTabs = ({
     fullWidth,
     items = tabs,
     orientation,
-    size = "sm",
 }: {
-    size?: "sm" | "md";
     orientation?: "horizontal" | "vertical";
     type: "underline" | "line" | "button-brand" | "button-gray" | "button-border" | "button-minimal";
     fullWidth?: boolean;
@@ -262,7 +251,6 @@ const GenericTabs = ({
         <>
             <div className="md:hidden">
                 <NativeSelect
-                    size="sm"
                     aria-label="Tabs"
                     value={selectedTabIndex as string}
                     onChange={(event) => setSelectedTabIndex(event.target.value)}
@@ -270,7 +258,7 @@ const GenericTabs = ({
                 />
             </div>
             <Tabs orientation={orientation} selectedKey={selectedTabIndex} onSelectionChange={setSelectedTabIndex} className="max-md:hidden">
-                <Tabs.List size={size} fullWidth={fullWidth} type={type} items={items}>
+                <Tabs.List fullWidth={fullWidth} type={type} items={items}>
                     {(tab) => <Tabs.Item {...tab} />}
                 </Tabs.List>
             </Tabs>
@@ -280,104 +268,89 @@ const GenericTabs = ({
 
 export const ButtonBrandHorizontal = () => (
     <div className="flex flex-col gap-16">
-        <GenericTabs type="button-brand" size="sm" />
-        <GenericTabs type="button-brand" size="md" />
+        <GenericTabs type="button-brand" />
     </div>
 );
 
 export const ButtonBrandHorizontalFullWidth = () => (
     <div className="flex w-full flex-col gap-16">
-        <GenericTabs type="button-brand" size="sm" items={fullWidthTabs} fullWidth />
-        <GenericTabs type="button-brand" size="md" items={fullWidthTabs} fullWidth />
+        <GenericTabs type="button-brand" items={fullWidthTabs} fullWidth />
     </div>
 );
 
 export const ButtonBrandVertical = () => (
     <div className="flex gap-16">
         <GenericTabs type="button-brand" orientation="vertical" />
-        <GenericTabs type="button-brand" orientation="vertical" size="md" />
     </div>
 );
 
 export const ButtonGrayHorizontal = () => (
     <div className="flex flex-col gap-16">
         <GenericTabs type="button-gray" />
-        <GenericTabs type="button-gray" size="md" />
     </div>
 );
 export const ButtonGrayHorizontalFullWidth = () => (
     <div className="flex w-full flex-col gap-16">
-        <GenericTabs type="button-gray" size="sm" items={fullWidthTabs} fullWidth />
-        <GenericTabs type="button-gray" size="md" items={fullWidthTabs} fullWidth />
+        <GenericTabs type="button-gray" items={fullWidthTabs} fullWidth />
     </div>
 );
 
 export const ButtonGrayVertical = () => (
     <div className="flex gap-16">
         <GenericTabs type="button-gray" orientation="vertical" />
-        <GenericTabs type="button-gray" orientation="vertical" size="md" />
     </div>
 );
 
 export const UnderlineHorizontal = () => (
     <div className="flex flex-col gap-16">
         <GenericTabs type="underline" />
-        <GenericTabs type="underline" size="md" />
     </div>
 );
 
 export const UnderlineHorizontalFullWidth = () => (
     <div className="flex w-full flex-col gap-16">
-        <GenericTabs type="underline" size="sm" items={fullWidthTabs} fullWidth />
-        <GenericTabs type="underline" size="md" items={fullWidthTabs} fullWidth />
+        <GenericTabs type="underline" items={fullWidthTabs} fullWidth />
     </div>
 );
 
 export const UnderlineVertical = () => (
     <div className="flex gap-16">
         <GenericTabs type="line" orientation="vertical" />
-        <GenericTabs type="line" orientation="vertical" size="md" />
     </div>
 );
 
 export const ButtonBorderHorizontal = () => (
     <div className="flex flex-col gap-16">
         <GenericTabs type="button-border" />
-        <GenericTabs type="button-border" size="md" />
     </div>
 );
 
 export const ButtonBorderHorizontalFullWidth = () => (
     <div className="flex w-full flex-col gap-16">
-        <GenericTabs type="button-border" size="sm" items={fullWidthTabs} fullWidth />
-        <GenericTabs type="button-border" size="md" items={fullWidthTabs} fullWidth />
+        <GenericTabs type="button-border" items={fullWidthTabs} fullWidth />
     </div>
 );
 
 export const ButtonBorderVertical = () => (
     <div className="flex gap-16">
         <GenericTabs type="button-border" orientation="vertical" />
-        <GenericTabs type="button-border" orientation="vertical" size="md" />
     </div>
 );
 
 export const ButtonMinimalHorizontal = () => (
     <div className="flex flex-col gap-16">
         <GenericTabs type="button-minimal" />
-        <GenericTabs type="button-minimal" size="md" />
     </div>
 );
 
 export const ButtonMinimalHorizontalFullWidth = () => (
     <div className="flex w-full flex-col gap-16">
         <GenericTabs type="button-minimal" items={fullWidthTabs} fullWidth />
-        <GenericTabs type="button-minimal" size="md" items={fullWidthTabs} fullWidth />
     </div>
 );
 
 export const ButtonMinimalVertical = () => (
     <div className="flex gap-16">
         <GenericTabs type="button-minimal" orientation="vertical" />
-        <GenericTabs type="button-minimal" orientation="vertical" size="md" />
     </div>
 );

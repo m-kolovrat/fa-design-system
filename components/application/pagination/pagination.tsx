@@ -82,7 +82,12 @@ export const PaginationPageDefault = ({ page = 1, total = 10, className, ...prop
             {...props}
             page={page}
             total={total}
-            className={cx("flex w-full items-center justify-between gap-3 border-t border-secondary pt-4 md:pt-5", className)}
+            className={cx(
+                "flex w-full items-center justify-between gap-3 border-t border-secondary pt-4 md:pt-5",
+                // Inside a `TableCard.Root`: the card's padding, level with the table's 20px cell sides.
+                "in-data-table-card:px-4 in-data-table-card:pt-3 in-data-table-card:pb-3 md:in-data-table-card:px-5 md:in-data-table-card:pt-3 md:in-data-table-card:pb-4",
+                className,
+            )}
         >
             <div className="hidden flex-1 justify-start md:flex">
                 <Pagination.PrevTrigger asChild>
@@ -146,7 +151,12 @@ export const PaginationPageMinimalCenter = ({ page = 1, total = 10, className, .
             {...props}
             page={page}
             total={total}
-            className={cx("flex w-full items-center justify-between gap-3 border-t border-secondary pt-4 md:pt-5", className)}
+            className={cx(
+                "flex w-full items-center justify-between gap-3 border-t border-secondary pt-4 md:pt-5",
+                // Inside a `TableCard.Root`: the card's padding, level with the table's 20px cell sides.
+                "in-data-table-card:px-4 in-data-table-card:pt-3 in-data-table-card:pb-3 md:in-data-table-card:px-5 md:in-data-table-card:pt-3 md:in-data-table-card:pb-4",
+                className,
+            )}
         >
             <div className="flex flex-1 justify-start">
                 <Pagination.PrevTrigger asChild>
@@ -199,7 +209,7 @@ export const PaginationCardDefault = ({ page = 1, total = 10, ...props }: Pagina
             {...props}
             page={page}
             total={total}
-            className="flex w-full items-center justify-between gap-3 border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4"
+            className="flex w-full items-center justify-between gap-3 border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4 md:in-data-table-card:px-5"
         >
             <div className="flex flex-1 justify-start">
                 <Pagination.PrevTrigger asChild>
@@ -280,7 +290,7 @@ export const PaginationCardMinimal = ({
     const align = alignProp ?? "left";
     const labels = { ...strings.pagination, ...labelsProp };
     return (
-        <div className={cx("border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4", className)}>
+        <div className={cx("border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4 md:in-data-table-card:px-5", className)}>
             <MobilePagination page={page} total={total} onPageChange={onPageChange} labels={labels} />
 
             <nav aria-label={labels.navigation} className={cx("hidden items-center gap-3 md:flex", align === "center" && "justify-between")}>
@@ -302,7 +312,6 @@ export const PaginationCardMinimal = ({
                         aria-label={labels.pageSize}
                         value={pageSize}
                         onChange={(value) => onPageSizeChange?.(value as number)}
-                        size="sm"
                         items={[10, 25, 50, 100].map((count) => ({ label: String(count), id: count }))}
                     >
                         {(item) => (
@@ -339,7 +348,7 @@ export const PaginationButtonGroup = ({ align: alignProp, page = 1, total = 10, 
     return (
         <div
             className={cx(
-                "flex border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4",
+                "flex border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4 md:in-data-table-card:px-5",
                 align === "left" && "justify-start",
                 align === "center" && "justify-center",
                 align === "right" && "justify-end",
@@ -417,7 +426,7 @@ export const PaginationCardAdvanced = ({
     const labels = { ...strings.pagination, ...labelsProp };
 
     return (
-        <div className={cx("border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4", className)}>
+        <div className={cx("border-t border-secondary px-4 py-3 md:px-6 md:pt-3 md:pb-4 md:in-data-table-card:px-5", className)}>
             <Pagination.Root
                 page={page}
                 total={total}
@@ -437,7 +446,6 @@ export const PaginationCardAdvanced = ({
                                 if (value === "" || !Number.isFinite(next)) return;
                                 onPageChange?.(Math.min(total, Math.max(1, Math.trunc(next))));
                             }}
-                            size="sm"
                             wrapperClassName="min-w-9"
                             inputClassName="text-center min-w-9 field-sizing-content"
                         />,
@@ -453,7 +461,6 @@ export const PaginationCardAdvanced = ({
                         aria-label={labels.pageSize}
                         value={pageSize}
                         onChange={(value) => onPageSizeChange?.(value as number)}
-                        size="sm"
                         items={[
                             { label: "10", id: 10 },
                             { label: "25", id: 25 },

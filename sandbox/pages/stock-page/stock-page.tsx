@@ -661,7 +661,7 @@ const StockTabs = () => {
                 options={stockTabs.map((t) => ({ label: t.label, value: t.id }))}
                 className="xl:hidden"
             />
-            <Tabs.List type="underline" size="sm" aria-label="Norwegian Air Shuttle (NAS)" items={stockTabs} className="max-xl:hidden">
+            <Tabs.List type="underline" aria-label="Norwegian Air Shuttle (NAS)" items={stockTabs} className="max-xl:hidden">
                 {(tab) => <Tabs.Item {...tab} />}
             </Tabs.List>
         </>
@@ -689,7 +689,7 @@ const NewsCard = () => {
                 className={cx(cardBody, "flex flex-1 flex-col gap-4")}
             >
                 <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
-                    <Tabs.List type="button-gray" size="sm" aria-label="Filtrer nyheter">
+                    <Tabs.List type="button-gray" aria-label="Filtrer nyheter">
                         {newsFilters.map((f) => (
                             <Tabs.Item key={f.id} id={f.id} label={f.label} />
                         ))}
@@ -756,7 +756,7 @@ const FinancialsCard = () => {
         <Card id="card-financials" className="lg:col-span-2">
             <CardHeader titleId="card-financials" title="Resultat og omsetning" />
             <Tabs selectedKey={view} onSelectionChange={(key) => setView(key as "annual" | "quarterly")} className={cx(cardBody, "flex flex-col gap-4")}>
-                <Tabs.List type="button-gray" size="sm" aria-label="Periode">
+                <Tabs.List type="button-gray" aria-label="Periode">
                     <Tabs.Item id="annual" label="Årlig" />
                     <Tabs.Item id="quarterly" label="Kvartalsvis" />
                 </Tabs.List>
@@ -1023,7 +1023,7 @@ const RecommendationsCard = ({ last }: { last: number }) => {
 const TechnicalsCard = () => (
     <Card id="card-technicals" className="lg:col-span-3">
         <CardHeader titleId="card-technicals" title="Tekniske indikatorer" />
-        <Table aria-labelledby="card-technicals" size="sm">
+        <Table aria-labelledby="card-technicals">
             <Table.Header>
                 <Table.Head id="name" label="Navn" isRowHeader />
                 <Table.Head id="value" label="Verdi" className="*:justify-end" />
@@ -1064,7 +1064,7 @@ const TechnicalsCard = () => (
 const TradesCard = () => (
     <Card id="card-trades" className="lg:col-span-2">
         <CardHeader titleId="card-trades" title="Siste handler" />
-        <Table aria-labelledby="card-trades" size="sm">
+        <Table aria-labelledby="card-trades">
             <Table.Header>
                 <Table.Head id="time" label="Tid" isRowHeader />
                 <Table.Head id="price" label="Kurs" className="*:justify-end" />
@@ -1090,7 +1090,7 @@ const TradesCard = () => (
 const DividendsCard = () => (
     <Card id="card-dividends" className="lg:col-span-2">
         <CardHeader titleId="card-dividends" title="Utbytte" />
-        <Table aria-labelledby="card-dividends" size="sm">
+        <Table aria-labelledby="card-dividends">
             <Table.Header>
                 <Table.Head id="amount" label="NOK per aksje" isRowHeader />
                 <Table.Head id="date" label="Dato" className="*:justify-end" />
@@ -1112,7 +1112,7 @@ const DividendsCard = () => (
 const CalendarCard = () => (
     <Card id="card-calendar" className="lg:col-span-2">
         <CardHeader titleId="card-calendar" title="Finanskalender" />
-        <Table aria-labelledby="card-calendar" size="sm">
+        <Table aria-labelledby="card-calendar">
             <Table.Header>
                 <Table.Head id="type" label="Type" isRowHeader />
                 <Table.Head id="date" label="Dato" />

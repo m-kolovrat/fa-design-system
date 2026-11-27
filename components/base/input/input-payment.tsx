@@ -95,7 +95,6 @@ export const PaymentInput = ({
     value,
     defaultValue,
     maxLength = 19,
-    size = "sm",
     placeholder,
     label,
     hint,
@@ -125,7 +124,6 @@ export const PaymentInput = ({
         <TextField
             aria-label={!label ? placeholder : undefined}
             {...props}
-            size={size}
             className={className}
             inputMode="numeric"
             maxLength={maxLength}
@@ -144,7 +142,6 @@ export const PaymentInput = ({
                         {...{
                             ref,
                             groupRef,
-                            size,
                             placeholder,
                             shortcut,
                             wrapperClassName,
@@ -153,12 +150,12 @@ export const PaymentInput = ({
                             type,
                         }}
                         icon={card.icon}
-                        inputClassName={cx(size === "sm" && "pl-12", size === "md" && "pl-12.5", size === "lg" && "pl-13", inputClassName)}
-                        iconClassName={cx("h-6 w-8.5", size === "sm" && "left-1.5", size === "md" && "left-2", size === "lg" && "left-2.5", iconClassName)}
+                        inputClassName={cx("pl-12", inputClassName)}
+                        iconClassName={cx("left-1.5 h-6 w-8.5", iconClassName)}
                     />
 
                     {hint && (
-                        <HintText isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                        <HintText isInvalid={isInvalid} className="text-xs">
                             {hint}
                         </HintText>
                     )}

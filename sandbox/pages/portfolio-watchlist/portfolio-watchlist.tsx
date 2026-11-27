@@ -703,7 +703,7 @@ const HoldingsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpen
             />
             <Tabs selectedKey={viewId} onSelectionChange={(key) => setViewId(String(key))} className="max-md:hidden">
                 <div className="px-4 pt-5 pb-4 md:px-6">
-                    <Tabs.List type="button-gray" size="sm" aria-label="Visning">
+                    <Tabs.List type="button-gray" aria-label="Visning">
                         <Tabs.Item id="pris" label="Pris" />
                         <Tabs.Item id="beholdning" label="Beholdning" />
                         <Tabs.Item id="historikk" label="Historikk" />
@@ -712,7 +712,7 @@ const HoldingsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; onOpen
                 </div>
 
                 <Tabs.Panel id={viewId}>
-                    <Table key={viewId} aria-labelledby="card-holdings" size="sm">
+                    <Table key={viewId} aria-labelledby="card-holdings">
                         <Table.Header>
                             <Table.Head id="name" label="Instrument" isRowHeader className="w-full min-w-56" />
                             {columns.map((c) => (
@@ -795,7 +795,7 @@ const NewsCard = ({ watchlist }: { watchlist: Watchlist }) => {
             <Tabs selectedKey={sourceId} onSelectionChange={(key) => setSourceId(String(key))} className={cx(cardBody, "flex flex-1 flex-col")}>
                 {/* Source as minimal tabs; categories as a Dropdown chip (page-patterns) */}
                 <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
-                    <Tabs.List type="button-gray" size="sm" aria-label="Kilde" className="shrink-0">
+                    <Tabs.List type="button-gray" aria-label="Kilde" className="shrink-0">
                         {sourceFilters.map((f) => (
                             <Tabs.Item key={f.id} id={f.id} label={f.label} />
                         ))}
@@ -1003,7 +1003,7 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
             <CardHeader titleId="card-transactions" title="Historiske transaksjoner" />
             <Tabs selectedKey={tab} onSelectionChange={setTab}>
                 <div className="px-4 pt-5 pb-4 md:px-6">
-                    <Tabs.List type="button-gray" size="sm" aria-label="Transaksjonstype">
+                    <Tabs.List type="button-gray" aria-label="Transaksjonstype">
                         <Tabs.Item id="handler" label="Handler" />
                         <Tabs.Item id="kontanter" label="Kontanter" />
                         <Tabs.Item id="utbytte" label="Utbytte" />
@@ -1012,7 +1012,7 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
 
                 <Tabs.Panel id="handler">
                     <div className="max-md:hidden">
-                        <Table aria-label="Handler" size="sm" sortDescriptor={sort} onSortChange={setSort}>
+                        <Table aria-label="Handler" sortDescriptor={sort} onSortChange={setSort}>
                             <Table.Header>
                                 <Table.Head id="name" label="Navn" isRowHeader allowsSorting className="w-full min-w-56" />
                                 <Table.Head id="date" label="Dato" allowsSorting />
@@ -1076,7 +1076,7 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
                 </Tabs.Panel>
 
                 <Tabs.Panel id="kontanter">
-                    <Table aria-label="Kontantbevegelser" size="sm">
+                    <Table aria-label="Kontantbevegelser">
                         <Table.Header>
                             <Table.Head id="date" label="Dato" isRowHeader className="w-full" />
                             <Table.Head id="type" label="Type" />
@@ -1097,7 +1097,7 @@ const TransactionsCard = ({ watchlist, onOpenSheet }: { watchlist: Watchlist; on
                 </Tabs.Panel>
 
                 <Tabs.Panel id="utbytte">
-                    <Table aria-label="Mottatt utbytte" size="sm">
+                    <Table aria-label="Mottatt utbytte">
                         <Table.Header>
                             <Table.Head id="name" label="Navn" isRowHeader className="w-full min-w-48" />
                             <Table.Head id="date" label="Dato" className="max-md:hidden" />
@@ -1243,7 +1243,7 @@ export const PortfolioWatchlistPage = () => {
                 <main className="mx-auto w-full max-w-container px-4 py-6 md:px-8">
                     <Tabs selectedKey={selected} onSelectionChange={setSelected}>
                         <WatchlistSelect value={selected as string} onChange={setSelected} className="md:hidden" />
-                        <Tabs.List type="underline" size="sm" aria-label="Mine watchlister" className="max-md:hidden">
+                        <Tabs.List type="underline" aria-label="Mine watchlister" className="max-md:hidden">
                             {watchlists.map((w) => (
                                 <Tabs.Item key={w.id} id={w.id}>
                                     {w.name}

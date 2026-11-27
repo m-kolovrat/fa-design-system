@@ -5,8 +5,6 @@ import { Checkbox as AriaCheckbox, type CheckboxProps as AriaCheckboxProps } fro
 import { cx } from "@/utils/cx";
 
 export interface CheckboxBaseProps {
-    /** The size variant: `sm` 16px, `md` 20px */
-    size?: "sm" | "md";
     /** Layout classes only */
     className?: string;
     /** Draws the focus ring (pass the parent's focus-visible state) */
@@ -22,12 +20,11 @@ export interface CheckboxBaseProps {
 }
 
 /** The visual box only, for use inside other components (menus, cards); never a form control on its own. */
-export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminate, isInvalid, size = "sm", isFocusVisible = false }: CheckboxBaseProps) => {
+export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminate, isInvalid, isFocusVisible = false }: CheckboxBaseProps) => {
     return (
         <div
             className={cx(
                 "relative flex size-4 shrink-0 cursor-pointer appearance-none items-center justify-center rounded bg-primary ring-1 ring-primary ring-inset",
-                size === "md" && "size-5 rounded-sm",
                 // The error ring Input and Select use; a checked box keeps its brand fill.
                 isInvalid && "ring-error_subtle",
                 (isSelected || isIndeterminate) && "bg-brand-solid ring-brand-solid",
@@ -44,7 +41,6 @@ export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminat
                 className={cx(
                     "pointer-events-none absolute h-3 w-2.5 text-fg-white opacity-0 transition-inherit-all",
                     isDisabled && "text-fg-disabled_subtle",
-                    size === "md" && "size-3.5",
                     isIndeterminate && "opacity-100",
                 )}
             >
@@ -58,7 +54,6 @@ export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminat
                 className={cx(
                     "pointer-events-none absolute size-3 text-fg-white opacity-0 transition-inherit-all",
                     isDisabled && "text-fg-disabled_subtle",
-                    size === "md" && "size-3.5",
                     isSelected && !isIndeterminate && "opacity-100",
                 )}
             >
@@ -72,8 +67,6 @@ CheckboxBase.displayName = "CheckboxBase";
 export interface CheckboxProps extends AriaCheckboxProps {
     /** Ref to the `<label>` that wraps the box and its text */
     ref?: Ref<HTMLLabelElement>;
-    /** The size variant: `sm` 16px box, `md` 20px box */
-    size?: "sm" | "md";
     /** The label next to the box. Without it, pass an `aria-label` */
     label?: ReactNode;
     /** One line of explanation below the label */
@@ -101,38 +94,17 @@ export interface CheckboxProps extends AriaCheckboxProps {
 }
 
 /** A box the person checks to turn one option on or off, with an optional label and hint. */
-export const Checkbox = ({ label, hint, size = "sm", className, ...ariaCheckboxProps }: CheckboxProps) => {
-    const sizes = {
-        sm: {
-            root: "gap-2",
-            textWrapper: "",
-            label: "text-sm font-medium",
-            hint: "text-sm",
-        },
-        md: {
-            root: "gap-3",
-            textWrapper: "gap-0.5",
-            label: "text-md font-medium",
-            hint: "text-md",
-        },
-    };
-
+export const Checkbox = ({ label, hint, className, ...ariaCheckboxProps }: CheckboxProps) => {
     return (
         <AriaCheckbox
             {...ariaCheckboxProps}
             className={(state) =>
-                cx(
-                    "relative flex items-start",
-                    state.isDisabled && "cursor-not-allowed",
-                    sizes[size].root,
-                    typeof className === "function" ? className(state) : className,
-                )
+                cx("relative flex items-start gap-2", state.isDisabled && "cursor-not-allowed", typeof className === "function" ? className(state) : className)
             }
         >
             {({ isSelected, isIndeterminate, isDisabled, isInvalid, isFocusVisible }) => (
                 <>
                     <CheckboxBase
-                        size={size}
                         isSelected={isSelected}
                         isIndeterminate={isIndeterminate}
                         isDisabled={isDisabled}
@@ -141,13 +113,10 @@ export const Checkbox = ({ label, hint, size = "sm", className, ...ariaCheckboxP
                         className={label || hint ? "mt-0.5" : ""}
                     />
                     {(label || hint) && (
-                        <div className={cx("inline-flex flex-col", sizes[size].textWrapper)}>
-                            {label && <p className={cx("text-secondary select-none", sizes[size].label)}>{label}</p>}
+                        <div className="inline-flex flex-col">
+                            {label && <p className="text-sm font-medium text-secondary select-none">{label}</p>}
                             {hint && (
-                                <span
-                                    className={cx("text-tertiary", isInvalid && "text-error-primary", sizes[size].hint)}
-                                    onClick={(event) => event.stopPropagation()}
-                                >
+                                <span className={cx("text-sm text-tertiary", isInvalid && "text-error-primary")} onClick={(event) => event.stopPropagation()}>
                                     {hint}
                                 </span>
                             )}

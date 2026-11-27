@@ -443,7 +443,7 @@ const TradeListItem = ({ trade }: { trade: Trade }) => (
 const TradesTable = ({ rows, sort, onSortChange }: { rows: Trade[]; sort?: SortDescriptor; onSortChange?: (s: SortDescriptor) => void }) => {
     const sortable = Boolean(onSortChange);
     return (
-        <Table aria-label="Siste registrerte handler" size="sm" sortDescriptor={sort} onSortChange={onSortChange}>
+        <Table aria-label="Siste registrerte handler" sortDescriptor={sort} onSortChange={onSortChange}>
             <Table.Header>
                 <Table.Head id="investor" label="Investor" isRowHeader allowsSorting={sortable} />
                 <Table.Head id="ticker" label="Aksje" allowsSorting={sortable} />
@@ -535,7 +535,7 @@ const TradesCard = () => {
     };
 
     return (
-        <TableCard.Root size="sm" className="bg-primary_alt">
+        <TableCard.Root className="bg-primary_alt">
             <TableCard.Header
                 title="Siste registrerte handler"
                 badge={`${sorted.length} handler`}
@@ -553,7 +553,6 @@ const TradesCard = () => {
                         label="Aksje"
                         placeholder="Søk etter aksje"
                         shortcut={false}
-                        size="md"
                         items={[{ id: "all", label: "Alle aksjer" }, ...allStocks]}
                         value={stock}
                         onChange={(k) => {
@@ -571,7 +570,6 @@ const TradesCard = () => {
                         label="Investor"
                         placeholder="Søk etter investor"
                         shortcut={false}
-                        size="md"
                         items={[{ id: "all", label: "Alle investorer" }, ...allInvestors]}
                         value={investor}
                         onChange={(k) => {
@@ -602,7 +600,6 @@ const TradesCard = () => {
                     <div className="md:hidden">
                         <Select
                             label="Sorter etter"
-                            size="md"
                             items={sortOptions}
                             value={sortId}
                             onChange={(k) => {
@@ -669,7 +666,7 @@ const TradesCard = () => {
 /* ------------------------------------------------------- investor tables */
 
 const InvestorsCard = () => (
-    <TableCard.Root size="sm">
+    <TableCard.Root>
         <TableCard.Header title="Alle investorer" badge={`${investors.length} investorer`} description="Åpne en portefølje for å se beholdning og handler" />
         <Table aria-label="Alle investorer">
             <Table.Header>

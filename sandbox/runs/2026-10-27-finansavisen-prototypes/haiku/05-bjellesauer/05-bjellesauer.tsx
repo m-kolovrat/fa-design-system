@@ -408,7 +408,7 @@ export default function Bjellesauer({ isSubscriber = true }: BjellesauerProps) {
                     </>
                 ) : null}
 
-                <TableCard.Root size="sm">
+                <TableCard.Root>
                     <TableCard.Header
                         title="Transaksjoner"
                         badge={isSubscriber ? `${sorted.length} treff` : undefined}

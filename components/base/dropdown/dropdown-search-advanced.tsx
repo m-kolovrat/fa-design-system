@@ -21,7 +21,7 @@ export const DropdownSearchAdvanced = () => {
             <Dropdown.Popover className="w-60">
                 <Autocomplete filter={contains}>
                     <SearchField className="flex gap-3 border-b border-secondary p-3">
-                        <InputBase size="md" placeholder="Search" icon={Search} />
+                        <InputBase placeholder="Search" icon={Search} />
                     </SearchField>
                     <Dropdown.Menu selectionMode="multiple" selectedKeys={selectedUsers} onSelectionChange={setSelectedUsers}>
                         <SubmenuTrigger>

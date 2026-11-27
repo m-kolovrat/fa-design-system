@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { FileIcon } from "@untitledui/file-icons";
 import { ArrowLeft, Check, Close, Pen, Trash, Upload } from "fa-icons";
 import type { SortDescriptor } from "react-aria-components";
-import { PaginationCardMinimal, PaginationPageMinimalCenter } from "@/components/application/pagination/pagination";
+import { PaginationPageMinimalCenter } from "@/components/application/pagination/pagination";
 import customers from "@/components/application/table/customers.json";
 import invoices from "@/components/application/table/invoices.json";
 import { Table, TableCard } from "@/components/application/table/table";
@@ -73,7 +73,7 @@ export const Table01DividerLine = () => {
                         <Table.Row id={item.username}>
                             <Table.Cell
                                 className="whitespace-nowrap"
-                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="md" />}
+                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="sm" />}
                                 leadText={item.name}
                                 supportingText={item.username}
                             />
@@ -110,7 +110,7 @@ export const Table01DividerLine = () => {
                 </Table.Body>
             </Table>
 
-            <PaginationPageMinimalCenter page={1} total={10} className="px-4 py-3 md:px-6 md:pt-3 md:pb-4" />
+            <PaginationPageMinimalCenter page={1} total={10} />
         </TableCard.Root>
     );
 };
@@ -169,7 +169,7 @@ export const Table01AlternatingFills = () => {
                         <Table.Row id={item.username} className="odd:bg-secondary">
                             <Table.Cell
                                 className="whitespace-nowrap"
-                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="md" />}
+                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="sm" />}
                                 leadText={item.name}
                                 supportingText={item.username}
                             />
@@ -206,103 +206,7 @@ export const Table01AlternatingFills = () => {
                 </Table.Body>
             </Table>
 
-            <PaginationPageMinimalCenter page={1} total={10} className="px-4 py-3 md:px-6 md:pt-3 md:pb-4" />
-        </TableCard.Root>
-    );
-};
-
-export const Table01DividerLineSm = () => {
-    const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-        column: "status",
-        direction: "ascending",
-    });
-
-    const sortedItems = useMemo(() => {
-        return teamMembers.items.sort((a, b) => {
-            const first = a[sortDescriptor.column as keyof typeof a];
-            const second = b[sortDescriptor.column as keyof typeof b];
-
-            // Compare numbers or booleans
-            if ((typeof first === "number" && typeof second === "number") || (typeof first === "boolean" && typeof second === "boolean")) {
-                return sortDescriptor.direction === "descending" ? second - first : first - second;
-            }
-
-            // Compare strings
-            if (typeof first === "string" && typeof second === "string") {
-                let cmp = first.localeCompare(second);
-                if (sortDescriptor.direction === "descending") {
-                    cmp *= -1;
-                }
-                return cmp;
-            }
-
-            return 0;
-        });
-    }, [sortDescriptor]);
-
-    return (
-        <TableCard.Root size="sm">
-            <TableCard.Header
-                title="Team members"
-                badge="100 users"
-                contentTrailing={
-                    <div className="absolute top-5 right-4 md:right-6">
-                        <DropdownIconSimple />
-                    </div>
-                }
-            />
-            <Table aria-label="Team members" selectionMode="multiple" sortDescriptor={sortDescriptor} onSortChange={setSortDescriptor}>
-                <Table.Header>
-                    <Table.Head id="name" label="Name" isRowHeader allowsSorting className="w-full max-w-1/4" />
-                    <Table.Head id="status" label="Status" allowsSorting />
-                    <Table.Head id="role" label="Role" allowsSorting tooltip="This is a tooltip" />
-                    <Table.Head id="email" label="Email address" allowsSorting className="md:hidden xl:table-cell" />
-                    <Table.Head id="teams" label="Teams" />
-                    <Table.Head id="actions" />
-                </Table.Header>
-
-                <Table.Body items={sortedItems}>
-                    {(item) => (
-                        <Table.Row id={item.username}>
-                            <Table.Cell
-                                className="whitespace-nowrap"
-                                leading={<Avatar src={item.avatarUrl} alt={item.name} size="sm" />}
-                                leadText={item.name}
-                            />
-                            <Table.Cell>
-                                <BadgeWithDot size="sm" color={item.status === "active" ? "success" : "gray"} type="modern">
-                                    {item.status === "active" ? "Active" : "Inactive"}
-                                </BadgeWithDot>
-                            </Table.Cell>
-                            <Table.Cell className="whitespace-nowrap">{item.role}</Table.Cell>
-                            <Table.Cell className="whitespace-nowrap md:hidden xl:table-cell">{item.email}</Table.Cell>
-                            <Table.Cell>
-                                <div className="flex gap-1">
-                                    {item.teams.slice(0, 3).map((team) => (
-                                        <Badge key={team.name} color={team.color as BadgeColor<BadgeTypes>} size="sm">
-                                            {team.name}
-                                        </Badge>
-                                    ))}
-
-                                    {item.teams.length > 3 && (
-                                        <Badge color="gray" size="sm">
-                                            +{item.teams.length - 3}
-                                        </Badge>
-                                    )}
-                                </div>
-                            </Table.Cell>
-                            <Table.Cell className="px-3">
-                                <div className="flex justify-end gap-0.5">
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash} />
-                                    <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Pen} />
-                                </div>
-                            </Table.Cell>
-                        </Table.Row>
-                    )}
-                </Table.Body>
-            </Table>
-
-            <PaginationCardMinimal align="right" page={1} total={10} className="px-4 py-3 md:px-5 md:pt-3 md:pb-4" />
+            <PaginationPageMinimalCenter page={1} total={10} />
         </TableCard.Root>
     );
 };
@@ -362,7 +266,7 @@ export const Table02DividerLine = () => {
                         <Table.Row id={item.name}>
                             <Table.Cell
                                 className="whitespace-nowrap"
-                                leading={<Avatar initials={item.initials} alt={item.name} size="md" />}
+                                leading={<Avatar initials={item.initials} alt={item.name} size="sm" />}
                                 leadText={item.name}
                                 supportingText={item.website}
                             />
@@ -461,7 +365,7 @@ export const Table02AlternatingFills = () => {
                         <Table.Row id={item.name} className="odd:bg-secondary">
                             <Table.Cell
                                 className="whitespace-nowrap"
-                                leading={<Avatar initials={item.initials} alt={item.name} size="md" />}
+                                leading={<Avatar initials={item.initials} alt={item.name} size="sm" />}
                                 leadText={item.name}
                                 supportingText={item.website}
                             />
@@ -577,7 +481,7 @@ export const Table03DividerLine = () => {
                             </Table.Cell>
                             <Table.Cell
                                 className="whitespace-nowrap"
-                                leading={<Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="md" />}
+                                leading={<Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="sm" />}
                                 leadText={item.customer.name}
                                 supportingText={item.customer.email}
                             />
@@ -596,7 +500,7 @@ export const Table03DividerLine = () => {
                     )}
                 </Table.Body>
             </Table>
-            <PaginationPageMinimalCenter page={1} total={10} className="px-4 py-3 md:px-6 md:pt-3 md:pb-4" />
+            <PaginationPageMinimalCenter page={1} total={10} />
         </TableCard.Root>
     );
 };
@@ -670,7 +574,7 @@ export const Table03AlternatingFills = () => {
                             </Table.Cell>
                             <Table.Cell
                                 className="whitespace-nowrap"
-                                leading={<Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="md" />}
+                                leading={<Avatar initials={getInitials(item.customer.name)} src={item.customer.avatarUrl} alt={item.customer.name} size="sm" />}
                                 leadText={item.customer.name}
                                 supportingText={item.customer.email}
                             />
@@ -689,7 +593,7 @@ export const Table03AlternatingFills = () => {
                     )}
                 </Table.Body>
             </Table>
-            <PaginationPageMinimalCenter page={1} total={10} className="px-4 py-3 md:px-6 md:pt-3 md:pb-4" />
+            <PaginationPageMinimalCenter page={1} total={10} />
         </TableCard.Root>
     );
 };

@@ -335,7 +335,7 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                 options={tabs.map((t) => ({ label: t.label, value: t.id }))}
                                 className="md:hidden"
                             />
-                            <Tabs.List type="underline" size="sm" aria-label="Bjellesauer" className="max-md:hidden">
+                            <Tabs.List type="underline" aria-label="Bjellesauer" className="max-md:hidden">
                                 {tabs.map((t) => (
                                     <Tabs.Item key={t.id} id={t.id} href={t.id} label={t.label} />
                                 ))}
@@ -357,7 +357,6 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                         <MultiSelect
                                             label="Aksje"
                                             placeholder="Alle aksjer"
-                                            size="sm"
                                             items={stockItems}
                                             selectedKeys={stockKeys}
                                             onSelectionChange={(keys) => {
@@ -380,7 +379,6 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                         <MultiSelect
                                             label="Investor"
                                             placeholder="Alle investorer"
-                                            size="sm"
                                             items={investorItems}
                                             selectedKeys={investorKeys}
                                             onSelectionChange={(keys) => {
@@ -450,7 +448,7 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                 {/* Desktop and tablet: the table */}
                                 <Table
                                     aria-label="Siste handler"
-                                    size="sm"
+
                                     sortDescriptor={sort}
                                     onSortChange={(next) => {
                                         setSort(next);
@@ -493,12 +491,12 @@ export const NotableInvestorsTradesPage = ({ isLoading = false }: NotableInvesto
                                             ) : (
                                                 <Table.Row id={t.id}>
                                                     <Table.Cell
-                                                        leading={<Avatar size="sm" alt="" initials={getInitials(investorById[t.investorId].name)} />}
+                                                        leading={<Avatar alt="" initials={getInitials(investorById[t.investorId].name)} />}
                                                         leadText={<CellLink href={investorHref(t.investorId)}>{investorById[t.investorId].name}</CellLink>}
                                                         supportingText={t.entity}
                                                     />
                                                     <Table.Cell
-                                                        leading={<Avatar size="sm" alt="" initials={t.ticker.slice(0, 2)} />}
+                                                        leading={<Avatar alt="" initials={t.ticker.slice(0, 2)} />}
                                                         leadText={<CellLink href={stockHref(t.ticker)}>{instrumentByTicker[t.ticker].name}</CellLink>}
                                                         supportingText={t.ticker}
                                                     />

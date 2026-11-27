@@ -1,6 +1,6 @@
 "use client";
 
-import { isValidElement, useContext } from "react";
+import { isValidElement } from "react";
 import { Check } from "fa-icons";
 import type { ListBoxItemProps as AriaListBoxItemProps } from "react-aria-components";
 import { ListBoxItem as AriaListBoxItem, Text as AriaText } from "react-aria-components";
@@ -9,31 +9,14 @@ import { CheckboxBase } from "@/components/base/checkbox/checkbox";
 import { cx } from "@/utils/cx";
 import { isReactComponent } from "@/utils/is-react-component";
 import type { SelectItemType } from "./select-shared";
-import { SelectContext } from "./select-shared";
 
-const sizes = {
-    sm: {
-        root: "p-2 pr-2.5 gap-2 *:data-icon:size-4",
-        text: "text-sm",
-        // Figma _Select menu item: 8px between label and supporting text at every size.
-        textContainer: "gap-x-2",
-        check: "size-4",
-        checkbox: "sm" as const,
-    },
-    md: {
-        root: "p-2 pr-2.5 gap-2 *:data-icon:size-5",
-        text: "text-md",
-        textContainer: "gap-x-2",
-        check: "size-5",
-        checkbox: "sm" as const,
-    },
-    lg: {
-        root: "p-2.5 pl-2 gap-2 *:data-icon:size-5",
-        text: "text-md",
-        textContainer: "gap-x-2",
-        check: "size-5",
-        checkbox: "md" as const,
-    },
+// One size (Figma _Select menu item, 2026-11-27): Text sm, 16px icons.
+const styles = {
+    root: "p-2 pr-2.5 gap-2 *:data-icon:size-4",
+    text: "text-sm",
+    // Figma _Select menu item: 8px between label and supporting text.
+    textContainer: "gap-x-2",
+    check: "size-4",
 };
 
 interface SelectItemProps extends Omit<AriaListBoxItemProps<SelectItemType>, "id">, SelectItemType {
@@ -57,8 +40,6 @@ export const SelectItem = ({
     selectionIndicatorAlign = "right",
     ...props
 }: SelectItemProps) => {
-    const { size } = useContext(SelectContext);
-
     const labelOrChildren = label || (typeof children === "string" ? children : "");
     const textValue = supportingText ? labelOrChildren + " " + supportingText : labelOrChildren;
 
@@ -80,9 +61,7 @@ export const SelectItem = ({
             textValue={textValue}
             isDisabled={isDisabled}
             {...props}
-            className={(state) =>
-                cx("w-full py-px outline-hidden", size === "sm" ? "px-1" : "px-1.5", typeof className === "function" ? className(state) : className)
-            }
+            className={(state) => cx("w-full px-1 py-px outline-hidden", typeof className === "function" ? className(state) : className)}
         >
             {(state) => (
                 <div
@@ -99,15 +78,13 @@ export const SelectItem = ({
                         // Figma _Select menu item State=Disabled: text-disabled label and supporting text, fg-disabled icon.
                         state.isDisabled && "*:data-icon:text-fg-disabled",
 
-                        sizes[size].root,
+                        styles.root,
                     )}
                 >
-                    {isLeft && selectionIndicator === "checkbox" && (
-                        <CheckboxBase size={sizes[size].checkbox} isSelected={state.isSelected} isDisabled={state.isDisabled} />
-                    )}
+                    {isLeft && selectionIndicator === "checkbox" && <CheckboxBase isSelected={state.isSelected} isDisabled={state.isDisabled} />}
 
                     {avatarUrl ? (
-                        <Avatar aria-hidden="true" size="xs" src={avatarUrl} alt={label} className={cx(size === "sm" && "size-5")} />
+                        <Avatar aria-hidden="true" size="xs" src={avatarUrl} alt={label} className="size-5" />
                     ) : isReactComponent(Icon) ? (
                         <Icon data-icon aria-hidden="true" />
                     ) : isValidElement(Icon) ? (
@@ -116,13 +93,13 @@ export const SelectItem = ({
 
                     {/* Figma _Select menu item: one line. The label keeps its width (cut only if it alone is too long);
                         the supporting text takes the rest and is cut with an ellipsis instead of wrapping. */}
-                    <div className={cx("flex w-full min-w-0 flex-1", sizes[size].textContainer)}>
+                    <div className={cx("flex w-full min-w-0 flex-1", styles.textContainer)}>
                         <AriaText
                             slot="label"
                             className={cx(
                                 "max-w-full shrink-0 truncate font-medium whitespace-nowrap text-primary",
                                 state.isDisabled && "text-disabled",
-                                sizes[size].text,
+                                styles.text,
                             )}
                         >
                             {label || (typeof children === "function" ? children(state) : children)}
@@ -131,7 +108,7 @@ export const SelectItem = ({
                         {supportingText && (
                             <AriaText
                                 slot="description"
-                                className={cx("min-w-0 truncate whitespace-nowrap text-tertiary", state.isDisabled && "text-disabled", sizes[size].text)}
+                                className={cx("min-w-0 truncate whitespace-nowrap text-tertiary", state.isDisabled && "text-disabled", styles.text)}
                             >
                                 {supportingText}
                             </AriaText>
@@ -139,11 +116,11 @@ export const SelectItem = ({
                     </div>
 
                     {state.isSelected && selectionIndicator === "checkmark" && (
-                        <Check aria-hidden="true" className={cx("ml-auto text-fg-brand-primary", sizes[size].check)} />
+                        <Check aria-hidden="true" className={cx("ml-auto text-fg-brand-primary", styles.check)} />
                     )}
 
                     {!isLeft && selectionIndicator === "checkbox" && (
-                        <CheckboxBase size={sizes[size].checkbox} isSelected={state.isSelected} isDisabled={state.isDisabled} className="ml-auto" />
+                        <CheckboxBase isSelected={state.isSelected} isDisabled={state.isDisabled} className="ml-auto" />
                     )}
                 </div>
             )}

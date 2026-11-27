@@ -57,32 +57,22 @@ const getTabStyles = ({ isFocusVisible, isSelected, isHovered }: AriaTabRenderPr
     ),
 });
 
+// Tabs have one size (Figma _Tab button base, 2026-11-27): Text sm semibold, 16px icons.
 const sizes = {
-    sm: {
-        base: "text-sm font-semibold gap-1 *:data-icon:size-4",
-        "button-brand": "py-2 px-2.5",
-        "button-gray": "py-2 px-2.5",
-        "button-border": "py-2 px-2.5",
-        "button-minimal": "py-2 px-2.5",
-        underline: "px-0.5 pb-2.5 pt-0",
-        line: "pl-2.5 pr-3 py-0.5",
-    },
-    md: {
-        base: "text-md font-semibold gap-1.5 *:data-icon:size-5",
-        "button-brand": "py-2.5 px-2.5",
-        "button-gray": "py-2.5 px-2.5",
-        "button-border": "py-2.5 px-2.5",
-        "button-minimal": "py-2.5 px-2.5",
-        underline: "px-0.5 pb-2.5 pt-0",
-        line: "pr-3.5 pl-3 py-1",
-    },
+    base: "text-sm font-semibold gap-1 *:data-icon:size-4",
+    "button-brand": "py-2 px-2.5",
+    "button-gray": "py-2 px-2.5",
+    "button-border": "py-2 px-2.5",
+    "button-minimal": "py-2 px-2.5",
+    underline: "px-0.5 pb-2.5 pt-0",
+    line: "pl-2.5 pr-3 py-0.5",
 };
 
 // Styles for different types of horizontal tabs
-const getHorizontalStyles = ({ size, fullWidth }: { size?: "sm" | "md"; fullWidth?: boolean }) => ({
+const getHorizontalStyles = ({ fullWidth }: { fullWidth?: boolean }) => ({
     "button-brand": "gap-1",
     "button-gray": "gap-1",
-    "button-border": cx("gap-1 rounded-lg bg-secondary_alt p-1 ring-1 ring-secondary ring-inset", size === "md" && "rounded-xl p-1.5"),
+    "button-border": "gap-1 rounded-lg bg-secondary_alt p-1 ring-1 ring-secondary ring-inset",
     // Figma Button minimal: the track hugs its tabs; Full width=True stretches it.
     "button-minimal": cx("gap-0.5 rounded-md bg-secondary_alt ring-1 ring-secondary ring-inset", fullWidth ? "w-full" : "w-fit"),
     underline: cx("gap-3", fullWidth && "w-full gap-4"),
@@ -90,8 +80,6 @@ const getHorizontalStyles = ({ size, fullWidth }: { size?: "sm" | "md"; fullWidt
 });
 
 export interface TabListComponentProps<T extends object, K extends Orientation> extends Omit<AriaTabListProps<T>, "items"> {
-    /** The size of the tabs. */
-    size?: keyof typeof sizes;
     /**
      * The look of the tabs. Horizontal: `button-brand`, `button-gray`, `button-border`, `button-minimal`, `underline`.
      * Vertical: the same buttons, and `line` instead of `underline`.
@@ -106,13 +94,11 @@ export interface TabListComponentProps<T extends object, K extends Orientation> 
 }
 
 const TabListContext = createContext<Omit<TabListComponentProps<TabComponentProps, Orientation>, "items">>({
-    size: "sm",
     type: "button-brand",
 });
 
-/** `Tabs.List`: the row (or column) of tabs; sets their type and size. */
+/** `Tabs.List`: the row (or column) of tabs; sets their type. */
 export const TabList = <T extends Orientation>({
-    size = "sm",
     type = "button-brand",
     orientation: orientationProp,
     fullWidth,
@@ -125,17 +111,14 @@ export const TabList = <T extends Orientation>({
     const orientation = orientationProp ?? context?.orientation ?? "horizontal";
 
     return (
-        <TabListContext.Provider value={{ size, type, orientation, fullWidth }}>
+        <TabListContext.Provider value={{ type, orientation, fullWidth }}>
             <AriaTabList
                 {...otherProps}
                 className={(state) =>
                     cx(
                         "group flex",
 
-                        getHorizontalStyles({
-                            size,
-                            fullWidth,
-                        })[type as HorizontalTypes],
+                        getHorizontalStyles({ fullWidth })[type as HorizontalTypes],
 
                         orientation === "vertical" && "w-max flex-col",
 
@@ -193,7 +176,7 @@ export interface TabComponentProps extends AriaTabProps {
 
 /** `Tabs.Item`: one tab. */
 export const Tab = ({ label, children, badge, icon: Icon, className, ...otherProps }: TabComponentProps) => {
-    const { size = "sm", type = "button-brand", fullWidth } = useContext(TabListContext);
+    const { type = "button-brand", fullWidth } = useContext(TabListContext);
 
     const showPillColorBadge = type === "underline" || type === "line" || type === "button-brand";
 
@@ -205,8 +188,8 @@ export const Tab = ({ label, children, badge, icon: Icon, className, ...otherPro
                     "z-10 flex h-max cursor-pointer items-center justify-center gap-2 rounded-sm whitespace-nowrap text-quaternary transition",
                     "group-orientation-vertical:justify-start",
                     fullWidth && "w-full flex-1",
-                    sizes[size].base,
-                    sizes[size][type],
+                    sizes.base,
+                    sizes[type],
                     getTabStyles(prop)[type],
                     // Figma _Tab button base State=Disabled: label and icon in fg-disabled, as a disabled Button; no fading.
                     prop.isDisabled && "cursor-not-allowed text-fg-disabled *:data-icon:text-fg-disabled",
@@ -229,7 +212,7 @@ export const Tab = ({ label, children, badge, icon: Icon, className, ...otherPro
                                 size="sm"
                                 type={showPillColorBadge ? "pill-color" : "modern"}
                                 color={showPillColorBadge && (state.isHovered || state.isSelected) ? "brand" : "gray"}
-                                className={cx("hidden transition-inherit-all md:flex", size === "sm" && "-my-px")}
+                                className="-my-px hidden transition-inherit-all md:flex"
                             >
                                 {badge}
                             </Badge>

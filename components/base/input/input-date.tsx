@@ -17,7 +17,6 @@ import { HintText } from "./hint-text";
 import { Label } from "./label";
 
 const DateFieldContext = createContext<{
-    size?: "sm" | "md" | "lg";
     wrapperClassName?: string;
     iconClassName?: string;
     tooltipClassName?: string;
@@ -27,11 +26,6 @@ const DateFieldContext = createContext<{
 export interface InputDateBaseProps extends Omit<AriaDateInputProps, "children"> {
     /** Tooltip message on hover. */
     tooltip?: string;
-    /**
-     * Input size: `sm` 36px, `md` 40px, `lg` 44px.
-     * @default sm
-     */
-    size?: "sm" | "md" | "lg";
     /** Placeholder text. */
     placeholder?: string;
     /** Class name for the icon. */
@@ -56,7 +50,6 @@ export const InputDateBase = ({
     tooltip,
     shortcut,
     groupRef,
-    size = "sm",
     isInvalid,
     isDisabled,
     icon: Icon,
@@ -72,27 +65,12 @@ export const InputDateBase = ({
     // If the input is inside a `TextFieldContext`, use its context to simplify applying styles
     const context = useContext(DateFieldContext);
 
-    const inputSize = context?.size || size;
-
-    const sizes = sortCx({
-        sm: {
-            root: cx("px-3 py-2 text-sm", hasTrailingIcon && "pr-9", hasLeadingIcon && "pl-8.5"),
-            iconLeading: "left-3 size-4",
-            iconTrailing: "right-3",
-            shortcut: "pr-2.5",
-        },
-        md: {
-            root: cx("px-3 py-2 text-md", hasTrailingIcon && "pr-9", hasLeadingIcon && "pl-10"),
-            iconLeading: "left-3 size-5",
-            iconTrailing: "right-3",
-            shortcut: "pr-2.5",
-        },
-        lg: {
-            root: cx("px-3.5 py-2.5 text-md", hasTrailingIcon && "pr-9.5", hasLeadingIcon && "pl-10.5"),
-            iconLeading: "left-3.5 size-5",
-            iconTrailing: "right-3.5",
-            shortcut: "pr-3",
-        },
+    // One size (Figma Input date, 2026-11-27): 36px, Text sm, 16px icons.
+    const styles = sortCx({
+        root: cx("px-3 py-2 text-sm max-md:text-md/5", hasTrailingIcon && "pr-9", hasLeadingIcon && "pl-8.5"),
+        iconLeading: "left-3 size-4",
+        iconTrailing: "right-3",
+        shortcut: "pr-2.5",
     });
 
     return (
@@ -127,7 +105,7 @@ export const InputDateBase = ({
                 <Icon
                     className={cx(
                         "pointer-events-none absolute text-fg-quaternary group-data-disabled/input:text-fg-disabled",
-                        sizes[inputSize].iconLeading,
+                        styles.iconLeading,
                         context?.iconClassName,
                         iconClassName,
                     )}
@@ -135,7 +113,7 @@ export const InputDateBase = ({
             )}
 
             {/* Input field */}
-            <AriaDateInput {...inputProps} className={cx("flex w-full", sizes[size].root, typeof inputProps.className === "string" && inputProps.className)}>
+            <AriaDateInput {...inputProps} className={cx("flex w-full", styles.root, typeof inputProps.className === "string" && inputProps.className)}>
                 {(segment) => (
                     <AriaDateSegment
                         segment={segment}
@@ -157,7 +135,7 @@ export const InputDateBase = ({
                         aria-label={tooltip}
                         className={cx(
                             "absolute cursor-pointer text-fg-quaternary outline-focus-ring transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover",
-                            sizes[inputSize].iconTrailing,
+                            styles.iconTrailing,
                             context?.tooltipClassName,
                             tooltipClassName,
                         )}
@@ -171,7 +149,7 @@ export const InputDateBase = ({
             <Info
                 className={cx(
                     "pointer-events-none absolute hidden size-4 text-fg-error-secondary group-invalid/input:block",
-                    sizes[inputSize].iconTrailing,
+                    styles.iconTrailing,
                     context?.tooltipClassName,
                     tooltipClassName,
                 )}
@@ -182,7 +160,7 @@ export const InputDateBase = ({
                 <div
                     className={cx(
                         "pointer-events-none absolute inset-y-0.5 right-0.5 z-10 flex items-center rounded-r-[inherit] bg-linear-to-r from-transparent to-bg-primary to-40% pl-8",
-                        sizes[inputSize].shortcut,
+                        styles.shortcut,
                     )}
                 >
                     <span
@@ -204,7 +182,7 @@ export interface InputDateProps
         AriaDateFieldProps<DateValue>,
         Pick<
             InputDateBaseProps,
-            "ref" | "size" | "placeholder" | "icon" | "shortcut" | "tooltip" | "groupRef" | "iconClassName" | "wrapperClassName" | "tooltipClassName"
+            "ref" | "placeholder" | "icon" | "shortcut" | "tooltip" | "groupRef" | "iconClassName" | "wrapperClassName" | "tooltipClassName"
         > {
     /** Label text for the input */
     label?: string;
@@ -236,7 +214,6 @@ export interface InputDateProps
 
 /** A typed date in segments (dd.mm.åååå with a Norwegian locale); React Aria `DateField`. */
 export const InputDate = ({
-    size = "sm",
     placeholder,
     icon: Icon,
     label,
@@ -273,7 +250,6 @@ export const InputDate = ({
                         {...{
                             ref,
                             groupRef,
-                            size,
                             placeholder,
                             icon: Icon,
                             shortcut,
@@ -285,7 +261,7 @@ export const InputDate = ({
                     />
 
                     {hint && (
-                        <HintText isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                        <HintText isInvalid={isInvalid} className="text-xs">
                             {hint}
                         </HintText>
                     )}

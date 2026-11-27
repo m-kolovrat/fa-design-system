@@ -23,12 +23,7 @@ export const InputPrefix = ({ children, ...props }: InputPrefixProps) => (
             // Styles when the prefix is within an `InputGroup`
             "in-data-input-wrapper:in-data-leading:-mr-px in-data-input-wrapper:in-data-leading:rounded-l-md",
             "in-data-input-wrapper:in-data-trailing:-ml-px in-data-input-wrapper:in-data-trailing:rounded-r-md",
-            // Default size styles
-            "px-3 py-2 text-md",
-            // Small size styles
-            "in-data-input-wrapper:in-data-[input-size=sm]:px-3 in-data-input-wrapper:in-data-[input-size=sm]:py-2 in-data-input-wrapper:in-data-[input-size=sm]:text-sm",
-            // Large size styles
-            "in-data-input-wrapper:in-data-[input-size=lg]:py-2.5 in-data-input-wrapper:in-data-[input-size=lg]:pr-3 in-data-input-wrapper:in-data-[input-size=lg]:pl-3.5",
+            "px-3 py-2 text-sm max-md:text-md/5",
 
             props.className,
         )}
@@ -58,42 +53,23 @@ export interface InputGroupProps extends TextFieldProps {
 }
 
 /** An input with a prefix inside the box, or addons (`InputGroup.Prefix`, a `NativeSelect`, a `Button`) joined to it. */
-export const InputGroup = ({ size = "sm", prefix, leadingAddon, trailingAddon, label, hint, hideRequiredIndicator, children, ...props }: InputGroupProps) => {
+export const InputGroup = ({ prefix, leadingAddon, trailingAddon, label, hint, hideRequiredIndicator, children, ...props }: InputGroupProps) => {
     const hasLeading = !!leadingAddon;
     const hasTrailing = !!trailingAddon;
 
     const paddings = sortCx({
-        sm: {
-            input: cx(
-                // Apply padding styles when select element is passed as a child
-                hasLeading && "group-has-[&>select]:pr-9 group-has-[&>select]:pl-2",
-                hasTrailing && (prefix ? "group-has-[&>select]:pr-6 group-has-[&>select]:pl-0" : "group-has-[&>select]:pr-6 group-has-[&>select]:pl-3"),
-            ),
-            leadingText: "pr-1.5 pl-3",
-        },
-        md: {
-            input: cx(
-                // Apply padding styles when select element is passed as a child
-                hasLeading && "group-has-[&>select]:pr-9 group-has-[&>select]:pl-2.5",
-                hasTrailing && (prefix ? "group-has-[&>select]:pr-6 group-has-[&>select]:pl-0" : "group-has-[&>select]:pr-6 group-has-[&>select]:pl-3"),
-            ),
-            leadingText: "pr-2 pl-3",
-        },
-        lg: {
-            input: cx(
-                // Apply padding styles when select element is passed as a child
-                hasLeading && "group-has-[&>select]:pr-9.5 group-has-[&>select]:pl-3",
-                hasTrailing && (prefix ? "group-has-[&>select]:pr-6 group-has-[&>select]:pl-0" : "group-has-[&>select]:pr-6 group-has-[&>select]:pl-3"),
-            ),
-            leadingText: "pr-2 pl-3.5",
-        },
+        input: cx(
+            // Apply padding styles when select element is passed as a child
+            hasLeading && "group-has-[&>select]:pr-9 group-has-[&>select]:pl-2",
+            hasTrailing && (prefix ? "group-has-[&>select]:pr-6 group-has-[&>select]:pl-0" : "group-has-[&>select]:pr-6 group-has-[&>select]:pl-3"),
+        ),
+        leadingText: "pr-1.5 pl-3",
     });
 
     return (
         <TextField
-            size={size}
             aria-label={label || undefined}
-            inputClassName={cx(paddings[size].input)}
+            inputClassName={paddings.input}
             tooltipClassName={cx(hasTrailing && !hasLeading && "group-has-[&>select]:right-0")}
             wrapperClassName={cx(
                 "z-10",
@@ -110,8 +86,6 @@ export const InputGroup = ({ size = "sm", prefix, leadingAddon, trailingAddon, l
                     {label && <Label isRequired={hideRequiredIndicator ? false : isRequired}>{label}</Label>}
 
                     <div
-                        // Used to apply styles based on the size of the input group within children
-                        data-input-size={size}
                         className={cx(
                             "group relative flex h-max w-full flex-row justify-center rounded-md bg-primary transition",
 
@@ -129,8 +103,8 @@ export const InputGroup = ({ size = "sm", prefix, leadingAddon, trailingAddon, l
                         )}
 
                         {prefix && (
-                            <span className={cx("my-auto grow group-disabled:text-disabled", paddings[size].leadingText)}>
-                                <p className={cx("text-md text-tertiary", size === "sm" && "text-sm")}>{prefix}</p>
+                            <span className={cx("my-auto grow group-disabled:text-disabled", paddings.leadingText)}>
+                                <p className="text-sm text-tertiary max-md:text-md/5">{prefix}</p>
                             </span>
                         )}
 
@@ -143,11 +117,7 @@ export const InputGroup = ({ size = "sm", prefix, leadingAddon, trailingAddon, l
                         )}
                     </div>
 
-                    {hint && (
-                        <HintText isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
-                            {hint}
-                        </HintText>
-                    )}
+                    {hint && <HintText isInvalid={isInvalid}>{hint}</HintText>}
                 </>
             )}
         </TextField>

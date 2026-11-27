@@ -22,7 +22,7 @@ Read every table the same way:
 | Figma                                  | Code                                                                                 |
 | -------------------------------------- | ------------------------------------------------------------------------------------ |
 | Buttons/Button                         | `Button`, `fa-design-system/components/base/buttons/button`                          |
-| `Size=sm/md/lg/xl`                     | `size`, same names                                                                   |
+| `Size=sm/md/lg`                        | `size`, same names                                                                   |
 | `Hierarchy=Primary/Secondary/Tertiary` | `color="primary"` / `"secondary"` / `"tertiary"`                                     |
 | `Hierarchy=Link color/Link gray`       | `color="link-color"` / `"link-gray"` (add `href` for a link)                         |
 | `Icon leading` / `Icon trailing`       | `iconLeading={Icon}` / `iconTrailing={Icon}` (the swap is the icon)                  |
@@ -167,7 +167,6 @@ icon); the other badge exports take only `color="gray"`.
 | `Type=Radio`         | `RadioButton` inside `RadioGroup`, `fa-design-system/components/base/radio-buttons/radio-buttons` |
 | `Checked=True`       | `isSelected` (or `defaultSelected`); radios: the group's `value`                                  |
 | `Indeterminate=True` | `isIndeterminate`                                                                                 |
-| `Size=sm/md`         | `size`, same names (radios: on `RadioGroup`)                                                      |
 | `Text=True`          | `label`                                                                                           |
 | `State=Error`        | `isInvalid` (unchecked checkbox only)                                                             |
 
@@ -175,7 +174,6 @@ icon); the other badge exports take only `color="gray"`.
 | ---------------------------- | ------------------------------------------------------------------------------ |
 | Radio group                  | `RadioCardGroup`, `fa-design-system/components/base/radio-buttons/radio-cards` |
 | Radio group item             | `RadioCard` (`title`, `description`)                                           |
-| `Size=sm/md`                 | `size` on `RadioCardGroup`, same names                                         |
 | `Type=Icon simple`           | `type="icon" icon={Icon}`                                                      |
 | `Type=Icon card`             | `type="card" icon={Icon} price="…" period="…"`                                 |
 | `Type=Avatar`                | `type="avatar" avatarSrc="…"`                                                  |
@@ -197,7 +195,6 @@ icon); the other badge exports take only `color="gray"`.
 | Figma                    | Code                                                                                                                             |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
 | Input field              | `Input`, `fa-design-system/components/base/input/input`                                                                          |
-| `Size=sm/md/lg`          | `size`, same names                                                                                                               |
 | `Icon leading=True`      | `icon={Icon}`                                                                                                                    |
 | `Type=Leading dropdown`  | `InputGroup leadingAddon={<NativeSelect … />}` with `<InputBase />` inside, `fa-design-system/components/base/input/input-group` |
 | `Type=Trailing dropdown` | `InputGroup trailingAddon={<NativeSelect … />}`                                                                                  |
@@ -213,7 +210,6 @@ icon); the other badge exports take only `color="gray"`.
 | Input file                        | `InputFile`, `fa-design-system/components/base/input/input-file`            |
 | Input tags outer                  | `InputTagsOuter`, `fa-design-system/components/base/input/input-tags-outer` |
 | Input number                      | `InputNumber`, `fa-design-system/components/base/input/input-number`        |
-| `Size=sm/md/lg` (all four)        | `size`, same names                                                          |
 | `Orientation=Horizontal/Vertical` | `orientation="horizontal"` / `"vertical"` (default)                         |
 | `State=Loading` (Input file)      | `isLoading`                                                                 |
 
@@ -237,7 +233,6 @@ icon); the other badge exports take only `color="gray"`.
 | Figma                  | Code                                                                       |
 | ---------------------- | -------------------------------------------------------------------------- |
 | Select                 | `Select` + `Select.Item`, `fa-design-system/components/base/select/select` |
-| `Size=sm/md/lg`        | `size`, same names                                                         |
 | `Type=Default`         | `Select`                                                                   |
 | `Type=Icon leading`    | `icon={Icon}` on `Select`, and on each item                                |
 | `Type=Avatar leading`  | items with `avatarUrl`                                                     |
@@ -420,7 +415,6 @@ icon); the other badge exports take only `color="gray"`.
 | `Dividers=Divider line`                | default                                                                                                                                                     |
 | `Dividers=Alternating fills`           | no prop, see Mismatches                                                                                                                                     |
 | Table header cell                      | `Table.Head` (`label`, `tooltip`); `_Table header label` `Arrow` → `allowsSorting` + the sort state (Chevron selector when unsorted), `State=Hover` → hover |
-| `Size=sm/md`                           | `size` on `Table` (or `Table.Header` / `Table.Row` / `Table.Cell`)                                                                                          |
 | `Checkbox=True`                        | `selectionMode="multiple" selectionBehavior="toggle"` on `Table`                                                                                            |
 | Table cell                             | `Table.Cell`: `Lead text` / `Supporting text` / the avatar or icon → `leadText` / `supportingText` / `leading`; other types composed inside                 |
 | Table cell lead action `Type=Checkbox` | as header `Checkbox=True`                                                                                                                                   |
@@ -436,7 +430,6 @@ icon); the other badge exports take only `color="gray"`.
 | `Type=Underline` (horizontal)                                | `type="underline"`                                                                                     |
 | `Type=Button primary` (vertical)                             | `type="button-brand"`                                                                                  |
 | `Type=Line` (vertical)                                       | `type="line"`                                                                                          |
-| `Size=sm/md`                                                 | `size` on `Tabs.List`, same names                                                                      |
 | `Full width=True`                                            | `fullWidth`                                                                                            |
 | \_Tab button base                                            | `Tabs.Item`; `Current` is the selected key, `Badge` → `badge`, `State=Disabled` → `isDisabled`         |
 
@@ -510,8 +503,7 @@ Figma options with no code value, and code values Figma lacks. Don't map them yo
 - Badge `Color=Blue/Indigo/Blue gray`: not in `BadgeColors`
   (`components/base/badges/badge-types.ts:5`). Parity §4.
 - Textarea `Type=Tags` and `Resize handle`: no prop; the handle always shows
-  (`components/base/textarea/textarea.tsx:38`). Code has `size="sm" | "md"`, Figma one size
-  (`textarea.tsx:18`). Parity §4 (size only).
+  (`components/base/textarea/textarea.tsx:38`).
 - Tag `Icon=Country` (`Flag swap`): `Tag` has no flag (`components/base/tags/tags.tsx:37`).
 - Select `Shortcut`: only `Select.ComboBox` has `shortcut`
   (`components/base/select/combobox.tsx:17`); plain `Select` has none.

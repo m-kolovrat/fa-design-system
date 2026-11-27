@@ -42,14 +42,10 @@ import { Label } from "fa-design-system/components/base/input/label";
 - **input-shortcut** SHOULD Use `shortcut` only on a search field that really has the shortcut
   bound; it's hidden below `md`.
 
-- **input-size** SHOULD Leave `size` unset; the default is `sm` (rule **fa-field-size**). Use `md`
-  or `lg` only when the person asks for it or the design shows it.
-
 ## Props
 
 | Prop                                                                      | Values                                                                        | Default |
 | :------------------------------------------------------------------------ | :---------------------------------------------------------------------------- | :------ |
-| `size`                                                                    | `sm` (36px) · `md` (40px) · `lg` (44px)                                       | `sm`    |
 | `label`                                                                   | string                                                                        |         |
 | `hint`                                                                    | ReactNode, shown below; red when invalid                                      |         |
 | `placeholder`                                                             | string                                                                        |         |
@@ -71,15 +67,15 @@ Plus React Aria `TextField` props: `value`, `defaultValue`, `onChange`, `name`, 
 `maxLength`, `autoComplete`, `inputMode`. `className` sets the outer wrapper (width, grid
 placement).
 
-`InputGroup`: `size`, `label`, `hint`, `prefix` (text inside the box), `leadingAddon` /
+`InputGroup`: `label`, `hint`, `prefix` (text inside the box), `leadingAddon` /
 `trailingAddon` (`InputGroup.Prefix`, a `NativeSelect` or a `Button`), plus `TextField` props.
 `InputGroup.Prefix`: `children` (the text), `className`, plus `position` (`leading` · `trailing`)
 and `isDisabled`, which are accepted but not needed: the side comes from the `leadingAddon` /
 `trailingAddon` slot it sits in and the disabled look from the group.
 `InputBase`: `placeholder`, `icon`, `tooltip`, `type`, and the same `*ClassName` / `ref` /
-`groupRef` hooks as `Input`. `TextField` (React Aria `TextField` props plus `size` and the
-`*ClassName` hooks) is the field wrapper for composing a custom field from `Label`, `InputBase`
-and `HintText`: it provides the size context the parts read. `Label` (`isRequired`, `tooltip`,
+`groupRef` hooks as `Input`. `TextField` (React Aria `TextField` props plus the `*ClassName`
+hooks) is the field wrapper for composing a custom field from `Label`, `InputBase` and `HintText`:
+it provides the class context the parts read. `Label` (`isRequired`, `tooltip`,
 `tooltipDescription`, `tooltipLabel`: the help icon's accessible name, default the `tooltip` text) and `HintText` (`isInvalid`, `size` `sm` · `md`) are for composing a custom
 React Aria field; they wire up through React Aria slots.
 

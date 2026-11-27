@@ -85,7 +85,7 @@ const ContentCard = () => (
 const DisabledSet = ({ tab, tag, box }: { tab?: string; tag?: string; box?: string }) => (
     <div className="flex flex-col gap-5 rounded-xl border border-secondary bg-primary_alt p-5">
         <Tabs defaultSelectedKey="oversikt">
-            <Tabs.List type="button-gray" size="sm" aria-label="Aksjeinformasjon" items={tabs}>
+            <Tabs.List type="button-gray" aria-label="Aksjeinformasjon" items={tabs}>
                 {(item) => <Tabs.Item {...item} className={item.isDisabled ? tab : undefined} />}
             </Tabs.List>
         </Tabs>
@@ -122,13 +122,13 @@ export const OpenDecisions = () => (
                         <ContentCard />
                     </Option>
                     <Option label="A. Table card today" note="Ring, 12 px radius, shadow-xs. Matches Figma.">
-                        <TableCard.Root size="sm">
+                        <TableCard.Root>
                             <TableCard.Header title="Mest omsatt" badge="Sanntid" />
                             <StockTable />
                         </TableCard.Root>
                     </Option>
                     <Option label="B. Table card follows the card rule" note="Border, 16 px radius, no shadow. Needs a Figma change too.">
-                        <TableCard.Root size="sm" className="rounded-2xl border border-secondary bg-primary_alt shadow-none ring-0">
+                        <TableCard.Root className="rounded-2xl border border-secondary bg-primary_alt shadow-none ring-0">
                             <TableCard.Header title="Mest omsatt" badge="Sanntid" className="bg-primary_alt" />
                             <StockTable />
                         </TableCard.Root>
@@ -156,7 +156,7 @@ export const OpenDecisions = () => (
                     <Option label="A. Keep both (today)" note="A table card next to a content card: two title sizes and two badge colours on one page.">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             <ContentCard />
-                            <TableCard.Root size="sm">
+                            <TableCard.Root>
                                 <TableCard.Header title="Mest omsatt" badge="Sanntid" />
                                 <StockTable />
                             </TableCard.Root>
@@ -165,7 +165,7 @@ export const OpenDecisions = () => (
                     <Option label="B. One header" note="The table card uses CardHeader: the same title and badge everywhere.">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             <ContentCard />
-                            <TableCard.Root size="sm">
+                            <TableCard.Root>
                                 <CardHeader title="Mest omsatt" badge="Sanntid" />
                                 <StockTable />
                             </TableCard.Root>
@@ -182,7 +182,10 @@ export const OpenDecisions = () => (
                     <Option label="A. 50% opacity (today)" note="One rule for any component; a disabled checked box stays faintly blue.">
                         <DisabledSet />
                     </Option>
-                    <Option label="B. Disabled tokens" note="Grey text and fills, as Figma's checkbox and the code Button do; each component needs its own design.">
+                    <Option
+                        label="B. Disabled tokens"
+                        note="Grey text and fills, as Figma's checkbox and the code Button do; each component needs its own design."
+                    >
                         <DisabledSet
                             tab={cx("text-disabled opacity-100")}
                             tag={cx("bg-disabled_subtle text-disabled opacity-100")}
