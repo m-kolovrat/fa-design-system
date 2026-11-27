@@ -22,34 +22,13 @@ import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-ic
 import { cx } from "@/utils/cx";
 import { type Strings, strings } from "@/utils/strings";
 import { SelectItem } from "./select-item";
-import { type CommonProps, SelectContext, type SelectItemType, sizes } from "./select-shared";
+import { type CommonProps, type SelectItemType, styles } from "./select-shared";
 
 type MultiSelectLabels = Partial<Strings["multiSelect"]>;
 
-const searchSizes = {
-    sm: { wrapper: "py-1", root: "px-3 py-2 gap-2 *:data-icon:size-4", text: "text-sm" },
-    md: { wrapper: "py-0.5", root: "px-3 py-2 gap-2 *:data-icon:size-5", text: "text-md" },
-    lg: { wrapper: "py-0.5", root: "px-3.5 py-2.5 gap-2 *:data-icon:size-5", text: "text-md" },
-};
-
-const footerButtonSize = {
-    sm: "sm" as const,
-    md: "sm" as const,
-    lg: "sm" as const,
-};
-
-const popoverMaxHeights = {
-    sm: "max-h-68",
-    md: "max-h-76",
-    lg: "max-h-92",
-};
+const searchStyles = { wrapper: "py-1", root: "px-3 py-2 gap-2 *:data-icon:size-4", text: "text-sm max-md:text-md/5" };
 
 interface MultiSelectFooterProps {
-    /**
-     * The size of the footer buttons.
-     * @default "sm"
-     */
-    size?: "sm" | "md" | "lg";
     /** Handler that is called when the reset button is clicked. */
     onReset?: () => void;
     /** Handler that is called when the select all button is clicked. */
@@ -60,16 +39,15 @@ interface MultiSelectFooterProps {
     className?: string;
 }
 
-const MultiSelectFooter = ({ size = "sm", onReset, onSelectAll, labels: labelsProp, className }: MultiSelectFooterProps) => {
-    const btnSize = footerButtonSize[size];
+const MultiSelectFooter = ({ onReset, onSelectAll, labels: labelsProp, className }: MultiSelectFooterProps) => {
     const labels = { ...strings.multiSelect, ...labelsProp };
 
     return (
         <div className={cx("flex items-center justify-between border-t border-secondary p-3", className)}>
-            <Button size={btnSize} color="secondary" onClick={onReset}>
+            <Button size="sm" color="secondary" onClick={onReset}>
                 {labels.reset}
             </Button>
-            <Button size={btnSize} color="secondary" onClick={onSelectAll}>
+            <Button size="sm" color="secondary" onClick={onSelectAll}>
                 {labels.selectAll}
             </Button>
         </div>
@@ -168,7 +146,6 @@ interface MultiSelectProps extends RefAttributes<HTMLDivElement>, CommonProps {
 const MultiSelectRoot = ({
     items,
     children,
-    size = "sm",
     selectedKeys,
     defaultSelectedKeys,
     onSelectionChange,
@@ -242,7 +219,7 @@ const MultiSelectRoot = ({
     }, []);
 
     return (
-        <SelectContext.Provider value={{ size }}>
+        <>
             <div className={cx("flex flex-col gap-1.5", className)}>
                 {label && (
                     <Label id={labelId} isRequired={hideRequiredIndicator ? false : isRequired} isInvalid={isInvalid} tooltip={tooltip}>
@@ -271,24 +248,20 @@ const MultiSelectRoot = ({
                     >
                         <span
                             id={valueId}
-                            className={cx(
-                                "flex w-full items-center truncate text-left",
-                                sizes[size].root,
-                                "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary",
-                            )}
+                            className={cx("flex w-full items-center truncate text-left", styles.root, "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary")}
                         >
                             {hasSelection ? (
-                                <span className={cx("flex items-center", sizes[size].textContainer)}>
-                                    <span className={cx("font-medium text-primary", sizes[size].text)}>
+                                <span className={cx("flex items-center", styles.textContainer)}>
+                                    <span className={cx("font-medium text-primary", styles.text)}>
                                         {selectedCountFormatter ? selectedCountFormatter(selectedCount) : labels.selectedCount(selectedCount)}
                                     </span>
-                                    {supportingText && <span className={cx("text-tertiary", sizes[size].text)}>{supportingText}</span>}
+                                    {supportingText && <span className={cx("text-tertiary", styles.text)}>{supportingText}</span>}
                                 </span>
                             ) : (
-                                <span className={cx("text-placeholder", sizes[size].text)}>{placeholder}</span>
+                                <span className={cx("text-placeholder", styles.text)}>{placeholder}</span>
                             )}
 
-                            <ChevronDown aria-hidden="true" className={cx("ml-auto shrink-0 text-fg-quaternary", size === "lg" ? "size-5" : "size-4")} />
+                            <ChevronDown aria-hidden="true" className="ml-auto size-4 shrink-0 text-fg-quaternary" />
                         </span>
                     </AriaButton>
 
@@ -311,15 +284,15 @@ const MultiSelectRoot = ({
                         <AriaDialog className="outline-hidden">
                             <AriaAutocomplete filter={contains} inputValue={searchValue} onInputChange={setSearchValue}>
                                 {showSearch && (
-                                    <div className={cx("border-b border-secondary", searchSizes[size].wrapper)}>
+                                    <div className={cx("border-b border-secondary", searchStyles.wrapper)}>
                                         <AriaSearchField aria-label={labels.search} value={searchValue} onChange={setSearchValue} autoFocus>
-                                            <div className={cx("flex items-center", searchSizes[size].root)}>
+                                            <div className={cx("flex items-center", searchStyles.root)}>
                                                 <Search data-icon aria-hidden="true" className="shrink-0 text-fg-quaternary" />
                                                 <AriaInput
                                                     placeholder={labels.search}
                                                     className={cx(
                                                         "w-full appearance-none bg-transparent text-primary caret-alpha-black/90 outline-hidden placeholder:text-placeholder",
-                                                        searchSizes[size].text,
+                                                        searchStyles.text,
                                                     )}
                                                 />
                                             </div>
@@ -341,24 +314,24 @@ const MultiSelectRoot = ({
                                             onClearSearch={searchValue ? handleClearSearch : undefined}
                                         />
                                     )}
-                                    className={cx("overflow-y-auto py-1 outline-hidden", popoverMaxHeights[size])}
+                                    className={cx("overflow-y-auto py-1 outline-hidden", "max-h-68")}
                                 >
                                     {children}
                                 </AriaListBox>
                             </AriaAutocomplete>
 
-                            {showFooter && <MultiSelectFooter size={size} onReset={handleReset} onSelectAll={handleSelectAll} labels={labels} />}
+                            {showFooter && <MultiSelectFooter onReset={handleReset} onSelectAll={handleSelectAll} labels={labels} />}
                         </AriaDialog>
                     </AriaPopover>
                 </AriaDialogTrigger>
 
                 {hint && (
-                    <HintText id={hintId} isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                    <HintText id={hintId} isInvalid={isInvalid} className="text-xs">
                         {hint}
                     </HintText>
                 )}
             </div>
-        </SelectContext.Provider>
+        </>
     );
 };
 

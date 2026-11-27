@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, type Ref, createContext, useContext } from "react";
+import type { ReactNode, Ref } from "react";
 import {
     Radio as AriaRadio,
     RadioGroup as AriaRadioGroup,
@@ -9,15 +9,7 @@ import {
 } from "react-aria-components";
 import { cx } from "@/utils/cx";
 
-export interface RadioGroupContextType {
-    size?: "sm" | "md";
-}
-
-const RadioGroupContext = createContext<RadioGroupContextType | null>(null);
-
 export interface RadioButtonBaseProps {
-    /** The size variant: `sm` 16px, `md` 20px */
-    size?: "sm" | "md";
     /** Layout classes only */
     className?: string;
     /** Draws the focus ring (pass the parent's state) */
@@ -29,12 +21,11 @@ export interface RadioButtonBaseProps {
 }
 
 /** The visual circle only, for use inside other components (menus, cards); not a control on its own. */
-export const RadioButtonBase = ({ className, isFocusVisible, isSelected, isDisabled, size = "sm" }: RadioButtonBaseProps) => {
+export const RadioButtonBase = ({ className, isFocusVisible, isSelected, isDisabled }: RadioButtonBaseProps) => {
     return (
         <div
             className={cx(
                 "flex size-4 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full bg-primary ring-1 ring-primary ring-inset",
-                size === "md" && "size-5",
                 isSelected && "bg-brand-solid ring-brand-solid",
                 // Figma _Checkbox base Type=Radio State=Disabled: bg-disabled_subtle, border-disabled, dot in fg-disabled_subtle.
                 isDisabled && "cursor-not-allowed bg-disabled_subtle ring-disabled",
@@ -45,7 +36,6 @@ export const RadioButtonBase = ({ className, isFocusVisible, isSelected, isDisab
             <div
                 className={cx(
                     "size-1.5 rounded-full bg-fg-white opacity-0 transition-inherit-all",
-                    size === "md" && "size-2",
                     isSelected && "opacity-100",
                     isDisabled && "bg-fg-disabled_subtle",
                 )}
@@ -56,8 +46,6 @@ export const RadioButtonBase = ({ className, isFocusVisible, isSelected, isDisab
 RadioButtonBase.displayName = "RadioButtonBase";
 
 export interface RadioButtonProps extends AriaRadioProps {
-    /** The size variant; inside a `RadioGroup` the group's `size` wins */
-    size?: "sm" | "md";
     /** The option's label */
     label?: ReactNode;
     /** One line of explanation below the label */
@@ -71,52 +59,27 @@ export interface RadioButtonProps extends AriaRadioProps {
 }
 
 /** One option in a `RadioGroup`, with a label and hint. */
-export const RadioButton = ({ label, hint, className, size = "sm", ...ariaRadioProps }: RadioButtonProps) => {
-    const context = useContext(RadioGroupContext);
-
-    size = context?.size ?? size;
-
-    const sizes = {
-        sm: {
-            root: "gap-2",
-            textWrapper: "",
-            label: "text-sm font-medium",
-            hint: "text-sm",
-        },
-        md: {
-            root: "gap-3",
-            textWrapper: "gap-0.5",
-            label: "text-md font-medium",
-            hint: "text-md",
-        },
-    };
-
+export const RadioButton = ({ label, hint, className, ...ariaRadioProps }: RadioButtonProps) => {
     return (
         <AriaRadio
             {...ariaRadioProps}
             className={(state) =>
-                cx(
-                    "relative flex items-start",
-                    state.isDisabled && "cursor-not-allowed",
-                    sizes[size].root,
-                    typeof className === "function" ? className(state) : className,
-                )
+                cx("relative flex items-start gap-2", state.isDisabled && "cursor-not-allowed", typeof className === "function" ? className(state) : className)
             }
         >
             {({ isSelected, isDisabled, isFocusVisible }) => (
                 <>
                     <RadioButtonBase
-                        size={size}
                         isSelected={isSelected}
                         isDisabled={isDisabled}
                         isFocusVisible={isFocusVisible}
                         className={label || hint ? "mt-0.5" : ""}
                     />
                     {(label || hint) && (
-                        <div className={cx("inline-flex flex-col", sizes[size].textWrapper)}>
-                            {label && <p className={cx("text-secondary select-none", sizes[size].label)}>{label}</p>}
+                        <div className="inline-flex flex-col">
+                            {label && <p className="text-sm font-medium text-secondary select-none">{label}</p>}
                             {hint && (
-                                <span className={cx("text-tertiary", sizes[size].hint)} onClick={(event) => event.stopPropagation()}>
+                                <span className="text-sm text-tertiary" onClick={(event) => event.stopPropagation()}>
                                     {hint}
                                 </span>
                             )}
@@ -129,12 +92,7 @@ export const RadioButton = ({ label, hint, className, size = "sm", ...ariaRadioP
 };
 RadioButton.displayName = "RadioButton";
 
-export interface RadioGroupProps extends RadioGroupContextType, AriaRadioGroupProps {
-    /**
-     * The size of every `RadioButton` in it: `sm` 16px, `md` 20px
-     * @default sm
-     */
-    size?: "sm" | "md";
+export interface RadioGroupProps extends AriaRadioGroupProps {
     /** The `RadioButton`s */
     children: ReactNode;
     /** Layout classes; the options stack with `gap-4` */
@@ -158,13 +116,11 @@ export interface RadioGroupProps extends RadioGroupContextType, AriaRadioGroupPr
 }
 
 /** A set of `RadioButton`s of which one can be chosen. Name it with `aria-label` or a visible heading. */
-export const RadioGroup = ({ children, className, size = "sm", ...props }: RadioGroupProps) => {
+export const RadioGroup = ({ children, className, ...props }: RadioGroupProps) => {
     return (
-        <RadioGroupContext.Provider value={{ size }}>
-            <AriaRadioGroup {...props} className={cx("flex flex-col gap-4", className)}>
-                {children}
-            </AriaRadioGroup>
-        </RadioGroupContext.Provider>
+        <AriaRadioGroup {...props} className={cx("flex flex-col gap-4", className)}>
+            {children}
+        </AriaRadioGroup>
     );
 };
 // react-docgen-typescript gives every function in this file the first `.displayName` it finds unless

@@ -12,8 +12,6 @@ import { Checkbox, CheckboxBase } from "./checkbox";
  * its initial value.
  */
 
-const sizes = ["sm", "md"] as const;
-
 /** Small captioned cell so it's obvious which checkbox is which. */
 const Labeled = ({ label, children }: { label: string; children: ReactNode }) => (
     <div className="flex flex-col items-start gap-2">
@@ -30,7 +28,6 @@ const meta = {
     // The Docs page text is checkbox.md; the props tables come from checkbox.tsx.
     parameters: { layout: "centered", skillDoc: checkboxDoc },
     args: {
-        size: "sm",
         label: "Remember me",
         hint: "Save my login details for next time.",
         isDisabled: false,
@@ -50,19 +47,6 @@ type Story = StoryObj<typeof meta>;
 
 /** Single interactive checkbox — edit props live in the Controls panel. */
 export const Playground: Story = {};
-
-/** The checkbox across every size. */
-export const Sizes: Story = {
-    render: (args) => (
-        <div className="flex flex-wrap items-start gap-8">
-            {sizes.map((size) => (
-                <Labeled key={size} label={size}>
-                    <Checkbox {...args} size={size} defaultSelected />
-                </Labeled>
-            ))}
-        </div>
-    ),
-};
 
 /** The checkbox in each interactive state. */
 export const States: Story = {

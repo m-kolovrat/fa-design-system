@@ -37,8 +37,6 @@ import { InputTagsOuter } from "fa-design-system/components/base/input/input-tag
   antall aksjer). Because steppers and keyboard arrows respect them.
 - **variants-file-text** SHOULD Pass `placeholder` to `InputFile` when "Velg en fil" (the default)
   can say more ("Velg kontoutskrift"). The button says "Last opp" (`buttonText`).
-- **variants-size** SHOULD Leave `size` unset, as on `Input` (rule **fa-field-size**): every variant
-  defaults to `sm`. Because the fields in a form then share one height.
 - **variants-tags-validate** SHOULD Use `validate`, `maxTags` and `allowDuplicates` to keep tag
   lists clean (e.g. only valid tickers), rather than filtering in `onChange`.
 - **variants-payment-value** MUST Read `PaymentInput`'s `onChange` value as digits only; the
@@ -46,8 +44,8 @@ import { InputTagsOuter } from "fa-design-system/components/base/input/input-tag
 
 ## Props
 
-Shared: `size` (`sm` · `md` · `lg`), `label`, `hint`, `isRequired`, `hideRequiredIndicator`,
-`isInvalid`, `isDisabled`. Size defaults to `sm`.
+Shared: `label`, `hint`, `isRequired`, `hideRequiredIndicator`, `isInvalid`, `isDisabled`. Every
+variant has one size, 36px, like `Input` (rule **fa-field-size**).
 
 | Component                      | Own props                                                                                                                                                 |
 | :----------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -94,7 +92,7 @@ groups the rest in fours ("1234 5678 9012 3456"), for showing a stored card numb
     validate={(ticker) => /^[a-z0-9.]{2,8}$/i.test(ticker)}
 />
 
-<InputFile label="Vedlegg" size="md" buttonText="Last opp" placeholder="Velg en fil" acceptedFileTypes={["application/pdf"]} />
+<InputFile label="Vedlegg" buttonText="Last opp" placeholder="Velg en fil" acceptedFileTypes={["application/pdf"]} />
 ```
 
 ## See also

@@ -456,7 +456,7 @@ const TradesCard = () => {
     };
 
     return (
-        <TableCard.Root size="sm">
+        <TableCard.Root>
             <TableCard.Header
                 title="Siste registrerte handler"
                 description={`${filtered.length} handler · Siste data mottatt: ${formatDate(DATA_DATE)}`}
@@ -473,7 +473,6 @@ const TradesCard = () => {
                     <Select.ComboBox
                         label="Aksje"
                         placeholder="Søk etter aksje"
-                        size="sm"
                         shortcut={false}
                         items={stockItems}
                         value={stock}
@@ -491,7 +490,6 @@ const TradesCard = () => {
                     <Select.ComboBox
                         label="Investor"
                         placeholder="Søk etter investor"
-                        size="sm"
                         shortcut={false}
                         icon={Users}
                         items={investorItems}
@@ -509,7 +507,6 @@ const TradesCard = () => {
                     {/* Nine periods don't fit a 375 px row: native select below md, button group from md. */}
                     <NativeSelect
                         label="Periode"
-                        size="sm"
                         className="md:hidden"
                         value={period ?? "custom"}
                         onChange={(event) => event.target.value !== "custom" && choosePeriod(event.target.value as PeriodId)}
@@ -559,7 +556,6 @@ const TradesCard = () => {
 
                 <NativeSelect
                     label="Sorter etter"
-                    size="sm"
                     className="md:hidden"
                     value={`${String(sort.column)}-${sort.direction}`}
                     onChange={(event) => {
@@ -611,7 +607,7 @@ const InvestorsCard = () => {
     }, [sort]);
 
     return (
-        <TableCard.Root size="sm">
+        <TableCard.Root>
             <TableCard.Header title="Alle investorer" description={`${investors.length} investorer · Porteføljer på Oslo Børs`} />
             <Table aria-label="Alle investorer" sortDescriptor={sort} onSortChange={setSort}>
                 <Table.Header>
@@ -758,7 +754,7 @@ const NewsletterCard = () => {
 const teaserRows = [...trades].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
 
 const TeaserCard = () => (
-    <TableCard.Root size="sm">
+    <TableCard.Root>
         <TableCard.Header title="Siste registrerte handler" description={`Siste data mottatt: ${formatDate(DATA_DATE)}`} />
         <Table aria-label="Utvalg av siste registrerte handler">
             <TradeHeader sortable={false} />

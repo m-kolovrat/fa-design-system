@@ -129,7 +129,7 @@ export const HeaderNavigationBase = ({
                     <div className="flex flex-col gap-5 px-4">
                         <FaLargeLogo className="h-6 w-auto text-fg-primary" />
 
-                        <Input size="md" aria-label="Search" placeholder="Search" icon={Search} />
+                        <Input aria-label="Search" placeholder="Search" icon={Search} />
                     </div>
 
                     <NavList items={items} />
@@ -199,7 +199,7 @@ export const HeaderNavigationBase = ({
                         {secondaryType === "tabs" ? (
                             <div className="w-full max-w-container px-8 pt-3">
                                 <Tabs selectedKey={activeTabKey}>
-                                    <TabList size="sm" type="underline" items={tabItems} className="-mb-px before:hidden" />
+                                    <TabList type="underline" items={tabItems} className="-mb-px before:hidden" />
                                 </Tabs>
                             </div>
                         ) : (
@@ -216,7 +216,7 @@ export const HeaderNavigationBase = ({
                                     </ul>
                                 </nav>
 
-                                {!centered && <Input shortcut aria-label="Search" placeholder="Search" icon={Search} size="sm" className="max-w-70" />}
+                                {!centered && <Input shortcut aria-label="Search" placeholder="Search" icon={Search} className="max-w-70" />}
                             </div>
                         )}
                     </section>

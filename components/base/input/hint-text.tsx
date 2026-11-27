@@ -10,7 +10,7 @@ export interface HintTextProps extends AriaTextProps {
     isInvalid?: boolean;
     /** Ref to the text element */
     ref?: Ref<HTMLElement>;
-    /** The text size */
+    /** The text size: `sm` is Text xs (inside a field it always is) */
     size?: "sm" | "md";
     /** The hint text */
     children: ReactNode;
@@ -27,7 +27,7 @@ export const HintText = ({ isInvalid, className, size = "md", ...props }: HintTe
 
                 // Size
                 size === "sm" && "text-xs",
-                "in-data-[input-size=sm]:text-xs",
+                "in-data-input-wrapper:text-xs",
 
                 // Invalid state
                 isInvalid && "text-error-primary",

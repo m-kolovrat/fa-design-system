@@ -806,7 +806,7 @@ const ConsensusCard = ({ className }: { className?: string }) => {
 
 const OrderBookCard = ({ className }: { className?: string }) => (
     <WidgetCard title="Ordredybde" icon={TableIcon} flush className={className}>
-        <Table aria-label="Ordredybde for Equinor" size="sm">
+        <Table aria-label="Ordredybde for Equinor">
             <Table.Header>
                 <Table.Head id="bidCount" label="Antall" className="hidden sm:table-cell" />
                 <Table.Head id="bidQty" label="Volum" />
@@ -833,7 +833,7 @@ const OrderBookCard = ({ className }: { className?: string }) => (
 
 const TradesCard = ({ className }: { className?: string }) => (
     <WidgetCard title="Siste handler" icon={GraphLine} flush className={className}>
-        <Table aria-label="Siste handler i Equinor" size="sm">
+        <Table aria-label="Siste handler i Equinor">
             <Table.Header>
                 <Table.Head id="time" label="Tid" isRowHeader />
                 <Table.Head id="price" label="Pris" />
@@ -951,7 +951,7 @@ const ReportsCard = ({ className }: { className?: string }) => {
 
 const RecommendationsCard = ({ className }: { className?: string }) => (
     <WidgetCard title="Anbefalinger" icon={Users} flush className={className} action={<span className="text-xs text-tertiary">Levert av Infront</span>}>
-        <Table aria-label="Siste anbefalinger for Equinor" size="sm">
+        <Table aria-label="Siste anbefalinger for Equinor">
             <Table.Header>
                 <Table.Head id="date" label="Dato" />
                 <Table.Head id="broker" label="Meglerhus" isRowHeader />
@@ -986,7 +986,7 @@ const TechnicalCard = ({ isSubscriber, className }: { isSubscriber: boolean; cla
         titleAddon={!isSubscriber && <Lock aria-label="Kun for abonnenter" className="size-4 text-fg-quaternary" />}
     >
         {isSubscriber ? (
-            <Table aria-label="Tekniske indikatorer for Equinor" size="sm">
+            <Table aria-label="Tekniske indikatorer for Equinor">
                 <Table.Header>
                     <Table.Head id="name" label="Indikator" isRowHeader />
                     <Table.Head id="value" label="Verdi" />
@@ -1080,7 +1080,7 @@ const ResultsCard = ({ className }: { className?: string }) => {
 
 const DividendsCard = ({ className }: { className?: string }) => (
     <WidgetCard title="Utbytte" icon={DocumentCash} iconColor="success" flush className={className}>
-        <Table aria-label="Utbytte per år for Equinor" size="sm">
+        <Table aria-label="Utbytte per år for Equinor">
             <Table.Header>
                 <Table.Head id="year" label="Regnskapsår" isRowHeader />
                 <Table.Head id="perShare" label="Utbytte per aksje" />

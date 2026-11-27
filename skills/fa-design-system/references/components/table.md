@@ -37,9 +37,6 @@ import type { SortDescriptor as AriaSortDescriptor } from "react-aria-components
 - **table-selection-by-prop** MUST Turn on selection with `selectionMode="multiple"` (or
   `"single"`) on `Table`; the checkbox column and the select-all box appear on their own. Never add
   `Checkbox` cells yourself. Use `selectedKeys` / `onSelectionChange` to read it.
-- **table-size-once** SHOULD Set `size` (`sm` · `md`) once: on `TableCard.Root` inside a card, or on
-  `Table` without one. Header, rows and cells read it from context and default to `md`. Inside a
-  card that sets `size`, the card's size wins over `Table`'s.
 - **table-cell-text** MUST Leave cell text at the cell's default, `text-sm text-primary` regular
   (Figma Text sm/Regular), and use `leadText` / `supportingText` / `leading` for a name over a second
   line with a logo or avatar: never compose that stack by hand. Supporting text (`text-tertiary`) is
@@ -69,8 +66,8 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
   (2026-11-27): a brief that asks for a ticker pill column is reported, not followed.
 - **table-change-value** MUST Show a change as a colored span ("Change value" in
   `page-patterns.md`), not a `BadgeWithIcon`.
-- **table-no-sideways-scroll** SHOULD Fit every column from `md` up (use `size="sm"`, shorter
-  headers, fewer decimals); below `md`, switch to the two-column rows with a sheet (see
+- **table-no-sideways-scroll** SHOULD Fit every column from `md` up (shorter headers, fewer
+  decimals); below `md`, switch to the two-column rows with a sheet (see
   `page-patterns.md`). Because a sideways scroll hides columns without telling the reader. Decided by the design owner
   (2026-11-27): on a phone a table becomes a list, and a tap opens a sheet or view with the rest; a
   brief that asks for sideways scroll is reported, not followed.
@@ -80,26 +77,27 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 
 ## Props
 
-| Component          | Props                                                                                                                                                                                                           |
-| :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TableCard.Root`   | `size` `sm` · `md` (default `md`), `div` attributes                                                                                                                                                             |
-| `TableCard.Header` | renders `CardHeader`: `title` (string, required), `badge` (string → gray modern `Badge`, or a node), `description` (string, one line), `contentTrailing` (node), `className`                                    |
-| `Table`            | React Aria `Table` props: `aria-label`, `selectionMode`, `selectedKeys`, `onSelectionChange`, `sortDescriptor`, `onSortChange`, `onRowAction`; `size` (see **table-size-once**)                                 |
-| `Table.Header`     | `bordered` (default `true`), `size`, `columns`                                                                                                                                                                  |
-| `Table.Head`       | `id`, `label`, `tooltip` (help icon), `isRowHeader`, `allowsSorting`, `className`                                                                                                                               |
-| `Table.Body`       | `items` + render function, or static rows                                                                                                                                                                       |
-| `Table.Row`        | `id`, `highlightSelectedRow` (default `true`), `size`, `className`                                                                                                                                              |
-| `Table.Cell`       | `size`, `className`; `leadText`, `supportingText` (one line each, truncated), `leading` (an `Avatar` the size of the table, or a file icon); other content (`Badge`, change value, `ButtonUtility`) as children |
+| Component          | Props                                                                                                                                                                                         |
+| :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TableCard.Root`   | `div` attributes                                                                                                                                                                              |
+| `TableCard.Header` | renders `CardHeader`: `title` (string, required), `badge` (string → gray modern `Badge`, or a node), `description` (string, one line), `contentTrailing` (node), `className`                  |
+| `Table`            | React Aria `Table` props: `aria-label`, `selectionMode`, `selectedKeys`, `onSelectionChange`, `sortDescriptor`, `onSortChange`, `onRowAction`                                                 |
+| `Table.Header`     | `bordered` (default `true`), `columns`                                                                                                                                                        |
+| `Table.Head`       | `id`, `label`, `tooltip` (help icon), `isRowHeader`, `allowsSorting`, `className`                                                                                                             |
+| `Table.Body`       | `items` + render function, or static rows                                                                                                                                                     |
+| `Table.Row`        | `id`, `highlightSelectedRow` (default `true`), `className`                                                                                                                                    |
+| `Table.Cell`       | `className`; `leadText`, `supportingText` (one line each, truncated), `leading` (an `Avatar` `size="sm"`, or a file icon); other content (`Badge`, change value, `ButtonUtility`) as children |
 
 ## Notes
 
 - Sortable heads: the sorted column shows its arrow (down, or up when ascending), the other
   sortable columns the up/down chevron. On hover the label turns `text-tertiary` and its icons
   `fg-quaternary_hover` (Figma `_Table header label` `State=Hover`).
-- Row height: 72px at `md`, 64px at `sm`. Cell text is `text-sm text-primary`; see
+- One size (2026-11-27): 64px rows, a 36px header row, 20px cell sides. Cell text is `text-sm text-primary`; see
   **table-cell-text**.
 - Put pagination (`PaginationPageMinimalCenter`, `PaginationCardMinimal`) inside `TableCard.Root`
-  after the table.
+  after the table. Inside the card it takes the card's padding and lines up with the 20px cell
+  sides by itself; don't pad it with `className`.
 
 ## Accessibility
 
@@ -120,7 +118,7 @@ const rows = useMemo(
     [sort],
 );
 
-<TableCard.Root size="sm">
+<TableCard.Root>
     <TableCard.Header title="Mest omsatt på Oslo Børs" badge="Sanntid" />
     <Table aria-label="Mest omsatt på Oslo Børs" sortDescriptor={sort} onSortChange={setSort}>
         <Table.Header>

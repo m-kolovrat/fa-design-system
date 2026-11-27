@@ -41,7 +41,7 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
 - **tabs-mobile** SHOULD Below `md`, show a `NativeSelect` with the same options and hide the tabs
   (`max-md:hidden`) when there are more than three or four tabs. Because tabs don't scroll or wrap,
   and the storybook demos use exactly this pattern.
-- **tabs-type-by-place** MUST Pick the type by where the tabs sit, always `size="sm"`: near the top
+- **tabs-type-by-place** MUST Pick the type by where the tabs sit: near the top
   of the page, switching the whole content below (instrument sub-pages, Bjellesauer views):
   horizontal `type="underline"`; inside a card, for anything that switches what the card shows
   (views, source filters, Årlig / Kvartalsvis): `type="button-gray"`, in the card body under the
@@ -85,7 +85,6 @@ import { Tabs } from "fa-design-system/components/application/tabs/tabs";
 | Prop (`Tabs.List`) | Values                                                 | Default        |
 | :----------------- | :----------------------------------------------------- | :------------- |
 | `type`             | see **tabs-type-per-orientation**                      | `button-brand` |
-| `size`             | `sm` · `md`                                            | `sm`           |
 | `fullWidth`        | boolean (tabs share the width)                         |                |
 | `items`            | array; render with `{(tab) => <Tabs.Item {...tab} />}` |                |
 

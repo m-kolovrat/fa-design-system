@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, type ReactNode, createContext, useContext } from "react";
+import type { FC, ReactNode } from "react";
 import {
     Radio as AriaRadio,
     RadioGroup as AriaRadioGroup,
@@ -15,48 +15,24 @@ import { cx } from "@/utils/cx";
 
 /*
  * Card-style radio group. Figma: "Radio group" / "Radio group item" with Type
- * Radio button, Checkbox, Icon simple, Avatar, Payment icon and Icon card, in sm and md.
+ * Radio button, Checkbox, Icon simple, Avatar, Payment icon and Icon card. One size (sm).
  */
 
-type RadioCardSize = "sm" | "md";
-
-const RadioCardContext = createContext<{ size: RadioCardSize }>({ size: "sm" });
-
-const styles = {
-    sm: {
-        inlineGap: "gap-2",
-        contentGap: "gap-3",
-        mediaGap: "gap-3",
-        textWrapper: "",
-        titleRow: "gap-1",
-        title: "text-sm font-medium",
-        text: "text-sm",
-        paymentGap: "gap-2",
-        cardTitle: "text-md font-semibold",
-        price: "text-display-sm font-semibold",
-        priceWrapper: "gap-1",
-    },
-    md: {
-        inlineGap: "gap-3",
-        contentGap: "gap-3",
-        mediaGap: "gap-4",
-        textWrapper: "gap-0.5",
-        titleRow: "gap-1.5",
-        title: "text-md font-medium",
-        text: "text-md",
-        paymentGap: "gap-3",
-        cardTitle: "text-lg font-semibold",
-        price: "text-display-md font-semibold",
-        priceWrapper: "gap-2",
-    },
+const s = {
+    inlineGap: "gap-2",
+    contentGap: "gap-3",
+    mediaGap: "gap-3",
+    textWrapper: "",
+    titleRow: "gap-1",
+    title: "text-sm font-medium",
+    text: "text-sm",
+    paymentGap: "gap-2",
+    cardTitle: "text-md font-semibold",
+    price: "text-display-sm font-semibold",
+    priceWrapper: "gap-1",
 };
 
 export interface RadioCardGroupProps extends AriaRadioGroupProps {
-    /**
-     * The size of every `RadioCard` in it
-     * @default sm
-     */
-    size?: RadioCardSize;
     /** The `RadioCard`s */
     children: ReactNode;
     /** Layout classes; cards stack with `gap-3` (`grid gap-3 md:grid-cols-3` for a row) */
@@ -74,12 +50,10 @@ export interface RadioCardGroupProps extends AriaRadioGroupProps {
 }
 
 /** A set of `RadioCard`s of which one can be chosen. Name it with `aria-label` or a visible heading. */
-export const RadioCardGroup = ({ size = "sm", children, className, ...props }: RadioCardGroupProps) => (
-    <RadioCardContext.Provider value={{ size }}>
-        <AriaRadioGroup {...props} className={cx("flex flex-col gap-3", className)}>
-            {children}
-        </AriaRadioGroup>
-    </RadioCardContext.Provider>
+export const RadioCardGroup = ({ children, className, ...props }: RadioCardGroupProps) => (
+    <AriaRadioGroup {...props} className={cx("flex flex-col gap-3", className)}>
+        {children}
+    </AriaRadioGroup>
 );
 
 export interface RadioCardProps extends Omit<AriaRadioProps, "children"> {
@@ -138,9 +112,6 @@ export const RadioCard = ({
     className,
     ...props
 }: RadioCardProps) => {
-    const { size } = useContext(RadioCardContext);
-    const s = styles[size];
-
     return (
         <AriaRadio
             {...props}
@@ -156,7 +127,7 @@ export const RadioCard = ({
             }
         >
             {({ isSelected, isDisabled }) => {
-                const check = <CheckboxBase size={size} isSelected={isSelected} isDisabled={isDisabled} />;
+                const check = <CheckboxBase isSelected={isSelected} isDisabled={isDisabled} />;
 
                 const textBlock = (
                     <div className={cx("flex min-w-0 flex-1 flex-col", s.textWrapper)}>
@@ -173,9 +144,9 @@ export const RadioCard = ({
                         <div className={cx("flex flex-1 items-start", s.inlineGap)}>
                             <div className="pt-0.5">
                                 {type === "radio" ? (
-                                    <RadioButtonBase size={size} isSelected={isSelected} isDisabled={isDisabled} />
+                                    <RadioButtonBase isSelected={isSelected} isDisabled={isDisabled} />
                                 ) : (
-                                    <CheckboxBase size={size} isSelected={isSelected} isDisabled={isDisabled} />
+                                    <CheckboxBase isSelected={isSelected} isDisabled={isDisabled} />
                                 )}
                             </div>
                             {textBlock}
@@ -198,13 +169,13 @@ export const RadioCard = ({
                                 )}
                             >
                                 <div className={cx("flex flex-1 items-center", s.contentGap)}>
-                                    {icon && <FeaturedIcon icon={icon} color="gray" theme="modern" size={size} />}
+                                    {icon && <FeaturedIcon icon={icon} color="gray" theme="modern" size="sm" />}
                                     <p className={cx("text-secondary", s.cardTitle)}>{title}</p>
                                 </div>
                                 {check}
                             </div>
                             <div className="flex items-start gap-1 p-4">
-                                <div className={cx("flex min-w-0 flex-1 flex-col", size === "sm" ? "gap-1" : "gap-2")}>
+                                <div className={cx("flex min-w-0 flex-1 flex-col", "gap-1")}>
                                     {price && (
                                         <p className={cx("flex items-end", s.priceWrapper)}>
                                             <span className={cx("text-secondary", s.price)}>{price}</span>
@@ -222,8 +193,8 @@ export const RadioCard = ({
                 return (
                     <>
                         <div className={cx("flex flex-1 items-start", type === "icon" ? s.contentGap : s.mediaGap)}>
-                            {type === "icon" && icon && <FeaturedIcon icon={icon} color="gray" theme="modern" size={size} />}
-                            {type === "avatar" && <Avatar src={avatarSrc} size={size} alt="" />}
+                            {type === "icon" && icon && <FeaturedIcon icon={icon} color="gray" theme="modern" size="sm" />}
+                            {type === "avatar" && <Avatar src={avatarSrc} size="sm" alt="" />}
                             {type === "payment" && PaymentIcon && <PaymentIcon className="h-8 w-11.5 shrink-0" />}
 
                             {type === "payment" ? (

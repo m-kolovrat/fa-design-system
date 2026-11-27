@@ -42,10 +42,6 @@ export const styles = sortCx({
             root: "gap-1.5 rounded-full px-4 py-2.5 text-md font-medium before:rounded-full data-icon-only:p-3",
             linkRoot: "gap-1.5 *:data-text:underline-offset-4",
         },
-        xl: {
-            root: "gap-1.5 rounded-full px-4.5 py-3 text-md font-medium before:rounded-full data-icon-only:p-3.5",
-            linkRoot: "gap-1.5 *:data-text:underline-offset-4",
-        },
     },
 
     colors: {

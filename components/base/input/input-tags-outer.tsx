@@ -21,11 +21,6 @@ export interface InputTagsOuterProps {
     hint?: ReactNode;
     /** Tooltip message displayed via a help icon inside the input. */
     tooltip?: string;
-    /**
-     * Input size variant.
-     * @default sm
-     */
-    size?: "sm" | "md" | "lg";
     /** Placeholder text for the input field. */
     placeholder?: string;
     /** Whether the field is required. */
@@ -64,7 +59,6 @@ export interface InputTagsOuterProps {
 
 /** Like `InputTags`, with the tags listed below the field. */
 export const InputTagsOuter = ({
-    size = "sm",
     label,
     hint,
     tooltip,
@@ -180,7 +174,7 @@ export const InputTagsOuter = ({
     };
 
     return (
-        <div className={cx("flex flex-col", size === "sm" ? "gap-1.5" : "gap-2", className)}>
+        <div className={cx("flex flex-col gap-1.5", className)}>
             <div className="flex flex-col gap-1.5">
                 {label && (
                     <Label htmlFor={inputId} isRequired={hideRequiredIndicator ? false : isRequired}>
@@ -193,7 +187,6 @@ export const InputTagsOuter = ({
                     aria-describedby={hint ? hintId : undefined}
                     aria-invalid={isInvalid || undefined}
                     aria-required={isRequired || undefined}
-                    size={size}
                     tooltip={tooltip}
                     placeholder={placeholder}
                     isInvalid={isInvalid}
@@ -205,7 +198,7 @@ export const InputTagsOuter = ({
             </div>
 
             {entries.length > 0 && (
-                <TagGroup label={label || strings.input.tags} size={size === "lg" ? "md" : size} onRemove={handleRemove}>
+                <TagGroup label={label || strings.input.tags} size="sm" onRemove={handleRemove}>
                     <TagList className="flex flex-wrap gap-1.5 focus:outline-hidden" items={entries}>
                         {(item) => (
                             <Tag id={item.id} isDisabled={isDisabled}>
@@ -217,7 +210,7 @@ export const InputTagsOuter = ({
             )}
 
             {hint && (
-                <HintText id={hintId} isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                <HintText id={hintId} isInvalid={isInvalid} className="text-xs">
                     {hint}
                 </HintText>
             )}

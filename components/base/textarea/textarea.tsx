@@ -18,12 +18,10 @@ const resizeHandleBg = `${resizeStroke}, ${resizeStroke}`;
 export interface TextAreaBaseProps extends AriaTextAreaProps {
     /** Ref to the `<textarea>` */
     ref?: Ref<HTMLTextAreaElement>;
-    /** Textarea size */
-    size?: "sm" | "md";
 }
 
 /** The `<textarea>` alone, for composing a custom React Aria field. */
-export const TextAreaBase = ({ className, size = "sm", ...props }: TextAreaBaseProps) => {
+export const TextAreaBase = ({ className, ...props }: TextAreaBaseProps) => {
     return (
         <AriaTextArea
             {...props}
@@ -32,8 +30,8 @@ export const TextAreaBase = ({ className, size = "sm", ...props }: TextAreaBaseP
                 cx(
                     "w-full scroll-py-3 rounded-md bg-primary text-primary ring-1 ring-primary transition ring-inset placeholder:text-placeholder autofill:rounded-md autofill:text-primary focus:outline-hidden",
 
-                    size === "sm" && "p-3 text-sm",
-                    size === "md" && "px-3.5 py-3 text-md",
+                    // One size (2026-11-27), matching the sm Input field: Text sm, 12px padding.
+                    "p-3 text-sm max-md:text-md/5",
 
                     // Resize handle
                     "[&::-webkit-resizer]:bg-(image:--resize-handle-bg) [&::-webkit-resizer]:[background-size:44.44%_44.44%,22.22%_22.22%] [&::-webkit-resizer]:[background-position:20%_20%,50%_50%] [&::-webkit-resizer]:bg-no-repeat",
@@ -59,8 +57,6 @@ export interface TextAreaProps extends AriaTextFieldProps {
     hint?: ReactNode;
     /** Tooltip message displayed after the label. */
     tooltip?: string;
-    /** Textarea size. */
-    size?: TextAreaBaseProps["size"];
     /** Classes on the `<textarea>` itself (e.g. `min-h-40`) */
     textAreaClassName?: TextAreaBaseProps["className"];
     /** Ref for the textarea wrapper */
@@ -109,7 +105,6 @@ export const TextArea = ({
     className,
     rows,
     cols,
-    size = "sm",
     ...props
 }: TextAreaProps) => {
     return (
@@ -127,10 +122,10 @@ export const TextArea = ({
                         </Label>
                     )}
 
-                    <TextAreaBase placeholder={placeholder} className={textAreaClassName} ref={textAreaRef} rows={rows} cols={cols} size={size} />
+                    <TextAreaBase placeholder={placeholder} className={textAreaClassName} ref={textAreaRef} rows={rows} cols={cols} />
 
                     {hint && (
-                        <HintText isInvalid={isInvalid} size={size}>
+                        <HintText isInvalid={isInvalid} size="sm">
                             {hint}
                         </HintText>
                     )}

@@ -6,7 +6,6 @@
  * never do; it exists only to show what was asked for.
  */
 import type { ReactNode } from "react";
-import { Ai, Calendar, Download, Flame, GraphUp, Search } from "fa-icons";
 import { CardHeader } from "fa-design-system/components/application/card-header/card-header";
 import { PeriodSelector } from "fa-design-system/components/application/period-selector/period-selector";
 import { Table } from "fa-design-system/components/application/table/table";
@@ -16,6 +15,7 @@ import { ButtonUtility } from "fa-design-system/components/base/buttons/button-u
 import { Input } from "fa-design-system/components/base/input/input";
 import { Num } from "fa-design-system/components/base/num/num";
 import { Select } from "fa-design-system/components/base/select/select";
+import { Ai, Calendar, Download, Flame, GraphUp, Search } from "fa-icons";
 
 const stocks = [
     { ticker: "EQNR", name: "Equinor", last: 287.4, change: 2.4, volume: 1612, cap: 812 },
@@ -84,8 +84,8 @@ export const Clashes = () => (
             <div className="flex flex-col gap-1 pb-4">
                 <h1 className="text-xl font-semibold text-primary">Where briefs and rules clashed</h1>
                 <p className="max-w-180 text-sm text-tertiary">
-                    A clash is a place where the brief for a sandbox page asked for one thing and a rule in the skill said another. The agent had to pick
-                    one and write it down. These are the ones that came up on more than one page.
+                    A clash is a place where the brief for a sandbox page asked for one thing and a rule in the skill said another. The agent had to pick one
+                    and write it down. These are the ones that came up on more than one page.
                 </p>
             </div>
 
@@ -99,7 +99,7 @@ export const Clashes = () => (
                         <CardHeader title="Mest omsatt" />
                         <div className="overflow-x-auto">
                             <div className="min-w-[560px]">
-                                <Table aria-label="Mest omsatt, slik briefen ba om" size="sm">
+                                <Table aria-label="Mest omsatt, slik briefen ba om">
                                     <Table.Header>
                                         <Table.Head id="name" label="Aksje" isRowHeader />
                                         <Table.Head id="last" label="Siste" />
@@ -161,7 +161,7 @@ export const Clashes = () => (
                 outcome="Rule followed on both pages. The brief's layout was dropped."
                 brief={
                     <div className={card}>
-                        <Table aria-label="Hete aksjer, slik briefen ba om" size="sm">
+                        <Table aria-label="Hete aksjer, slik briefen ba om">
                             <Table.Header>
                                 <Table.Head id="ticker" label="Ticker" />
                                 <Table.Head id="name" label="Selskap" isRowHeader className="w-full" />
@@ -187,7 +187,7 @@ export const Clashes = () => (
                 }
                 built={
                     <div className={card}>
-                        <Table aria-label="Hete aksjer, slik regelen sier" size="sm">
+                        <Table aria-label="Hete aksjer, slik regelen sier">
                             <Table.Header>
                                 <Table.Head id="name" label="Aksje" isRowHeader className="w-full" />
                                 <Table.Head id="change" label="Endring" />

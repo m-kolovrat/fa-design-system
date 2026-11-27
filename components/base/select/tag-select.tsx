@@ -13,7 +13,7 @@ import type { IconComponentType } from "@/components/base/badges/badge-types";
 import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 import { Popover } from "@/components/base/select/popover";
-import { SelectContext, type SelectItemType, sizes } from "@/components/base/select/select-shared";
+import { type SelectItemType, styles } from "@/components/base/select/select-shared";
 import { TagCloseX } from "@/components/base/tags/base-components/tag-close-x";
 import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { cx } from "@/utils/cx";
@@ -21,7 +21,6 @@ import { strings } from "@/utils/strings";
 import { SelectItem } from "./select-item";
 
 interface TagSelectValueProps extends AriaGroupProps {
-    size: "sm" | "md" | "lg";
     shortcut?: boolean;
     isDisabled?: boolean;
     placeholder?: string;
@@ -52,8 +51,6 @@ export interface TagSelectProps extends Omit<AriaComboBoxProps<SelectItemType>, 
     label?: string;
     /** Tooltip text for the help icon next to the label */
     tooltip?: string;
-    /** The size of the component */
-    size?: "sm" | "md" | "lg";
     /** Placeholder text in the search field */
     placeholder?: string;
     /** Shows a "⌘K" hint in the field */
@@ -81,7 +78,6 @@ export interface TagSelectProps extends Omit<AriaComboBoxProps<SelectItemType>, 
 export const TagSelectBase = ({
     items,
     children,
-    size = "sm",
     selectedItems,
     onItemCleared,
     onItemInserted,
@@ -170,7 +166,7 @@ export const TagSelectBase = ({
                 valueFormatter,
             }}
         >
-            <SelectContext.Provider value={{ size }}>
+            <>
                 <AriaComboBox
                     allowsEmptyCollection
                     menuTrigger="focus"
@@ -192,7 +188,6 @@ export const TagSelectBase = ({
                             )}
 
                             <TagSelectTagsValue
-                                size={size}
                                 shortcut={shortcut}
                                 ref={placeholderRef}
                                 placeholder={placeholder}
@@ -203,26 +198,26 @@ export const TagSelectBase = ({
                                 onPointerEnter={onResize}
                             />
 
-                            <Popover size={size} triggerRef={placeholderRef} style={{ width: popoverWidth }} className={props?.popoverClassName}>
+                            <Popover triggerRef={placeholderRef} style={{ width: popoverWidth }} className={props?.popoverClassName}>
                                 <AriaListBox selectionMode="multiple" className="size-full outline-hidden">
                                     {children}
                                 </AriaListBox>
                             </Popover>
 
                             {props.hint && (
-                                <HintText isInvalid={state.isInvalid} className={cx(size === "sm" && "text-xs")}>
+                                <HintText isInvalid={state.isInvalid} className="text-xs">
                                     {props.hint}
                                 </HintText>
                             )}
                         </>
                     )}
                 </AriaComboBox>
-            </SelectContext.Provider>
+            </>
         </TagSelectContext.Provider>
     );
 };
 
-const InnerTagSelect = ({ isDisabled, shortcut, shortcutClassName, placeholder, size = "sm" }: Omit<TagSelectProps, "selectedItems" | "children">) => {
+const InnerTagSelect = ({ isDisabled, shortcut, shortcutClassName, placeholder }: Omit<TagSelectProps, "selectedItems" | "children">) => {
     const focusManager = useFocusManager();
     const tagSelectContext = useContext(TagSelectContext);
     const comboBoxStateContext = useContext(ComboBoxStateContext);
@@ -293,26 +288,15 @@ const InnerTagSelect = ({ isDisabled, shortcut, shortcutClassName, placeholder, 
         <div className="relative flex w-full min-w-0 flex-1 flex-row flex-wrap items-center justify-start gap-1.5">
             {!isSelectionEmpty &&
                 tagSelectContext?.selectedItems?.items?.map((value) => (
-                    <span
-                        key={value.id}
-                        className={cx(
-                            "flex min-w-0 items-center rounded-sm bg-primary ring-1 ring-primary ring-inset",
-                            size === "sm" ? "px-1 py-0.75" : "py-0.5 pr-1 pl-1.25",
-                        )}
-                    >
+                    <span key={value.id} className={cx("flex min-w-0 items-center rounded-sm bg-primary px-1 py-0.75 ring-1 ring-primary ring-inset")}>
                         <Avatar size="xs" alt={value?.label} src={value?.avatarUrl} className="size-4" />
 
-                        <p
-                            className={cx(
-                                "truncate font-medium whitespace-nowrap text-secondary select-none",
-                                size === "sm" ? "ml-1 text-xs" : "ml-1.25 text-sm",
-                            )}
-                        >
+                        <p className={cx("ml-1 truncate text-xs font-medium whitespace-nowrap text-secondary select-none")}>
                             {tagSelectContext.valueFormatter ? tagSelectContext.valueFormatter(value) : value?.label}
                         </p>
 
                         <TagCloseX
-                            size={size === "sm" ? "sm" : "md"}
+                            size="sm"
                             isDisabled={isDisabled}
                             className="ml-0.75"
                             // For workaround, onKeyDown is added to the button
@@ -329,7 +313,7 @@ const InnerTagSelect = ({ isDisabled, shortcut, shortcutClassName, placeholder, 
                     onMouseDown={handleInputMouseDown}
                     className={cx(
                         "w-full flex-[1_0_0] appearance-none bg-transparent text-ellipsis text-primary caret-alpha-black/90 outline-hidden placeholder:text-placeholder focus:outline-hidden disabled:cursor-not-allowed",
-                        sizes[size].text,
+                        styles.text,
                     )}
                 />
 
@@ -339,7 +323,7 @@ const InnerTagSelect = ({ isDisabled, shortcut, shortcutClassName, placeholder, 
                         className={cx(
                             "absolute inset-y-0.5 right-0.5 z-10 hidden items-center rounded-r-[inherit] bg-linear-to-r from-transparent to-bg-primary to-40% pl-8 md:flex",
                             shortcutClassName,
-                            sizes[size].shortcut,
+                            styles.shortcut,
                         )}
                     >
                         <span
@@ -358,7 +342,6 @@ const InnerTagSelect = ({ isDisabled, shortcut, shortcutClassName, placeholder, 
 };
 
 export const TagSelectTagsValue = ({
-    size = "sm",
     shortcut,
     placeholder,
     shortcutClassName,
@@ -383,11 +366,11 @@ export const TagSelectTagsValue = ({
                     // Icon styles
                     "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary",
 
-                    sizes[size].root,
+                    styles.root,
 
-                    // Overwrite vertical padding for small size when there are selected items
+                    // Overwrite vertical padding when there are selected items
                     // to prevent height jump because the tags are taller than the input text.
-                    size === "sm" && selectedItemsCount > 0 && "py-1.5",
+                    selectedItemsCount > 0 && "py-1.5",
                 )
             }
         >
@@ -395,13 +378,7 @@ export const TagSelectTagsValue = ({
                 <>
                     {Icon && <Icon data-icon className="pointer-events-none" />}
                     <FocusScope contain={false} autoFocus={false} restoreFocus={false}>
-                        <InnerTagSelect
-                            isDisabled={isDisabled}
-                            size={size}
-                            shortcut={shortcut}
-                            shortcutClassName={shortcutClassName}
-                            placeholder={placeholder}
-                        />
+                        <InnerTagSelect isDisabled={isDisabled} shortcut={shortcut} shortcutClassName={shortcutClassName} placeholder={placeholder} />
                     </FocusScope>
                 </>
             )}

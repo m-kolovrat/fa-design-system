@@ -23,7 +23,7 @@ const TabRows = ({ disabledClassName }: { disabledClassName?: string }) => (
     <div className="flex flex-col gap-4">
         {types.map((type) => (
             <Tabs key={type} defaultSelectedKey="oversikt">
-                <Tabs.List type={type} size="sm" aria-label={`Aksjeinformasjon (${type})`} items={tabs}>
+                <Tabs.List type={type} aria-label={`Aksjeinformasjon (${type})`} items={tabs}>
                     {(tab) => <Tabs.Item {...tab} className={tab.isDisabled ? disabledClassName : undefined} />}
                 </Tabs.List>
             </Tabs>
@@ -76,8 +76,8 @@ export const DisabledTab = () => (
             <div className="flex flex-col gap-1 pb-6">
                 <h1 className="text-xl font-semibold text-primary">How should a disabled tab look?</h1>
                 <p className="max-w-180 text-sm text-tertiary">
-                    “Innsidehandel” is the disabled tab in every row. Each option is shown in light and dark, in three tab types. Option A is the library
-                    today; the others are simulated on this page only.
+                    “Innsidehandel” is the disabled tab in every row. Each option is shown in light and dark, in three tab types. Option A is the library today;
+                    the others are simulated on this page only.
                 </p>
             </div>
 
@@ -105,8 +105,8 @@ export const DisabledTab = () => (
                 <div className="flex flex-col gap-0.5">
                     <h2 className="text-md font-semibold text-primary">For comparison: disabled today in Button and ButtonGroup</h2>
                     <p className="max-w-180 text-sm text-tertiary">
-                        Both already use the disabled tokens. A disabled Button's text is fg-disabled (option C); a disabled ButtonGroup item gets a
-                        grey fill and text-disabled.
+                        Both already use the disabled tokens. A disabled Button's text is fg-disabled (option C); a disabled ButtonGroup item gets a grey fill
+                        and text-disabled.
                     </p>
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

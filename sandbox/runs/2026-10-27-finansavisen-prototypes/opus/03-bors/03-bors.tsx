@@ -675,7 +675,7 @@ const WatchlistCard = ({ loggedIn }: { loggedIn: boolean }) => {
         >
             {loggedIn ? (
                 <div className="flex flex-1 flex-col gap-4">
-                    <Select aria-label="Velg watchlist" size="sm" items={watchlists} value={list} onChange={setList} placeholder="Velg watchlist">
+                    <Select aria-label="Velg watchlist" items={watchlists} value={list} onChange={setList} placeholder="Velg watchlist">
                         {(item) => <Select.Item id={item.id}>{item.label}</Select.Item>}
                     </Select>
                     {/* Key figures — no Figma component yet. */}
@@ -764,7 +764,7 @@ const StockTable = <T extends { ticker: string }>({
     onSortChange?: (d: SortDescriptor) => void;
 }) => (
     <div className="-mx-4 md:-mx-5">
-        <Table aria-label={label} size="sm" sortDescriptor={sortDescriptor} onSortChange={onSortChange}>
+        <Table aria-label={label} sortDescriptor={sortDescriptor} onSortChange={onSortChange}>
             <Table.Header columns={columns}>
                 {(c) => (
                     <Table.Head
@@ -1166,7 +1166,6 @@ export const BorsPage = ({ loggedIn = true }: BorsPageProps) => {
                                 placeholder="Ticker eller selskap"
                                 icon={Search}
                                 shortcut={false}
-                                size="sm"
                                 items={tickerSearch}
                                 onChange={(key) => {
                                     if (key) window.location.assign(`/aksjer/${key}`);

@@ -22,7 +22,7 @@ import { CloseButton } from "./close-button";
  * every button here updates automatically.
  */
 
-const sizes = ["sm", "md", "lg", "xl"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
 const colors = [
     "primary",

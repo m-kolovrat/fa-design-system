@@ -202,11 +202,12 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
     label. Errors go through `isInvalid` + `hint`. Because screen readers name a field by its label;
     without one it's announced only as "edit text".
     - Correct: `<Input label="E-post" placeholder="navn@firma.no" isInvalid hint="Ugyldig e-post" />`
-14. **fa-field-size** SHOULD Leave `size` unset on fields: `Input` and the input variants, `Select`,
-    `Select.ComboBox`, `MultiSelect`, `TagSelect`, `NativeSelect` and `TextArea` all default to `sm`
-    (36px), and their menu items follow the field. A `Dropdown` trigger is a `Button size="sm"`. Use
-    `md` or `lg` only when the person you're building for asks for it or the design shows it.
-    Because one field height keeps forms, filter bars and card toolbars aligned.
+14. **fa-field-size** SHOULD Keep fields at their one size: 36px, Text sm. `Input` and the input
+    variants, `Select`, `Select.ComboBox`, `MultiSelect`, `TagSelect`, `NativeSelect` and `TextArea`
+    have one size and no `size` prop (decided 2026-11-27), and so do their menu items. Below `md`
+    their text is 16px on the same 36px height, so iOS doesn't zoom into a field. A `Dropdown`
+    trigger is a `Button size="sm"`. Because one field height keeps forms, filter bars and card
+    toolbars aligned.
 15. **fa-focus-visible** MUST Keep every interactive element keyboard-reachable with the focus ring
     (`outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2`). Never
     `outline-none` without that replacement. Because the ring is the only sign of which element a
@@ -256,7 +257,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`) and a hover (`hover:und
 - **Select vs ComboBox vs MultiSelect vs TagSelect vs NativeSelect:** one choice from a short list,
   one choice with search, several choices, several shown as tags, the browser's own select.
 - **Tabs vs ButtonGroup:** inside a card, anything that changes what the card shows (a view, a
-  source filter, Årlig / Kvartalsvis) is `Tabs` with `type="button-gray"` `size="sm"`.
+  source filter, Årlig / Kvartalsvis) is `Tabs` with `type="button-gray"`.
   `ButtonGroup` is for segmented choices outside cards (a market, a currency, Liste / Kort for a
   whole page). Chart periods use `PeriodSelector`, not either of them.
 - **Toggle vs Checkbox:** `Toggle` applies at once. `Checkbox` is part of a form that is submitted.

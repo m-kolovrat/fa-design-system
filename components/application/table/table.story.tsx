@@ -59,7 +59,7 @@ const meta = {
             </div>
         )),
     ],
-    args: { "aria-label": "Team members", size: "md", selectionMode: "none" },
+    args: { "aria-label": "Team members", selectionMode: "none" },
     argTypes: {
         // Controls only: types, defaults and descriptions come from docgen.
         selectionMode: { control: "inline-radio", options: ["none", "single", "multiple"] },
@@ -75,10 +75,10 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** A small table in a `TableCard` — the controls set the `Table` props (`size` is passed to the card). */
+/** A small table in a `TableCard` — the controls set the `Table` props. */
 export const Playground: Story = {
-    render: ({ size, ...args }) => (
-        <TableCard.Root size={size}>
+    render: (args) => (
+        <TableCard.Root>
             <TableCard.Header title="Team members" badge="5 users" description="Everyone with access to this workspace." />
             <Table {...args}>
                 <Table.Header>
@@ -115,14 +115,6 @@ Table01AlternatingFills.parameters = {
     design: {
         desktop: "1229-12388",
         mobile: "1229-15727",
-    },
-};
-
-export const Table01DividerLineSm = () => <Tables.Table01DividerLineSm />;
-Table01DividerLineSm.storyName = "Table 01 divider line sm";
-Table01DividerLineSm.parameters = {
-    design: {
-        desktop: "1227-110480",
     },
 };
 

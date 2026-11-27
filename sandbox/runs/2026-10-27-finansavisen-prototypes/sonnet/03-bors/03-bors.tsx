@@ -498,7 +498,7 @@ const DataTable = <T extends { id: string }>({
 
     return (
         <div className="-mx-4 -mb-4 md:-mx-5 md:-mb-5">
-            <Table aria-label={label} size="sm" sortDescriptor={sort} onSortChange={setSort}>
+            <Table aria-label={label} sortDescriptor={sort} onSortChange={setSort}>
                 <Table.Header>
                     {columns.map((c, i) => (
                         <Table.Head
@@ -1023,7 +1023,7 @@ export const BorsPage = ({ loggedIn = true }: { loggedIn?: boolean }) => {
                         </p>
                     </div>
                     <form role="search" action="/sok" className="w-full md:w-80">
-                        <Input name="q" aria-label="Søk etter aksje eller ticker" placeholder="Søk etter aksje eller ticker" icon={Search} size="md" />
+                        <Input name="q" aria-label="Søk etter aksje eller ticker" placeholder="Søk etter aksje eller ticker" icon={Search} />
                     </form>
                 </div>
 

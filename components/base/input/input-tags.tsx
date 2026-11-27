@@ -23,11 +23,6 @@ export interface InputTagsProps {
     hint?: ReactNode;
     /** Tooltip message displayed via a help icon inside the input. */
     tooltip?: string;
-    /**
-     * Input size variant.
-     * @default sm
-     */
-    size?: "sm" | "md" | "lg";
     /** Placeholder text for the input field. */
     placeholder?: string;
     /** Whether the field is required. */
@@ -66,7 +61,6 @@ export interface InputTagsProps {
 
 /** Free-text tags inside the field: Enter adds one, Backspace on an empty field moves to the last tag. */
 export const InputTags = ({
-    size = "sm",
     label,
     hint,
     tooltip,
@@ -227,19 +221,10 @@ export const InputTags = ({
     const isEmpty = entries.length === 0;
     const hasTrailingIcon = tooltip || isInvalid;
 
-    const sizes = sortCx({
-        sm: {
-            root: cx("gap-2 px-3 py-2 text-sm", !isEmpty && "py-1.5 pl-2", hasTrailingIcon && "pr-9"),
-            iconTrailing: "right-3",
-        },
-        md: {
-            root: cx("gap-2 px-3 py-2 text-md", !isEmpty && "pl-2", hasTrailingIcon && "pr-9"),
-            iconTrailing: "right-3",
-        },
-        lg: {
-            root: cx("gap-2 px-3.5 py-2.5 text-md", !isEmpty && "pl-2.5", hasTrailingIcon && "pr-9.5"),
-            iconTrailing: "right-3.5",
-        },
+    // One size (Figma Input field Type=Tags, 2026-11-27): 36px, Text sm, sm tags.
+    const styles = sortCx({
+        root: cx("gap-2 px-3 py-2 text-sm max-md:text-md/5", !isEmpty && "py-1.5 pl-2", hasTrailingIcon && "pr-9"),
+        iconTrailing: "right-3",
     });
 
     return (
@@ -260,21 +245,16 @@ export const InputTags = ({
                         isFocusWithin && !isDisabled && "ring-2 ring-brand",
                         isInvalid && !isFocusWithin && "ring-error_subtle",
                         isInvalid && isFocusWithin && "ring-2 ring-error",
-                        sizes[size].root,
+                        styles.root,
                     )
                 }
             >
                 {({ isDisabled }) => (
                     <>
-                        <div className={cx("relative flex w-full flex-1 flex-row flex-wrap items-center justify-start", size === "sm" ? "gap-1.5" : "gap-2")}>
+                        <div className={cx("relative flex w-full flex-1 flex-row flex-wrap items-center justify-start gap-1.5")}>
                             {!isEmpty && (
                                 <div ref={tagGroupRef} onKeyDown={handleTagGroupKeyDown} className="contents">
-                                    <TagGroup
-                                        label={label || strings.input.tags}
-                                        size={size === "lg" ? "md" : size}
-                                        onRemove={handleRemove}
-                                        className="contents"
-                                    >
+                                    <TagGroup label={label || strings.input.tags} size="sm" onRemove={handleRemove} className="contents">
                                         <TagList className="flex flex-wrap gap-1.5 focus:outline-hidden" items={entries}>
                                             {(item) => (
                                                 <Tag
@@ -314,7 +294,7 @@ export const InputTags = ({
                                     aria-label={tooltip}
                                     className={cx(
                                         "absolute cursor-pointer text-fg-quaternary transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover",
-                                        sizes[size].iconTrailing,
+                                        styles.iconTrailing,
                                     )}
                                 >
                                     <Help className="size-4" />
@@ -324,17 +304,14 @@ export const InputTags = ({
 
                         <Info
                             aria-hidden="true"
-                            className={cx(
-                                "pointer-events-none absolute hidden size-4 text-fg-error-secondary group-invalid/input:block",
-                                sizes[size].iconTrailing,
-                            )}
+                            className={cx("pointer-events-none absolute hidden size-4 text-fg-error-secondary group-invalid/input:block", styles.iconTrailing)}
                         />
                     </>
                 )}
             </AriaGroup>
 
             {hint && (
-                <HintText id={hintId} isInvalid={isInvalid} className={cx(size === "sm" && "text-xs")}>
+                <HintText id={hintId} isInvalid={isInvalid} className="text-xs">
                     {hint}
                 </HintText>
             )}

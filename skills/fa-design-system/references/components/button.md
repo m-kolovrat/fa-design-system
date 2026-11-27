@@ -47,7 +47,7 @@ import { CloseButton } from "fa-design-system/components/base/buttons/close-butt
 
 | Prop                   | Values                                                                                                                                                            | Default   |
 | :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- |
-| `size`                 | `sm` (36px) · `md` · `lg` · `xl`                                                                                                                                  | `sm`      |
+| `size`                 | `sm` (36px) · `md` · `lg`                                                                                                                                         | `sm`      |
 | `color`                | `primary` · `secondary` · `tertiary` · `link-color` · `link-gray` · `primary-destructive` · `secondary-destructive` · `tertiary-destructive` · `link-destructive` | `primary` |
 | `iconLeading`          | icon component or element                                                                                                                                         |           |
 | `iconTrailing`         | icon component or element                                                                                                                                         |           |

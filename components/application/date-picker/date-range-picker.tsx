@@ -10,6 +10,7 @@ import { DateRangePicker as AriaDateRangePicker, Dialog as AriaDialog, Group as 
 import { Button, type ButtonProps } from "@/components/base/buttons/button";
 import { InputDateBase } from "@/components/base/input/input-date";
 import { Label } from "@/components/base/input/label";
+import { useBreakpoint } from "@/hooks/use-breakpoint";
 import { cx } from "@/utils/cx";
 import { type DatePickerLabels, mergeDatePickerLabels } from "@/utils/strings";
 import { RangeCalendar, RangePresetButton } from "./range-calendar";
@@ -64,6 +65,8 @@ export const DateRangePicker = ({
 }: DateRangePickerProps) => {
     const { locale } = useLocale();
     const labels = mergeDatePickerLabels(labelsProp);
+    // Figma _Date picker menu: Cancel and Apply are sm (36px, level with the date inputs) on desktop, md on mobile for a larger tap target.
+    const footerButtonSize = useBreakpoint("md") ? "sm" : "md";
     const formatter = useDateFormatter({
         month: "short",
         day: "numeric",
@@ -180,13 +183,13 @@ export const DateRangePicker = ({
                                 />
                                 <div className="flex justify-between gap-3 border-t border-secondary p-4">
                                     <div className="hidden items-center gap-2 md:flex">
-                                        <InputDateBase slot="start" size="sm" />
+                                        <InputDateBase slot="start" />
                                         <div className="text-md text-quaternary">–</div>
-                                        <InputDateBase slot="end" size="sm" />
+                                        <InputDateBase slot="end" />
                                     </div>
                                     <div className="grid w-full grid-cols-2 gap-3 md:flex md:w-auto">
                                         <Button
-                                            size="sm"
+                                            size={footerButtonSize}
                                             color="secondary"
                                             onClick={() => {
                                                 onCancel?.();
@@ -196,7 +199,7 @@ export const DateRangePicker = ({
                                             {labels.cancel}
                                         </Button>
                                         <Button
-                                            size="sm"
+                                            size={footerButtonSize}
                                             color="primary"
                                             onClick={() => {
                                                 setValue(pickerValue);

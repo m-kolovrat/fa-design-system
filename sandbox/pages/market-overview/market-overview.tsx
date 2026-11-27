@@ -479,7 +479,7 @@ const MarketListCard = ({
             />
             <Table
                 aria-label="Markeder"
-                size="sm"
+
                 selectionMode="single"
                 selectionBehavior="replace"
                 disallowEmptySelection
@@ -528,7 +528,7 @@ const MoversCard = ({ id, title, rows, href, className }: { id: string; title: s
             title={title}
             actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href={href} aria-label={`Se alle ${title.toLowerCase()}`} />}
         />
-        <Table aria-labelledby={id} size="sm">
+        <Table aria-labelledby={id}>
             <Table.Header>
                 <Table.Head id="name" label="Aksje" isRowHeader className={cx(head, "w-full")} />
                 <Table.Head id="last" label="Siste" className={numHead} />
@@ -597,7 +597,7 @@ const NewsCard = ({ className }: { className?: string }) => {
                 className={cx(cardBody, "flex flex-1 flex-col gap-4")}
             >
                 <div className="-mx-4 overflow-x-auto px-4 md:-mx-6 md:px-6">
-                    <Tabs.List type="button-gray" size="sm" aria-label="Filtrer børsnytt">
+                    <Tabs.List type="button-gray" aria-label="Filtrer børsnytt">
                         {newsCategories.map((c) => (
                             <Tabs.Item key={c.id} id={c.id} label={c.label} />
                         ))}
@@ -665,7 +665,6 @@ const WatchlistCard = ({ watchlist, onWatchlistChange, className }: { watchlist:
                     <>
                         <Select
                             aria-label="Velg watchlist"
-                            size="sm"
                             items={watchlists}
                             value={watchlist}
                             onChange={(k) => k !== null && onWatchlistChange(k)}
@@ -698,7 +697,7 @@ const WatchlistCard = ({ watchlist, onWatchlistChange, className }: { watchlist:
                     </p>
                 </div>
             </div>
-            <Table aria-label="Instrumenter i watchlist" size="sm" className="min-w-2xl">
+            <Table aria-label="Instrumenter i watchlist" className="min-w-2xl">
                 <Table.Header>
                     <Table.Head id="name" label="Navn" isRowHeader className={cx(head, "w-full")} />
                     <Table.Head id="last" label="Siste" className={numHead} />
@@ -745,7 +744,7 @@ const MostTradedCard = ({ className }: { className?: string }) => (
             title="Mest omsatt"
             actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="/bors/mest-omsatt" aria-label="Se alle mest omsatte aksjer" />}
         />
-        <Table aria-labelledby="card-traded" size="sm" className="min-w-xl">
+        <Table aria-labelledby="card-traded" className="min-w-xl">
             <Table.Header>
                 <Table.Head id="name" label="Aksje" isRowHeader className={cx(head, "w-full")} />
                 <Table.Head id="turnover" label="Omsetning" className={numHead} />
@@ -784,7 +783,7 @@ const UnusualVolumeCard = ({ className }: { className?: string }) => (
             title="Hete aksjer"
             actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="/bors/hete-aksjer" aria-label="Se alle hete aksjer" />}
         />
-        <Table aria-labelledby="card-hot" size="sm" className="min-w-xl">
+        <Table aria-labelledby="card-hot" className="min-w-xl">
             <Table.Header>
                 <Table.Head id="name" label="Aksje" isRowHeader className={cx(head, "w-full")} />
                 <Table.Head id="ratio" label="Volum mot snitt" tooltip="Dagens volum sammenlignet med snittet de siste 30 dagene" className={numHead} />
@@ -832,7 +831,7 @@ const ShortedCard = ({ className }: { className?: string }) => (
             title="Mest shortet"
             actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="/bors/short" aria-label="Se alle shortposisjoner" />}
         />
-        <Table aria-labelledby="card-short" size="sm" className="min-w-lg">
+        <Table aria-labelledby="card-short" className="min-w-lg">
             <Table.Header>
                 <Table.Head id="name" label="Aksje" isRowHeader className={cx(head, "w-full")} />
                 <Table.Head id="pct" label="Andel shortet" className={numHead} />
@@ -866,7 +865,7 @@ const ShortedCard = ({ className }: { className?: string }) => (
 const ExtremesCard = ({ id, title, rows, className }: { id: string; title: string; rows: ExtremeRecord[]; className?: string }) => (
     <section aria-labelledby={id} className={className}>
         <CardHeader titleId={id} title={title} />
-        <Table aria-labelledby={id} size="sm" className="min-w-lg">
+        <Table aria-labelledby={id} className="min-w-lg">
             <Table.Header>
                 <Table.Head id="name" label="Aksje" isRowHeader className={cx(head, "w-full")} />
                 <Table.Head id="price" label="Kurs" className={numHead} />
@@ -946,7 +945,7 @@ const ReportsCard = ({ className }: { className?: string }) => {
             <CardHeader titleId="card-reports" title="Kvartals- og årsrapporter" />
             <div className={cardBody}>
                 <Tabs>
-                    <Tabs.List type="button-gray" size="sm" aria-label="Rapporter">
+                    <Tabs.List type="button-gray" aria-label="Rapporter">
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                     </Tabs.List>
@@ -989,7 +988,7 @@ const EarningsCallsCard = ({ className }: { className?: string }) => {
             <CardHeader titleId="card-calls" title="Resultatpresentasjoner" />
             <div className={cardBody}>
                 <Tabs>
-                    <Tabs.List type="button-gray" size="sm" aria-label="Resultatpresentasjoner">
+                    <Tabs.List type="button-gray" aria-label="Resultatpresentasjoner">
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                         <Tabs.Item id="live" label="Live" />
@@ -1039,7 +1038,7 @@ const PresentationsCard = ({ className }: { className?: string }) => {
             <CardHeader titleId="card-presentations" title="Kvartalspresentasjoner" />
             <div className={cardBody}>
                 <Tabs>
-                    <Tabs.List type="button-gray" size="sm" aria-label="Kvartalspresentasjoner">
+                    <Tabs.List type="button-gray" aria-label="Kvartalspresentasjoner">
                         <Tabs.Item id="latest" label="Siste" />
                         <Tabs.Item id="upcoming" label="Kommende" />
                     </Tabs.List>
@@ -1082,7 +1081,7 @@ const SectorsCard = ({ className }: { className?: string }) => {
     return (
         <section aria-labelledby="card-sectors" className={className}>
             <CardHeader titleId="card-sectors" title="Sektorer" />
-            <Table aria-labelledby="card-sectors" size="sm" sortDescriptor={sort} onSortChange={setSort}>
+            <Table aria-labelledby="card-sectors" sortDescriptor={sort} onSortChange={setSort}>
                 <Table.Header>
                     <Table.Head id="name" label="Navn" isRowHeader allowsSorting className={cx(head, "w-full")} />
                     <Table.Head id="change" label="%" allowsSorting className={numHead} />
@@ -1106,7 +1105,7 @@ const SectorsCard = ({ className }: { className?: string }) => {
 const DividendsCard = ({ className }: { className?: string }) => (
     <section aria-labelledby="card-dividends" className={className}>
         <CardHeader titleId="card-dividends" title="Kommende utbytter" />
-        <Table aria-labelledby="card-dividends" size="sm">
+        <Table aria-labelledby="card-dividends">
             <Table.Header>
                 <Table.Head id="name" label="Selskap" isRowHeader className={cx(head, "w-full")} />
                 <Table.Head id="amount" label="Per aksje" className={numHead} />
@@ -1133,7 +1132,7 @@ const CalendarCard = ({ className }: { className?: string }) => (
             title="Finanskalender"
             actions={<Button color="secondary" size="sm" iconLeading={ChevronRight} href="/bors/kalender" aria-label="Se hele finanskalenderen" />}
         />
-        <Table aria-labelledby="card-calendar" size="sm" className="min-w-lg">
+        <Table aria-labelledby="card-calendar" className="min-w-lg">
             <Table.Header>
                 <Table.Head id="name" label="Selskap" isRowHeader className={cx(head, "w-full")} />
                 <Table.Head id="type" label="Type" className={head} />
@@ -1283,7 +1282,6 @@ export const MarketOverviewPage = () => {
                         <div className="flex items-center gap-2">
                             <Select
                                 aria-label="Velg watchlist"
-                                size="sm"
                                 items={watchlists}
                                 value={watchlist}
                                 onChange={(k) => k !== null && setWatchlist(k)}

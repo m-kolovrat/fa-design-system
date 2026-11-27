@@ -46,7 +46,7 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 
 | Prop                     | Values                                                                               | Default |
 | :----------------------- | :----------------------------------------------------------------------------------- | :------ |
-| `size`                   | `sm` · `md` · `lg` · `xl` (Button sizes)                                             | `sm`    |
+| `size`                   | `sm` · `md` · `lg` (Button sizes)                                                    | `sm`    |
 | `value` / `defaultValue` | `DateValue` (range: `{ start, end }`)                                                |         |
 | `label`                  | string: visible label above the trigger                                              |         |
 | `onChange`               | fires when Apply commits a new value                                                 |         |
@@ -58,7 +58,8 @@ import { RangeCalendar } from "fa-design-system/components/application/date-pick
 
 Plus React Aria `DatePicker` / `DateRangePicker` props. Both pickers pass `highlightedDates` on to
 their calendar; today always gets a dot as well. The picker's calendar takes no other options (no
-`showOutOfRangeDates`).
+`showOutOfRangeDates`). The popover's Cancel and Apply are `sm` from `md` up (level with the date inputs) and
+`md` below it, for a larger tap target; this follows Figma's \_Date picker menu and isn't a prop.
 
 ## Notes
 

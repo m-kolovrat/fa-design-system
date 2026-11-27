@@ -94,7 +94,7 @@ const LiveRow = ({ index }: { index: number }) => {
 
 /** A dense table: 50 rows × 3 figures, ticking every second. Prices and volume are `live`; the change isn't. */
 export const DenseTable = () => (
-    <TableCard.Root size="sm" className="max-w-2xl">
+    <TableCard.Root className="max-w-2xl">
         <TableCard.Header title="50 rader, 3 levende tall" />
         <Table aria-label="50 rader, 3 levende tall">
             <Table.Header>

@@ -67,7 +67,6 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
                     <CheckboxBase
                         isSelected={state.isSelected && !state.hasSubmenu}
                         isIndeterminate={state.isSelected && state.hasSubmenu}
-                        size="sm"
                         className={cx("shrink-0", state.className)}
                     />
                 );

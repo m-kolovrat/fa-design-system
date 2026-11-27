@@ -14,9 +14,9 @@ import { strings } from "@/utils/strings";
 import { ComboBox } from "./combobox";
 import { Popover } from "./popover";
 import { SelectItem } from "./select-item";
-import { type CommonProps, SelectContext, type SelectItemType, sizes } from "./select-shared";
+import { type CommonProps, type SelectItemType, styles } from "./select-shared";
 
-export { SelectContext, sizes, type CommonProps, type SelectItemType } from "./select-shared";
+export { styles, type CommonProps, type SelectItemType } from "./select-shared";
 
 type SelectAriaProps = AriaSelectProps<SelectItemType>;
 
@@ -52,7 +52,6 @@ export interface SelectProps extends Omit<AriaSelectProps<SelectItemType>, "chil
 
 interface SelectValueProps {
     isOpen: boolean;
-    size: "sm" | "md" | "lg";
     isFocused: boolean;
     isDisabled: boolean;
     isInvalid: boolean;
@@ -61,7 +60,7 @@ interface SelectValueProps {
     icon?: FC | ReactNode;
 }
 
-const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placeholder, icon, ref }: SelectValueProps) => {
+const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, placeholder, icon, ref }: SelectValueProps) => {
     return (
         <AriaButton
             ref={ref}
@@ -75,19 +74,12 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placehold
             )}
         >
             <AriaSelectValue<SelectItemType>
-                className={(state) =>
-                    cx(
-                        "flex h-max w-full items-center justify-start truncate text-left align-middle",
-
-                        sizes[size].root,
-
-                        // With icon
-                        (state.selectedItems[0]?.icon || icon) && sizes[size].withIcon,
-
-                        // Icon styles
-                        "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary",
-                    )
-                }
+                className={cx(
+                    "flex h-max w-full items-center justify-start truncate text-left align-middle",
+                    styles.root,
+                    // Icon styles
+                    "*:data-icon:shrink-0 *:data-icon:text-fg-quaternary",
+                )}
             >
                 {(state) => {
                     const selectedItem = state.selectedItems[0];
@@ -96,7 +88,7 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placehold
                     return (
                         <>
                             {selectedItem?.avatarUrl ? (
-                                <Avatar size="xs" src={selectedItem.avatarUrl} alt={selectedItem.label} className={cx(size === "sm" && "size-5")} />
+                                <Avatar size="xs" src={selectedItem.avatarUrl} alt={selectedItem.label} className="size-5" />
                             ) : isReactComponent(Icon) ? (
                                 <Icon data-icon aria-hidden="true" />
                             ) : isValidElement(Icon) ? (
@@ -104,17 +96,17 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placehold
                             ) : null}
 
                             {selectedItem ? (
-                                <section className={cx("flex w-full truncate", sizes[size].textContainer)}>
-                                    <p className={cx("max-w-full shrink-0 truncate font-medium text-primary", sizes[size].text)}>{selectedItem?.label}</p>
+                                <section className={cx("flex w-full truncate", styles.textContainer)}>
+                                    <p className={cx("max-w-full shrink-0 truncate font-medium text-primary", styles.text)}>{selectedItem?.label}</p>
                                     {selectedItem?.supportingText && (
-                                        <p className={cx("min-w-0 truncate text-tertiary", sizes[size].text)}>{selectedItem?.supportingText}</p>
+                                        <p className={cx("min-w-0 truncate text-tertiary", styles.text)}>{selectedItem?.supportingText}</p>
                                     )}
                                 </section>
                             ) : (
-                                <p className={cx("text-placeholder", sizes[size].text)}>{placeholder}</p>
+                                <p className={cx("text-placeholder", styles.text)}>{placeholder}</p>
                             )}
 
-                            <ChevronDown aria-hidden="true" className={cx("ml-auto shrink-0 text-fg-quaternary", size === "lg" ? "size-5" : "size-4")} />
+                            <ChevronDown aria-hidden="true" className="ml-auto size-4 shrink-0 text-fg-quaternary" />
                         </>
                     );
                 }}
@@ -126,7 +118,6 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, isInvalid, size, placehold
 const SelectComponent = ({
     placeholder = strings.select.placeholder,
     icon,
-    size = "sm",
     children,
     items,
     label,
@@ -137,7 +128,7 @@ const SelectComponent = ({
     ...rest
 }: SelectProps) => {
     return (
-        <SelectContext.Provider value={{ size }}>
+        <>
             <AriaSelect {...rest} className={(state) => cx("flex flex-col gap-1.5", typeof className === "function" ? className(state) : className)}>
                 {(state) => (
                     <>
@@ -147,23 +138,23 @@ const SelectComponent = ({
                             </Label>
                         )}
 
-                        <SelectValue {...state} {...{ size, placeholder }} icon={icon} />
+                        <SelectValue {...state} {...{ placeholder }} icon={icon} />
 
-                        <Popover size={size} className={rest.popoverClassName}>
+                        <Popover className={rest.popoverClassName}>
                             <AriaListBox items={items} className="size-full outline-hidden">
                                 {children}
                             </AriaListBox>
                         </Popover>
 
                         {hint && (
-                            <HintText isInvalid={state.isInvalid} className={cx(size === "sm" && "text-xs")}>
+                            <HintText isInvalid={state.isInvalid} className="text-xs">
                                 {hint}
                             </HintText>
                         )}
                     </>
                 )}
             </AriaSelect>
-        </SelectContext.Provider>
+        </>
     );
 };
 

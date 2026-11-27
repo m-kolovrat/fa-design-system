@@ -9,11 +9,6 @@ import { cx } from "@/utils/cx";
 import { strings } from "@/utils/strings";
 
 export interface InputFileProps {
-    /**
-     * The size of the input.
-     * @default "sm"
-     */
-    size?: "sm" | "md" | "lg";
     /** Label text for the input. */
     label?: string;
     /** Helper text displayed below the input. */
@@ -45,9 +40,8 @@ export interface InputFileProps {
     buttonText?: string;
 }
 
-/** One compact field with a file button. Defaults to size `sm`; the texts default to Norwegian (`strings.input`). */
+/** One compact field with a file button; the texts default to Norwegian (`strings.input`). */
 export const InputFile = ({
-    size = "sm",
     label,
     hint,
     placeholder = strings.input.filePlaceholder,
@@ -89,7 +83,6 @@ export const InputFile = ({
     return (
         <>
             <InputGroup
-                size={size}
                 label={label}
                 hint={hint}
                 isDisabled={isDisabled}
@@ -98,7 +91,7 @@ export const InputFile = ({
                 hideRequiredIndicator={hideRequiredIndicator}
                 className={className}
                 trailingAddon={
-                    <Button size={size} color="secondary" onClick={handleClick} isDisabled={isDisabled}>
+                    <Button size="sm" color="secondary" onClick={handleClick} isDisabled={isDisabled}>
                         {buttonText}
                     </Button>
                 }

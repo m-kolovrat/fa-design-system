@@ -67,7 +67,7 @@ export const Calendar = ({ highlightedDates, className, children, labels: labels
 
                         {children || (
                             <div className="flex gap-3">
-                                <InputDateBase aria-label={labels.dateInput} size="sm" className="flex-1" />
+                                <InputDateBase aria-label={labels.dateInput} className="flex-1" />
                                 <Button
                                     slot={null}
                                     size="sm"

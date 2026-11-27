@@ -9,6 +9,7 @@ import type { DatePickerProps as AriaDatePickerProps, DateValue } from "react-ar
 import { DatePicker as AriaDatePicker, Dialog as AriaDialog, Group as AriaGroup, Popover as AriaPopover } from "react-aria-components";
 import { Button, type ButtonProps } from "@/components/base/buttons/button";
 import { Label } from "@/components/base/input/label";
+import { useBreakpoint } from "@/hooks/use-breakpoint";
 import { cx } from "@/utils/cx";
 import { type DatePickerLabels, mergeDatePickerLabels } from "@/utils/strings";
 import { Calendar } from "./calendar";
@@ -60,6 +61,8 @@ export const DatePicker = ({
     ...props
 }: DatePickerProps) => {
     const labels = mergeDatePickerLabels(labelsProp);
+    // Figma _Date picker menu: Cancel and Apply are sm (36px, level with the date inputs) on desktop, md on mobile for a larger tap target.
+    const footerButtonSize = useBreakpoint("md") ? "sm" : "md";
     const formatter = useDateFormatter({
         month: "short",
         day: "numeric",
@@ -113,7 +116,7 @@ export const DatePicker = ({
                             </div>
                             <div className="grid grid-cols-2 gap-3 border-t border-secondary p-4">
                                 <Button
-                                    size="md"
+                                    size={footerButtonSize}
                                     color="secondary"
                                     onClick={() => {
                                         onCancel?.();
@@ -123,7 +126,7 @@ export const DatePicker = ({
                                     {labels.cancel}
                                 </Button>
                                 <Button
-                                    size="md"
+                                    size={footerButtonSize}
                                     color="primary"
                                     onClick={() => {
                                         setValue(pickerValue);

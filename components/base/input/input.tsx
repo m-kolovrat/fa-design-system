@@ -19,11 +19,6 @@ export interface InputBaseProps extends Omit<AriaInputProps, "size"> {
     isDisabled?: boolean;
     /** Whether the input is required. */
     isRequired?: boolean;
-    /**
-     * Input size: `sm` 36px, `md` 40px, `lg` 44px.
-     * @default sm
-     */
-    size?: "sm" | "md" | "lg";
     /** Placeholder text. */
     placeholder?: string;
     /** Class name for the icon. */
@@ -50,7 +45,6 @@ export const InputBase = ({
     tooltip,
     shortcut,
     groupRef,
-    size = "sm",
     isInvalid,
     isDisabled,
     isRequired,
@@ -72,27 +66,13 @@ export const InputBase = ({
     // If the input is inside a `TextFieldContext`, use its context to simplify applying styles
     const context = useContext(TextFieldContext);
 
-    const inputSize = context?.size || size;
-
-    const sizes = sortCx({
-        sm: {
-            root: cx("px-3 py-2 text-sm", hasLeadingIcon && "pl-9", hasTrailingIcon && "pr-9"),
-            iconLeading: "left-3 size-4",
-            iconTrailing: "right-3",
-            shortcut: "pr-1.5",
-        },
-        md: {
-            root: cx("px-3 py-2 text-md", hasLeadingIcon && "pl-10", hasTrailingIcon && "pr-9"),
-            iconLeading: "left-3 size-5",
-            iconTrailing: "right-3",
-            shortcut: "pr-2",
-        },
-        lg: {
-            root: cx("px-3.5 py-2.5 text-md", hasLeadingIcon && "pl-10.5", hasTrailingIcon && "pr-9.5"),
-            iconLeading: "left-3.5 size-5",
-            iconTrailing: "right-3.5",
-            shortcut: "pr-2.5",
-        },
+    // One size (Figma Input field, 2026-11-27): 36px, Text sm, 16px icons. Below `md` the text is
+    // 16px on a 20px line (same 36px height): iOS zooms the page into any field under 16px.
+    const styles = sortCx({
+        root: cx("px-3 py-2 text-sm max-md:text-md/5", hasLeadingIcon && "pl-9", hasTrailingIcon && "pr-9"),
+        iconLeading: "left-3 size-4",
+        iconTrailing: "right-3",
+        shortcut: "pr-1.5",
     });
 
     return (
@@ -128,7 +108,7 @@ export const InputBase = ({
                 <Icon
                     className={cx(
                         "pointer-events-none absolute text-fg-quaternary group-data-disabled/input:text-fg-disabled",
-                        sizes[inputSize].iconLeading,
+                        styles.iconLeading,
                         context?.iconClassName,
                         iconClassName,
                     )}
@@ -144,7 +124,7 @@ export const InputBase = ({
                 placeholder={placeholder}
                 className={cx(
                     "m-0 w-full bg-transparent text-primary ring-0 outline-hidden placeholder:text-placeholder autofill:rounded-md autofill:text-primary disabled:cursor-not-allowed disabled:text-disabled",
-                    sizes[inputSize].root,
+                    styles.root,
                     context?.inputClassName,
                     inputClassName,
                 )}
@@ -157,7 +137,7 @@ export const InputBase = ({
                         aria-label={tooltip}
                         className={cx(
                             "absolute cursor-pointer text-fg-quaternary outline-focus-ring transition group-invalid/input:hidden hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover",
-                            sizes[inputSize].iconTrailing,
+                            styles.iconTrailing,
                             context?.tooltipClassName,
                             tooltipClassName,
                         )}
@@ -172,7 +152,7 @@ export const InputBase = ({
                 <Info
                     className={cx(
                         "pointer-events-none absolute hidden size-4 text-fg-error-secondary group-invalid/input:block",
-                        sizes[inputSize].iconTrailing,
+                        styles.iconTrailing,
                         context?.tooltipClassName,
                         tooltipClassName,
                     )}
@@ -186,7 +166,7 @@ export const InputBase = ({
                     onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                     className={cx(
                         "absolute flex cursor-pointer items-center justify-center text-fg-quaternary outline-focus-ring transition hover:text-fg-quaternary_hover focus-visible:text-fg-quaternary_hover focus-visible:outline-2 focus-visible:outline-offset-2",
-                        sizes[inputSize].iconTrailing,
+                        styles.iconTrailing,
                     )}
                 >
                     {isPasswordVisible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
@@ -198,7 +178,7 @@ export const InputBase = ({
                 <div
                     className={cx(
                         "pointer-events-none absolute inset-y-0.5 right-0.5 z-10 hidden items-center rounded-r-[inherit] bg-linear-to-r from-transparent to-bg-primary to-40% pl-8 md:flex",
-                        sizes[inputSize].shortcut,
+                        styles.shortcut,
                     )}
                 >
                     <span
@@ -215,19 +195,18 @@ export const InputBase = ({
 
 InputBase.displayName = "InputBase";
 
-interface TextFieldContextProps extends Partial<Pick<InputBaseProps, "size" | "wrapperClassName" | "inputClassName" | "iconClassName" | "tooltipClassName">> {}
+interface TextFieldContextProps extends Partial<Pick<InputBaseProps, "wrapperClassName" | "inputClassName" | "iconClassName" | "tooltipClassName">> {}
 
 const TextFieldContext = createContext<TextFieldContextProps>({});
 
 export interface TextFieldProps extends AriaTextFieldProps, TextFieldContextProps {}
 
-export const TextField = ({ className, size = "sm", inputClassName, wrapperClassName, iconClassName, tooltipClassName, ...props }: TextFieldProps) => {
+export const TextField = ({ className, inputClassName, wrapperClassName, iconClassName, tooltipClassName, ...props }: TextFieldProps) => {
     return (
-        <TextFieldContext.Provider value={{ inputClassName, wrapperClassName, iconClassName, tooltipClassName, size }}>
+        <TextFieldContext.Provider value={{ inputClassName, wrapperClassName, iconClassName, tooltipClassName }}>
             <AriaTextField
                 {...props}
                 data-input-wrapper
-                data-input-size={size}
                 className={(state) =>
                     cx("group flex h-max w-full flex-col items-start justify-start gap-1.5", typeof className === "function" ? className(state) : className)
                 }
@@ -243,17 +222,7 @@ export interface InputProps
         AriaTextFieldProps,
         Pick<
             InputBaseProps,
-            | "ref"
-            | "placeholder"
-            | "icon"
-            | "shortcut"
-            | "tooltip"
-            | "groupRef"
-            | "size"
-            | "wrapperClassName"
-            | "inputClassName"
-            | "iconClassName"
-            | "tooltipClassName"
+            "ref" | "placeholder" | "icon" | "shortcut" | "tooltip" | "groupRef" | "wrapperClassName" | "inputClassName" | "iconClassName" | "tooltipClassName"
         > {
     /** Label text for the input */
     label?: string;
@@ -288,7 +257,6 @@ export interface InputProps
 
 /** A single-line text field with label, hint, optional leading icon, tooltip and shortcut. */
 export const Input = ({
-    size = "sm",
     placeholder,
     icon: Icon,
     label,
@@ -307,7 +275,7 @@ export const Input = ({
     ...props
 }: InputProps) => {
     return (
-        <TextField aria-label={!label ? placeholder : undefined} {...props} size={size} className={className}>
+        <TextField aria-label={!label ? placeholder : undefined} {...props} className={className}>
             {({ isRequired, isInvalid }) => (
                 <>
                     {label && (
@@ -320,7 +288,6 @@ export const Input = ({
                         {...{
                             ref,
                             groupRef,
-                            size,
                             placeholder,
                             icon: Icon,
                             shortcut,
