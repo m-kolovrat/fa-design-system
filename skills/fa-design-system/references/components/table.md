@@ -2,7 +2,7 @@
 
 Rows of data to scan, sort and select, built on React Aria's `Table` (keyboard grid navigation,
 sorting and selection come with it). `TableCard` wraps it in a bordered card with a title bar.
-Figma: Tables/Table; the title bar (`TableCard.Header`) is Table card header. Figma's Table cell lead text, supporting text and leading visual are
+Figma: Tables/Table; the title bar (`TableCard.Header`) is Card header. Figma's Table cell lead text, supporting text and leading visual are
 `Table.Cell` props; its other cell types (badges, trend, actions) are content you put inside.
 
 ```ts
@@ -65,12 +65,15 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
   `tabular-nums` to numeric cells so digits line up.
 - **table-instrument-cell** MUST Show an instrument (company, fund, index) as one cell: logo, full
   name on top, ticker under it ("Instrument cell" in `page-patterns.md`); never a ticker column next
-  to a name column. Because it saves a column and is Figma's table cell `Type=Avatar`.
+  to a name column. Because it saves a column and is Figma's table cell `Type=Avatar`. Decided by the design owner
+  (2026-11-27): a brief that asks for a ticker pill column is reported, not followed.
 - **table-change-value** MUST Show a change as a colored span ("Change value" in
   `page-patterns.md`), not a `BadgeWithIcon`.
 - **table-no-sideways-scroll** SHOULD Fit every column from `md` up (use `size="sm"`, shorter
   headers, fewer decimals); below `md`, switch to the two-column rows with a sheet (see
-  `page-patterns.md`). Because a sideways scroll hides columns without telling the reader.
+  `page-patterns.md`). Because a sideways scroll hides columns without telling the reader. Decided by the design owner
+  (2026-11-27): on a phone a table becomes a list, and a tap opens a sheet or view with the rest; a
+  brief that asks for sideways scroll is reported, not followed.
 - **table-no-restyle** NEVER Restyle rows or cells with colors. Allowed: `odd:bg-secondary` on rows
   (the Figma "alternating fills" variant, with `className="bg-primary"` on `Table.Header`), widths,
   `whitespace-nowrap`, and responsive `hidden` classes.
@@ -80,7 +83,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 | Component          | Props                                                                                                                                                                                                           |
 | :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `TableCard.Root`   | `size` `sm` · `md` (default `md`), `div` attributes                                                                                                                                                             |
-| `TableCard.Header` | `title` (string, required), `badge` (string → gray modern `Badge`, or a node), `description` (string), `contentTrailing` (node), `className`                                                                    |
+| `TableCard.Header` | renders `CardHeader`: `title` (string, required), `badge` (string → gray modern `Badge`, or a node), `description` (string, one line), `contentTrailing` (node), `className`                                    |
 | `Table`            | React Aria `Table` props: `aria-label`, `selectionMode`, `selectedKeys`, `onSelectionChange`, `sortDescriptor`, `onSortChange`, `onRowAction`; `size` (see **table-size-once**)                                 |
 | `Table.Header`     | `bordered` (default `true`), `size`, `columns`                                                                                                                                                                  |
 | `Table.Head`       | `id`, `label`, `tooltip` (help icon), `isRowHeader`, `allowsSorting`, `className`                                                                                                                               |
@@ -93,7 +96,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2`. Never a `link-color` or
 - Sortable heads: the sorted column shows its arrow (down, or up when ascending), the other
   sortable columns the up/down chevron. On hover the label turns `text-tertiary` and its icons
   `fg-quaternary_hover` (Figma `_Table header label` `State=Hover`).
-- Row height: 72px at `md`, 56px at `sm`. Cell text is `text-sm text-primary`; see
+- Row height: 72px at `md`, 64px at `sm`. Cell text is `text-sm text-primary`; see
   **table-cell-text**.
 - Put pagination (`PaginationPageMinimalCenter`, `PaginationCardMinimal`) inside `TableCard.Root`
   after the table.
